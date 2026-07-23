@@ -298,13 +298,27 @@ button { cursor: pointer; font-family: var(--font-body); }
   content: '';
   position: absolute; inset: 0;
   background: linear-gradient(180deg,
-    rgba(5,5,5,0.45) 0%,
-    rgba(5,5,5,0.15) 35%,
-    rgba(5,5,5,0.15) 65%,
-    rgba(5,5,5,0.55) 100%
+    rgba(5,5,5,0.55) 0%,
+    rgba(5,5,5,0.25) 30%,
+    rgba(5,5,5,0.30) 70%,
+    rgba(5,5,5,0.65) 100%
   );
   z-index: 1;
   pointer-events: none;
+}
+.hero-video-wrap::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(200,169,81,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 40%, rgba(200,169,81,0.05) 0%, transparent 50%);
+  z-index: 1;
+  pointer-events: none;
+  animation: heroGlow 8s ease-in-out infinite alternate;
+}
+@keyframes heroGlow {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
 }
 
 .hero-content {
@@ -328,6 +342,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   text-transform: uppercase;
   margin-bottom: 24px;
   animation: fadeDown 0.8s ease-out;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.4);
 }
 .hero-badge .dot {
   width: 5px; height: 5px;
@@ -348,6 +363,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   margin: 0 auto;
   font-weight: 300;
   animation: fadeUp 1s ease-out 0.2s both;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.6), 0 4px 40px rgba(0,0,0,0.3);
 }
 .hero h1 em {
   font-style: italic;
@@ -363,6 +379,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   margin-left: auto; margin-right: auto;
   line-height: 1.7;
   animation: fadeUp 1s ease-out 0.4s both;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.5);
 }
 @media (min-width: 640px) { .hero-subtitle { font-size: 1.1rem; margin-top: 24px; } }
 
@@ -1739,11 +1756,65 @@ select.form-control { cursor: pointer; appearance: none; }
 /* ═══ BATIK BODY BACKGROUND ═══ */
 .batik-bg-layer {
   position: fixed; inset: 0;
-  background: var(--batik-pattern-3);
-  background-size: 100px 100px;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.8;
+}
+.batik-layer-1 {
+  background: var(--batik-pattern-3);
+  background-size: 100px 100px;
+  opacity: 0.12;
+  animation: batikDrift1 60s linear infinite;
+}
+.batik-layer-2 {
+  background: var(--batik-pattern-1);
+  background-size: 80px 80px;
+  opacity: 0.08;
+  animation: batikDrift2 90s linear infinite reverse;
+  mix-blend-mode: screen;
+}
+.batik-layer-3 {
+  background: var(--batik-pattern-2);
+  background-size: 60px 60px;
+  opacity: 0.06;
+  animation: batikPulse 8s ease-in-out infinite, batikDrift3 120s linear infinite;
+  mix-blend-mode: screen;
+}
+.batik-layer-mandala {
+  background-size: 500px;
+  opacity: 0.05;
+  animation: spin-slow 120s linear infinite;
+  mix-blend-mode: screen;
+}
+.batik-bg-glow {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 15% 25%, rgba(200,169,81,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 350px at 85% 75%, rgba(200,169,81,0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 50% 10%, rgba(200,169,81,0.03) 0%, transparent 60%);
+  animation: glowPulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes batikDrift1 {
+  0% { background-position: 0 0; }
+  100% { background-position: 100px 100px; }
+}
+@keyframes batikDrift2 {
+  0% { background-position: 0 0; }
+  100% { background-position: -80px -80px; }
+}
+@keyframes batikDrift3 {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px -60px; }
+}
+@keyframes batikPulse {
+  0%, 100% { opacity: 0.06; }
+  50% { opacity: 0.10; }
+}
+@keyframes glowPulse {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
 }
 main, .footer, .mobile-nav, .chat-fab {
   position: relative;
