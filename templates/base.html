@@ -1,0 +1,1130 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% block title %}{% trans "Bali Healer — Discover · Book · Heal" %}{% endblock %}</title>
+    <meta name="description" content="{% trans 'Find and book trusted healing experiences across Bali. Connect with verified healers for spiritual wellness and ancient Balinese healing traditions.' %}">
+    <meta name="keywords" content="{% trans 'Bali Healer, healing, spiritual healing, Reiki, chakra healing, sound healing, Balinese healing, meditation, wellness, Bali' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+Display:wght@400;500;600;700&family=Cinzel:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=11">
+    {% block extra_css %}{% endblock %}
+    <style>
+        body > .splash-wrap {
+            position: fixed !important; inset: 0 !important; z-index: 99999 !important;
+            display: flex !important; align-items: center !important; justify-content: center !important;
+            background: radial-gradient(circle at 50% 50%, #15120f, #050505) !important;
+            opacity: 1 !important; visibility: visible !important;
+            pointer-events: auto !important;
+        }
+        body > .splash-wrap.hide {
+            opacity: 0 !important; visibility: hidden !important; pointer-events: none !important;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        body > .splash-wrap .splash-bg {
+            position: absolute; inset: 0;
+            background-image:
+                radial-gradient(circle at 50% 38%, rgba(214,170,67,0.15), transparent 38%),
+                linear-gradient(rgba(214,170,67,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(214,170,67,0.05) 1px, transparent 1px);
+            background-size: auto, 72px 72px, 72px 72px;
+        }
+        body > .splash-wrap .splash-inner {
+            text-align: center; position: relative; z-index: 2; padding: 20px;
+        }
+        body > .splash-wrap .splash-circle {
+            position: relative; width: 120px; height: 120px; border-radius: 50%;
+            border: 2px solid rgba(200,169,81,0.4);
+            background: rgba(200,169,81,0.08);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 28px;
+            animation: sp-pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(200,169,81,0.15), 0 0 60px rgba(200,169,81,0.08), inset 0 0 20px rgba(200,169,81,0.05);
+        }
+        @keyframes sp-pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(200,169,81,0.1), 0 0 60px rgba(200,169,81,0.05), inset 0 0 20px rgba(200,169,81,0.03); }
+            50% { box-shadow: 0 0 50px rgba(200,169,81,0.2), 0 0 100px rgba(200,169,81,0.1), inset 0 0 30px rgba(200,169,81,0.06); }
+        }
+        body > .splash-wrap .splash-circle img {
+            width: 65%; height: 65%; object-fit: contain;
+            filter: drop-shadow(0 0 12px rgba(214,170,67,0.4));
+        }
+        body > .splash-wrap .splash-name {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem; letter-spacing: 0.15em; color: #d6aa43;
+            margin-bottom: 12px; font-weight: 800;
+            text-shadow: 0 0 30px rgba(214,170,67,0.3); text-transform: uppercase;
+        }
+        body > .splash-wrap .splash-tag {
+            font-size: 11px; color: rgba(214,170,67,0.5);
+            letter-spacing: 0.25em; margin-bottom: 32px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        body > .splash-wrap .splash-bar {
+            width: 240px; height: 4px; background: rgba(0,0,0,0.8);
+            margin: 0 auto; overflow: hidden; border-radius: 4px;
+            border: 1px solid rgba(214,170,67,0.25);
+        }
+        body > .splash-wrap .splash-fill {
+            height: 100%; width: 0; border-radius: 4px;
+            background: linear-gradient(90deg, #b45309, #d6aa43, #fef08a);
+            transition: width 0.25s linear;
+        }
+        @media (max-width: 640px) {
+            body > .splash-wrap .splash-circle { width: 90px; height: 90px; margin-bottom: 20px; }
+            body > .splash-wrap .splash-name { font-size: 1.3rem; letter-spacing: 0.1em; margin-bottom: 10px; }
+            body > .splash-wrap .splash-tag { font-size: 10px; letter-spacing: 0.15em; margin-bottom: 24px; }
+            body > .splash-wrap .splash-bar { width: 200px; }
+        }
+
+        /* Language + Region Switcher */
+        .lang-switcher { position: relative; display: inline-block; }
+        .lang-switcher-btn {
+            background: #1a1714; border: 2px solid rgba(200,169,81,0.7); color: #ffffff;
+            padding: 10px 16px; border-radius: var(--radius-sm); cursor: pointer;
+            font-size: 14px; display: flex; align-items: center; gap: 8px;
+            transition: all 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .lang-switcher-btn:hover { border-color: var(--gold); color: var(--gold); background: #242018; transform: translateY(-1px); }
+        .lang-switcher-btn i { font-size: 14px; }
+        .lang-dropdown {
+            display: none; position: fixed; top: 0; left: 0;
+            background: #0f0d0b !important; border: 2px solid rgba(200,169,81,0.8) !important;
+            border-radius: var(--radius); min-width: 300px; z-index: 9999999 !important;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.8), 0 0 0 2px rgba(200,169,81,0.3) !important;
+            animation: dropdownFadeIn 0.25s ease;
+            backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+            opacity: 1 !important;
+        }
+        .lang-dropdown.open {
+            display: block !important;
+        }
+        #langSwitcher:has(.lang-dropdown.open) ~ .header,
+        .lang-switcher:has(.lang-dropdown.open) {
+            background: #1a1714 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        .lang-dropdown::before {
+            content: ''; position: absolute; inset: 0;
+            background: #0f0d0b !important; border-radius: inherit; z-index: -1;
+        }
+
+        @keyframes dropdownFadeIn {
+            from { opacity: 0; transform: translateX(40px) scale(0.97); }
+            to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        /* Panel Header */
+        .lang-panel-header {
+            display: flex; align-items: center; gap: 8px; padding: 14px 16px;
+            font-size: 12px; font-weight: 700; color: #ffffff;
+            text-transform: uppercase; letter-spacing: 0.6px;
+            border-bottom: 2px solid rgba(200,169,81,0.5); background: #0f0d0b !important;
+        }
+        .lang-panel-header i { color: var(--gold); font-size: 14px; }
+
+        /* Language Panel */
+        .lang-panel-main { max-height: 400px; overflow-y: auto; background: #0f0d0b !important; }
+        .lang-panel-main::-webkit-scrollbar { width: 6px; }
+        .lang-panel-main::-webkit-scrollbar-thumb { background: rgba(200,169,81,0.7); border-radius: 4px; }
+
+        .lang-item {
+            display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+            color: #ffffff; text-decoration: none; font-size: 14px;
+            transition: all 0.15s; border-bottom: 1px solid rgba(200,169,81,0.2);
+            cursor: pointer; position: relative; background: #0f0d0b !important;
+            user-select: none;
+        }
+        .lang-item:hover { background: rgba(214,170,67,0.15); }
+        .lang-item:active { background: rgba(214,170,67,0.25); transform: scale(0.98); }
+        .lang-item:last-child { border-bottom: none; }
+        .lang-item.active { color: var(--gold); background: rgba(214,170,67,0.15); font-weight: 600; border-left: 3px solid var(--gold); }
+        .lang-item:hover { background: rgba(214,170,67,0.25); color: var(--gold); }
+        .lang-item.active { color: var(--gold); background: rgba(214,170,67,0.3); font-weight: 700; border-left: 4px solid var(--gold); }
+        .lang-item .flag { font-size: 20px; flex-shrink: 0; }
+        .lang-item .lang-name { flex: 1; }
+        .lang-item .lang-check {
+            font-size: 12px; color: var(--gold); opacity: 0; transition: opacity 0.2s;
+            position: absolute; right: 45px;
+        }
+        .lang-item.active .lang-check { opacity: 1; color: var(--gold); }
+
+        /* Region button inside language item */
+        .lang-region-btn {
+            width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center;
+            justify-content: center; font-size: 11px; color: #ffffff;
+            background: rgba(200,169,81,0.2); border: 1px solid rgba(200,169,81,0.4); cursor: pointer;
+            transition: all 0.2s; flex-shrink: 0; z-index: 2;
+        }
+        .lang-region-btn:hover {
+            color: var(--gold); border-color: rgba(214,170,67,0.6);
+            background: rgba(214,170,67,0.25);
+        }
+
+        /* Region Panel */
+        .lang-panel-region { max-height: 400px; overflow-y: auto; background: #0f0d0b !important; }
+        .lang-panel-region::-webkit-scrollbar { width: 6px; }
+        .lang-panel-region::-webkit-scrollbar-thumb { background: rgba(200,169,81,0.7); border-radius: 4px; }
+        .lang-back-btn {
+            color: #ffffff; text-decoration: none; font-size: 13px;
+            padding: 6px 10px; border-radius: 4px; transition: all 0.2s; cursor: pointer;
+            background: rgba(200,169,81,0.2); border: 1px solid rgba(200,169,81,0.4);
+        }
+        .lang-back-btn:hover { color: var(--gold); background: rgba(214,170,67,0.25); border-color: rgba(214,170,67,0.5); }
+
+        .region-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+            color: #ffffff; text-decoration: none; font-size: 14px;
+            transition: all 0.15s; border-bottom: 1px solid rgba(200,169,81,0.2);
+            cursor: pointer; background: #0f0d0b !important;
+            user-select: none;
+        }
+        .region-item:hover { background: rgba(214,170,67,0.1); color: var(--gold); }
+        .region-item:active { background: rgba(214,170,67,0.2); transform: scale(0.98); }
+        .region-item:last-child { border-bottom: none; }
+        .region-item:hover { background: rgba(214,170,67,0.1); color: var(--gold); }
+        .region-item .region-flag { font-size: 20px; flex-shrink: 0; width: 28px; text-align: center; }
+        .region-item .region-info { flex: 1; min-width: 0; }
+        .region-item .region-name { font-size: 13px; color: #ffffff; font-weight: 500; }
+        .region-item:hover .region-name { color: var(--gold); }
+        .region-item .region-sub { font-size: 11px; color: #c0c0c0; margin-top: 2px; }
+        .region-item:hover .region-sub { color: rgba(214,170,67,0.8); }
+        .region-item .region-check { font-size: 10px; color: var(--gold); opacity: 0; transition: opacity 0.2s; }
+        .region-item.selected .region-check { opacity: 1; color: var(--gold); }
+        .region-item.selected { background: rgba(214,170,67,0.18); border-left: 3px solid var(--gold); }
+
+        /* Panel Slide Animation */
+        .lang-panel-region.slide-in {
+            animation: panelSlideIn 0.3s ease forwards;
+        }
+        @keyframes panelSlideIn {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .lang-panel-main.slide-out {
+            animation: panelSlideOut 0.3s ease forwards;
+        }
+        @keyframes panelSlideOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(-40px); }
+        }
+
+        @media (max-width: 640px) {
+            .lang-switcher { position: static; }
+        }
+
+        /* Currency Selector */
+        .currency-switcher { position: relative; display: inline-block; }
+        .currency-switcher-btn {
+            background: #1a1714; border: 1px solid rgba(200,169,81,0.5); color: #ffffff;
+            padding: 8px 14px; border-radius: var(--radius-sm); cursor: pointer;
+            font-size: 13px; display: flex; align-items: center; gap: 8px;
+            transition: all 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .currency-switcher-btn:hover { border-color: var(--gold); color: var(--gold); background: #242018; }
+        .currency-switcher-btn .currency-flag { font-size: 16px; }
+        .currency-switcher-btn i { font-size: 12px; }
+        .currency-dropdown {
+            display: none; position: fixed; top: 0; left: 0;
+            background: #1a1714 !important; border: 1px solid rgba(200,169,81,0.5) !important;
+            border-radius: var(--radius); min-width: 240px; z-index: 9999999 !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.95), 0 0 60px rgba(0,0,0,0.7) !important;
+            animation: dropdownFadeIn 0.25s ease;
+            backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+            max-height: 360px; overflow-y: auto;
+        }
+        .currency-dropdown.open { display: block !important; }
+        .currency-dropdown::-webkit-scrollbar { width: 4px; }
+        .currency-dropdown::-webkit-scrollbar-thumb { background: rgba(200,169,81,0.5); border-radius: 4px; }
+        .currency-header {
+            display: flex; align-items: center; gap: 8px; padding: 12px 14px;
+            font-size: 11px; font-weight: 600; color: #ffffff;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(200,169,81,0.3); background: #1a1714 !important;
+            position: sticky; top: 0; z-index: 1;
+        }
+        .currency-header i { color: var(--gold); font-size: 12px; }
+        .currency-item {
+            display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+            color: #ffffff; font-size: 13px; transition: all 0.15s;
+            border-bottom: 1px solid rgba(200,169,81,0.08); cursor: pointer;
+            background: #1a1714 !important;
+            user-select: none;
+        }
+        .currency-item:hover { background: rgba(214,170,67,0.15); }
+        .currency-item:active { background: rgba(214,170,67,0.25); transform: scale(0.98); }
+        .currency-item:last-child { border-bottom: none; }
+        .currency-item:hover { background: rgba(214,170,67,0.15); color: var(--gold); }
+        .currency-item.active { color: var(--gold); background: rgba(214,170,67,0.18); font-weight: 600; border-left: 3px solid var(--gold); }
+        .currency-item .cur-flag { font-size: 18px; flex-shrink: 0; }
+        .currency-item .cur-info { flex: 1; }
+        .currency-item .cur-code { font-weight: 600; }
+        .currency-item .cur-name { font-size: 11px; color: #a0a0a0; margin-top: 1px; }
+        .currency-item:hover .cur-name { color: rgba(214,170,67,0.7); }
+        .currency-item .cur-check { font-size: 10px; color: var(--gold); opacity: 0; transition: opacity 0.2s; }
+        .currency-item.active .cur-check { opacity: 1; }
+
+        /* Price with currency conversion */
+        .price-converted { display: inline; }
+        .price-original {
+            font-size: 0.75em; opacity: 0.55; margin-left: 4px;
+            font-weight: 400; white-space: nowrap;
+        }
+
+        /* Currency Carousel in Healer Cards */
+        .currency-carousel-wrap {
+            position: relative; overflow: hidden; margin: 8px 0 4px;
+            background: linear-gradient(135deg, rgba(200,169,81,0.06), rgba(200,169,81,0.02));
+            border: 1px solid rgba(200,169,81,0.12); border-radius: 8px;
+            padding: 0; height: 32px;
+        }
+        .currency-carousel-track {
+            display: flex; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+            height: 100%;
+        }
+        .currency-carousel-slide {
+            min-width: 100%; display: flex; align-items: center; justify-content: center;
+            gap: 6px; padding: 0 12px; font-size: 12px; color: #e5e5e5; white-space: nowrap;
+        }
+        .currency-carousel-slide .cc-flag { font-size: 14px; }
+        .currency-carousel-slide .cc-code {
+            font-weight: 700; color: var(--gold); font-size: 10px;
+            background: rgba(200,169,81,0.12); padding: 1px 5px; border-radius: 3px;
+        }
+        .currency-carousel-slide .cc-amount {
+            font-weight: 600; color: #ffffff; font-size: 12px;
+        }
+        .currency-carousel-dots {
+            display: flex; gap: 4px; justify-content: center; margin-top: 6px;
+        }
+        .currency-carousel-dot {
+            width: 5px; height: 5px; border-radius: 50%;
+            background: rgba(200,169,81,0.25); transition: all 0.3s;
+            cursor: pointer;
+        }
+        .currency-carousel-dot.active {
+            background: var(--gold); width: 14px; border-radius: 3px;
+        }
+        .currency-carousel-pause {
+            position: absolute; top: 4px; right: 6px; z-index: 2;
+            background: none; border: none; color: rgba(200,169,81,0.4);
+            font-size: 8px; cursor: pointer; padding: 2px;
+        }
+        .currency-carousel-pause:hover { color: var(--gold); }
+
+        @media (max-width: 640px) {
+            .currency-switcher { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SPLASH SCREEN -->
+    <div class="splash-wrap" id="splash-screen">
+        <div class="splash-bg"></div>
+        <div class="splash-inner">
+            <div class="splash-circle">
+                <img src="{% static 'images/lotus.svg' %}" alt="Bali Healer">
+            </div>
+            <div class="splash-name">BALI HEALER</div>
+            <div class="splash-tag">{% trans "Ancient Healing Wisdom" %}</div>
+            <div class="splash-bar">
+                <div class="splash-fill" id="splash-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LUXURY BATIK BACKGROUND LAYER -->
+    <div class="batik-bg-layer" style="position:fixed;inset:0;z-index:0;opacity:0.07;pointer-events:none;background-image:url('{% static 'images/mandala.svg' %}');background-size:400px;animation:spin-slow 120s linear infinite;"></div>
+    <div style="position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 20% 20%, rgba(200,169,81,0.03) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(200,169,81,0.02) 0%, transparent 50%), linear-gradient(180deg, rgba(5,5,5,0.02) 0%, rgba(5,5,5,0.08) 100%);"></div>
+
+    <!-- GLOBAL BATIK FRAME BORDERS (all pages) -->
+    <div class="global-batik-frame">
+        <div class="global-frame-top"></div>
+        <div class="global-frame-bottom"></div>
+        <div class="global-frame-left"></div>
+        <div class="global-frame-right"></div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header" id="main-header">
+        <div class="header-inner">
+            <a href="{% url 'home' %}" class="nav-brand">
+                <div class="nav-brand-icon"><i class="fas fa-om"></i></div>
+                <span>Bali Healer</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">{% trans "Home" %}</a>
+                <a href="{% url 'healer_list' %}" class="nav-link {% if request.resolver_match.url_name == 'healer_list' %}active{% endif %}">{% trans "Find Healers" %}</a>
+                <a href="{% url 'center_list' %}" class="nav-link {% if request.resolver_match.url_name == 'center_list' %}active{% endif %}">{% trans "Centers" %}</a>
+                <a href="{% url 'speciality_list' %}" class="nav-link {% if request.resolver_match.url_name == 'speciality_list' %}active{% endif %}">{% trans "Specialities" %}</a>
+                <a href="{% url 'booking_track' %}" class="nav-link">{% trans "Consultation" %}</a>
+            </nav>
+
+            <div class="nav-right">
+                {% get_current_language as CURRENT_LANGUAGE %}
+                {% get_available_languages as AVAILABLE_LANGUAGES %}
+                {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+
+                <!-- Currency Selector -->
+                <div class="currency-switcher" id="currencySwitcher">
+                    <button class="currency-switcher-btn">
+                        <span class="currency-flag" id="currentCurrencyFlag">🇮🇩</span>
+                        <span id="currentCurrencyCode">IDR</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="currency-dropdown" id="currencyDropdown">
+                        <div class="currency-header"><i class="fas fa-coins"></i> {% trans "Pilih Mata Uang" %}</div>
+                        <div class="currency-item active" data-currency="IDR" data-symbol="Rp" data-flag="🇮🇩" data-rate="1">
+                            <span class="cur-flag">🇮🇩</span>
+                            <div class="cur-info"><div class="cur-code">IDR</div><div class="cur-name">Indonesian Rupiah</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="USD" data-symbol="$" data-flag="🇺🇸" data-rate="0.000063">
+                            <span class="cur-flag">🇺🇸</span>
+                            <div class="cur-info"><div class="cur-code">USD</div><div class="cur-name">US Dollar</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="EUR" data-symbol="€" data-flag="🇪🇺" data-rate="0.000058">
+                            <span class="cur-flag">🇪🇺</span>
+                            <div class="cur-info"><div class="cur-code">EUR</div><div class="cur-name">Euro</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="GBP" data-symbol="£" data-flag="🇬🇧" data-rate="0.000050">
+                            <span class="cur-flag">🇬🇧</span>
+                            <div class="cur-info"><div class="cur-code">GBP</div><div class="cur-name">British Pound</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="CNY" data-symbol="¥" data-flag="🇨🇳" data-rate="0.00046">
+                            <span class="cur-flag">🇨🇳</span>
+                            <div class="cur-info"><div class="cur-code">CNY</div><div class="cur-name">Chinese Yuan</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="JPY" data-symbol="¥" data-flag="🇯🇵" data-rate="0.0096">
+                            <span class="cur-flag">🇯🇵</span>
+                            <div class="cur-info"><div class="cur-code">JPY</div><div class="cur-name">Japanese Yen</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="KRW" data-symbol="₩" data-flag="🇰🇷" data-rate="0.083">
+                            <span class="cur-flag">🇰🇷</span>
+                            <div class="cur-info"><div class="cur-code">KRW</div><div class="cur-name">South Korean Won</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="TWD" data-symbol="NT$" data-flag="🇹🇼" data-rate="0.0020">
+                            <span class="cur-flag">🇹🇼</span>
+                            <div class="cur-info"><div class="cur-code">TWD</div><div class="cur-name">New Taiwan Dollar</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="SGD" data-symbol="S$" data-flag="🇸🇬" data-rate="0.000085">
+                            <span class="cur-flag">🇸🇬</span>
+                            <div class="cur-info"><div class="cur-code">SGD</div><div class="cur-name">Singapore Dollar</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="THB" data-symbol="฿" data-flag="🇹🇭" data-rate="0.0022">
+                            <span class="cur-flag">🇹🇭</span>
+                            <div class="cur-info"><div class="cur-code">THB</div><div class="cur-name">Thai Baht</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="VND" data-symbol="₫" data-flag="🇻🇳" data-rate="1.56">
+                            <span class="cur-flag">🇻🇳</span>
+                            <div class="cur-info"><div class="cur-code">VND</div><div class="cur-name">Vietnamese Dong</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="INR" data-symbol="₹" data-flag="🇮🇳" data-rate="0.0053">
+                            <span class="cur-flag">🇮🇳</span>
+                            <div class="cur-info"><div class="cur-code">INR</div><div class="cur-name">Indian Rupee</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="RUB" data-symbol="₽" data-flag="🇷🇺" data-rate="0.0058">
+                            <span class="cur-flag">🇷🇺</span>
+                            <div class="cur-info"><div class="cur-code">RUB</div><div class="cur-name">Russian Ruble</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="SAR" data-symbol="﷼" data-flag="🇸🇦" data-rate="0.00024">
+                            <span class="cur-flag">🇸🇦</span>
+                            <div class="cur-info"><div class="cur-code">SAR</div><div class="cur-name">Saudi Riyal</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="TRY" data-symbol="₺" data-flag="🇹🇷" data-rate="0.0021">
+                            <span class="cur-flag">🇹🇷</span>
+                            <div class="cur-info"><div class="cur-code">TRY</div><div class="cur-name">Turkish Lira</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="BRL" data-symbol="R$" data-flag="🇧🇷" data-rate="0.00031">
+                            <span class="cur-flag">🇧🇷</span>
+                            <div class="cur-info"><div class="cur-code">BRL</div><div class="cur-name">Brazilian Real</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="AUD" data-symbol="A$" data-flag="🇦🇺" data-rate="0.000096">
+                            <span class="cur-flag">🇦🇺</span>
+                            <div class="cur-info"><div class="cur-code">AUD</div><div class="cur-name">Australian Dollar</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="CAD" data-symbol="C$" data-flag="🇨🇦" data-rate="0.000086">
+                            <span class="cur-flag">🇨🇦</span>
+                            <div class="cur-info"><div class="cur-code">CAD</div><div class="cur-name">Canadian Dollar</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="MYR" data-symbol="RM" data-flag="🇲🇾" data-rate="0.00029">
+                            <span class="cur-flag">🇲🇾</span>
+                            <div class="cur-info"><div class="cur-code">MYR</div><div class="cur-name">Malaysian Ringgit</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="PHP" data-symbol="₱" data-flag="🇵🇭" data-rate="0.0035">
+                            <span class="cur-flag">🇵🇭</span>
+                            <div class="cur-info"><div class="cur-code">PHP</div><div class="cur-name">Philippine Peso</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="NZD" data-symbol="NZ$" data-flag="🇳🇿" data-rate="0.00010">
+                            <span class="cur-flag">🇳🇿</span>
+                            <div class="cur-info"><div class="cur-code">NZD</div><div class="cur-name">New Zealand Dollar</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="HKD" data-symbol="HK$" data-flag="🇭🇰" data-rate="0.00049">
+                            <span class="cur-flag">🇭🇰</span>
+                            <div class="cur-info"><div class="cur-code">HKD</div><div class="cur-name">Hong Kong Dollar</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                        <div class="currency-item" data-currency="PLN" data-symbol="zł" data-flag="🇵🇱" data-rate="0.00025">
+                            <span class="cur-flag">🇵🇱</span>
+                            <div class="cur-info"><div class="cur-code">PLN</div><div class="cur-name">Polish Zloty</div></div>
+                            <i class="fas fa-check cur-check"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lang-switcher" id="langSwitcher">
+                    <button class="lang-switcher-btn">
+                        <i class="fas fa-globe"></i>
+                        {% for lang in languages %}
+                            {% if lang.code == CURRENT_LANGUAGE %}{{ lang.name_local }}{% endif %}
+                        {% endfor %}
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <!-- STEP 1: Language List -->
+                        <div class="lang-panel lang-panel-main" id="langPanelMain">
+                            <div class="lang-panel-header">
+                                <i class="fas fa-globe"></i>
+                                {% trans "Pilih Bahasa" %}
+                            </div>
+                            {% for lang in languages %}
+                            <div class="lang-item {% if lang.code == CURRENT_LANGUAGE %}active{% endif %}" data-lang="{{ lang.code }}">
+                                <span class="flag">
+                                    {% if lang.code == 'id' %}🇮🇩{% elif lang.code == 'en' %}🇬🇧{% elif lang.code == 'zh-hans' %}🇨🇳{% elif lang.code == 'zh-hant' %}🇹🇼{% elif lang.code == 'ja' %}🇯🇵{% elif lang.code == 'ko' %}🇰🇷{% elif lang.code == 'ru' %}🇷🇺{% elif lang.code == 'ar' %}🇸🇦{% elif lang.code == 'es' %}🇪🇸{% elif lang.code == 'fr' %}🇫🇷{% elif lang.code == 'de' %}🇩🇪{% elif lang.code == 'pt' %}🇧🇷{% elif lang.code == 'it' %}🇮🇹{% elif lang.code == 'nl' %}🇳🇱{% elif lang.code == 'th' %}🇹🇭{% elif lang.code == 'vi' %}🇻🇳{% elif lang.code == 'tr' %}🇹🇷{% elif lang.code == 'pl' %}🇵🇱{% elif lang.code == 'hi' %}🇮🇳{% else %}🌐{% endif %}
+                                </span>
+                                <span class="lang-name">{{ lang.name_local }}</span>
+                                <i class="fas fa-check lang-check"></i>
+                                <button class="lang-region-btn" title="{% trans 'Pilih Region' %}">
+                                    <i class="fas fa-globe"></i>
+                                </button>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- STEP 2: Region List (shown after clicking globe icon) -->
+                        <div class="lang-panel lang-panel-region" id="langPanelRegion" style="display:none">
+                            <div class="lang-panel-header">
+                                <button class="lang-back-btn">
+                                    <i class="fas fa-arrow-left"></i>
+                                </button>
+                                <span id="regionPanelTitle">{% trans "Pilih Region" %}</span>
+                            </div>
+                            <div class="region-list" id="regionList">
+                                <!-- Filled dynamically by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if user.is_authenticated %}
+                <a href="{% if user.profile.is_healer %}{% url 'healer_dashboard' %}{% else %}{% url 'customer_dashboard' %}{% endif %}" class="nav-link"><i class="fas fa-user"></i> {{ user.first_name|default:user.username }}</a>
+                <a href="{% url 'logout' %}" class="btn-find" style="background:transparent;color:var(--stone-400);border:1px solid var(--border)"><i class="fas fa-right-from-bracket"></i></a>
+                {% else %}
+                <a href="{% url 'login' %}" class="nav-link"><i class="fas fa-right-to-bracket"></i> {% trans "Masuk" %}</a>
+                <a href="{% url 'register_choose' %}" class="btn-find"><i class="fas fa-user-plus"></i> {% trans "Daftar" %}</a>
+                {% endif %}
+
+                <button class="nav-mobile-toggle" onclick="document.querySelector('.mobile-nav').classList.toggle('open')">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    {% if messages %}
+    <div style="position:fixed;top:76px;right:16px;z-index:999;max-width:340px">
+        {% for message in messages %}
+        <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:var(--radius);margin-bottom:6px;font-size:12px;background:{% if message.tags == 'success' %}rgba(52,211,153,0.1);color:#34d399;border:1px solid rgba(52,211,153,0.15){% elif message.tags == 'error' %}rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.15){% else %}rgba(96,165,250,0.1);color:#60a5fa;border:1px solid rgba(96,165,250,0.15){% endif %}" onclick="this.style.opacity='0';this.style.transform='translateX(20px)';this.style.transition='all 0.3s';setTimeout(()=>this.remove(),300)">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <main class="batik-main">
+        <div class="main-sacred-left"></div>
+        <div class="main-sacred-right"></div>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="section-divider bali-divider" style="padding-top:0">
+                <div class="bali-divider-ornament"></div>
+                <span class="divider-icon">&#10022; &#10022; &#10022;</span>
+                <div class="bali-divider-ornament"></div>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="{% url 'home' %}" class="nav-brand" style="font-size:16px">
+                        <div class="nav-brand-icon"><i class="fas fa-om"></i></div>
+                        <span>Bali Healer</span>
+                    </a>
+                    <p>{% trans "Find and book trusted healing experiences across Bali. Connect with verified healers for spiritual wellness and ancient Balinese healing traditions." %}</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>{% trans "Discover" %}</h4>
+                    <a href="{% url 'healer_list' %}">{% trans "Find Healers" %}</a>
+                    <a href="{% url 'center_list' %}">{% trans "Healing Centers" %}</a>
+                    <a href="{% url 'speciality_list' %}">{% trans "Healing Specialities" %}</a>
+                    <a href="{% url 'booking_track' %}">{% trans "Online Consultation" %}</a>
+                </div>
+                <div class="footer-col">
+                    <h4>{% trans "Popular Areas" %}</h4>
+                    <a href="{% url 'healer_list' %}?q=Ubud">Ubud</a>
+                    <a href="{% url 'healer_list' %}?q=Canggu">Canggu</a>
+                    <a href="{% url 'healer_list' %}?q=Sanur">Sanur</a>
+                    <a href="{% url 'healer_list' %}?q=Uluwatu">Uluwatu</a>
+                </div>
+                <div class="footer-col">
+                    <h4>{% trans "Support" %}</h4>
+                    <a href="#">{% trans "About Bali Healer" %}</a>
+                    <a href="#">{% trans "Contact Us" %}</a>
+                    <a href="#">{% trans "Become a Provider" %}</a>
+                </div>
+            </div>
+            <div class="footer-newsletter">
+                <h4><i class="fas fa-envelope" style="color:var(--gold)"></i> {% trans "Stay Updated" %}</h4>
+                <div class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="{% trans 'Enter your email...' %}">
+                    <button class="newsletter-btn">{% trans "Subscribe" %}</button>
+                </div>
+            </div>
+            <!-- Batik Ornamental Footer Divider -->
+            <div style="position:relative;margin:24px 0 0;text-align:center">
+                <div style="height:2px;background:linear-gradient(90deg,transparent,rgba(200,169,81,0.25),rgba(200,169,81,0.45),rgba(200,169,81,0.25),transparent)"></div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg-card);padding:0 20px">
+                    <span style="color:rgba(200,169,81,0.5);font-size:10px;letter-spacing:8px">&#10022; &#10022; &#10022;</span>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 Bali Healer. {% trans "All rights reserved." %}</span>
+                <a href="#">{% trans "Privacy Policy" %}</a>
+                <a href="#">{% trans "Terms of Service" %}</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="mobile-nav">
+        <a href="{% url 'home' %}" class="mobile-nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+            <i class="fas fa-house"></i>
+            <span>{% trans "Home" %}</span>
+        </a>
+        <a href="{% url 'healer_list' %}" class="mobile-nav-item {% if request.resolver_match.url_name == 'healer_list' %}active{% endif %}">
+            <i class="fas fa-magnifying-glass"></i>
+            <span>{% trans "Search" %}</span>
+        </a>
+        <a href="{% url 'center_list' %}" class="mobile-nav-item {% if request.resolver_match.url_name == 'center_list' %}active{% endif %}">
+            <i class="fas fa-spa"></i>
+            <span>{% trans "Centers" %}</span>
+        </a>
+        <a href="{% url 'booking_track' %}" class="mobile-nav-item">
+            <i class="fas fa-comment-dots"></i>
+            <span>{% trans "Consult" %}</span>
+        </a>
+        <a href="{% if user.is_authenticated %}{% if user.profile.is_healer %}{% url 'healer_dashboard' %}{% else %}{% url 'customer_dashboard' %}{% endif %}{% else %}{% url 'login' %}{% endif %}" class="mobile-nav-item">
+            {% if user.is_authenticated %}
+            <i class="fas fa-user"></i>
+            <span>{{ user.first_name|truncatechars:8|default:_("Account") }}</span>
+            {% else %}
+            <i class="fas fa-right-to-bracket"></i>
+            <span>{% trans "Login" %}</span>
+            {% endif %}
+        </a>
+    </nav>
+
+    <!-- FLOATING CHAT -->
+    <button class="chat-fab">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <script src="{% static 'js/app.js' %}?v=5"></script>
+    <script>
+    /* ═══════════════════════════════════════════════
+       UNIFIED EVENT DELEGATION - WORKS ON ALL PAGES
+       ═══════════════════════════════════════════════ */
+    document.addEventListener('DOMContentLoaded', function() {
+
+        /* ─── DROPDOWN POSITIONING (fixed) ─── */
+        function positionDropdown(dd, btn) {
+            if (!dd || !btn) return;
+            var r = btn.getBoundingClientRect();
+            var ddWidth = dd.offsetWidth || 300;
+            var ddHeight = dd.offsetHeight || 400;
+            var gap = 8;
+            var top = r.bottom + gap;
+            var left = r.left;
+            if (left + ddWidth > window.innerWidth - 16) {
+                left = window.innerWidth - ddWidth - 16;
+            }
+            if (left < 16) left = 16;
+            if (top + ddHeight > window.innerHeight - 16) {
+                top = r.top - ddHeight - gap;
+            }
+            dd.style.top = top + 'px';
+            dd.style.left = left + 'px';
+            dd.style.right = 'auto';
+        }
+
+        /* ─── SPLASH SCREEN DISMISS ─── */
+        (function() {
+            var splash = document.getElementById('splash-screen');
+            var fill = document.getElementById('splash-fill');
+            if (!splash) return;
+            var pct = 0;
+            var iv = setInterval(function() {
+                pct += Math.random() * 15 + 5;
+                if (pct > 100) pct = 100;
+                if (fill) fill.style.width = pct + '%';
+                if (pct >= 100) {
+                    clearInterval(iv);
+                    setTimeout(function() {
+                        splash.classList.add('hide');
+                        setTimeout(function() { splash.remove(); }, 600);
+                    }, 300);
+                }
+            }, 120);
+        })();
+
+        /* ─── LANGUAGE → REGION MAP ─── */
+        var languageRegions = {
+            'id': { name: 'Indonesia', regions: [
+                { flag: '\ud83c\uddee\ud83c\uddf9', name: 'Indonesia', sub: 'Southeast Asia', langCode: 'id' },
+                { flag: '\ud83c\uddf2\ud83c\uddfe', name: 'Malaysia', sub: 'Southeast Asia', langCode: 'id' },
+                { flag: '\ud83c\udde7\ud83c\uddf3', name: 'Brunei', sub: 'Southeast Asia', langCode: 'id' },
+                { flag: '\ud83c\uddf9\ud83c\uddfc', name: 'Timor-Leste', sub: 'Southeast Asia', langCode: 'id' },
+                { flag: '\ud83c\uddf8\ud83c\uddec', name: 'Singapore', sub: 'Southeast Asia', langCode: 'id' }
+            ]},
+            'en': { name: 'English', regions: [
+                { flag: '\ud83c\uddec\ud83c\udde7', name: 'United Kingdom', sub: 'Europe', langCode: 'en' },
+                { flag: '\ud83c\uddfa\ud83c\uddf8', name: 'United States', sub: 'North America', langCode: 'en' },
+                { flag: '\ud83c\udde6\ud83c\uddfa', name: 'Australia', sub: 'Oceania', langCode: 'en' },
+                { flag: '\ud83c\udde8\ud83c\udde6', name: 'Canada', sub: 'North America', langCode: 'en' },
+                { flag: '\ud83c\uddf3\ud83c\uddff', name: 'New Zealand', sub: 'Oceania', langCode: 'en' },
+                { flag: '\ud83c\uddee\ud83c\uddea', name: 'Ireland', sub: 'Europe', langCode: 'en' },
+                { flag: '\ud83c\uddff\ud83c\udde6', name: 'South Africa', sub: 'Africa', langCode: 'en' }
+            ]},
+            'zh-hans': { name: '\u7b80\u4f53\u4e2d\u6587', regions: [
+                { flag: '\ud83c\udde8\ud83c\uddf3', name: '\u4e2d\u56fd\u5927\u9646', sub: 'China Mainland', langCode: 'zh-hans' },
+                { flag: '\ud83c\uddf8\ud83c\uddec', name: '\u65b0\u52a0\u5761', sub: 'Southeast Asia', langCode: 'zh-hans' }
+            ]},
+            'zh-hant': { name: '\u7e41\u9ad4\u4e2d\u6587', regions: [
+                { flag: '\ud83c\uddf9\ud83c\uddfc', name: '\u53f0\u7063', sub: 'Taiwan', langCode: 'zh-hant' },
+                { flag: '\ud83c\udded\ud83c\uddf0', name: '\u9999\u6e2f', sub: 'Hong Kong', langCode: 'zh-hant' }
+            ]},
+            'ja': { name: '\u65e5\u672c\u8a9e', regions: [
+                { flag: '\ud83c\uddef\ud83c\uddf5', name: '\u65e5\u672c', sub: 'Japan', langCode: 'ja' }
+            ]},
+            'ko': { name: '\ud55c\uad6d\uc5b4', regions: [
+                { flag: '\ud83c\uddf0\ud83c\uddf7', name: '\ub300\ud55c\ubbfc\uad6d', sub: 'South Korea', langCode: 'ko' }
+            ]},
+            'ru': { name: '\u0420\u0443\u0441\u0441\u043a\u0438\u0439', regions: [
+                { flag: '\ud83c\uddf7\ud83c\uddfa', name: '\u0420\u043e\u0441\u0441\u0438\u044f', sub: 'Russia', langCode: 'ru' }
+            ]},
+            'ar': { name: '\u0627\u0644\u0639\u0631\u0628\u064a\u0629', regions: [
+                { flag: '\ud83c\uddf8\ud83c\udde6', name: '\u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629', sub: 'Saudi Arabia', langCode: 'ar' },
+                { flag: '\ud83c\udde6\ud83c\uddea', name: '\u0627\u0644\u0625\u0645\u0627\u0631\u0627\u062a', sub: 'UAE', langCode: 'ar' }
+            ]},
+            'es': { name: 'Espa\u00f1ol', regions: [
+                { flag: '\ud83c\uddea\ud83c\uddf8', name: 'Espa\u00f1a', sub: 'Spain', langCode: 'es' },
+                { flag: '\ud83c\uddf2\ud83c\uddfd', name: 'M\u00e9xico', sub: 'Mexico', langCode: 'es' }
+            ]},
+            'fr': { name: 'Fran\u00e7ais', regions: [
+                { flag: '\ud83c\uddeb\ud83c\uddf7', name: 'France', sub: 'Europe', langCode: 'fr' }
+            ]},
+            'de': { name: 'Deutsch', regions: [
+                { flag: '\ud83c\udde9\ud83c\uddea', name: 'Deutschland', sub: 'Germany', langCode: 'de' }
+            ]},
+            'pt': { name: 'Portugu\u00eas', regions: [
+                { flag: '\ud83c\udde7\ud83c\uddf7', name: 'Brasil', sub: 'South America', langCode: 'pt' }
+            ]},
+            'it': { name: 'Italiano', regions: [
+                { flag: '\ud83c\uddee\ud83c\uddf9', name: 'Italia', sub: 'Italy', langCode: 'it' }
+            ]},
+            'nl': { name: 'Nederlands', regions: [
+                { flag: '\ud83c\uddf3\ud83c\uddf1', name: 'Nederland', sub: 'Netherlands', langCode: 'nl' }
+            ]},
+            'th': { name: '\u0e44\u0e17\u0e22', regions: [
+                { flag: '\ud83c\uddf9\ud83c\udded', name: '\u0e23\u0e32\u0e22\u0e44\u0e17\u0e22', sub: 'Thailand', langCode: 'th' }
+            ]},
+            'vi': { name: 'Ti\u1ebfng Vi\u1ec7t', regions: [
+                { flag: '\ud83c\uddfb\ud83c\uddf3', name: 'Vi\u1ec7t Nam', sub: 'Vietnam', langCode: 'vi' }
+            ]},
+            'tr': { name: 'T\u00fcrk\u00e7e', regions: [
+                { flag: '\ud83c\uddf9\ud83c\uddf7', name: 'T\u00fcrkiye', sub: 'Turkey', langCode: 'tr' }
+            ]},
+            'pl': { name: 'Polski', regions: [
+                { flag: '\ud83c\uddf5\ud83c\uddf1', name: 'Polska', sub: 'Poland', langCode: 'pl' }
+            ]},
+            'hi': { name: '\u0939\u093f\u0928\u094d\u0926\u0940', regions: [
+                { flag: '\ud83c\uddee\ud83c\uddf3', name: '\u092d\u093e\u0930\u0924', sub: 'India', langCode: 'hi' }
+            ]}
+        };
+
+        /* ─── CURRENCY DATA ─── */
+        var CURRENCY_DATA = {
+            'IDR': { symbol: 'Rp',  flag: '\ud83c\uddee\ud83c\uddf9', decimals: 0, rate: 1 },
+            'USD': { symbol: '$',   flag: '\ud83c\uddfa\ud83c\uddf8', decimals: 2, rate: 0.000063 },
+            'EUR': { symbol: '\u20ac', flag: '\ud83c\uddea\ud83c\uddfa', decimals: 2, rate: 0.000058 },
+            'GBP': { symbol: '\u00a3', flag: '\ud83c\uddec\ud83c\udde7', decimals: 2, rate: 0.000050 },
+            'CNY': { symbol: '\u00a5', flag: '\ud83c\udde8\ud83c\uddf3', decimals: 0, rate: 0.00046 },
+            'JPY': { symbol: '\u00a5', flag: '\ud83c\uddef\ud83c\uddf5', decimals: 0, rate: 0.0096 },
+            'KRW': { symbol: '\u20a9', flag: '\ud83c\uddf0\ud83c\uddf7', decimals: 0, rate: 0.083 },
+            'TWD': { symbol: 'NT$', flag: '\ud83c\uddf9\ud83c\uddfc', decimals: 0, rate: 0.0020 },
+            'SGD': { symbol: 'S$',  flag: '\ud83c\uddf8\ud83c\uddec', decimals: 2, rate: 0.000085 },
+            'THB': { symbol: '\u0e3f', flag: '\ud83c\uddf9\ud83c\udded', decimals: 2, rate: 0.0022 },
+            'VND': { symbol: '\u20ab', flag: '\ud83c\uddfb\ud83c\uddf3', decimals: 0, rate: 1.56 },
+            'INR': { symbol: '\u20b9', flag: '\ud83c\uddee\ud83c\uddf3', decimals: 0, rate: 0.0053 },
+            'AUD': { symbol: 'A$',  flag: '\ud83c\udde6\ud83c\uddfa', decimals: 2, rate: 0.000096 },
+            'CAD': { symbol: 'C$',  flag: '\ud83c\udde8\ud83c\udde6', decimals: 2, rate: 0.000086 },
+            'SAR': { symbol: '\ufdfc', flag: '\ud83c\uddf8\ud83c\udde6', decimals: 2, rate: 0.00024 },
+            'NZD': { symbol: 'NZ$', flag: '\ud83c\uddf3\ud83c\uddff', decimals: 2, rate: 0.00010 },
+            'MYR': { symbol: 'RM',  flag: '\ud83c\uddf2\ud83c\uddfe', decimals: 2, rate: 0.00029 },
+            'PHP': { symbol: '\u20b1', flag: '\ud83c\uddf5\ud83c\uddfd', decimals: 2, rate: 0.0035 },
+            'PLN': { symbol: 'z\u0142', flag: '\ud83c\uddf5\ud83c\uddf1', decimals: 2, rate: 0.00025 }
+        };
+
+        function formatPrice(amount, currency) {
+            var c = CURRENCY_DATA[currency] || CURRENCY_DATA['IDR'];
+            var val = c.decimals === 0 ? Math.round(amount).toLocaleString('en-US') :
+                amount.toLocaleString('en-US', { minimumFractionDigits: c.decimals, maximumFractionDigits: c.decimals });
+            return c.symbol + ' ' + val;
+        }
+
+        function convertFromIDR(idrAmount, toCurrency) {
+            var c = CURRENCY_DATA[toCurrency] || CURRENCY_DATA['IDR'];
+            return idrAmount * c.rate;
+        }
+
+        function applyCurrencyToPrices(currency) {
+            document.querySelectorAll('[data-price-idr]').forEach(function(el) {
+                var idr = parseFloat(el.getAttribute('data-price-idr'));
+                if (isNaN(idr)) return;
+                var converted = convertFromIDR(idr, currency);
+                var formatted = formatPrice(converted, currency);
+                if (currency === 'IDR') {
+                    el.textContent = formatted;
+                } else {
+                    el.innerHTML = formatted + '<span class="price-original">(Rp ' + Math.round(idr).toLocaleString('en-US') + ')</span>';
+                }
+            });
+        }
+
+        function updateCurrencyCarousel(currency) {
+            document.querySelectorAll('.currency-carousel-wrap').forEach(function(wrap) {
+                var idr = parseFloat(wrap.getAttribute('data-price-idr'));
+                if (isNaN(idr)) return;
+                var c = CURRENCY_DATA[currency] || CURRENCY_DATA['IDR'];
+                var converted = idr * c.rate;
+                var val = c.decimals === 0 ? Math.round(converted).toLocaleString('en-US') :
+                    converted.toLocaleString('en-US', { minimumFractionDigits: c.decimals, maximumFractionDigits: c.decimals });
+                var mainSlide = wrap.querySelector('.currency-carousel-slide:first-child .cc-amount');
+                if (mainSlide) mainSlide.textContent = c.symbol + ' ' + val;
+                var codeLabel = wrap.querySelector('.currency-carousel-slide:first-child .cc-code');
+                if (codeLabel) codeLabel.textContent = currency;
+                var flagLabel = wrap.querySelector('.currency-carousel-slide:first-child .cc-flag');
+                if (flagLabel) flagLabel.textContent = c.flag;
+            });
+        }
+
+        function switchLanguage(langCode) {
+            localStorage.setItem('bh_language', langCode);
+            var currentPath = window.location.pathname;
+            var parts = currentPath.split('/');
+            if (parts.length > 1) parts[1] = langCode;
+            window.location.href = parts.join('/');
+        }
+
+        function switchCurrency(currency, flag) {
+            localStorage.setItem('bh_currency', currency);
+            var btn = document.getElementById('currencySwitcher');
+            if (btn) {
+                var f = btn.querySelector('#currentCurrencyFlag');
+                var c = btn.querySelector('#currentCurrencyCode');
+                if (f) f.textContent = flag;
+                if (c) c.textContent = currency;
+            }
+            document.querySelectorAll('.currency-item').forEach(function(item) {
+                item.classList.toggle('active', item.getAttribute('data-currency') === currency);
+            });
+            applyCurrencyToPrices(currency);
+            updateCurrencyCarousel(currency);
+            var dd = document.getElementById('currencyDropdown');
+            if (dd) dd.classList.remove('open');
+        }
+
+        function closeAllDropdowns() {
+            var ld = document.getElementById('langDropdown');
+            var cd = document.getElementById('currencyDropdown');
+            var h = document.getElementById('main-header');
+            if (ld) { ld.classList.remove('open'); }
+            if (cd) { cd.classList.remove('open'); }
+            if (h) { h.style.background = ''; h.style.backdropFilter = ''; h.style.webkitBackdropFilter = ''; }
+            showLangPanel();
+        }
+
+        function showLangPanel() {
+            var pm = document.getElementById('langPanelMain');
+            var pr = document.getElementById('langPanelRegion');
+            if (pm && pr) {
+                pr.style.display = 'none';
+                pr.classList.remove('slide-in');
+                pm.style.display = 'block';
+                pm.style.animation = 'panelSlideIn 0.3s ease';
+                setTimeout(function() { pm.style.animation = ''; }, 300);
+            }
+        }
+
+        /* ═══════════════════════════════════════════
+           SINGLE CLICK HANDLER FOR EVERYTHING
+           ═══════════════════════════════════════════ */
+        document.addEventListener('click', function(e) {
+            var target = e.target;
+
+            /* ── Toggle Language Dropdown ── */
+            if (target.closest('.lang-switcher-btn')) {
+                e.preventDefault();
+                var ld = document.getElementById('langDropdown');
+                var cd = document.getElementById('currencyDropdown');
+                var h = document.getElementById('main-header');
+                var btn = target.closest('.lang-switcher-btn');
+                if (cd) cd.classList.remove('open');
+                if (ld) {
+                    var isOpen = ld.classList.contains('open');
+                    ld.classList.toggle('open');
+                    if (!isOpen) {
+                        positionDropdown(ld, btn);
+                        if (h) { h.style.background = '#1a1714'; h.style.backdropFilter = 'none'; h.style.webkitBackdropFilter = 'none'; }
+                    } else {
+                        if (h) { h.style.background = ''; h.style.backdropFilter = ''; h.style.webkitBackdropFilter = ''; }
+                    }
+                }
+                return;
+            }
+
+            /* ── Toggle Currency Dropdown ── */
+            if (target.closest('.currency-switcher-btn')) {
+                e.preventDefault();
+                var ld2 = document.getElementById('langDropdown');
+                var cd2 = document.getElementById('currencyDropdown');
+                var h2 = document.getElementById('main-header');
+                var btn2 = target.closest('.currency-switcher-btn');
+                if (ld2) { ld2.classList.remove('open'); if (h2) { h2.style.background = ''; h2.style.backdropFilter = ''; h2.style.webkitBackdropFilter = ''; } }
+                if (cd2) {
+                    var isOpen2 = cd2.classList.contains('open');
+                    cd2.classList.toggle('open');
+                    if (!isOpen2) positionDropdown(cd2, btn2);
+                }
+                return;
+            }
+
+            /* ── Click Currency Item ── */
+            var currencyItem = target.closest('.currency-item');
+            if (currencyItem) {
+                var cur = currencyItem.getAttribute('data-currency');
+                var fl = currencyItem.getAttribute('data-flag');
+                if (cur) switchCurrency(cur, fl);
+                return;
+            }
+
+            /* ── Click Language Item ── */
+            var langItem = target.closest('.lang-item');
+            if (langItem && !target.closest('.lang-region-btn')) {
+                var lang = langItem.getAttribute('data-lang');
+                if (lang) switchLanguage(lang);
+                return;
+            }
+
+            /* ── Click Region Button ── */
+            var regionBtn = target.closest('.lang-region-btn');
+            if (regionBtn) {
+                var langItemParent = regionBtn.closest('.lang-item');
+                if (langItemParent) {
+                    var langCode = langItemParent.getAttribute('data-lang');
+                    var langData = languageRegions[langCode];
+                    if (!langData) { switchLanguage(langCode); return; }
+                    var pm = document.getElementById('langPanelMain');
+                    var pr = document.getElementById('langPanelRegion');
+                    var rl = document.getElementById('regionList');
+                    var tt = document.getElementById('regionPanelTitle');
+                    if (pm && pr && rl && tt) {
+                        var html = '';
+                        langData.regions.forEach(function(region) {
+                            html += '<div class="region-item" data-lang="' + region.langCode + '" style="cursor:pointer">';
+                            html += '<span class="region-flag">' + region.flag + '</span>';
+                            html += '<div class="region-info"><div class="region-name">' + region.name + '</div><div class="region-sub">' + region.sub + '</div></div>';
+                            html += '<i class="fas fa-check region-check"></i></div>';
+                        });
+                        rl.innerHTML = html;
+                        tt.textContent = langData.name + ' \u2014 Region';
+                        pm.style.display = 'none';
+                        pr.style.display = 'block';
+                        pr.classList.remove('slide-in');
+                        void pr.offsetWidth;
+                        pr.classList.add('slide-in');
+                    }
+                }
+                return;
+            }
+
+            /* ── Click Region Item ── */
+            var regionItem = target.closest('.region-item');
+            if (regionItem) {
+                var rlCode = regionItem.getAttribute('data-lang');
+                document.querySelectorAll('.region-item').forEach(function(r) { r.classList.remove('selected'); });
+                regionItem.classList.add('selected');
+                setTimeout(function() { switchLanguage(rlCode); }, 300);
+                return;
+            }
+
+            /* ── Click Back Button ── */
+            if (target.closest('.lang-back-btn')) {
+                showLangPanel();
+                return;
+            }
+
+            /* ── Click Outside Closes All ── */
+            if (!target.closest('.lang-switcher') && !target.closest('.currency-switcher')) {
+                closeAllDropdowns();
+            }
+        });
+
+        /* ─── RESTORE SAVED CURRENCY ─── */
+        (function() {
+            var saved = localStorage.getItem('bh_currency') || 'IDR';
+            var savedItem = document.querySelector('.currency-item[data-currency="' + saved + '"]');
+            if (savedItem) {
+                var f = document.getElementById('currentCurrencyFlag');
+                var c = document.getElementById('currentCurrencyCode');
+                if (f) f.textContent = savedItem.getAttribute('data-flag');
+                if (c) c.textContent = saved;
+                document.querySelectorAll('.currency-item').forEach(function(item) { item.classList.remove('active'); });
+                savedItem.classList.add('active');
+            }
+            setTimeout(function() { applyCurrencyToPrices(saved); updateCurrencyCarousel(saved); }, 100);
+        })();
+
+        /* ─── RESTORE SAVED LANGUAGE ─── */
+        (function() {
+            var savedLang = localStorage.getItem('bh_language');
+            var currentPath = window.location.pathname;
+            var parts = currentPath.split('/');
+            var currentLang = parts[1];
+            if (savedLang && currentLang && currentLang !== savedLang) {
+                parts[1] = savedLang;
+                window.location.href = parts.join('/');
+                return;
+            }
+            var activeLang = savedLang || currentLang;
+            document.querySelectorAll('.lang-item').forEach(function(item) {
+                item.classList.toggle('active', item.getAttribute('data-lang') === activeLang);
+            });
+        })();
+
+        /* ─── CURRENCY CAROUSEL INIT ─── */
+        (function() {
+            document.querySelectorAll('.currency-carousel-wrap').forEach(function(wrap) {
+                var idr = parseFloat(wrap.getAttribute('data-price-idr'));
+                if (isNaN(idr)) return;
+                wrap.querySelectorAll('[data-convert]').forEach(function(slide) {
+                    var cur = slide.getAttribute('data-convert');
+                    if (CURRENCY_DATA[cur]) {
+                        var c = CURRENCY_DATA[cur];
+                        var converted = idr * c.rate;
+                        slide.textContent = c.symbol + ' ' + (c.decimals === 0 ? Math.round(converted).toLocaleString('en-US') : converted.toLocaleString('en-US', { minimumFractionDigits: c.decimals, maximumFractionDigits: c.decimals }));
+                    }
+                });
+                var track = wrap.querySelector('.currency-carousel-track');
+                var allSlides = wrap.querySelectorAll('.currency-carousel-slide');
+                var dotsWrap = wrap.querySelector('.currency-carousel-dots');
+                var total = allSlides.length;
+                var current = 0;
+                var interval = null;
+                var paused = false;
+                allSlides.forEach(function(_, i) {
+                    var dot = document.createElement('div');
+                    dot.className = 'currency-carousel-dot' + (i === 0 ? ' active' : '');
+                    dot.addEventListener('click', function() { goTo(i); startTimer(); });
+                    dotsWrap.appendChild(dot);
+                });
+                function goTo(idx) {
+                    current = idx;
+                    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+                    dotsWrap.querySelectorAll('.currency-carousel-dot').forEach(function(d, i) { d.classList.toggle('active', i === current); });
+                }
+                function startTimer() {
+                    if (interval) clearInterval(interval);
+                    interval = setInterval(function() { if (!paused) goTo((current + 1) % total); }, 2200);
+                }
+                wrap.addEventListener('mouseenter', function() { paused = true; });
+                wrap.addEventListener('mouseleave', function() { paused = false; startTimer(); });
+                var touchStartX = 0;
+                wrap.addEventListener('touchstart', function(ev) { touchStartX = ev.touches[0].clientX; paused = true; }, { passive: true });
+                wrap.addEventListener('touchend', function(ev) {
+                    var diff = touchStartX - ev.changedTouches[0].clientX;
+                    if (Math.abs(diff) > 30) { goTo(diff > 0 ? (current + 1) % total : (current - 1 + total) % total); startTimer(); }
+                    paused = false;
+                }, { passive: true });
+                startTimer();
+            });
+        })();
+
+        /* ─── REPOSITION DROPDOWNS ON SCROLL/RESIZE ─── */
+        function repositionOpenDropdowns() {
+            var ld = document.getElementById('langDropdown');
+            var cd = document.getElementById('currencyDropdown');
+            if (ld && ld.classList.contains('open')) {
+                var lb = document.querySelector('.lang-switcher-btn');
+                positionDropdown(ld, lb);
+            }
+            if (cd && cd.classList.contains('open')) {
+                var cb = document.querySelector('.currency-switcher-btn');
+                positionDropdown(cd, cb);
+            }
+        }
+        window.addEventListener('scroll', repositionOpenDropdowns, { passive: true });
+        window.addEventListener('resize', repositionOpenDropdowns, { passive: true });
+
+    }); /* end DOMContentLoaded */
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load currency_tags %}
+
+{% block title %}{% trans "Chat" %} — {% if chat_role == 'healer' %}{{ room.customer.get_full_name|default:room.customer.username }}{% else %}{{ healer.name }}{% endif %}{% endblock %}
+
+{% block content %}
+<div class="section" style="padding-top:10px">
+    <div style="max-width:960px;margin:0 auto">
+        <a href="{% if chat_role == 'healer' %}{% url 'healer_chat_list' %}{% else %}{% url 'customer_chat_list' %}{% endif %}" class="chat-back-link">
+            <i class="fas fa-arrow-left"></i> {% trans "Kembali" %}
+        </a>
+
+        <div class="chat-container">
+            <!-- Header -->
+            <div class="chat-header">
+                {% if chat_role == 'customer' %}
+                <div class="chat-avatar" style="background:linear-gradient(135deg,var(--gold),var(--gold-dark))">
+                    {{ healer.name|truncatechars:1 }}
+                </div>
+                <div class="chat-header-info">
+                    <strong>{{ healer.name }}</strong>
+                    <span><i class="fas fa-star" style="color:var(--gold);font-size:9px;margin-right:2px"></i>{{ healer.specializations|truncatewords:3 }}</span>
+                </div>
+                <div class="chat-header-actions">
+                    <a href="{% url 'healer_detail' healer.slug %}" class="chat-action-btn" title="{% trans 'Lihat Profil' %}"><i class="fas fa-user"></i></a>
+                    <a href="{% url 'create_booking' healer.id %}" class="chat-action-btn gold" title="{% trans 'Booking' %}"><i class="fas fa-calendar-plus"></i></a>
+                </div>
+                {% else %}
+                <div class="chat-avatar" style="background:linear-gradient(135deg,var(--jade),var(--jade-light))">
+                    {{ room.customer.get_full_name|default:room.customer.username|truncatechars:1 }}
+                </div>
+                <div class="chat-header-info">
+                    <strong>{{ room.customer.get_full_name|default:room.customer.username }}</strong>
+                    <span><i class="fas fa-envelope" style="font-size:9px;margin-right:2px"></i>{{ room.customer.email }}</span>
+                </div>
+                <div class="chat-header-actions">
+                    {% if customer_bookings %}
+                    <span class="chat-badge">{{ customer_bookings|length }} {% trans "booking" %}</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="chat-body">
+                <!-- Messages -->
+                <div class="chat-messages" id="chat-messages">
+                    {% if messages %}
+                    {% regroup messages by created_at.date as date_groups %}
+                    {% for date_group in date_groups %}
+                    <div class="chat-date-divider">
+                        <span>{{ date_group.grouper|date:"d M Y" }}</span>
+                    </div>
+                    {% for msg in date_group.list %}
+                    <div class="chat-msg-row {% if msg.sender == request.user %}mine{% else %}theirs{% endif %}">
+                        {% if msg.sender != request.user %}
+                        <div class="chat-msg-avatar" style="background:{% if chat_role == 'customer' %}linear-gradient(135deg,var(--gold),var(--gold-dark)){% else %}linear-gradient(135deg,var(--jade),var(--jade-light)){% endif %}">
+                            {% if chat_role == 'customer' %}{{ healer.name|truncatechars:1 }}{% else %}{{ room.customer.get_full_name|default:room.customer.username|truncatechars:1 }}{% endif %}
+                        </div>
+                        {% endif %}
+                        <div class="chat-bubble {% if msg.sender == request.user %}mine{% else %}theirs{% endif %}">
+                            <p>{{ msg.message }}</p>
+                            <span class="chat-time">{{ msg.created_at|time:"H:i" }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% else %}
+                    <div class="chat-empty">
+                        <i class="fas fa-comments"></i>
+                        <p>{% trans "Mulai percakapan..." %}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Sidebar -->
+                <div class="chat-sidebar" id="chat-sidebar">
+                    {% if chat_role == 'customer' %}
+                    <!-- Customer sees: Healer profile + services -->
+                    <div class="sidebar-profile">
+                        <div class="sidebar-avatar" style="background:linear-gradient(135deg,var(--gold),var(--gold-dark))">
+                            {{ healer.name|truncatechars:1 }}
+                        </div>
+                        <strong>{{ healer.name }}</strong>
+                        <span class="sidebar-spec">{{ healer.specializations|truncatewords:4 }}</span>
+                        <div class="sidebar-rating">
+                            {% for i in "12345" %}{% if forloop.counter <= healer.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}
+                            <span>{{ healer.rating }}</span>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'create_booking' healer.id %}" class="sidebar-book-btn">
+                        <i class="fas fa-calendar-plus"></i> {% trans "Booking Sekarang" %}
+                    </a>
+
+                    {% if services %}
+                    <div class="sidebar-section">
+                        <h4>{% trans "Layanan" %}</h4>
+                        {% for svc in services %}
+                        <div class="sidebar-service">
+                            <div>
+                                <strong>{{ svc.name }}</strong>
+                                <span>{{ svc.duration_minutes }} {% trans "menit" %}</span>
+                            </div>
+                            <span class="sidebar-price" data-price-idr="{{ svc.price_idr|floatformat:0 }}">{{ svc.price_idr|convert_price:LANGUAGE_CODE }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="sidebar-section">
+                        <h4>{% trans "Info" %}</h4>
+                        <div class="sidebar-info-row">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ healer.address|default:"-"|truncatewords:5 }}</span>
+                        </div>
+                        <div class="sidebar-info-row">
+                            <i class="fas fa-briefcase"></i>
+                            <span>{{ healer.experience_years }} {% trans "tahun pengalaman" %}</span>
+                        </div>
+                    </div>
+
+                    {% else %}
+                    <!-- Healer sees: Customer profile + their bookings -->
+                    <div class="sidebar-profile">
+                        <div class="sidebar-avatar" style="background:linear-gradient(135deg,var(--jade),var(--jade-light))">
+                            {{ room.customer.get_full_name|default:room.customer.username|truncatechars:1 }}
+                        </div>
+                        <strong>{{ room.customer.get_full_name|default:room.customer.username }}</strong>
+                        <span class="sidebar-spec">{{ room.customer.email }}</span>
+                    </div>
+
+                    {% if customer_bookings %}
+                    <div class="sidebar-section">
+                        <h4>{% trans "Booking dari Pelanggan Ini" %}</h4>
+                        {% for b in customer_bookings %}
+                        <a href="{% url 'booking_detail' b.booking_code %}" class="sidebar-booking">
+                            <div class="sidebar-booking-header">
+                                <strong>{{ b.booking_code }}</strong>
+                                <span class="status-badge status-{{ b.status }}" style="font-size:9px">{{ b.get_status_display }}</span>
+                            </div>
+                            <span>{{ b.service_type }}</span>
+                            <span>{{ b.booking_date|date:"d M Y" }} {{ b.booking_time|time:"H:i" }}</span>
+                            <span class="sidebar-price">{{ b.total_price_idr|convert_price:LANGUAGE_CODE }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="sidebar-section">
+                        <p style="font-size:12px;color:var(--stone-500);text-align:center">{% trans "Belum ada booking dari pelanggan ini." %}</p>
+                    </div>
+                    {% endif %}
+
+                    <div class="sidebar-section">
+                        <h4>{% trans "Aksi" %}</h4>
+                        <a href="{% url 'customer_chat_list' %}" class="sidebar-action-btn">
+                            <i class="fas fa-comments"></i> {% trans "Lihat Semua Chat" %}
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Input -->
+            <form method="post" action="{% if chat_role == 'healer' %}{% url 'healer_chat_send' room.id %}{% else %}{% url 'chat_send' room.id %}{% endif %}" class="chat-input-form">
+                {% csrf_token %}
+                <input type="text" name="message" placeholder="{% trans 'Ketik pesan...' %}" required autocomplete="off" id="chat-input">
+                <button type="submit" title="{% trans 'Kirim' %}"><i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+(function(){
+    var el = document.getElementById('chat-messages');
+    if(el) el.scrollTop = el.scrollHeight;
+
+    if(window.innerWidth > 768){
+        var sb = document.getElementById('chat-sidebar');
+        if(sb) sb.classList.add('visible');
+    }
+
+    var lastId = {{ messages.last.id|default:0 }};
+
+    setInterval(function(){
+        fetch("{% url 'chat_messages_api' room.id %}?last_id=" + lastId)
+        .then(function(r){ return r.json(); })
+        .then(function(data){
+            if(data.messages && data.messages.length > 0){
+                data.messages.forEach(function(m){
+                    lastId = m.id;
+                    var row = document.createElement('div');
+                    row.className = 'chat-msg-row ' + (m.is_mine ? 'mine' : 'theirs');
+                    var bubble = document.createElement('div');
+                    bubble.className = 'chat-bubble ' + (m.is_mine ? 'mine' : 'theirs');
+                    bubble.innerHTML = '<p>' + m.message.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</p><span class="chat-time">' + m.created_at + '</span>';
+                    row.appendChild(bubble);
+                    el.appendChild(row);
+                });
+                el.scrollTop = el.scrollHeight;
+            }
+        });
+    }, 3000);
+
+    var chatInput = document.getElementById('chat-input');
+    if(chatInput){
+        chatInput.addEventListener('keydown', function(e){
+            if(e.key === 'Enter' && !e.shiftKey){
+                e.preventDefault();
+                chatInput.closest('form').submit();
+            }
+        });
+    }
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load currency_tags %}
+{% block title %}{{ healer.name }} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <a href="{% url 'healer_list' %}" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Find Healers" %}</a>
+        <div style="position:relative;display:inline-block">
+            <h1>{{ healer.name }}</h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+        <p>{{ healer.category }} &bull; {{ healer.experience_years }} {% trans "years experience" %}</p>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div style="display:grid;grid-template-columns:1fr;gap:20px">
+            {% if True %}
+            <div class="card">
+                <div class="healer-card-header" style="height:180px">
+                    <div class="healer-card-header-bg" style="background:linear-gradient(135deg,#92400e,#ca8a04)">
+                        <div class="deco-circle"></div><div class="deco-circle"></div>
+                    </div>
+                    <div class="healer-avatar-wrap" style="bottom:-28px">
+                        <div class="healer-avatar" style="width:56px;height:56px;font-size:16px;background:linear-gradient(135deg,#b45309,#eab308)">{{ healer.name|truncatechars:2 }}</div>
+                        <div class="verified-badge"><i class="fas fa-check"></i></div>
+                    </div>
+                </div>
+                <div class="card-body" style="padding-top:40px">
+                    <div class="healer-name" style="font-size:1.15rem">{{ healer.name }}</div>
+                    <div class="healer-meta"><span><i class="fas fa-location-dot"></i> {{ healer.address }}</span></div>
+                    <div class="healer-rating" style="margin:10px 0">
+                        <div class="stars">{% for i in "12345" %}{% if forloop.counter <= healer.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}</div>
+                        <span class="rating-score">{{ healer.rating }}</span>
+                        <span class="rating-count">({{ healer.reviews.count }} {% trans "reviews" %})</span>
+                    </div>
+                    <div class="healer-tags" style="margin:10px 0">
+                        {% for spec in healer.specializations.split %}<span class="healer-tag">{{ spec }}</span>{% endfor %}
+                    </div>
+                    <div class="healer-divider"></div>
+                    <p style="color:var(--stone-400);font-size:13px;line-height:1.7;margin:10px 0">{{ healer.bio }}</p>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0">
+                        <div style="padding:10px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-elevated)"><div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px">{% trans "Experience" %}</div><div style="font-size:13px;font-weight:600;color:var(--fg)">{{ healer.experience_years }} {% trans "Years" %}</div></div>
+                        <div style="padding:10px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-elevated)"><div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px">{% trans "Phone" %}</div><div style="font-size:13px;font-weight:600;color:var(--fg)">{{ healer.phone }}</div></div>
+                    </div>
+                    <div class="healer-divider"></div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">
+                        <div class="healer-price" style="font-size:13px">{% trans "From" %} <strong style="font-size:1.15rem;color:var(--gold)" data-price-idr="{{ healer.price_idr|floatformat:0 }}">{{ healer.price_idr|price_with_original:LANGUAGE_CODE }}</strong></div>
+                        <div class="healer-status {% if healer.is_available %}available{% else %}demand{% endif %}">
+                            <span class="healer-status-dot"></span> {% if healer.is_available %}{% trans "Available" %}{% else %}{% trans "High Demand" %}{% endif %}
+                        </div>
+                    </div>
+                    <div class="healer-actions" style="margin-top:14px">
+                        <a href="{% url 'create_booking' healer.id %}" class="btn-book" style="padding:11px 22px;font-size:13px">{% trans "Book Now" %}</a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'chat_with_healer' healer.id %}" class="btn-profile" style="padding:11px 22px;font-size:13px"><i class="fas fa-comments" style="margin-right:4px"></i>{% trans "Chat" %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if schedules %}
+            <div class="card">
+                <div class="card-header"><h3><i class="fas fa-calendar" style="color:var(--gold)"></i> {% trans "Schedule" %}</h3></div>
+                <div class="card-body">
+                    {% for s in schedules %}
+                    <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px">
+                        <span style="color:var(--fg);font-weight:500">{{ s.get_day_of_week_display }}</span>
+                        <span style="color:var(--stone-400)">{{ s.start_time|time:"H:i" }} — {{ s.end_time|time:"H:i" }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if services %}
+            <div class="card">
+                <div class="card-header"><h3><i class="fas fa-concierge-bell" style="color:var(--gold)"></i> {% trans "Layanan" %}</h3></div>
+                <div class="card-body">
+                    {% for svc in services %}
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+                        <div>
+                            <strong style="color:var(--fg);font-size:13px">{{ svc.name }}</strong>
+                            {% if svc.description %}<p style="font-size:11px;color:var(--stone-500);margin:3px 0 0">{{ svc.description|truncatewords:15 }}</p>{% endif %}
+                            <span style="font-size:11px;color:var(--stone-500)"><i class="fas fa-clock" style="margin-right:3px"></i>{{ svc.duration_minutes }} {% trans "menit" %}</span>
+                        </div>
+                        <strong style="color:var(--gold);font-size:14px;white-space:nowrap" data-price-idr="{{ svc.price_idr|floatformat:0 }}">{{ svc.price_idr|convert_price:LANGUAGE_CODE }}</strong>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if reviews %}
+            <div class="card">
+                <div class="card-header"><h3><i class="fas fa-star" style="color:var(--gold)"></i> {% trans "Reviews" %}</h3></div>
+                <div class="card-body">
+                    {% for r in reviews %}
+                    <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+                        <div class="healer-rating" style="margin-bottom:5px">
+                            <div class="stars">{% for i in "12345" %}{% if forloop.counter <= r.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}</div>
+                            <span style="font-size:11px;color:var(--stone-500)">{{ r.created_at|date:"M d, Y" }}</span>
+                        </div>
+                        <p style="font-size:12px;color:var(--stone-400);line-height:1.6">"{{ r.comment }}"</p>
+                        <div style="font-size:11px;color:var(--fg);font-weight:500;margin-top:5px">&mdash; {{ r.customer_name }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

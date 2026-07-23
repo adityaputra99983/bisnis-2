@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Track Booking" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Track" %} <em>{% trans "Booking" %}</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+        <p>{% trans "Enter booking code to track status" %}</p>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="track-form-container">
+            <div class="card">
+                <div class="card-body" style="text-align:center;padding:32px">
+                    <div style="width:56px;height:56px;border-radius:50%;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--gold);font-size:20px">
+                        <i class="fas fa-magnifying-glass-location"></i>
+                    </div>
+                    <h3 style="margin-bottom:6px;font-family:var(--font-display);font-weight:500">{% trans "Track Booking Status" %}</h3>
+                    <p style="color:var(--stone-500);font-size:12px;margin-bottom:20px">{% trans "Enter the booking code you received" %}</p>
+                    <form method="GET" action="{% url 'booking_track' %}">
+                        <div class="track-input-group">
+                            <input type="text" name="code" class="form-control" value="{{ request.GET.code }}" placeholder="{% trans 'Enter booking code...' %}" required style="text-transform:uppercase;letter-spacing:0.05em">
+                            <button type="submit" class="btn btn-gold"><i class="fas fa-magnifying-glass"></i> {% trans "Track" %}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% if booking %}
+            <div class="card" style="margin-top:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-check" style="color:var(--gold)"></i> {% trans "Booking Found" %}</h3>
+                    <span class="status-badge status-{{ booking.status }}">{{ booking.get_status_display }}</span>
+                </div>
+                <div class="card-body">
+                    <div class="detail-grid">
+                        <div class="detail-item"><label>{% trans "Code" %}</label><strong class="booking-code">{{ booking.booking_code }}</strong></div>
+                        <div class="detail-item"><label>{% trans "Date" %}</label><span>{{ booking.booking_date|date:"d M Y" }}</span></div>
+                        <div class="detail-item"><label>{% trans "Healer" %}</label><span>{{ booking.healer.name }}</span></div>
+                        <div class="detail-item"><label>{% trans "Service" %}</label><span>{{ booking.service_type }}</span></div>
+                    </div>
+                    <div style="margin-top:14px">
+                        <a href="{% url 'booking_detail' booking.booking_code %}" class="btn btn-outline"><i class="fas fa-eye"></i> {% trans "View Details" %}</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if error %}
+            <div class="alert alert-error" style="margin-top:12px"><i class="fas fa-circle-exclamation"></i> {{ error }}</div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

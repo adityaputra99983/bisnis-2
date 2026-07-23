@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+  <!-- Flower of Life pattern -->
+  <g opacity="0.12" stroke="#c9a84c" fill="none" stroke-width="0.5">
+    <circle cx="200" cy="200" r="60"/>
+    <circle cx="200" cy="140" r="60"/>
+    <circle cx="200" cy="260" r="60"/>
+    <circle cx="148" cy="170" r="60"/>
+    <circle cx="252" cy="170" r="60"/>
+    <circle cx="148" cy="230" r="60"/>
+    <circle cx="252" cy="230" r="60"/>
+    <circle cx="200" cy="200" r="120"/>
+    <circle cx="200" cy="200" r="180"/>
+  </g>
+  <!-- Center glow -->
+  <circle cx="200" cy="200" r="40" fill="url(#g3)"/>
+</svg>

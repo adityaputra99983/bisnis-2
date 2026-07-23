@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d0b08"/>
+      <stop offset="100%" stop-color="#1a1510"/>
+    </linearGradient>
+    <radialGradient id="aura2" cx="50%" cy="50%">
+      <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg2)"/>
+  <circle cx="200" cy="200" r="150" fill="url(#aura2)"/>
+  <!-- Om symbol suggestion (abstract) -->
+  <g transform="translate(200,180)" opacity="0.25" stroke="#c9a84c" fill="none" stroke-width="1.5">
+    <path d="M-40,20 Q-40,-30 0,-30 Q40,-30 40,10 Q40,40 10,40 Q-10,40 -10,20 Q-10,0 10,0 Q30,0 30,20"/>
+    <path d="M-20,60 Q-20,45 0,45 Q20,45 20,60 Q20,75 0,75 Q-20,75 -20,60"/>
+    <path d="M25,-45 Q35,-55 45,-50 Q50,-40 40,-35"/>
+  </g>
+  <!-- Decorative circles -->
+  <circle cx="200" cy="200" r="100" stroke="#c9a84c" stroke-opacity="0.06" fill="none" stroke-width="0.5"/>
+  <circle cx="200" cy="200" r="70" stroke="#c9a84c" stroke-opacity="0.08" fill="none" stroke-width="0.5"/>
+  <circle cx="200" cy="200" r="40" stroke="#c9a84c" stroke-opacity="0.1" fill="none" stroke-width="0.5"/>
+  <!-- Dots -->
+  <circle cx="200" cy="100" r="2" fill="#c9a84c" opacity="0.2"/>
+  <circle cx="200" cy="300" r="2" fill="#c9a84c" opacity="0.2"/>
+  <circle cx="100" cy="200" r="2" fill="#c9a84c" opacity="0.2"/>
+  <circle cx="300" cy="200" r="2" fill="#c9a84c" opacity="0.2"/>
+</svg>

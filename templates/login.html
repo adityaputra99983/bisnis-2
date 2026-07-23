@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Login" %} — Bali Healer{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Login" %}</h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+    </div>
+</div>
+
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="auth-container">
+            <div class="card bali-carving-border" style="text-align:center">
+                <div class="card-body" style="padding:36px">
+                    <!-- Batik ornamental top -->
+                    <div style="text-align:center;margin-bottom:16px">
+                        <span style="color:rgba(200,169,81,0.2);font-size:8px;letter-spacing:8px">&#10022; &#10022; &#10022;</span>
+                    </div>
+                    <div class="lotus-badge lotus-badge-animated" style="margin:0 auto 20px">
+                        <img src="{% static 'images/lotus.svg' %}" alt="">
+                    </div>
+                    <h3 style="color:var(--fg);margin-bottom:6px;font-family:var(--font-display);font-weight:500">{% trans "Login to Account" %}</h3>
+                    <p class="text-muted" style="margin-bottom:24px;font-size:0.82rem">{% trans "Welcome back, Healer." %}</p>
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="alert alert-error"><i class="fas fa-circle-exclamation"></i> {{ message }}</div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+
+                    {% if form.errors %}
+                    <div class="alert alert-error"><i class="fas fa-circle-exclamation"></i> {% trans "Invalid username or password." %}</div>
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group" style="text-align:left">
+                            <label><i class="fas fa-user"></i> {% trans "Username" %}</label>
+                            <input type="text" name="username" class="form-control" required autofocus placeholder="{% trans 'Enter username' %}">
+                        </div>
+                        <div class="form-group" style="text-align:left">
+                            <label><i class="fas fa-lock"></i> {% trans "Password" %}</label>
+                            <input type="password" name="password" class="form-control" required placeholder="{% trans 'Enter password' %}">
+                        </div>
+                        <button type="submit" class="btn btn-gold btn-lg btn-block"><i class="fas fa-right-to-bracket"></i> {% trans "Login" %}</button>
+                    </form>
+
+                    <div class="auth-divider">
+                        <span>{% trans "or" %}</span>
+                    </div>
+
+                    <div class="auth-links" style="border-top:none;padding-top:0">
+                        <p style="color:var(--stone-500);font-size:12px;margin-bottom:10px">{% trans "Don't have an account?" %}</p>
+                        <a href="{% url 'register_customer' %}" class="btn btn-outline" style="margin-bottom:8px;width:100%;justify-content:center">
+                            <i class="fas fa-user-plus"></i> {% trans "Register as Customer" %}
+                        </a>
+                        <a href="{% url 'register_healer' %}" class="btn btn-outline" style="width:100%;justify-content:center">
+                            <i class="fas fa-hand-holding-heart"></i> {% trans "Register as Healer" %}
+                        </a>
+                    </div>
+
+                    <div class="auth-links" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
+                        <a href="{% url 'home' %}"><i class="fas fa-house"></i> {% trans "Back to Home" %}</a>
+                    </div>
+                    <!-- Batik ornamental bottom -->
+                    <div style="text-align:center;margin-top:20px">
+                        <span style="color:rgba(200,169,81,0.2);font-size:8px;letter-spacing:8px">&#10022; &#10022; &#10022;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

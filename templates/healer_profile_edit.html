@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Edit Healer Profile" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <a href="{% url 'healer_dashboard' %}" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Back" %}</a>
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Edit Profile" %} <em>Healer</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="auth-container" style="max-width:560px">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-pen" style="color:var(--gold)"></i> {% trans "Edit Profile" %}</h3>
+                </div>
+                <div class="card-body" style="padding:22px">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-section">
+                            <h4><i class="fas fa-spa"></i> {% trans "Healing Profile" %}</h4>
+                            <div class="form-group">
+                                <label>{% trans "Professional Name" %}</label>
+                                <input type="text" name="name" class="form-control" value="{{ healer.name }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label>{% trans "Specializations" %}</label>
+                                <input type="text" name="specializations" class="form-control" value="{{ healer.specializations }}" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>{% trans "Years of Experience" %}</label>
+                                    <input type="number" name="experience_years" class="form-control" value="{{ healer.experience_years }}" min="0" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>{% trans "Session Price (IDR)" %}</label>
+                                    <input type="number" name="price_idr" class="form-control" value="{{ healer.price_idr|floatformat:0 }}" min="0" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>{% trans "Phone" %}</label>
+                                <input type="text" name="phone" class="form-control" value="{{ healer.phone }}">
+                            </div>
+                            <div class="form-group">
+                                <label>{% trans "Practice Address" %}</label>
+                                <textarea name="address" class="form-control" rows="2" required>{{ healer.address }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>{% trans "About Yourself" %}</label>
+                                <textarea name="bio" class="form-control" rows="4" required>{{ healer.bio }}</textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-gold btn-lg btn-block">
+                            <i class="fas fa-floppy-disk"></i> {% trans "Save Changes" %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

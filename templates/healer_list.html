@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load currency_tags %}
+{% block title %}{% trans "Find Healers" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <a href="{% url 'home' %}" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Home" %}</a>
+        <div style="position:relative;display:inline-block">
+            <h1>{% blocktrans %}Find <em>Healers</em>{% endblocktrans %}</h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+        <p>{% trans "Discover verified healing professionals across Bali" %}</p>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="search-wrap" style="margin-bottom:20px">
+            <i class="fas fa-magnifying-glass search-icon"></i>
+            <form method="GET" action="{% url 'healer_list' %}">
+                <input type="text" name="q" class="search-input" value="{{ query }}" placeholder="{% trans 'Search by name, speciality, or location...' %}">
+            </form>
+        </div>
+        <div class="popular-tags" style="margin-bottom:28px">
+            <span class="popular-label">{% trans "Filter:" %}</span>
+            <a href="{% url 'healer_list' %}" class="tag-pill" style="{% if not selected_category %}border-color:var(--gold);color:var(--gold){% endif %}">{% trans "All" %}</a>
+            {% for cat in categories %}
+            <a href="{% url 'healer_list' %}?category={{ cat.id }}" class="tag-pill" style="{% if selected_category == cat.id|stringformat:'d' %}border-color:var(--gold);color:var(--gold){% endif %}">{{ cat.name }}</a>
+            {% endfor %}
+        </div>
+        <div class="healers-grid">
+            {% for healer in healers %}
+            <div class="healer-card">
+                <div class="healer-card-header">
+                    <div class="healer-card-header-bg" style="background:linear-gradient(135deg, {% cycle '#92400e' '#581c87' '#0f766e' '#1e3a5f' '#7e22ce' '#166534' as hbg1 %}, {% cycle '#ca8a04' '#9333ea' '#06b6d4' '#2563eb' '#db2777' '#059669' as hbg2 %})">
+                        <div class="deco-circle"></div>
+                        <div class="deco-circle"></div>
+                    </div>
+                    <button class="healer-fav-btn"><i class="far fa-heart"></i></button>
+                    <div class="healer-avatar-wrap">
+                        <div class="healer-avatar" style="background:linear-gradient(135deg, {% cycle '#b45309' '#7c3aed' '#0d9488' '#1e40af' '#a21caf' '#15803d' as av1 %}, {% cycle '#eab308' '#a855f7' '#22d3ee' '#3b82f6' '#ec4899' '#10b981' as av2 %})">
+                            {{ healer.name|truncatechars:2 }}
+                        </div>
+                        <div class="verified-badge"><i class="fas fa-check"></i></div>
+                    </div>
+                </div>
+                <div class="healer-card-body">
+                    <div class="healer-name">{{ healer.name }}</div>
+                    <div class="healer-meta">
+                        <span><i class="fas fa-location-dot"></i> {{ healer.address|truncatechars:20 }}</span>
+                        <span><i class="fas fa-clock"></i> {{ healer.experience_years }} {% trans "yrs" %}</span>
+                    </div>
+                    <div class="healer-rating">
+                        <div class="stars">{% for i in "12345" %}{% if forloop.counter <= healer.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}</div>
+                        <span class="rating-score">{{ healer.rating }}</span>
+                        <span class="rating-count">({{ healer.reviews.count }})</span>
+                    </div>
+                    {% if healer.rating >= 4.8 %}<div class="top-rated-badge"><i class="fas fa-award"></i> {% trans "Top Rated" %}</div>{% endif %}
+                    <div class="healer-tags">
+                        {% for spec in healer.specializations|truncatewords:2 %}<span class="healer-tag">{{ spec }}</span>{% endfor %}
+                    </div>
+                    <div class="healer-divider"></div>
+                    <div class="healer-footer">
+                        <div class="healer-status {% if healer.is_available %}available{% else %}demand{% endif %}">
+                            <span class="healer-status-dot"></span>
+                            {% if healer.is_available %}{% trans "Available" %}{% else %}{% trans "High Demand" %}{% endif %}
+                        </div>
+                        <div class="healer-price">{% trans "From" %} <strong data-price-idr="{{ healer.price_idr|floatformat:0 }}">{{ healer.price_idr|price_with_original:LANGUAGE_CODE }}</strong></div>
+                    </div>
+                    <!-- Multi-Currency Carousel -->
+                    <div class="currency-carousel-wrap" data-price-idr="{{ healer.price_idr|floatformat:0 }}">
+                        <div class="currency-carousel-track">
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇮🇩</span><span class="cc-code">IDR</span><span class="cc-amount">Rp {{ healer.price_idr|floatformat:0 }}</span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇺🇸</span><span class="cc-code">USD</span><span class="cc-amount" data-convert="USD"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇪🇺</span><span class="cc-code">EUR</span><span class="cc-amount" data-convert="EUR"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇬🇧</span><span class="cc-code">GBP</span><span class="cc-amount" data-convert="GBP"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇯🇵</span><span class="cc-code">JPY</span><span class="cc-amount" data-convert="JPY"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇨🇳</span><span class="cc-code">CNY</span><span class="cc-amount" data-convert="CNY"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇰🇷</span><span class="cc-code">KRW</span><span class="cc-amount" data-convert="KRW"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇸🇬</span><span class="cc-code">SGD</span><span class="cc-amount" data-convert="SGD"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇹🇭</span><span class="cc-code">THB</span><span class="cc-amount" data-convert="THB"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇦🇺</span><span class="cc-code">AUD</span><span class="cc-amount" data-convert="AUD"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇸🇦</span><span class="cc-code">SAR</span><span class="cc-amount" data-convert="SAR"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇮🇳</span><span class="cc-code">INR</span><span class="cc-amount" data-convert="INR"></span></div>
+                        </div>
+                        <div class="currency-carousel-dots"></div>
+                    </div>
+                    <div class="healer-actions">
+                        <a href="{% url 'create_booking' healer.id %}" class="btn-book">{% trans "Book Now" %}</a>
+                        <a href="{% url 'healer_detail' healer.slug %}" class="btn-profile">{% trans "Profile" %}</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state"><i class="fas fa-magnifying-glass"></i><h3>{% trans "No Healers Found" %}</h3><p>{% trans "Try adjusting your search criteria." %}</p></div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

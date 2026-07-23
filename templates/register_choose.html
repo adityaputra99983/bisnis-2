@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Register" %} — Bali Healer{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Register" %} <em>{% trans "Account" %}</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+        <p style="color:var(--stone-400);font-size:13px;margin-top:6px">{% trans "Choose your role to start your healing journey" %}</p>
+    </div>
+</div>
+
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="register-choose-grid">
+            <a href="{% url 'register_customer' %}" class="register-choose-card bali-carving-border">
+                <div class="register-choose-icon" style="background:linear-gradient(135deg,rgba(96,165,250,0.12),rgba(96,165,250,0.03))">
+                    <i class="fas fa-user" style="color:#60a5fa;font-size:32px"></i>
+                </div>
+                <h3>{% trans "Customer" %}</h3>
+                <p>{% trans "Find the best healers in Bali and book healing sessions for your body, mind, and soul health." %}</p>
+                <div class="register-choose-features">
+                    <span><i class="fas fa-check"></i> {% trans "Search & compare healers" %}</span>
+                    <span><i class="fas fa-check"></i> {% trans "Book healing sessions" %}</span>
+                    <span><i class="fas fa-check"></i> {% trans "Booking history" %}</span>
+                    <span><i class="fas fa-check"></i> {% trans "Pay online" %}</span>
+                </div>
+                <div class="btn btn-outline" style="margin-top:14px;width:100%;justify-content:center">
+                    <i class="fas fa-user-plus"></i> {% trans "Register as Customer" %}
+                </div>
+            </a>
+
+            <a href="{% url 'register_healer' %}" class="register-choose-card register-choose-card--featured bali-carving-border">
+                <div class="register-choose-badge">{% trans "POPULAR" %}</div>
+                <div class="register-choose-icon" style="background:linear-gradient(135deg,rgba(200,169,81,0.12),rgba(200,169,81,0.03))">
+                    <i class="fas fa-hand-holding-heart" style="color:var(--gold);font-size:32px"></i>
+                </div>
+                <h3>{% trans "Healer" %}</h3>
+                <p>{% trans "Open your healing practice, manage services, schedules, and reach thousands of seekers." %}</p>
+                <div class="register-choose-features">
+                    <span><i class="fas fa-check"></i> {% trans "Professional business profile" %}</span>
+                    <span><i class="fas fa-check"></i> {% trans "Manage services & pricing" %}</span>
+                    <span><i class="fas fa-check"></i> {% trans "Set practice schedule" %}</span>
+                    <span><i class="fas fa-check"></i> {% trans "Receive & manage bookings" %}</span>
+                    <span><i class="fas fa-check"></i> {% trans "Message inbox" %}</span>
+                    <span><i class="fas fa-check"></i> {% trans "Payment settings" %}</span>
+                </div>
+                <div class="btn btn-gold" style="margin-top:14px;width:100%;justify-content:center">
+                    <i class="fas fa-rocket"></i> {% trans "Start Healing Business" %}
+                </div>
+            </a>
+        </div>
+
+        <div style="text-align:center;margin-top:24px">
+            <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(200,169,81,0.1),transparent);margin-bottom:16px"></div>
+            <p style="color:var(--stone-500);font-size:12px">{% trans "Already have an account?" %} <a href="{% url 'login' %}" style="color:var(--gold);font-weight:500">{% trans "Login now" %}</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}

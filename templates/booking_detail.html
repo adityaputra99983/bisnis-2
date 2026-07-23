@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load currency_tags %}
+{% block title %}{% trans "Booking Details" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <a href="javascript:history.back()" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Back" %}</a>
+        <div style="position:relative;display:inline-block">
+            <h1>Booking <em>{{ booking.booking_code }}</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="booking-detail-layout">
+            <div class="card" style="margin-bottom:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-check" style="color:var(--gold)"></i> {% trans "Booking Details" %}</h3>
+                    <span class="status-badge status-{{ booking.status }}">{{ booking.get_status_display }}</span>
+                </div>
+                <div class="card-body">
+                    <div class="detail-grid">
+                        <div class="detail-item"><label>{% trans "Booking Code" %}</label><strong class="booking-code">{{ booking.booking_code }}</strong></div>
+                        <div class="detail-item"><label>{% trans "Date" %}</label><span>{{ booking.booking_date|date:"d M Y" }}</span></div>
+                        <div class="detail-item"><label>{% trans "Time" %}</label><span>{{ booking.booking_time|time:"H:i" }}</span></div>
+                        <div class="detail-item"><label>{% trans "Customer" %}</label><span>{{ booking.customer_name }}</span></div>
+                        <div class="detail-item"><label>{% trans "Phone" %}</label><span>{{ booking.customer_phone }}</span></div>
+                        <div class="detail-item"><label>{% trans "Healer" %}</label><a href="{% url 'healer_detail' booking.healer.slug %}">{{ booking.healer.name }}</a></div>
+                        <div class="detail-item"><label>{% trans "Service" %}</label><span>{{ booking.service_type }}</span></div>
+                        <div class="detail-item full"><label>{% trans "Notes" %}</label><span>{{ booking.notes|default:"-" }}</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-route" style="color:var(--gold)"></i> {% trans "Status Booking" %}</h3>
+                </div>
+                <div class="card-body">
+                    <div style="display:flex;flex-direction:column;gap:0">
+                        {% with steps="pending_payment,pending_confirm,confirmed,in_progress,completed" %}
+                        {% for step in steps|cut:" " %}
+                        {% with step_list=steps|cut:" " %}
+                        {% endwith %}
+                        {% endfor %}
+                        {% endwith %}
+
+                        <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;{% if booking.status == 'pending_payment' %}opacity:1{% else %}opacity:0.5{% endif %}">
+                            <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;
+                                {% if booking.status == 'pending_payment' %}background:var(--gold);color:var(--bg)
+                                {% elif booking.status == 'pending_confirm' or booking.status == 'confirmed' or booking.status == 'in_progress' or booking.status == 'completed' %}background:var(--emerald-500);color:var(--bg)
+                                {% else %}background:var(--stone-700);color:var(--stone-400){% endif %}">
+                                {% if booking.status == 'pending_payment' %}1{% elif booking.status == 'pending_confirm' or booking.status == 'confirmed' or booking.status == 'in_progress' or booking.status == 'completed' %}<i class="fas fa-check"></i>{% else %}1{% endif %}
+                            </div>
+                            <div>
+                                <strong style="font-size:12px;color:var(--fg)">{% trans "Menunggu Pembayaran" %}</strong>
+                                {% if payment and payment.paid_at %}<p style="font-size:10px;color:var(--stone-500);margin:2px 0 0">{{ payment.paid_at|date:"d M Y, H:i" }}</p>{% endif %}
+                            </div>
+                        </div>
+
+                        <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-left:2px solid var(--border);margin-left:13px;padding-left:22px;{% if booking.status == 'pending_confirm' %}opacity:1{% elif booking.status == 'confirmed' or booking.status == 'in_progress' or booking.status == 'completed' %}opacity:0.5{% else %}opacity:0.3{% endif %}">
+                            <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;
+                                {% if booking.status == 'pending_confirm' %}background:var(--gold);color:var(--bg)
+                                {% elif booking.status == 'confirmed' or booking.status == 'in_progress' or booking.status == 'completed' %}background:var(--emerald-500);color:var(--bg)
+                                {% else %}background:var(--stone-700);color:var(--stone-400){% endif %}">
+                                {% if booking.status == 'pending_confirm' %}2{% elif booking.status == 'confirmed' or booking.status == 'in_progress' or booking.status == 'completed' %}<i class="fas fa-check"></i>{% else %}2{% endif %}
+                            </div>
+                            <div>
+                                <strong style="font-size:12px;color:var(--fg)">{% trans "Menunggu Konfirmasi Healer" %}</strong>
+                                {% if booking.confirmed_at %}<p style="font-size:10px;color:var(--stone-500);margin:2px 0 0">{{ booking.confirmed_at|date:"d M Y, H:i" }}</p>{% endif %}
+                            </div>
+                        </div>
+
+                        <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-left:2px solid var(--border);margin-left:13px;padding-left:22px;{% if booking.status == 'confirmed' %}opacity:1{% elif booking.status == 'in_progress' or booking.status == 'completed' %}opacity:0.5{% else %}opacity:0.3{% endif %}">
+                            <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;
+                                {% if booking.status == 'confirmed' %}background:var(--gold);color:var(--bg)
+                                {% elif booking.status == 'in_progress' or booking.status == 'completed' %}background:var(--emerald-500);color:var(--bg)
+                                {% else %}background:var(--stone-700);color:var(--stone-400){% endif %}">
+                                {% if booking.status == 'confirmed' %}3{% elif booking.status == 'in_progress' or booking.status == 'completed' %}<i class="fas fa-check"></i>{% else %}3{% endif %}
+                            </div>
+                            <div>
+                                <strong style="font-size:12px;color:var(--fg)">{% trans "Dikonfirmasi" %}</strong>
+                                {% if booking.confirmed_at %}<p style="font-size:10px;color:var(--stone-500);margin:2px 0 0">{{ booking.confirmed_at|date:"d M Y, H:i" }}</p>{% endif %}
+                            </div>
+                        </div>
+
+                        <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-left:2px solid var(--border);margin-left:13px;padding-left:22px;{% if booking.status == 'in_progress' %}opacity:1{% elif booking.status == 'completed' %}opacity:0.5{% else %}opacity:0.3{% endif %}">
+                            <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;
+                                {% if booking.status == 'in_progress' %}background:var(--gold);color:var(--bg)
+                                {% elif booking.status == 'completed' %}background:var(--emerald-500);color:var(--bg)
+                                {% else %}background:var(--stone-700);color:var(--stone-400){% endif %}">
+                                {% if booking.status == 'in_progress' %}4{% elif booking.status == 'completed' %}<i class="fas fa-check"></i>{% else %}4{% endif %}
+                            </div>
+                            <div>
+                                <strong style="font-size:12px;color:var(--fg)">{% trans "Sedang Dikerjakan" %}</strong>
+                                {% if booking.started_at %}<p style="font-size:10px;color:var(--stone-500);margin:2px 0 0">{{ booking.started_at|date:"d M Y, H:i" }}</p>{% endif %}
+                            </div>
+                        </div>
+
+                        <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-left:2px solid transparent;margin-left:13px;padding-left:22px;opacity:{% if booking.status == 'completed' %}1{% else %}0.3{% endif %}">
+                            <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;
+                                {% if booking.status == 'completed' %}background:var(--emerald-500);color:var(--bg){% else %}background:var(--stone-700);color:var(--stone-400){% endif %}">
+                                {% if booking.status == 'completed' %}<i class="fas fa-check"></i>{% else %}5{% endif %}
+                            </div>
+                            <div>
+                                <strong style="font-size:12px;color:var(--fg)">{% trans "Selesai" %}</strong>
+                                {% if booking.completed_at %}<p style="font-size:10px;color:var(--stone-500);margin:2px 0 0">{{ booking.completed_at|date:"d M Y, H:i" }}</p>{% endif %}
+                            </div>
+                        </div>
+
+                        {% if booking.status == 'cancelled' %}
+                        <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;margin-top:8px;background:rgba(239,68,68,0.1);border-radius:8px;padding:12px">
+                            <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;background:var(--red);color:var(--bg)">
+                                <i class="fas fa-xmark"></i>
+                            </div>
+                            <div>
+                                <strong style="font-size:12px;color:var(--red)">{% trans "Dibatalkan" %}</strong>
+                                {% if booking.cancel_reason %}<p style="font-size:10px;color:var(--stone-500);margin:2px 0 0">{{ booking.cancel_reason }}</p>{% endif %}
+                                {% if booking.cancelled_at %}<p style="font-size:10px;color:var(--stone-500);margin:2px 0 0">{{ booking.cancelled_at|date:"d M Y, H:i" }}</p>{% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-coins" style="color:var(--gold)"></i> {% trans "Price Summary" %}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="price-summary">
+                        <div class="price-row"><span>{% trans "Layanan" %}</label><strong>{{ booking.service_type }}</strong></div>
+                        <div class="price-row"><span>{% trans "Harga" %}</span><strong data-price-idr="{{ booking.service_price_idr|floatformat:0 }}">{{ booking.service_price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
+                        {% if booking.total_price_converted and booking.currency != 'IDR' %}
+                        <div class="price-row"><span>{% blocktrans %}Total ({{ booking.currency }}){% endblocktrans %}</span><strong>{{ booking.total_price_converted|floatformat:0 }} {{ booking.currency }}</strong></div>
+                        {% endif %}
+                        <div class="price-row total"><span>{% trans "Total" %}</span><strong data-price-idr="{{ booking.total_price_idr|floatformat:0 }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
+                    </div>
+
+                    {% if payment %}
+                    <div style="margin-top:12px;padding:10px;background:var(--bg-secondary);border-radius:8px;border:1px solid var(--border)">
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                            <span style="font-size:12px;color:var(--stone-500)">{% trans "Status Pembayaran" %}</span>
+                            <span class="payment-status-badge {{ payment.status }}" style="font-size:11px">
+                                {% if payment.status == 'pending' %}<i class="fas fa-clock"></i> {% trans "Menunggu" %}
+                                {% elif payment.status == 'success' %}<i class="fas fa-check-circle"></i> {% trans "Berhasil" %}
+                                {% elif payment.status == 'held' %}<i class="fas fa-lock"></i> {% trans "Ditahan (Escrow)" %}
+                                {% elif payment.status == 'released' %}<i class="fas fa-unlock"></i> {% trans "Dirilis" %}
+                                {% elif payment.status == 'refunded' %}<i class="fas fa-rotate-left"></i> {% trans "Dikembalikan" %}
+                                {% else %}<i class="fas fa-times-circle"></i> {% trans "Gagal" %}{% endif %}
+                            </span>
+                        </div>
+                        {% if payment.status == 'held' %}
+                        <p style="font-size:11px;color:var(--gold);margin:6px 0 0"><i class="fas fa-shield-halved" style="margin-right:3px"></i>{% trans "Dana aman di escrow. Akan dirilis ke healer setelah pekerjaan selesai." %}</p>
+                        {% endif %}
+                        {% if payment.status == 'released' %}
+                        <p style="font-size:11px;color:var(--emerald-500);margin:6px 0 0"><i class="fas fa-check-circle" style="margin-right:3px"></i>{% trans "Dana telah dirilis ke healer." %}</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    <div class="booking-actions">
+                        {% if booking.status == 'pending_payment' %}
+                        <a href="{% url 'payment_process' booking.booking_code %}" class="btn btn-gold"><i class="fas fa-credit-card"></i> {% trans "Bayar Sekarang" %}</a>
+                        <form method="POST" action="{% url 'booking_cancel' booking.booking_code %}" onsubmit="return confirm('{% trans "Batalkan booking ini?" %}')" style="display:inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="reason" value="Dibatalkan oleh pelanggan">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-xmark"></i> {% trans "Batalkan" %}</button>
+                        </form>
+                        {% endif %}
+
+                        {% if booking.status == 'pending_confirm' %}
+                        <div style="padding:10px;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;font-size:12px;color:var(--gold)">
+                            <i class="fas fa-clock" style="margin-right:4px"></i>{% trans "Menunggu konfirmasi dari healer. Pembayaran Anda aman di escrow." %}
+                        </div>
+                        <form method="POST" action="{% url 'booking_cancel' booking.booking_code %}" onsubmit="return confirm('{% trans "Batalkan booking ini? Dana akan dikembalikan." %}')" style="display:inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="reason" value="Dibatalkan oleh pelanggan sebelum konfirmasi">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-xmark"></i> {% trans "Batalkan" %}</button>
+                        </form>
+                        {% endif %}
+
+                        {% if booking.status == 'confirmed' %}
+                        <div style="padding:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;font-size:12px;color:var(--emerald-500)">
+                            <i class="fas fa-check-circle" style="margin-right:4px"></i>{% trans "Healer sudah mengkonfirmasi. Menunggu pengerjaan." %}
+                        </div>
+                        {% endif %}
+
+                        {% if booking.status == 'in_progress' %}
+                        <div style="padding:10px;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;font-size:12px;color:var(--gold)">
+                            <i class="fas fa-spinner" style="margin-right:4px"></i>{% trans "Sedang dikerjakan oleh healer." %}
+                        </div>
+                        {% endif %}
+
+                        {% if booking.status == 'completed' %}
+                        <div style="padding:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;font-size:12px;color:var(--emerald-500)">
+                            <i class="fas fa-check-double" style="margin-right:4px"></i>{% trans "Pekerjaan selesai. Dana telah dirilis ke healer." %}
+                        </div>
+                        {% endif %}
+
+                        {% if booking.status == 'completed' and user.is_authenticated %}
+                        <a href="{% url 'chat_with_healer' booking.healer.id %}" class="btn btn-outline"><i class="fas fa-comments"></i> {% trans "Chat Healer" %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% if status_logs %}
+            <div class="card" style="margin-bottom:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-clock-rotate-left" style="color:var(--gold)"></i> {% trans "Riwayat Status" %}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        {% for log in status_logs %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot {% if forloop.first %}active{% endif %}"></div>
+                            <div class="timeline-content">
+                                <strong>{{ log.get_new_status_display }}</strong>
+                                {% if log.changed_by %}<p style="font-size:11px;color:var(--stone-500)">{% trans "oleh" %} {{ log.changed_by.get_full_name|default:log.changed_by.username }}</p>{% endif %}
+                                {% if log.reason %}<p>{{ log.reason }}</p>{% endif %}
+                                <small>{{ log.created_at|date:"d M Y, H:i" }}</small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

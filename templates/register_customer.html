@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Register Customer" %} — Bali Healer{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Register" %} <em>{% trans "Customer" %}</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+    </div>
+</div>
+
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="auth-container" style="max-width:480px">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-plus" style="color:var(--gold)"></i> {% trans "Create Customer Account" %}</h3>
+                </div>
+                <div class="card-body" style="padding:22px">
+                    <p class="text-muted" style="margin-bottom:18px;font-size:12px">{% trans "Find and book healing sessions with the best healers in Bali." %}</p>
+
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-info{% endif %}"><i class="fas fa-circle-info"></i> {{ message }}</div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-section">
+                            <h4><i class="fas fa-user"></i> {% trans "Account Data" %}</h4>
+                            <div class="form-group">
+                                <label>{% trans "Username" %} *</label>
+                                {{ form.username }}
+                                {% if form.username.errors %}<small style="color:#ef4444">{{ form.username.errors.0 }}</small>{% endif %}
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>{% trans "First Name" %} *</label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}<small style="color:#ef4444">{{ form.first_name.errors.0 }}</small>{% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label>{% trans "Last Name" %} *</label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}<small style="color:#ef4444">{{ form.last_name.errors.0 }}</small>{% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>{% trans "Email" %} *</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}<small style="color:#ef4444">{{ form.email.errors.0 }}</small>{% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label>{% trans "Phone" %}</label>
+                                {{ form.phone }}
+                            </div>
+                        </div>
+
+                        <div class="form-section" style="border-bottom:none">
+                            <h4><i class="fas fa-lock"></i> {% trans "Password" %}</h4>
+                            <div class="form-group">
+                                <label>{% trans "Password" %} *</label>
+                                {{ form.password1 }}
+                                {% if form.password1.errors %}<small style="color:#ef4444">{{ form.password1.errors.0 }}</small>{% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label>{% trans "Confirm Password" %} *</label>
+                                {{ form.password2 }}
+                                {% if form.password2.errors %}<small style="color:#ef4444">{{ form.password2.errors.0 }}</small>{% endif %}
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-gold btn-lg btn-block">
+                            <i class="fas fa-check"></i> {% trans "Register Now" %}
+                        </button>
+                    </form>
+
+                    <div class="auth-links" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
+                        <p style="color:var(--stone-500);font-size:12px;margin-bottom:6px">{% trans "Already have an account?" %} <a href="{% url 'login' %}" style="color:var(--gold)">{% trans "Login" %}</a></p>
+                        <p style="color:var(--stone-500);font-size:12px;margin-bottom:6px">{% trans "Want to become a healer?" %} <a href="{% url 'register_healer' %}" style="color:var(--gold)">{% trans "Register as Healer" %}</a></p>
+                        <p style="color:var(--stone-500);font-size:12px"><a href="{% url 'register_choose' %}" style="color:var(--gold)"><i class="fas fa-arrow-left"></i> {% trans "Back to selection" %}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

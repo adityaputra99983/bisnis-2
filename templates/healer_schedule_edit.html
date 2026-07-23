@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Manage Schedule" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <a href="{% url 'healer_dashboard' %}" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Back" %}</a>
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Manage Practice Schedule" %} <em>Praktek</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="auth-container" style="max-width:560px">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-days" style="color:var(--gold)"></i> {% trans "Weekly Schedule" %}</h3>
+                </div>
+                <div class="card-body" style="padding:22px">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-section" style="border-bottom:none">
+                            <p class="text-muted" style="margin-bottom:16px;font-size:12px">{% trans "Fill in start and end times for active days. Leave empty for days off." %}</p>
+                            <div style="display:flex;flex-direction:column;gap:6px">
+                                <div class="schedule-row" style="padding:12px 14px;border-radius:var(--radius);background:var(--bg);border:1px solid var(--border)">
+                                    <strong style="color:var(--fg);font-size:13px;min-width:72px">{% trans "Monday" %}</strong>
+                                    <div style="display:flex;gap:6px;align-items:center">
+                                        <input type="time" name="day_0_start" class="form-control-sm" value="{{ schedules.0.start_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                        <span style="color:var(--stone-600)">&mdash;</span>
+                                        <input type="time" name="day_0_end" class="form-control-sm" value="{{ schedules.0.end_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                    </div>
+                                </div>
+                                <div class="schedule-row" style="padding:12px 14px;border-radius:var(--radius);background:var(--bg);border:1px solid var(--border)">
+                                    <strong style="color:var(--fg);font-size:13px;min-width:72px">{% trans "Tuesday" %}</strong>
+                                    <div style="display:flex;gap:6px;align-items:center">
+                                        <input type="time" name="day_1_start" class="form-control-sm" value="{{ schedules.1.start_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                        <span style="color:var(--stone-600)">&mdash;</span>
+                                        <input type="time" name="day_1_end" class="form-control-sm" value="{{ schedules.1.end_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                    </div>
+                                </div>
+                                <div class="schedule-row" style="padding:12px 14px;border-radius:var(--radius);background:var(--bg);border:1px solid var(--border)">
+                                    <strong style="color:var(--fg);font-size:13px;min-width:72px">{% trans "Wednesday" %}</strong>
+                                    <div style="display:flex;gap:6px;align-items:center">
+                                        <input type="time" name="day_2_start" class="form-control-sm" value="{{ schedules.2.start_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                        <span style="color:var(--stone-600)">&mdash;</span>
+                                        <input type="time" name="day_2_end" class="form-control-sm" value="{{ schedules.2.end_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                    </div>
+                                </div>
+                                <div class="schedule-row" style="padding:12px 14px;border-radius:var(--radius);background:var(--bg);border:1px solid var(--border)">
+                                    <strong style="color:var(--fg);font-size:13px;min-width:72px">{% trans "Thursday" %}</strong>
+                                    <div style="display:flex;gap:6px;align-items:center">
+                                        <input type="time" name="day_3_start" class="form-control-sm" value="{{ schedules.3.start_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                        <span style="color:var(--stone-600)">&mdash;</span>
+                                        <input type="time" name="day_3_end" class="form-control-sm" value="{{ schedules.3.end_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                    </div>
+                                </div>
+                                <div class="schedule-row" style="padding:12px 14px;border-radius:var(--radius);background:var(--bg);border:1px solid var(--border)">
+                                    <strong style="color:var(--fg);font-size:13px;min-width:72px">{% trans "Friday" %}</strong>
+                                    <div style="display:flex;gap:6px;align-items:center">
+                                        <input type="time" name="day_4_start" class="form-control-sm" value="{{ schedules.4.start_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                        <span style="color:var(--stone-600)">&mdash;</span>
+                                        <input type="time" name="day_4_end" class="form-control-sm" value="{{ schedules.4.end_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                    </div>
+                                </div>
+                                <div class="schedule-row" style="padding:12px 14px;border-radius:var(--radius);background:var(--bg);border:1px solid var(--border)">
+                                    <strong style="color:var(--fg);font-size:13px;min-width:72px">{% trans "Saturday" %}</strong>
+                                    <div style="display:flex;gap:6px;align-items:center">
+                                        <input type="time" name="day_5_start" class="form-control-sm" value="{{ schedules.5.start_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                        <span style="color:var(--stone-600)">&mdash;</span>
+                                        <input type="time" name="day_5_end" class="form-control-sm" value="{{ schedules.5.end_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                    </div>
+                                </div>
+                                <div class="schedule-row" style="padding:12px 14px;border-radius:var(--radius);background:var(--bg);border:1px solid var(--border)">
+                                    <strong style="color:var(--fg);font-size:13px;min-width:72px">{% trans "Sunday" %}</strong>
+                                    <div style="display:flex;gap:6px;align-items:center">
+                                        <input type="time" name="day_6_start" class="form-control-sm" value="{{ schedules.6.start_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                        <span style="color:var(--stone-600)">&mdash;</span>
+                                        <input type="time" name="day_6_end" class="form-control-sm" value="{{ schedules.6.end_time|time:'H:i' }}" style="padding:6px 8px;font-size:12px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-gold btn-lg btn-block">
+                            <i class="fas fa-floppy-disk"></i> {% trans "Save Schedule" %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

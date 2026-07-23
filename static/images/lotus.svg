@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9a84c"/>
+      <stop offset="50%" stop-color="#e8c95a"/>
+      <stop offset="100%" stop-color="#c9a84c"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="90" fill="url(#glow)"/>
+  <!-- Center petal -->
+  <ellipse cx="100" cy="70" rx="14" ry="40" fill="url(#gold)" opacity="0.9"/>
+  <ellipse cx="100" cy="70" rx="14" ry="40" fill="url(#gold)" opacity="0.9" transform="rotate(30 100 100)"/>
+  <ellipse cx="100" cy="70" rx="14" ry="40" fill="url(#gold)" opacity="0.8" transform="rotate(60 100 100)"/>
+  <ellipse cx="100" cy="70" rx="14" ry="40" fill="url(#gold)" opacity="0.9" transform="rotate(90 100 100)"/>
+  <ellipse cx="100" cy="70" rx="14" ry="40" fill="url(#gold)" opacity="0.8" transform="rotate(120 100 100)"/>
+  <ellipse cx="100" cy="70" rx="14" ry="40" fill="url(#gold)" opacity="0.9" transform="rotate(150 100 100)"/>
+  <!-- Outer petals -->
+  <ellipse cx="100" cy="55" rx="10" ry="30" fill="url(#gold)" opacity="0.4" transform="rotate(15 100 100)"/>
+  <ellipse cx="100" cy="55" rx="10" ry="30" fill="url(#gold)" opacity="0.4" transform="rotate(45 100 100)"/>
+  <ellipse cx="100" cy="55" rx="10" ry="30" fill="url(#gold)" opacity="0.4" transform="rotate(75 100 100)"/>
+  <ellipse cx="100" cy="55" rx="10" ry="30" fill="url(#gold)" opacity="0.4" transform="rotate(105 100 100)"/>
+  <ellipse cx="100" cy="55" rx="10" ry="30" fill="url(#gold)" opacity="0.4" transform="rotate(135 100 100)"/>
+  <ellipse cx="100" cy="55" rx="10" ry="30" fill="url(#gold)" opacity="0.4" transform="rotate(165 100 100)"/>
+  <!-- Center circle -->
+  <circle cx="100" cy="100" r="12" fill="url(#gold)" opacity="0.95"/>
+  <circle cx="100" cy="100" r="6" fill="#0a0a0c"/>
+</svg>

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Customer Dashboard" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Dashboard" %} <em>{% trans "Customer" %}</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+        <p>{% trans "Manage your bookings and activities" %}</p>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-calendar-check"></i></div>
+                <div class="stat-info">
+                    <span class="stat-number">{{ bookings|length }}</span>
+                    <span class="stat-label">{% trans "Total Bookings" %}</span>
+                </div>
+            </div>
+            <a href="{% url 'customer_chat_list' %}" class="stat-card" style="text-decoration:none">
+                <div class="stat-icon gold"><i class="fas fa-comments"></i></div>
+                <div class="stat-info">
+                    <span class="stat-number"><i class="fas fa-arrow-right" style="font-size:18px"></i></span>
+                    <span class="stat-label">{% trans "Chat dengan Healer" %}</span>
+                </div>
+            </a>
+            <a href="{% url 'healer_list' %}" class="stat-card" style="text-decoration:none">
+                <div class="stat-icon green"><i class="fas fa-magnifying-glass"></i></div>
+                <div class="stat-info">
+                    <span class="stat-number"><i class="fas fa-arrow-right" style="font-size:18px"></i></span>
+                    <span class="stat-label">{% trans "Temukan Healer" %}</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-calendar" style="color:var(--gold)"></i> {% trans "My Bookings" %}</h3>
+            </div>
+            <div class="card-body">
+                {% if bookings %}
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>{% trans "Code" %}</th><th>{% trans "Healer" %}</th><th>{% trans "Service" %}</th><th>{% trans "Date" %}</th><th>{% trans "Status" %}</th><th>{% trans "Action" %}</th></tr>
+                        </thead>
+                        <tbody>
+                            {% for b in bookings %}
+                            <tr>
+                                <td><strong style="color:var(--gold);font-weight:700">{{ b.booking_code }}</strong></td>
+                                <td style="color:var(--fg)">{{ b.healer.name }}</td>
+                                <td>{{ b.service_type }}</td>
+                                <td>{{ b.booking_date|date:"d M Y" }}</td>
+                                <td><span class="status-badge status-{{ b.status }}">{{ b.get_status_display }}</span></td>
+                                <td><a href="{% url 'booking_detail' b.booking_code %}" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i></a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-calendar-xmark"></i>
+                    <h3>{% trans "No Bookings Yet" %}</h3>
+                    <p>{% trans "Start exploring healers and make your first booking." %}</p>
+                    <a href="{% url 'healer_list' %}" class="btn btn-gold btn-sm" style="margin-top:8px"><i class="fas fa-magnifying-glass"></i> {% trans "Find Healer" %}</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

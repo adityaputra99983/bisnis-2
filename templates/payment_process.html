@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load currency_tags %}
+{% block title %}{% trans "Payment" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <a href="{% url 'booking_detail' booking.booking_code %}" class="back-link"><i class="fas fa-arrow-left"></i> Booking {{ booking.booking_code }}</a>
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Payment" %} <em>{% trans "Booking" %}</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="payment-layout">
+            <div>
+                <div class="card" style="margin-bottom:14px">
+                    <div class="card-body">
+                        <div class="healer-mini">
+                            <div class="healer-mini-avatar" style="border-radius:10px">
+                                <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;color:var(--stone-950);font-weight:700;font-size:18px;border-radius:10px">
+                                    {{ booking.healer.name|truncatechars:1 }}
+                                </div>
+                            </div>
+                            <div class="healer-mini-info">
+                                <h4>{{ booking.healer.name }}</h4>
+                                <p>{{ booking.service_type }}</p>
+                            </div>
+                        </div>
+                        <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
+                        <div class="summary-row"><span>{% trans "Booking Code" %}</span><strong style="color:var(--gold)">{{ booking.booking_code }}</strong></div>
+                        <div class="summary-row"><span>{% trans "Date" %}</span><strong>{{ booking.booking_date|date:"d M Y" }}</strong></div>
+                        <div class="summary-row"><span>{% trans "Customer" %}</span><strong>{{ booking.customer_name }}</strong></div>
+                        <div class="summary-row total"><span>{% trans "Total" %}</span><strong data-price-idr="{{ booking.total_price_idr|floatformat:0 }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-credit-card" style="color:var(--gold)"></i> {% trans "Select Payment Method" %}</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if payment %}
+                        <div class="payment-status-badge pending" style="margin-bottom:16px">
+                            <i class="fas fa-clock"></i> {% trans "Awaiting Payment" %}
+                        </div>
+                        <div class="payment-instructions">
+                            <h4>{% trans "Complete Payment" %}</h4>
+                            <p>{% trans "Payment code" %}: <strong style="color:var(--gold)">{{ payment.payment_code }}</strong></p>
+                            <p>{% trans "Waiting for payment confirmation..." %}</p>
+                        </div>
+                        {% else %}
+                        <form method="POST" action="{% url 'create_payment' booking.booking_code %}">
+                            {% csrf_token %}
+                            <div class="form-section">
+                                <h4><i class="fas fa-globe"></i> {% trans "Currency" %}</h4>
+                                <div class="currency-grid">
+                                    {% for curr in currencies %}
+                                    <label class="currency-option {% if forloop.first %}selected{% endif %}">
+                                        <input type="radio" name="currency" value="{{ curr.code }}" {% if forloop.first %}checked{% endif %}>
+                                        <div class="currency-box">
+                                            <div class="currency-symbol">{{ curr.symbol }}</div>
+                                            <div class="currency-code">{{ curr.code }}</div>
+                                            <div class="currency-name">{{ curr.name }}</div>
+                                        </div>
+                                    </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="form-section" style="border-bottom:none">
+                                <h4><i class="fas fa-wallet"></i> {% trans "Payment Method" %}</h4>
+                                <div class="payment-methods">
+                                    {% for method in payment_methods %}
+                                    <label class="payment-method-option">
+                                        <input type="radio" name="payment_method" value="{{ method.id }}" {% if forloop.first %}checked{% endif %}>
+                                        <div class="method-box">
+                                            <i class="fas {% if method.bank_name %}fa-building-columns{% else %}fa-mobile-screen{% endif %}"></i>
+                                            <div>
+                                                <strong>{{ method.name }}</strong>
+                                                <small>{{ method.description|default:"Instant payment" }}</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="payment-total-section">
+                                <div class="payment-total-row">
+                                    <span>{% trans "Total Payment" %}</span>
+                                    <strong>{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-gold btn-lg btn-block">
+                                <i class="fas fa-lock"></i> {% trans "Pay Now" %}
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

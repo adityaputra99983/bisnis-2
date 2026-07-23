@@ -1,0 +1,513 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load currency_tags %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero bali-hero">
+    <div class="hero-video-wrap" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; overflow: hidden;">
+        <img src="{% static 'images/bali_healer_hero.png' %}" alt="Elegant Bali Healer Background" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            {% trans "Trusted Bali Healing" %}
+        </div>
+        <h1 style="font-family: 'Cinzel', serif; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;">{% blocktrans %}Discover Your <span class="gold-text-gradient" style="font-style: normal;">Healing</span> Journey in Bali{% endblocktrans %}</h1>
+        <p class="hero-subtitle">{% trans "Connect with Bali's most authentic healers and discover ancient rituals for your body, mind, and soul." %}</p>
+        <div class="search-wrap">
+            <i class="fas fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" placeholder="{% trans 'Search healers, centres, specialities...' %}">
+        </div>
+        <div class="popular-tags">
+            <span class="popular-label">{% trans "Popular:" %}</span>
+            <a href="{% url 'healer_list' %}?q=Reiki" class="tag-pill">Reiki Healing</a>
+            <a href="{% url 'healer_list' %}?q=Chakra" class="tag-pill">Chakra Balancing</a>
+            <a href="{% url 'healer_list' %}?q=Sound" class="tag-pill">Sound Healing</a>
+        </div>
+    </div>
+</section>
+
+<!-- TRUSTED HEALERS -->
+<section class="section batik-section-bg" data-reveal>
+    <div class="container">
+        <div class="section-header batik-section-header">
+            <div class="heading-ornament"><span class="heading-ornament-icon">&#10022;</span></div>
+            <div class="section-label">{% trans "Featured Healers" %}</div>
+            <h2>{% blocktrans %}Trusted <em>Mobile Healers</em>{% endblocktrans %}</h2>
+            <p>{% trans "Verified healers who come to you" %}</p>
+        </div>
+        <div class="healers-grid">
+            {% for healer in healers %}
+            <div class="healer-card">
+                <div class="healer-card-header">
+                    <div class="healer-card-header-bg" style="background:linear-gradient(135deg, {% cycle '#92400e' '#581c87' '#0f766e' '#1e3a5f' '#7e22ce' '#166534' as hbg1 %}, {% cycle '#ca8a04' '#9333ea' '#06b6d4' '#2563eb' '#db2777' '#059669' as hbg2 %})">
+                        <div class="deco-circle"></div>
+                        <div class="deco-circle"></div>
+                    </div>
+                    <button class="healer-fav-btn"><i class="far fa-heart"></i></button>
+                    <div class="healer-avatar-wrap">
+                        <div class="healer-avatar" style="background:linear-gradient(135deg, {% cycle '#b45309' '#7c3aed' '#0d9488' '#1e40af' '#a21caf' '#15803d' as av1 %}, {% cycle '#eab308' '#a855f7' '#22d3ee' '#3b82f6' '#ec4899' '#10b981' as av2 %})">
+                            {{ healer.name|truncatechars:2 }}
+                        </div>
+                        <div class="verified-badge"><i class="fas fa-check"></i></div>
+                    </div>
+                </div>
+                <div class="healer-card-body">
+                    <div class="healer-name">{{ healer.name }}</div>
+                    <div class="healer-meta">
+                        <span><i class="fas fa-location-dot"></i> {{ healer.address|truncatechars:20 }}</span>
+                        <span><i class="fas fa-clock"></i> {{ healer.experience_years }} {% trans "yrs" %}</span>
+                    </div>
+                    <div class="healer-rating">
+                        <div class="stars">
+                            {% for i in "12345" %}{% if forloop.counter <= healer.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}
+                        </div>
+                        <span class="rating-score">{{ healer.rating }}</span>
+                        <span class="rating-count">({{ healer.reviews.count }})</span>
+                    </div>
+                    {% if healer.rating >= 4.8 %}
+                    <div class="top-rated-badge"><i class="fas fa-award"></i> {% trans "Top Rated" %}</div>
+                    {% endif %}
+                    <div class="healer-tags">
+                        {% for spec in healer.specializations|truncatewords:2 %}
+                        <span class="healer-tag">{{ spec }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="healer-divider"></div>
+                    <div class="healer-footer">
+                        <div class="healer-status {% if healer.is_available %}available{% else %}demand{% endif %}">
+                            <span class="healer-status-dot"></span>
+                            {% if healer.is_available %}{% trans "Available" %}{% else %}{% trans "High Demand" %}{% endif %}
+                        </div>
+                        <div class="healer-price">{% trans "From" %} <strong data-price-idr="{{ healer.price_idr|floatformat:0 }}">{{ healer.price_idr|price_with_original:LANGUAGE_CODE }}</strong></div>
+                    </div>
+                    <!-- Multi-Currency Carousel -->
+                    <div class="currency-carousel-wrap" data-price-idr="{{ healer.price_idr|floatformat:0 }}">
+                        <div class="currency-carousel-track">
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇮🇩</span><span class="cc-code">IDR</span><span class="cc-amount">Rp {{ healer.price_idr|floatformat:0 }}</span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇺🇸</span><span class="cc-code">USD</span><span class="cc-amount" data-convert="USD"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇪🇺</span><span class="cc-code">EUR</span><span class="cc-amount" data-convert="EUR"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇬🇧</span><span class="cc-code">GBP</span><span class="cc-amount" data-convert="GBP"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇯🇵</span><span class="cc-code">JPY</span><span class="cc-amount" data-convert="JPY"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇨🇳</span><span class="cc-code">CNY</span><span class="cc-amount" data-convert="CNY"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇰🇷</span><span class="cc-code">KRW</span><span class="cc-amount" data-convert="KRW"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇸🇬</span><span class="cc-code">SGD</span><span class="cc-amount" data-convert="SGD"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇹🇭</span><span class="cc-code">THB</span><span class="cc-amount" data-convert="THB"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇦🇺</span><span class="cc-code">AUD</span><span class="cc-amount" data-convert="AUD"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇸🇦</span><span class="cc-code">SAR</span><span class="cc-amount" data-convert="SAR"></span></div>
+                            <div class="currency-carousel-slide"><span class="cc-flag">🇮🇳</span><span class="cc-code">INR</span><span class="cc-amount" data-convert="INR"></span></div>
+                        </div>
+                        <div class="currency-carousel-dots"></div>
+                    </div>
+                    <div class="healer-actions">
+                        <a href="{% url 'create_booking' healer.id %}" class="btn-book">{% trans "Book Now" %}</a>
+                        <a href="{% url 'healer_detail' healer.slug %}" class="btn-profile">{% trans "Profile" %}</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <i class="fas fa-user-doctor"></i>
+                <h3>{% trans "Healers Coming Soon" %}</h3>
+                <p>{% trans "Verified healers will be available shortly." %}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="section-footer">
+            <a href="{% url 'healer_list' %}" class="btn btn-outline">{% trans "View All Healers" %} <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- Batik Ornamental Divider -->
+<div class="section-divider bali-divider">
+    <div class="bali-divider-ornament"></div>
+    <span class="divider-icon">&#10022; &#10022; &#10022;</span>
+    <div class="bali-divider-ornament"></div>
+</div>
+
+<!-- HEALING CENTERS -->
+<section class="section batik-section-bg" data-reveal>
+    <div class="container">
+        <div class="section-header batik-section-header">
+            <div class="heading-ornament"><span class="heading-ornament-icon">&#10022;</span></div>
+            <div class="section-label">{% trans "Sacred Spaces" %}</div>
+            <h2>{% blocktrans %}Healing <em>Centers</em> Across Bali{% endblocktrans %}</h2>
+            <p>{% trans "Beautiful spaces for your healing journey" %}</p>
+        </div>
+        <div class="centers-grid">
+            {% for center in centers %}
+            <div class="center-card">
+                <div class="center-card-image">
+                    <div class="center-card-image-bg" style="background:linear-gradient(135deg, {% cycle '#155e75' '#312e81' '#065f46' as c1 %}, {% cycle '#0e7490' '#4338ca' '#047857' as c2 %})"></div>
+                    {% if center.has_google_badge %}
+                    <div class="google-badge">
+                        <span class="g-icon" style="background:linear-gradient(135deg,#4285f4,#ea4335,#fbbc05,#34a853)">G</span>
+                        Google
+                    </div>
+                    {% endif %}
+                    <button class="center-fav-btn"><i class="far fa-heart"></i></button>
+                    <div class="center-info-overlay">
+                        <div class="center-name">{{ center.name }}</div>
+                        <div class="center-location"><i class="fas fa-location-dot"></i> {{ center.location|default:"Bali" }}</div>
+                    </div>
+                </div>
+                <div class="center-card-body">
+                    <div class="healer-rating">
+                        <div class="stars">
+                            {% for i in "12345" %}{% if forloop.counter <= center.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}
+                        </div>
+                        <span class="rating-score">{{ center.rating }}</span>
+                        <span class="rating-count">({{ center.review_count }})</span>
+                    </div>
+                    <div class="center-tags">
+                        {% for spec in center.specializations|truncatewords:2 %}
+                        <span class="healer-tag">{{ spec }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="center-divider"></div>
+                    <div class="center-price">{{ center.price_range|default:"Rp 300.000 — Rp 1.500.000" }}</div>
+                    <div class="center-actions">
+                        <a href="{% url 'center_detail' center.slug %}" class="btn-book">{% trans "Book Now" %}</a>
+                        <a href="{% url 'center_detail' center.slug %}" class="btn-profile">{% trans "Details" %}</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <i class="fas fa-building"></i>
+                <h3>{% trans "Centers Coming Soon" %}</h3>
+                <p>{% trans "Healing centers will be listed here." %}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="section-footer">
+            <a href="{% url 'center_list' %}" class="btn btn-outline">{% trans "View All Centers" %} <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- HEALING SPECIALITIES -->
+<section class="section batik-section-bg" data-reveal>
+    <div class="container">
+        <div class="section-header batik-section-header">
+            <div class="heading-ornament"><span class="heading-ornament-icon">&#10022;</span></div>
+            <div class="section-label">{% trans "Ancient Traditions" %}</div>
+            <h2>{% blocktrans %}Healing <em>Specialities</em>{% endblocktrans %}</h2>
+            <p>{% trans "Explore the diverse healing traditions of Bali" %}</p>
+        </div>
+        <div class="specialties-grid">
+            {% for spec in specialities %}
+            <a href="{% url 'healer_list' %}?q={{ spec.name }}" class="specialty-card">
+                <div class="specialty-emoji">{{ spec.emoji }}</div>
+                <div class="specialty-title">{{ spec.name }}</div>
+                <div class="specialty-desc">{{ spec.description }}</div>
+                <div class="specialty-link">{% trans "Explore" %} &rarr;</div>
+            </a>
+            {% empty %}
+            {% for spec_name, spec_emoji, spec_desc in default_specialities %}
+            <a href="{% url 'healer_list' %}?q={{ spec_name }}" class="specialty-card">
+                <div class="specialty-emoji">{{ spec_emoji }}</div>
+                <div class="specialty-title">{{ spec_name }}</div>
+                <div class="specialty-desc">{{ spec_desc }}</div>
+                <div class="specialty-link">{% trans "Explore" %} &rarr;</div>
+            </a>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Batik Ornamental Divider -->
+<div class="section-divider bali-divider">
+    <div class="bali-divider-ornament"></div>
+    <span class="divider-icon">&#10022; &#10022; &#10022;</span>
+    <div class="bali-divider-ornament"></div>
+</div>
+
+<!-- POPULAR LOCATIONS -->
+<section class="section batik-section-bg" data-reveal>
+    <div class="container">
+        <div class="section-header batik-section-header">
+            <div class="heading-ornament"><span class="heading-ornament-icon">&#10022;</span></div>
+            <div class="section-label">{% trans "Destinations" %}</div>
+            <h2>{% blocktrans %}Popular <em>Locations</em>{% endblocktrans %}</h2>
+            <p>{% trans "Explore healing experiences across Bali's most sought-after areas" %}</p>
+        </div>
+        <div class="locations-grid">
+            {% for loc in locations %}
+            <div class="location-card">
+                {% with loc_name=loc.name|lower %}
+                <div class="location-card-bg">
+                    {% if "ubud" in loc_name %}
+                    <img src="{% static 'images/loc_ubud.png' %}" alt="Ubud" style="width:100%;height:100%;object-fit:cover;">
+                    {% elif "canggu" in loc_name %}
+                    <img src="{% static 'images/loc_canggu.png' %}" alt="Canggu" style="width:100%;height:100%;object-fit:cover;">
+                    {% elif "sanur" in loc_name %}
+                    <img src="{% static 'images/loc_sanur.png' %}" alt="Sanur" style="width:100%;height:100%;object-fit:cover;">
+                    {% elif "seminyak" in loc_name %}
+                    <img src="{% static 'images/loc_seminyak.png' %}" alt="Seminyak" style="width:100%;height:100%;object-fit:cover;">
+                    {% elif "abiansemal" in loc_name %}
+                    <img src="{% static 'images/loc_abiansemal.png' %}" alt="Abiansemal" style="width:100%;height:100%;object-fit:cover;">
+                    {% else %}
+                    <div style="background:linear-gradient(135deg,#064e3b,#047857);width:100%;height:100%;"></div>
+                    {% endif %}
+                </div>
+                {% endwith %}
+                <div class="location-card-overlay">
+                    <div class="location-name">{{ loc.name }}</div>
+                    <div class="location-desc">{{ loc.description|truncatewords:8 }}</div>
+                    <div class="location-stats">
+                        <span><i class="fas fa-user"></i> {{ loc.healer_count }} {% trans "Healers" %}</span>
+                        <span><i class="fas fa-building"></i> {{ loc.center_count }} {% trans "Centers" %}</span>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            {% for loc_name, loc_desc, loc_healers, loc_centers, loc_gradient in default_locations %}
+            <div class="location-card">
+                <div class="location-card-bg">
+                    {% with loc_name_lower=loc_name|lower %}
+                    {% if "ubud" in loc_name_lower %}
+                    <img src="{% static 'images/loc_ubud.png' %}" alt="Ubud" style="width:100%;height:100%;object-fit:cover;">
+                    {% elif "canggu" in loc_name_lower %}
+                    <img src="{% static 'images/loc_canggu.png' %}" alt="Canggu" style="width:100%;height:100%;object-fit:cover;">
+                    {% elif "sanur" in loc_name_lower %}
+                    <img src="{% static 'images/loc_sanur.png' %}" alt="Sanur" style="width:100%;height:100%;object-fit:cover;">
+                    {% elif "seminyak" in loc_name_lower %}
+                    <img src="{% static 'images/loc_seminyak.png' %}" alt="Seminyak" style="width:100%;height:100%;object-fit:cover;">
+                    {% elif "abiansemal" in loc_name_lower %}
+                    <img src="{% static 'images/loc_abiansemal.png' %}" alt="Abiansemal" style="width:100%;height:100%;object-fit:cover;">
+                    {% else %}
+                    <div style="background:linear-gradient(135deg, {{ loc_gradient }});width:100%;height:100%;"></div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="location-card-overlay">
+                    <div class="location-name">{{ loc_name }}</div>
+                    <div class="location-desc">{{ loc_desc }}</div>
+                    <div class="location-stats">
+                        <span><i class="fas fa-user"></i> {{ loc_healers }} {% trans "Healers" %}</span>
+                        <span><i class="fas fa-building"></i> {{ loc_centers }} {% trans "Centers" %}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section batik-section-bg" data-reveal>
+    <div class="container">
+        <div class="section-header batik-section-header" style="text-align:center">
+            <div class="heading-ornament" style="justify-content:center"><span class="heading-ornament-icon">&#10022;</span></div>
+            <div class="section-label" style="justify-content:center">{% trans "Simple Process" %}</div>
+            <h2>{% blocktrans %}How It <em>Works</em>{% endblocktrans %}</h2>
+            <p style="margin-left:auto;margin-right:auto">{% trans "Three simple steps to begin your healing journey" %}</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-icon-wrap">
+                    <i class="fas fa-compass"></i>
+                    <div class="step-badge">01</div>
+                </div>
+                <div class="step-content">
+                    <div class="step-title">{% trans "Discover" %}</div>
+                    <div class="step-desc">{% trans "Explore verified healers, healing centres, and specialities across Bali. Read reviews and find the perfect match." %}</div>
+                </div>
+            </div>
+            <div class="step-card">
+                <div class="step-icon-wrap">
+                    <i class="fas fa-calendar-check"></i>
+                    <div class="step-badge">02</div>
+                </div>
+                <div class="step-content">
+                    <div class="step-title">{% trans "Book" %}</div>
+                    <div class="step-desc">{% trans "Choose your session — on-site, home service, or online consultation. Pick a date and time that works for you." %}</div>
+                </div>
+            </div>
+            <div class="step-card">
+                <div class="step-icon-wrap">
+                    <i class="fas fa-heart"></i>
+                    <div class="step-badge">03</div>
+                </div>
+                <div class="step-content">
+                    <div class="step-title">{% trans "Heal" %}</div>
+                    <div class="step-desc">{% trans "Experience authentic healing wherever you are. Connect with Bali's ancient wisdom for transformation." %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Batik Ornamental Divider -->
+<div class="section-divider bali-divider">
+    <div class="bali-divider-ornament"></div>
+    <span class="divider-icon">&#10022; &#10022; &#10022;</span>
+    <div class="bali-divider-ornament"></div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="section batik-section-bg" data-reveal>
+    <div class="container">
+        <div class="section-header batik-section-header">
+            <div class="heading-ornament"><span class="heading-ornament-icon">&#10022;</span></div>
+            <div class="section-label">{% trans "Client Stories" %}</div>
+            <h2>{% blocktrans %}What Our Clients <em>Say</em>{% endblocktrans %}</h2>
+            <p>{% trans "Real experiences from healing seekers" %}</p>
+        </div>
+    </div>
+    <!-- Auto-scrolling Carousel -->
+    <div class="reviews-carousel">
+        <div class="reviews-track">
+            {% for t in testimonials %}
+            <div class="review-card">
+                <div class="review-stars">
+                    {% for i in "12345" %}{% if forloop.counter <= t.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}
+                </div>
+                <div class="review-text">"{{ t.comment }}"</div>
+                <div class="review-author">
+                    <div class="review-avatar">{{ t.customer_name|truncatechars:1 }}</div>
+                    <div>
+                        <div class="review-name">{{ t.customer_name }}</div>
+                        <div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div>
+                    </div>
+                    <div class="review-date">{{ t.date|date:"M d, Y" }}</div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- Fallback reviews (same as before, duplicated for seamless loop) -->
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "Wayan's healing session was truly transformative. I felt a deep sense of peace and renewal that I hadn't experienced in years." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">S</div>
+                    <div><div class="review-name">Sarah M.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "Anjali has an incredible gift. Her Reiki session helped me release years of stored emotional tension." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">J</div>
+                    <div><div class="review-name">James K.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "The sound bath with Kadek was beyond words. The vibrations of the singing bowls took me to a state of deep relaxation." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">E</div>
+                    <div><div class="review-name">Elena P.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "The healing center in Ubud was breathtaking. The combination of traditional and modern approaches was exactly what I needed." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">M</div>
+                    <div><div class="review-name">Michael T.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "I was skeptical at first, but the chakra balancing session completely changed my energy. I feel more centered than ever." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">L</div>
+                    <div><div class="review-name">Lisa R.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "A truly authentic Balinese healing experience. Made's traditional knowledge is priceless." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">D</div>
+                    <div><div class="review-name">David W.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+            <!-- DUPLICATE SET for seamless loop -->
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "Wayan's healing session was truly transformative. I felt a deep sense of peace and renewal that I hadn't experienced in years." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">S</div>
+                    <div><div class="review-name">Sarah M.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "Anjali has an incredible gift. Her Reiki session helped me release years of stored emotional tension." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">J</div>
+                    <div><div class="review-name">James K.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "The sound bath with Kadek was beyond words. The vibrations of the singing bowls took me to a state of deep relaxation." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">E</div>
+                    <div><div class="review-name">Elena P.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "The healing center in Ubud was breathtaking. The combination of traditional and modern approaches was exactly what I needed." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">M</div>
+                    <div><div class="review-name">Michael T.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "I was skeptical at first, but the chakra balancing session completely changed my energy. I feel more centered than ever." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">L</div>
+                    <div><div class="review-name">Lisa R.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <div class="review-text">{% trans "A truly authentic Balinese healing experience. Made's traditional knowledge is priceless." %}</div>
+                <div class="review-author">
+                    <div class="review-avatar">D</div>
+                    <div><div class="review-name">David W.</div><div class="review-verified"><i class="fas fa-circle-check"></i> {% trans "Verified" %}</div></div>
+                    <div class="review-date">Jul 18, 2026</div>
+                </div>
+            </div>
+        </div>
+        <!-- Fade edges -->
+        <div class="carousel-fade-left"></div>
+        <div class="carousel-fade-right"></div>
+    </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section bali-cta" data-reveal>
+    <div class="cta-batik-frame"></div>
+    <div class="cta-content">
+        <h2>{% blocktrans %}Ready to Begin Your <em>Healing Journey?</em>{% endblocktrans %}</h2>
+        <p>{% trans "Find your perfect healer and book a session today." %}</p>
+        <div class="cta-buttons">
+            <a href="{% url 'healer_list' %}" class="btn-cta-primary">{% trans "Find a Healer" %}</a>
+            <a href="{% url 'register_choose' %}" class="btn-cta-outline">{% trans "Become a Provider" %}</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

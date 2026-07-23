@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load currency_tags %}
+{% block title %}{% trans "Book Healing Session" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <a href="{% url 'healer_detail' healer.slug %}" class="back-link"><i class="fas fa-arrow-left"></i> {{ healer.name }}</a>
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Book" %} <em>{% trans "Healing Session" %}</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="booking-layout">
+            <div class="booking-healer-info">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="healer-mini">
+                            <div class="healer-mini-avatar" style="border-radius:10px">
+                                <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;color:var(--stone-950);font-weight:700;font-size:18px;border-radius:10px">
+                                    {{ healer.name|truncatechars:1 }}
+                                </div>
+                            </div>
+                            <div class="healer-mini-info">
+                                <h4>{{ healer.name }}</h4>
+                                <p>{{ healer.specializations|truncatewords:3 }}</p>
+                                <div class="healer-rating">
+                                    <div class="stars">{% for i in "12345" %}{% if forloop.counter <= healer.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}</div>
+                                    <span class="rating-score">{{ healer.rating }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <span>{% trans "Session Price" %}</span>
+                            <strong id="price-display" data-price-idr="{{ healer.price_idr|floatformat:0 }}">{{ healer.price_idr|convert_price:LANGUAGE_CODE }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-calendar-plus" style="color:var(--gold)"></i> {% trans "Booking Form" %}</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-section">
+                                <h4><i class="fas fa-user"></i> {% trans "Personal Information" %}</h4>
+                                <div class="form-group">
+                                    <label>{% trans "Full Name" %} *</label>
+                                    <input type="text" name="customer_name" class="form-control" required value="{{ user.get_full_name|default:user.username }}">
+                                </div>
+                                <div class="form-group">
+                                    <label>{% trans "Phone" %} *</label>
+                                    <input type="text" name="customer_phone" class="form-control" required placeholder="{% trans 'Your phone number' %}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" name="customer_email" class="form-control" value="{{ user.email|default:'' }}" placeholder="{% trans 'Your email' %}">
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h4><i class="fas fa-calendar"></i> {% trans "Session Details" %}</h4>
+                                <div class="form-group">
+                                    <label>{% trans "Service" %} *</label>
+                                    <select name="service_type" class="form-control" required>
+                                        <option value="">{% trans "Select service..." %}</option>
+                                        {% for svc in services %}
+                                        <option value="{{ svc.id }}" data-price="{{ svc.price_idr }}">{{ svc.name }} — {{ svc.price_idr|convert_price:LANGUAGE_CODE }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>{% trans "Date" %} *</label>
+                                        <input type="date" name="booking_date" class="form-control" required min="{{ today|date:'Y-m-d' }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{% trans "Time" %} *</label>
+                                        <input type="time" name="booking_time" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>{% trans "Session Type" %} *</label>
+                                    <select name="session_type" class="form-control" required>
+                                        <option value="onsite">{% trans "On-site (Visit Healer Location)" %}</option>
+                                        <option value="home">{% trans "Home Service (Healer Comes to You)" %}</option>
+                                        <option value="online">{% trans "Online Consultation" %}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>{% trans "Additional Notes" %}</label>
+                                    <textarea name="notes" class="form-control" rows="3" placeholder="{% trans 'Describe your condition or special requests...' %}"></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-gold btn-lg btn-block">
+                                <i class="fas fa-check"></i> {% trans "Confirm Booking" %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+document.querySelector('select[name="service_type"]').addEventListener('change', function(){
+    var opt = this.options[this.selectedIndex];
+    var price = opt.getAttribute('data-price');
+    if(price){
+        var text = opt.textContent;
+        var parts = text.split(' — ');
+        if(parts.length > 1){
+            document.getElementById('price-display').textContent = parts[1].trim();
+        }
+    }
+});
+</script>
+{% endblock %}

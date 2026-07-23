@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Specialities" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <a href="{% url 'home' %}" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Home" %}</a>
+        <div style="position:relative;display:inline-block">
+            <h1>{% blocktrans %}Healing <em>Specialities</em>{% endblocktrans %}</h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+        <p>{% trans "Explore the diverse healing traditions of Bali" %}</p>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="specialties-grid">
+            {% for spec in specialities %}
+            <a href="{% url 'healer_list' %}?q={{ spec.name }}" class="specialty-card">
+                <div class="specialty-emoji">{{ spec.emoji }}</div>
+                <div class="specialty-title">{{ spec.name }}</div>
+                <div class="specialty-desc">{{ spec.description }}</div>
+                <div class="specialty-link">{% trans "Explore" %} &rarr;</div>
+            </a>
+            {% empty %}
+            {% for spec_name, spec_emoji, spec_desc in default_specialities %}
+            <a href="{% url 'healer_list' %}?q={{ spec_name }}" class="specialty-card">
+                <div class="specialty-emoji">{{ spec_emoji }}</div>
+                <div class="specialty-title">{{ spec_name }}</div>
+                <div class="specialty-desc">{{ spec_desc }}</div>
+                <div class="specialty-link">{% trans "Explore" %} &rarr;</div>
+            </a>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

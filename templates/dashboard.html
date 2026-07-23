@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Admin Dashboard" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Dashboard" %} <em>{% trans "Admin" %}</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+        <p>{% trans "Manage bookings, payments, and healer data" %}</p>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-calendar-days"></i></div>
+                <div class="stat-info"><span class="stat-number">{{ total_bookings }}</span><span class="stat-label">{% trans "Total Bookings" %}</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon yellow"><i class="fas fa-clock"></i></div>
+                <div class="stat-info"><span class="stat-number">{{ pending_bookings }}</span><span class="stat-label">{% trans "Pending" %}</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-info"><span class="stat-number">{{ confirmed_bookings }}</span><span class="stat-label">{% trans "Confirmed" %}</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fas fa-flag-checkered"></i></div>
+                <div class="stat-info"><span class="stat-number">{{ completed_bookings }}</span><span class="stat-label">{% trans "Completed" %}</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon gold"><i class="fas fa-coins"></i></div>
+                <div class="stat-info"><span class="stat-number">Rp {{ total_revenue_idr|floatformat:0 }}</span><span class="stat-label">{% trans "Revenue (IDR)" %}</span></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon teal"><i class="fas fa-money-check-alt"></i></div>
+                <div class="stat-info"><span class="stat-number">{{ total_payments }}</span><span class="stat-label">{% trans "Successful Payments" %}</span></div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar" style="color:var(--gold)"></i> {% trans "Recent Bookings" %}</h3>
+                    <a href="{% url 'booking_list' %}" class="btn btn-sm btn-outline">{% trans "View All" %}</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>{% trans "Code" %}</th><th>{% trans "Customer" %}</th><th>{% trans "Healer" %}</th><th>{% trans "Status" %}</th><th>{% trans "Action" %}</th></tr>
+                            </thead>
+                            <tbody>
+                                {% for b in recent_bookings %}
+                                <tr>
+                                    <td><strong style="color:var(--gold);font-weight:700">{{ b.booking_code }}</strong></td>
+                                    <td style="color:var(--fg)">{{ b.customer_name }}</td>
+                                    <td>{{ b.healer.name }}</td>
+                                    <td><span class="status-badge status-{{ b.status }}">{{ b.get_status_display }}</span></td>
+                                    <td>
+                                        <form method="POST" action="{% url 'update_booking_status' b.booking_code %}" class="inline-form">
+                                            {% csrf_token %}
+                                            <select name="status" class="form-control-sm" onchange="this.form.submit()">
+                                                {% for val, label in b.STATUS_CHOICES %}
+                                                <option value="{{ val }}" {% if b.status == val %}selected{% endif %}>{{ label }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="5" class="text-center text-muted" style="padding:36px">{% trans "No bookings yet." %}</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-money-bill-wave" style="color:var(--gold)"></i> {% trans "Recent Payments" %}</h3>
+                    <a href="{% url 'payment_history' %}" class="btn btn-sm btn-outline">{% trans "View All" %}</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>{% trans "Code" %}</th><th>{% trans "Customer" %}</th><th>{% trans "Amount" %}</th><th>{% trans "Status" %}</th><th>{% trans "Action" %}</th></tr>
+                            </thead>
+                            <tbody>
+                                {% for p in recent_payments %}
+                                <tr>
+                                    <td><strong style="color:var(--gold);font-weight:700">{{ p.payment_code }}</strong></td>
+                                    <td style="color:var(--fg)">{{ p.booking.customer_name }}</td>
+                                    <td style="color:var(--gold)">{{ p.amount_converted|floatformat:2 }} {{ p.currency.code|default:"IDR" }}</td>
+                                    <td><span class="status-badge status-{{ p.status }}">{{ p.get_status_display }}</span></td>
+                                    <td><a href="{% url 'payment_detail' p.payment_code %}" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i></a></td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="5" class="text-center text-muted" style="padding:36px">{% trans "No payments yet." %}</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-link" style="color:var(--gold)"></i> {% trans "Quick Access" %}</h3>
+            </div>
+            <div class="card-body">
+                <div class="quick-links">
+                    <a href="{% url 'healer_list' %}" class="quick-link"><i class="fas fa-user-doctor"></i><span>{% trans "Healers" %}</span></a>
+                    <a href="{% url 'booking_list' %}" class="quick-link"><i class="fas fa-calendar-check"></i><span>{% trans "Bookings" %}</span></a>
+                    <a href="{% url 'payment_history' %}" class="quick-link"><i class="fas fa-money-bill-wave"></i><span>{% trans "Payments" %}</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Payment History" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <a href="{% url 'home' %}" class="back-link"><i class="fas fa-arrow-left"></i> Home</a>
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Payment" %} <em>{% trans "History" %}</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                {% if payments %}
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>{% trans "Code" %}</th><th>{% trans "Customer" %}</th><th>{% trans "Amount" %}</th><th>{% trans "Status" %}</th><th>{% trans "Actions" %}</th></tr>
+                        </thead>
+                        <tbody>
+                            {% for p in payments %}
+                            <tr>
+                                <td><strong style="color:var(--gold);font-weight:700">{{ p.payment_code }}</strong></td>
+                                <td style="color:var(--fg)">{{ p.booking.customer_name }}</td>
+                                <td style="color:var(--gold)">{{ p.amount_converted|floatformat:2 }} {{ p.currency.code|default:"IDR" }}</td>
+                                <td><span class="status-badge status-{{ p.status }}">{{ p.get_status_display }}</span></td>
+                                <td><a href="{% url 'payment_detail' p.payment_code %}" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i></a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-receipt"></i>
+                    <h3>{% trans "No Payments Yet" %}</h3>
+                    <p>{% trans "Payment history will appear here." %}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

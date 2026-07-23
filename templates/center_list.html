@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Healing Centers" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <a href="{% url 'home' %}" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Home" %}</a>
+        <div style="position:relative;display:inline-block">
+            <h1>{% blocktrans %}Healing <em>Centers</em>{% endblocktrans %}</h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+        <p>{% trans "Explore healing centres across Bali" %}</p>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="search-wrap" style="margin-bottom:20px">
+            <i class="fas fa-magnifying-glass search-icon"></i>
+            <form method="GET" action="{% url 'center_list' %}">
+                <input type="text" name="q" class="search-input" value="{{ query }}" placeholder="{% trans 'Search centers by name or location...' %}">
+            </form>
+        </div>
+        <div class="centers-grid">
+            {% for center in centers %}
+            <div class="center-card">
+                <div class="center-card-image">
+                    <div class="center-card-image-bg" style="background:linear-gradient(135deg, {% cycle '#155e75' '#312e81' '#065f46' as c1 %}, {% cycle '#0e7490' '#4338ca' '#047857' as c2 %})"></div>
+                    {% if center.has_google_badge %}
+                    <div class="google-badge">
+                        <span class="g-icon" style="background:linear-gradient(135deg,#4285f4,#ea4335,#fbbc05,#34a853)">G</span>
+                        Google
+                    </div>
+                    {% endif %}
+                    <button class="center-fav-btn"><i class="far fa-heart"></i></button>
+                    <div class="center-info-overlay">
+                        <div class="center-name">{{ center.name }}</div>
+                        <div class="center-location"><i class="fas fa-location-dot"></i> {{ center.location|default:"Bali" }}</div>
+                    </div>
+                </div>
+                <div class="center-card-body">
+                    <div class="healer-rating">
+                        <div class="stars">{% for i in "12345" %}{% if forloop.counter <= center.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}</div>
+                        <span class="rating-score">{{ center.rating }}</span>
+                        <span class="rating-count">({{ center.review_count }})</span>
+                    </div>
+                    <div class="center-tags">{% for spec in center.specializations|truncatewords:2 %}<span class="healer-tag">{{ spec }}</span>{% endfor %}</div>
+                    <div class="center-divider"></div>
+                    <div class="center-price">{{ center.price_range|default:"Rp 300.000 — Rp 1.500.000" }}</div>
+                    <div class="center-actions">
+                        <a href="{% url 'center_detail' center.slug %}" class="btn-book">{% trans "Book Now" %}</a>
+                        <a href="{% url 'center_detail' center.slug %}" class="btn-profile">{% trans "Details" %}</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state"><i class="fas fa-building"></i><h3>{% trans "No Centers Found" %}</h3><p>{% trans "Try adjusting your search criteria." %}</p></div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

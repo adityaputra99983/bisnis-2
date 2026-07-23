@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+  <g opacity="0.6">
+    <!-- Outer circles -->
+    <circle cx="200" cy="200" r="180" stroke="#c9a84c" stroke-opacity="0.08" fill="none" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="150" stroke="#c9a84c" stroke-opacity="0.1" fill="none" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="120" stroke="#c9a84c" stroke-opacity="0.12" fill="none" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="90" stroke="#c9a84c" stroke-opacity="0.15" fill="none" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="60" stroke="#c9a84c" stroke-opacity="0.18" fill="none" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="30" stroke="#c9a84c" stroke-opacity="0.22" fill="none" stroke-width="0.5"/>
+    <!-- Cross lines -->
+    <line x1="200" y1="20" x2="200" y2="380" stroke="#c9a84c" stroke-opacity="0.06" stroke-width="0.5"/>
+    <line x1="20" y1="200" x2="380" y2="200" stroke="#c9a84c" stroke-opacity="0.06" stroke-width="0.5"/>
+    <line x1="73" y1="73" x2="327" y2="327" stroke="#c9a84c" stroke-opacity="0.06" stroke-width="0.5"/>
+    <line x1="327" y1="73" x2="73" y2="327" stroke="#c9a84c" stroke-opacity="0.06" stroke-width="0.5"/>
+    <!-- Diamond shapes -->
+    <polygon points="200,50 350,200 200,350 50,200" stroke="#c9a84c" stroke-opacity="0.08" fill="none" stroke-width="0.5"/>
+    <polygon points="200,80 320,200 200,320 80,200" stroke="#c9a84c" stroke-opacity="0.1" fill="none" stroke-width="0.5"/>
+    <polygon points="200,110 290,200 200,290 110,200" stroke="#c9a84c" stroke-opacity="0.12" fill="none" stroke-width="0.5"/>
+    <!-- Petal arcs -->
+    <path d="M200,50 Q250,130 200,200 Q150,130 200,50Z" fill="url(#g1)"/>
+    <path d="M350,200 Q270,250 200,200 Q270,150 350,200Z" fill="url(#g1)"/>
+    <path d="M200,350 Q150,270 200,200 Q250,270 200,350Z" fill="url(#g1)"/>
+    <path d="M50,200 Q130,150 200,200 Q130,250 50,200Z" fill="url(#g1)"/>
+    <!-- Inner star -->
+    <polygon points="200,120 220,180 280,180 232,218 248,278 200,242 152,278 168,218 120,180 180,180" stroke="#c9a84c" stroke-opacity="0.15" fill="none" stroke-width="0.5"/>
+    <!-- Center dot -->
+    <circle cx="200" cy="200" r="4" fill="#c9a84c" opacity="0.3"/>
+  </g>
+</svg>

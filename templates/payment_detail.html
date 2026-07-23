@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Payment Details" %} — Bali Healer{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <a href="javascript:history.back()" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Back" %}</a>
+        <div style="position:relative;display:inline-block">
+            <h1>{% trans "Payment" %} <em>{{ payment.payment_code }}</em></h1>
+            <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
+        </div>
+    </div>
+</div>
+<section class="section" data-reveal>
+    <div class="container">
+        <div class="payment-detail-layout">
+            <div class="card" style="margin-bottom:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-receipt" style="color:var(--gold)"></i> {% trans "Payment Details" %}</h3>
+                    <span class="payment-status-badge {{ payment.status }}">
+                        {% if payment.status == 'pending' %}<i class="fas fa-clock"></i> {% trans "Pending" %}
+                        {% elif payment.status == 'success' %}<i class="fas fa-check-circle"></i> {% trans "Successful" %}
+                        {% else %}<i class="fas fa-times-circle"></i> {% trans "Failed" %}{% endif %}
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="amount-display">
+                        <div class="amount-row"><span>{% trans "Payment Code" %}</span><strong style="color:var(--gold);font-weight:700">{{ payment.payment_code }}</strong></div>
+                        <div class="amount-row"><span>{% trans "Booking Code" %}</span><strong>{{ payment.booking.booking_code }}</strong></div>
+                        <div class="amount-row"><span>{% trans "Method" %}</span><strong>{{ payment.payment_method }}</strong></div>
+                        <div class="amount-row"><span>{% trans "Currency" %}</span><strong>{{ currency_code }}</strong></div>
+                        <div class="amount-row total"><span>{% trans "Total" %}</span><strong>{{ currency_symbol }} {{ payment.amount_converted|floatformat:2 }}</strong></div>
+                    </div>
+                </div>
+            </div>
+            {% if payment.status == 'pending' %}
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-flask" style="color:var(--info)"></i> {% trans "Payment Simulation" %}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="sim-actions">
+                        <h4>{% trans "Simulation Actions" %}</h4>
+                        <div class="sim-buttons">
+                            <form method="POST" action="{% url 'payment_simulate' payment.payment_code %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="success">
+                                <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i> {% trans "Simulate Success" %}</button>
+                            </form>
+                            <form method="POST" action="{% url 'payment_simulate' payment.payment_code %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="fail">
+                                <button type="submit" class="btn btn-danger"><i class="fas fa-times-circle"></i> {% trans "Simulate Failure" %}</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% if logs %}
+            <div class="card" style="margin-top:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-clock-rotate-left" style="color:var(--gold)"></i> {% trans "Transaction Log" %}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        {% for log in logs %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot {% if forloop.first %}active{% endif %}"></div>
+                            <div class="timeline-content">
+                                <strong>{{ log.action }}</strong>
+                                <p>{{ log.details }}</p>
+                                <small>{{ log.created_at|date:"d M Y, H:i" }}</small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

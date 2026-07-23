@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="fg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#e8c95a" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(100,100)">
+    <!-- Fire/flame shape -->
+    <path d="M0,-80 Q20,-50 15,-30 Q25,-10 10,10 Q20,30 10,50 Q15,70 0,80 Q-15,70 -10,50 Q-20,30 -10,10 Q-25,-10 -15,-30 Q-20,-50 0,-80Z" fill="url(#fg1)"/>
+    <path d="M0,-60 Q12,-40 8,-25 Q15,-10 5,10 Q12,25 5,40 Q8,55 0,60 Q-8,55 -5,40 Q-12,25 -5,10 Q-15,-10 -8,-25 Q-12,-40 0,-60Z" fill="#c9a84c" opacity="0.15"/>
+    <!-- Glow -->
+    <circle cx="0" cy="0" r="30" fill="#c9a84c" opacity="0.05"/>
+  </g>
+</svg>
