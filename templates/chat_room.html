@@ -184,10 +184,12 @@
     var lastId = {{ messages.last.id|default:0 }};
     var chatInterval = null;
     var chatVisible = true;
+    var pollCount = 0;
 
     document.addEventListener('visibilitychange', function(){
         chatVisible = !document.hidden;
         if(chatVisible && !chatInterval){
+            pollCount = 0;
             startChatPoll();
         } else if(!chatVisible && chatInterval){
             clearInterval(chatInterval);
@@ -212,13 +214,16 @@
                     el.appendChild(row);
                 });
                 el.scrollTop = el.scrollHeight;
+                pollCount = 0;
+            } else {
+                pollCount++;
             }
         }).catch(function(){});
     }
 
     function startChatPoll(){
         if(chatInterval) clearInterval(chatInterval);
-        chatInterval = setInterval(pollMessages, 3000);
+        chatInterval = setInterval(pollMessages, 5000);
     }
     startChatPoll();
 

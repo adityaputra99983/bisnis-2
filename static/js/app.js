@@ -101,20 +101,7 @@
   });
 
   /* ─── SMOOTH PAGE TRANSITION ─── */
-  document.querySelectorAll('a').forEach(a => {
-    if (a.href && a.href.includes(window.location.origin) && !a.href.includes('#') && !a.href.includes('javascript:')) {
-      a.addEventListener('click', function(e) {
-        if (this.target !== '_blank' && !this.hasAttribute('download') && !this.closest('.header') && !this.closest('.footer') && !this.closest('.mobile-nav') && !this.closest('.currency-dropdown') && !this.closest('.lang-dropdown')) {
-          e.preventDefault();
-          document.body.style.opacity = '0';
-          document.body.style.transition = 'opacity 0.2s ease';
-          setTimeout(() => { window.location.href = this.href; }, 200);
-        }
-      });
-    }
-  });
-  document.body.style.opacity = '1';
-  document.body.style.transition = 'opacity 0.4s ease';
+  /* Removed: was causing full body opacity fade on every click = constant repaints */
 
   /* ─── COUNTER ANIMATION ─── */
   const counters = document.querySelectorAll('.stat-number[data-count]');
@@ -143,27 +130,40 @@
   }, { threshold: 0.5 });
   counters.forEach(c => countObs.observe(c));
 
-  /* ─── PARALLAX on hero ─── */
+  /* ─── PARALLAX on hero (throttled with rAF) ─── */
   const heroContent = document.querySelector('.hero-content');
   const heroImg = document.querySelector('.hero-video-wrap img');
   if (heroContent && heroImg) {
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      if (scrollY < window.innerHeight) {
-        heroContent.style.transform = `translateY(${scrollY * 0.15}px)`;
-        heroContent.style.opacity = 1 - (scrollY / (window.innerHeight * 0.8));
-        heroImg.style.transform = `translateY(${scrollY * 0.08}px) scale(${1 + scrollY * 0.0002})`;
-      }
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        if (scrollY < window.innerHeight) {
+          heroContent.style.transform = `translateY(${scrollY * 0.15}px)`;
+          heroContent.style.opacity = 1 - (scrollY / (window.innerHeight * 0.8));
+          heroImg.style.transform = `translateY(${scrollY * 0.08}px) scale(${1 + scrollY * 0.0002})`;
+        }
+        ticking = false;
+      });
     }, { passive: true });
   }
 
-  /* ─── MAGNETIC BUTTONS ─── */
+  /* ─── MAGNETIC BUTTONS (throttled with rAF) ─── */
   document.querySelectorAll('.btn-gold, .btn-cta-primary, .btn-book').forEach(btn => {
+    let ticking = false;
+    let mx = 0, my = 0;
     btn.addEventListener('mousemove', (e) => {
+      if (ticking) return;
       const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+      mx = e.clientX - rect.left - rect.width / 2;
+      my = e.clientY - rect.top - rect.height / 2;
+      ticking = true;
+      requestAnimationFrame(() => {
+        btn.style.transform = `translate(${mx * 0.15}px, ${my * 0.15}px)`;
+        ticking = false;
+      });
     });
     btn.addEventListener('mouseleave', () => {
       btn.style.transform = 'translate(0, 0)';
@@ -174,15 +174,22 @@
     });
   });
 
-  /* ─── CARD TILT EFFECT ─── */
+  /* ─── CARD TILT EFFECT (throttled with rAF) ─── */
   document.querySelectorAll('.healer-card, .center-card, .review-card').forEach(card => {
+    let ticking = false;
+    let pendingX = 0, pendingY = 0;
     card.addEventListener('mousemove', (e) => {
+      if (ticking) return;
       const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
-      const rotateX = (y - 0.5) * -4;
-      const rotateY = (x - 0.5) * 4;
-      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+      pendingX = (e.clientX - rect.left) / rect.width;
+      pendingY = (e.clientY - rect.top) / rect.height;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const rotateX = (pendingY - 0.5) * -4;
+        const rotateY = (pendingX - 0.5) * 4;
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        ticking = false;
+      });
     });
     card.addEventListener('mouseleave', () => {
       card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';

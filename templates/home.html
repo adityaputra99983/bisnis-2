@@ -66,7 +66,7 @@
                             {% for i in "12345" %}{% if forloop.counter <= healer.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}
                         </div>
                         <span class="rating-score">{{ healer.rating }}</span>
-                        <span class="rating-count">({{ healer.reviews.count }})</span>
+                        <span class="rating-count">({{ healer.review_count }})</span>
                     </div>
                     {% if healer.rating >= 4.8 %}
                     <div class="top-rated-badge"><i class="fas fa-award"></i> {% trans "Top Rated" %}</div>
@@ -243,15 +243,15 @@
                 {% with loc_name=loc.name|lower %}
                 <div class="location-card-bg">
                     {% if "ubud" in loc_name %}
-                    <img src="{% static 'images/loc_ubud.png' %}" alt="Ubud" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="{% static 'images/loc_ubud.png' %}" alt="Ubud" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
                     {% elif "canggu" in loc_name %}
-                    <img src="{% static 'images/loc_canggu.png' %}" alt="Canggu" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="{% static 'images/loc_canggu.png' %}" alt="Canggu" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
                     {% elif "sanur" in loc_name %}
-                    <img src="{% static 'images/loc_sanur.png' %}" alt="Sanur" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="{% static 'images/loc_sanur.png' %}" alt="Sanur" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
                     {% elif "seminyak" in loc_name %}
-                    <img src="{% static 'images/loc_seminyak.png' %}" alt="Seminyak" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="{% static 'images/loc_seminyak.png' %}" alt="Seminyak" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
                     {% elif "abiansemal" in loc_name %}
-                    <img src="{% static 'images/loc_abiansemal.png' %}" alt="Abiansemal" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="{% static 'images/loc_abiansemal.png' %}" alt="Abiansemal" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
                     {% else %}
                     <div style="background:linear-gradient(135deg,#064e3b,#047857);width:100%;height:100%;"></div>
                     {% endif %}
@@ -272,15 +272,15 @@
                 <div class="location-card-bg">
                     {% with loc_name_lower=loc_name|lower %}
                     {% if "ubud" in loc_name_lower %}
-                    <img src="{% static 'images/loc_ubud.png' %}" alt="Ubud" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="{% static 'images/loc_ubud.png' %}" alt="Ubud" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
                     {% elif "canggu" in loc_name_lower %}
-                    <img src="{% static 'images/loc_canggu.png' %}" alt="Canggu" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="{% static 'images/loc_canggu.png' %}" alt="Canggu" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
                     {% elif "sanur" in loc_name_lower %}
-                    <img src="{% static 'images/loc_sanur.png' %}" alt="Sanur" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="{% static 'images/loc_sanur.png' %}" alt="Sanur" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
                     {% elif "seminyak" in loc_name_lower %}
-                    <img src="{% static 'images/loc_seminyak.png' %}" alt="Seminyak" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="{% static 'images/loc_seminyak.png' %}" alt="Seminyak" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
                     {% elif "abiansemal" in loc_name_lower %}
-                    <img src="{% static 'images/loc_abiansemal.png' %}" alt="Abiansemal" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="{% static 'images/loc_abiansemal.png' %}" alt="Abiansemal" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
                     {% else %}
                     <div style="background:linear-gradient(135deg, {{ loc_gradient }});width:100%;height:100%;"></div>
                     {% endif %}

@@ -104,7 +104,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   -webkit-text-fill-color: transparent;
   background-clip: text;
   background-size: 200% 100%;
-  animation: shimmer 4s ease-in-out infinite;
+  animation: shimmer 8s ease-in-out infinite;
 }
 @keyframes shimmer {
   0%, 100% { background-position: 0% 50%; }
@@ -187,11 +187,11 @@ button { cursor: pointer; font-family: var(--font-body); }
 .header {
   position: fixed; top: 0; left: 0; right: 0;
   z-index: 9999;
-  background: rgba(12,10,9,0.92);
-  backdrop-filter: blur(20px) saturate(1.2);
-  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  background: rgba(12,10,9,0.95);
   border-bottom: 1px solid var(--border);
-  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+  contain: layout;
 }
 .header.scrolled {
   background: rgba(12,10,9,0.98);
@@ -314,11 +314,11 @@ button { cursor: pointer; font-family: var(--font-body); }
     radial-gradient(ellipse at 70% 40%, rgba(200,169,81,0.05) 0%, transparent 50%);
   z-index: 1;
   pointer-events: none;
-  animation: heroGlow 8s ease-in-out infinite alternate;
+  animation: heroGlow 12s ease-in-out infinite alternate;
 }
 @keyframes heroGlow {
-  0% { opacity: 0.5; }
-  100% { opacity: 1; }
+  0% { opacity: 0.6; }
+  100% { opacity: 0.9; }
 }
 
 .hero-content {
@@ -457,7 +457,8 @@ button { cursor: pointer; font-family: var(--font-body); }
 [data-reveal] {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1);
+  transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform, opacity;
 }
 [data-reveal].revealed {
   opacity: 1;
@@ -486,6 +487,7 @@ button { cursor: pointer; font-family: var(--font-body); }
 .section {
   padding: 48px 0;
   position: relative;
+  contain: layout style;
 }
 @media (min-width: 640px) { .section { padding: 72px 0; } }
 @media (min-width: 1024px) { .section { padding: 96px 0; } }
@@ -541,15 +543,16 @@ button { cursor: pointer; font-family: var(--font-body); }
 .healer-card {
   border-radius: var(--radius-xl);
   border: 1px solid var(--border);
-  background: rgba(10, 10, 10, 0.6);
-  backdrop-filter: blur(12px);
+  background: rgba(10, 10, 10, 0.8);
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  contain: layout style;
+  will-change: transform;
 }
 .healer-card:hover {
   border-color: rgba(214,170,67,0.4);
-  transform: translateY(-6px);
-  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 30px rgba(214,170,67,0.06);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px -8px rgba(0,0,0,0.4);
 }
 .healer-card-header {
   position: relative;
@@ -572,12 +575,12 @@ button { cursor: pointer; font-family: var(--font-body); }
   position: absolute; top: 10px; right: 10px;
   width: 32px; height: 32px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.25);
-  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.45);
   border: none;
   display: flex; align-items: center; justify-content: center;
   color: #fff; font-size: 13px;
-  transition: all 0.25s;
+  transition: transform 0.25s;
+  will-change: transform;
 }
 .healer-fav-btn:hover { background: rgba(0,0,0,0.4); transform: scale(1.1); }
 
@@ -727,12 +730,14 @@ button { cursor: pointer; font-family: var(--font-body); }
   border: 1px solid var(--border);
   background: var(--bg-card);
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  contain: layout style;
+  will-change: transform;
 }
 .center-card:hover {
   border-color: var(--border-hover);
   transform: translateY(-3px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.25);
 }
 .center-card-image {
   position: relative;
@@ -745,8 +750,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   display: flex; align-items: center; gap: 5px;
   padding: 3px 8px;
   border-radius: var(--radius-full);
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.5);
   font-size: 9px; font-weight: 600;
   color: rgba(255,255,255,0.9);
 }
@@ -760,8 +764,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   position: absolute; top: 10px; right: 10px;
   width: 32px; height: 32px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.25);
-  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.45);
   border: none;
   display: flex; align-items: center; justify-content: center;
   color: #fff; font-size: 13px;
@@ -986,7 +989,8 @@ button { cursor: pointer; font-family: var(--font-body); }
   border-radius: var(--radius-xl);
   border: 1px solid var(--border);
   background: var(--bg-card);
-  transition: all 0.35s;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  contain: layout style;
 }
 .review-card:hover {
   border-color: var(--border-hover);
@@ -1079,6 +1083,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   border-top: 1px solid var(--border);
   padding: 48px 0 0;
   position: relative;
+  contain: layout style;
 }
 .footer::before {
   content: '';
@@ -1180,10 +1185,9 @@ button { cursor: pointer; font-family: var(--font-body); }
   position: fixed; bottom: 0; left: 0; right: 0;
   z-index: 9998;
   background: rgba(12,10,9,0.98);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
   border-top: 1px solid var(--border);
   padding-bottom: env(safe-area-inset-bottom);
+  contain: layout;
 }
 @media (min-width: 1024px) { .mobile-nav { display: none; } }
 .mobile-nav-item {
@@ -1616,7 +1620,7 @@ select.form-control { cursor: pointer; appearance: none; }
   display: flex; align-items: center; gap: 12px;
   padding: 16px 14px; border-radius: var(--radius-lg);
   background: var(--bg-card); border: 1px solid var(--border);
-  transition: all 0.3s;
+  transition: border-color 0.25s ease, transform 0.25s ease;
 }
 .stat-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
 .stat-icon {
@@ -1658,7 +1662,7 @@ select.form-control { cursor: pointer; appearance: none; }
 .lotus-badge img { width: 100%; height: 100%; }
 @keyframes lotus-float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  50% { transform: translateY(-4px); }
 }
 .lotus-badge-animated { animation: lotus-float 3s ease-in-out infinite; }
 .alert {
@@ -1758,32 +1762,32 @@ select.form-control { cursor: pointer; appearance: none; }
   position: fixed; inset: 0;
   pointer-events: none;
   z-index: 0;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .batik-layer-1 {
   background: var(--batik-pattern-3);
   background-size: 100px 100px;
-  opacity: 0.12;
-  animation: batikDrift1 60s linear infinite;
+  opacity: 0.08;
+  animation: batikDrift1 120s linear infinite;
 }
 .batik-layer-2 {
   background: var(--batik-pattern-1);
   background-size: 80px 80px;
-  opacity: 0.08;
-  animation: batikDrift2 90s linear infinite reverse;
-  mix-blend-mode: screen;
+  opacity: 0.05;
+  animation: batikDrift2 180s linear infinite reverse;
 }
 .batik-layer-3 {
   background: var(--batik-pattern-2);
   background-size: 60px 60px;
-  opacity: 0.06;
-  animation: batikPulse 8s ease-in-out infinite, batikDrift3 120s linear infinite;
-  mix-blend-mode: screen;
+  opacity: 0.04;
+  animation: batikDrift3 240s linear infinite;
 }
 .batik-layer-mandala {
   background-size: 500px;
-  opacity: 0.05;
-  animation: spin-slow 120s linear infinite;
-  mix-blend-mode: screen;
+  opacity: 0.03;
+  animation: spin-slow 240s linear infinite;
 }
 .batik-bg-glow {
   position: fixed; inset: 0;
@@ -1793,7 +1797,6 @@ select.form-control { cursor: pointer; appearance: none; }
     radial-gradient(ellipse 600px 400px at 15% 25%, rgba(200,169,81,0.06) 0%, transparent 70%),
     radial-gradient(ellipse 500px 350px at 85% 75%, rgba(200,169,81,0.04) 0%, transparent 70%),
     radial-gradient(ellipse 400px 300px at 50% 10%, rgba(200,169,81,0.03) 0%, transparent 60%);
-  animation: glowPulse 10s ease-in-out infinite alternate;
 }
 
 @keyframes batikDrift1 {
@@ -2431,8 +2434,8 @@ main, .footer, .mobile-nav, .chat-fab {
   animation: nav-ring 4s ease-in-out infinite;
 }
 @keyframes nav-ring {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.1); opacity: 0.2; }
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.05); opacity: 0.15; }
 }
 
 /* ═══ BATIK FORM FOCUS ═══ */
@@ -2477,8 +2480,7 @@ main, .footer, .mobile-nav, .chat-fab {
 /* ═══ LUXURY GOLDEN BORDER GLOW ═══ */
 .healer-card:hover, .center-card:hover, .specialty-card:hover {
   box-shadow:
-    0 20px 60px rgba(0,0,0,0.3),
-    0 0 40px rgba(200,169,81,0.04),
+    0 16px 40px rgba(0,0,0,0.25),
     inset 0 1px 0 rgba(200,169,81,0.1);
 }
 
@@ -2998,13 +3000,13 @@ section.section::before {
   position: absolute; inset: 0;
   background: var(--batik-pattern-3);
   background-size: 100px 100px;
-  opacity: 0.45;
+  opacity: 0.15;
   pointer-events: none;
 }
 section.section:nth-child(even)::before {
   background: var(--batik-pattern-1);
   background-size: 80px 80px;
-  opacity: 0.5;
+  opacity: 0.18;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -3042,8 +3044,7 @@ section.section:nth-child(even)::before {
 .card:hover {
   border-color: rgba(200,169,81,0.25);
   box-shadow:
-    0 20px 60px rgba(0,0,0,0.3),
-    0 0 30px rgba(200,169,81,0.04),
+    0 16px 40px rgba(0,0,0,0.25),
     inset 0 1px 0 rgba(200,169,81,0.08);
 }
 
@@ -3138,8 +3139,7 @@ section.section:nth-child(even)::before {
 .specialty-card:hover {
   border-color: rgba(200,169,81,0.3);
   box-shadow:
-    0 15px 40px rgba(0,0,0,0.3),
-    0 0 25px rgba(200,169,81,0.06),
+    0 12px 32px rgba(0,0,0,0.25),
     inset 0 1px 0 rgba(200,169,81,0.08);
 }
 
@@ -3424,3 +3424,34 @@ section.section:nth-child(even)::before {
   .chat-header-actions { gap: 4px; }
   .chat-action-btn { width: 28px; height: 28px; font-size: 11px; }
 }
+
+/* ═══ PERFORMANCE: DISABLE EXPENSIVE EFFECTS ON MOBILE ═══ */
+@media (max-width: 1023px) {
+  .batik-layer-2, .batik-layer-3, .batik-layer-mandala { display: none; }
+  .batik-bg-glow { display: none; }
+  .main-sacred-left, .main-sacred-right { display: none; }
+  .global-frame-left, .global-frame-right { display: none; }
+}
+
+/* ═══ PAUSE BACKGROUND ANIMATIONS WHEN TAB HIDDEN ═══ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .batik-bg-layer, .batik-bg-glow { display: none; }
+}
+
+/* ═══ CONTAINMENT: ISOLATE LAYOUT RECALCULATION ═══ */
+.healer-card, .center-card, .specialty-card, .step-card, .review-card {
+  contain: layout style;
+}
+
+/* ═══ GPU ACCELERATION HINTS ═══ */
+.hero-content, .hero-video-wrap img {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+

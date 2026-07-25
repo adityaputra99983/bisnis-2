@@ -1,5 +1,6 @@
 import decimal
-from django.db.models import Subquery, OuterRef, Count, Q
+from functools import wraps
+from django.db.models import Subquery, OuterRef, Count, Q, Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -8,6 +9,25 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 from .models import UserProfile
 from .forms import CustomerRegistrationForm, HealerRegistrationForm
+from healers.models import Healer as HealerModel, HealerSchedule, HealerService, HealerMessage, HealerPaymentSetting, ChatRoom, ChatMessage
+from bookings.models import Booking
+from payments.models import Payment, TransactionLog
+
+
+def require_healer_profile(view_func):
+    @wraps(view_func)
+    @login_required
+    def wrapper(request, *args, **kwargs):
+        profile, _created = UserProfile.objects.get_or_create(user=request.user)
+        if not profile.is_healer:
+            messages.error(request, _('Anda tidak memiliki akses.'))
+            return redirect('home')
+        healer = profile.get_healer_profile()
+        if not healer:
+            messages.error(request, _('Profil healer tidak ditemukan.'))
+            return redirect('home')
+        return view_func(request, profile, healer, *args, **kwargs)
+    return wrapper
 
 
 def register_choose(request):
@@ -79,7 +99,6 @@ def logout_view(request):
 @login_required
 def customer_dashboard(request):
     profile, _created = UserProfile.objects.get_or_create(user=request.user)
-    from bookings.models import Booking
     bookings = Booking.objects.filter(
         customer_email=request.user.email
     ).select_related('healer').order_by('-created_at')[:20]
@@ -95,9 +114,6 @@ def healer_dashboard(request):
     if not profile.is_healer:
         messages.error(request, _('Anda tidak memiliki akses ke dashboard healer.'))
         return redirect('home')
-    from healers.models import Healer, HealerSchedule, HealerService
-    from bookings.models import Booking
-    from payments.models import Payment
     healer = profile.get_healer_profile()
     schedules_list = [None] * 7
     services = []
@@ -114,14 +130,20 @@ def healer_dashboard(request):
         recent_bookings = Booking.objects.filter(
             healer=healer
         ).select_related('customer').order_by('-created_at')[:10]
-        pending_count = Booking.objects.filter(healer=healer, status='pending_confirm').count()
-        in_progress_count = Booking.objects.filter(healer=healer, status='in_progress').count()
-        completed_count = Booking.objects.filter(healer=healer, status='completed').count()
-        from django.db.models import Sum
-        total_revenue = Payment.objects.filter(booking__healer=healer, status='released').aggregate(
-            total=Sum('amount_idr'))['total'] or 0
-        held_funds = Payment.objects.filter(booking__healer=healer, status='held').aggregate(
-            total=Sum('amount_idr'))['total'] or 0
+        booking_stats = Booking.objects.filter(healer=healer).aggregate(
+            pending_count=Count('id', filter=Q(status='pending_confirm')),
+            in_progress_count=Count('id', filter=Q(status='in_progress')),
+            completed_count=Count('id', filter=Q(status='completed')),
+        )
+        pending_count = booking_stats['pending_count']
+        in_progress_count = booking_stats['in_progress_count']
+        completed_count = booking_stats['completed_count']
+        payment_stats = Payment.objects.filter(booking__healer=healer).aggregate(
+            total_revenue=Sum('amount_idr', filter=Q(status='released')),
+            held_funds=Sum('amount_idr', filter=Q(status='held')),
+        )
+        total_revenue = payment_stats['total_revenue'] or 0
+        held_funds = payment_stats['held_funds'] or 0
     return render(request, 'healer_dashboard.html', {
         'profile': profile,
         'healer': healer,
@@ -136,17 +158,8 @@ def healer_dashboard(request):
     })
 
 
-@login_required
-def healer_profile_edit(request):
-    profile, _created = UserProfile.objects.get_or_create(user=request.user)
-    if not profile.is_healer:
-        messages.error(request, _('Anda tidak memiliki akses.'))
-        return redirect('home')
-    from healers.models import Healer
-    healer = profile.get_healer_profile()
-    if not healer:
-        messages.error(request, _('Profil healer tidak ditemukan.'))
-        return redirect('home')
+@require_healer_profile
+def healer_profile_edit(request, profile, healer):
     if request.method == 'POST':
         healer.name = request.POST.get('name', healer.name)
         healer.bio = request.POST.get('bio', healer.bio)
@@ -167,17 +180,8 @@ def healer_profile_edit(request):
     return render(request, 'healer_profile_edit.html', {'healer': healer})
 
 
-@login_required
-def healer_schedule_edit(request):
-    profile, _created = UserProfile.objects.get_or_create(user=request.user)
-    if not profile.is_healer:
-        messages.error(request, _('Anda tidak memiliki akses.'))
-        return redirect('home')
-    from healers.models import Healer, HealerSchedule
-    healer = profile.get_healer_profile()
-    if not healer:
-        messages.error(request, _('Profil healer tidak ditemukan.'))
-        return redirect('home')
+@require_healer_profile
+def healer_schedule_edit(request, profile, healer):
     if request.method == 'POST':
         healer.schedules.all().update(is_active=False)
         for day in range(7):
@@ -196,15 +200,8 @@ def healer_schedule_edit(request):
     return render(request, 'healer_schedule_edit.html', {'healer': healer, 'schedules': schedules})
 
 
-@login_required
-def healer_services(request):
-    profile, _created = UserProfile.objects.get_or_create(user=request.user)
-    if not profile.is_healer:
-        return redirect('home')
-    from healers.models import Healer, HealerService
-    healer = profile.get_healer_profile()
-    if not healer:
-        return redirect('home')
+@require_healer_profile
+def healer_services(request, profile, healer):
     try:
         services = healer.services.all()
     except (decimal.InvalidOperation, ValueError):
@@ -252,15 +249,8 @@ def healer_services(request):
     return render(request, 'healer_services.html', {'healer': healer, 'services': services})
 
 
-@login_required
-def healer_messages(request):
-    profile, _created = UserProfile.objects.get_or_create(user=request.user)
-    if not profile.is_healer:
-        return redirect('home')
-    from healers.models import Healer, HealerMessage
-    healer = profile.get_healer_profile()
-    if not healer:
-        return redirect('home')
+@require_healer_profile
+def healer_messages(request, profile, healer):
     all_messages = healer.messages.all()
     unread_count = all_messages.filter(is_read=False).count()
     return render(request, 'healer_messages.html', {
@@ -268,15 +258,8 @@ def healer_messages(request):
     })
 
 
-@login_required
-def healer_message_detail(request, msg_id):
-    profile, _created = UserProfile.objects.get_or_create(user=request.user)
-    if not profile.is_healer:
-        return redirect('home')
-    from healers.models import Healer, HealerMessage
-    healer = profile.get_healer_profile()
-    if not healer:
-        return redirect('home')
+@require_healer_profile
+def healer_message_detail(request, profile, healer, msg_id):
     msg = get_object_or_404(HealerMessage, id=msg_id, healer=healer)
     if not msg.is_read:
         msg.is_read = True
@@ -292,15 +275,8 @@ def healer_message_detail(request, msg_id):
     return render(request, 'healer_message_detail.html', {'healer': healer, 'msg': msg})
 
 
-@login_required
-def healer_payments(request):
-    profile, _created = UserProfile.objects.get_or_create(user=request.user)
-    if not profile.is_healer:
-        return redirect('home')
-    from healers.models import Healer, HealerPaymentSetting
-    healer = profile.get_healer_profile()
-    if not healer:
-        return redirect('home')
+@require_healer_profile
+def healer_payments(request, profile, healer):
     settings, _created = HealerPaymentSetting.objects.get_or_create(healer=healer)
     if request.method == 'POST':
         settings.bank_name = request.POST.get('bank_name', '')
@@ -326,7 +302,6 @@ def healer_payments(request):
 
 @login_required
 def healer_booking_update(request, booking_code):
-    from bookings.models import Booking
     if request.method != 'POST':
         return redirect('healer_dashboard')
     profile, _created = UserProfile.objects.get_or_create(user=request.user)
@@ -350,8 +325,6 @@ def healer_booking_update(request, booking_code):
                 try:
                     payment = booking.payment
                     if payment.status == 'held':
-                        from django.utils import timezone
-                        from payments.models import TransactionLog
                         payment.status = 'released'
                         payment.released_at = timezone.now()
                         payment.save()
@@ -379,8 +352,7 @@ def healer_booking_update(request, booking_code):
 
 @login_required
 def chat_with_healer(request, healer_id):
-    from healers.models import Healer, ChatRoom, ChatMessage, HealerService
-    healer = get_object_or_404(Healer.objects.select_related('category'), id=healer_id)
+    healer = get_object_or_404(HealerModel.objects.select_related('category'), id=healer_id)
     room, created = ChatRoom.objects.get_or_create(healer=healer, customer=request.user)
     if created:
         ChatMessage.objects.create(
@@ -399,7 +371,6 @@ def chat_with_healer(request, healer_id):
 
 @login_required
 def chat_send(request, room_id):
-    from healers.models import ChatRoom, ChatMessage
     if request.method != 'POST':
         return redirect('customer_dashboard')
     room = get_object_or_404(ChatRoom, id=room_id, customer=request.user)
@@ -413,8 +384,6 @@ def chat_send(request, room_id):
 @login_required
 def chat_messages_api(request, room_id):
     from django.http import JsonResponse
-    from healers.models import ChatRoom
-    import json
     room = get_object_or_404(ChatRoom.objects.select_related('healer', 'customer'), id=room_id)
     if request.user != room.customer and request.user != getattr(room.healer, 'user', None):
         return JsonResponse({'error': 'forbidden'}, status=403)
@@ -437,7 +406,6 @@ def chat_messages_api(request, room_id):
 
 @login_required
 def customer_chat_list(request):
-    from healers.models import ChatRoom, ChatMessage
     last_msg_subquery = ChatMessage.objects.filter(
         room=OuterRef('pk')
     ).order_by('-created_at')
@@ -465,15 +433,8 @@ def customer_chat_list(request):
     return render(request, 'customer_chat_list.html', {'rooms': room_data})
 
 
-@login_required
-def healer_chat_list(request):
-    profile, _created = UserProfile.objects.get_or_create(user=request.user)
-    if not profile.is_healer:
-        return redirect('home')
-    healer = profile.get_healer_profile()
-    if not healer:
-        return redirect('home')
-    from healers.models import ChatRoom, ChatMessage
+@require_healer_profile
+def healer_chat_list(request, profile, healer):
     last_msg_subquery = ChatMessage.objects.filter(
         room=OuterRef('pk')
     ).order_by('-created_at')
@@ -501,16 +462,8 @@ def healer_chat_list(request):
     return render(request, 'healer_chat_list.html', {'healer': healer, 'rooms': room_data})
 
 
-@login_required
-def healer_chat_room(request, room_id):
-    profile, _created = UserProfile.objects.get_or_create(user=request.user)
-    if not profile.is_healer:
-        return redirect('home')
-    healer = profile.get_healer_profile()
-    if not healer:
-        return redirect('home')
-    from healers.models import ChatRoom, ChatMessage, HealerService
-    from bookings.models import Booking
+@require_healer_profile
+def healer_chat_room(request, profile, healer, room_id):
     room = get_object_or_404(
         ChatRoom.objects.select_related('customer', 'healer'),
         id=room_id, healer=healer
@@ -531,17 +484,10 @@ def healer_chat_room(request, room_id):
     })
 
 
-@login_required
-def healer_chat_send(request, room_id):
+@require_healer_profile
+def healer_chat_send(request, profile, healer, room_id):
     if request.method != 'POST':
         return redirect('healer_chat_list')
-    profile, _created = UserProfile.objects.get_or_create(user=request.user)
-    if not profile.is_healer:
-        return redirect('home')
-    healer = profile.get_healer_profile()
-    if not healer:
-        return redirect('home')
-    from healers.models import ChatRoom, ChatMessage
     room = get_object_or_404(ChatRoom, id=room_id, healer=healer)
     text = request.POST.get('message', '').strip()
     if text:

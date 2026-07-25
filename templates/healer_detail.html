@@ -34,7 +34,7 @@
                     <div class="healer-rating" style="margin:10px 0">
                         <div class="stars">{% for i in "12345" %}{% if forloop.counter <= healer.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}{% endfor %}</div>
                         <span class="rating-score">{{ healer.rating }}</span>
-                        <span class="rating-count">({{ healer.reviews.count }} {% trans "reviews" %})</span>
+                        <span class="rating-count">({{ healer.review_count }} {% trans "reviews" %})</span>
                     </div>
                     <div class="healer-tags" style="margin:10px 0">
                         {% for spec in healer.specializations.split %}<span class="healer-tag">{{ spec }}</span>{% endfor %}

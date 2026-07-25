@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Q, Avg, Prefetch
+from django.db.models import Q, Avg, Prefetch, Count
 from django.http import JsonResponse
 from .models import Healer, HealerCategory, HealerReview, HealerSchedule, Location, HealingCenter, Speciality, Testimonial
 from payments.services import convert_currency, format_currency, get_all_currencies
@@ -8,8 +8,9 @@ from payments.services import convert_currency, format_currency, get_all_currenc
 def home(request):
     featured_healers = Healer.objects.filter(is_available=True).select_related(
         'category'
+    ).annotate(
+        review_count=Count('reviews')
     ).prefetch_related(
-        'reviews',
         Prefetch('schedules', queryset=HealerSchedule.objects.filter(is_active=True)),
     ).order_by('-rating')[:6]
     categories = HealerCategory.objects.all()
@@ -28,7 +29,9 @@ def home(request):
 
 
 def healer_list(request):
-    healers = Healer.objects.filter(is_available=True).select_related('category').prefetch_related('reviews')
+    healers = Healer.objects.filter(is_available=True).select_related('category').annotate(
+        review_count=Count('reviews')
+    )
     categories = HealerCategory.objects.all()
     locations = Location.objects.all()
     query = request.GET.get('q')
@@ -69,24 +72,15 @@ def healer_list(request):
 def healer_detail(request, slug):
     healer = get_object_or_404(
         Healer.objects.select_related('category').prefetch_related(
-            'reviews',
             'services',
             Prefetch('schedules', queryset=HealerSchedule.objects.filter(is_active=True)),
-        ),
+        ).annotate(review_count=Count('reviews')),
         slug=slug
     )
     reviews = healer.reviews.all().order_by('-created_at')[:10]
     schedules = healer.schedules.all()
     services = healer.services.all()
     avg_rating = healer.reviews.aggregate(avg=Avg('rating'))['avg'] or healer.rating
-    currencies = get_all_currencies()
-
-    converted_prices = {}
-    for curr in currencies:
-        converted_prices[curr['code']] = {
-            'amount': convert_currency(healer.price_idr, 'IDR', curr['code']),
-            'symbol': curr['symbol'],
-        }
 
     return render(request, 'healer_detail.html', {
         'healer': healer,
@@ -94,8 +88,6 @@ def healer_detail(request, slug):
         'schedules': schedules,
         'services': services,
         'avg_rating': avg_rating,
-        'currencies': currencies,
-        'converted_prices': converted_prices,
     })
 
 
