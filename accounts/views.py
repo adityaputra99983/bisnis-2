@@ -335,7 +335,9 @@ def healer_booking_update(request, booking_code):
     healer = profile.get_healer_profile()
     if not healer:
         return redirect('home')
-    booking = Booking.objects.filter(healer=healer, booking_code=booking_code).first()
+    booking = Booking.objects.filter(
+        healer=healer, booking_code=booking_code
+    ).select_related('healer').first()
     if booking:
         action = request.POST.get('action', '')
         if action == 'confirm':
@@ -378,7 +380,7 @@ def healer_booking_update(request, booking_code):
 @login_required
 def chat_with_healer(request, healer_id):
     from healers.models import Healer, ChatRoom, ChatMessage, HealerService
-    healer = get_object_or_404(Healer, id=healer_id)
+    healer = get_object_or_404(Healer.objects.select_related('category'), id=healer_id)
     room, created = ChatRoom.objects.get_or_create(healer=healer, customer=request.user)
     if created:
         ChatMessage.objects.create(
@@ -389,7 +391,7 @@ def chat_with_healer(request, healer_id):
     return render(request, 'chat_room.html', {
         'room': room,
         'healer': healer,
-        'messages': room.messages.all(),
+        'messages': room.messages.select_related('sender').all(),
         'services': services,
         'chat_role': 'customer',
     })
@@ -413,7 +415,7 @@ def chat_messages_api(request, room_id):
     from django.http import JsonResponse
     from healers.models import ChatRoom
     import json
-    room = get_object_or_404(ChatRoom, id=room_id)
+    room = get_object_or_404(ChatRoom.objects.select_related('healer', 'customer'), id=room_id)
     if request.user != room.customer and request.user != getattr(room.healer, 'user', None):
         return JsonResponse({'error': 'forbidden'}, status=403)
     last_id = request.GET.get('last_id', 0)
@@ -421,7 +423,7 @@ def chat_messages_api(request, room_id):
         last_id = int(last_id)
     except (ValueError, TypeError):
         last_id = 0
-    new_msgs = room.messages.filter(id__gt=last_id)
+    new_msgs = room.messages.filter(id__gt=last_id).select_related('sender')
     data = [{
         'id': m.id,
         'sender': m.sender.username,
@@ -471,16 +473,30 @@ def healer_chat_list(request):
     healer = profile.get_healer_profile()
     if not healer:
         return redirect('home')
-    from healers.models import ChatRoom
-    rooms = ChatRoom.objects.filter(healer=healer).select_related('customer')
+    from healers.models import ChatRoom, ChatMessage
+    last_msg_subquery = ChatMessage.objects.filter(
+        room=OuterRef('pk')
+    ).order_by('-created_at')
+
+    rooms = ChatRoom.objects.filter(
+        healer=healer
+    ).select_related('customer').annotate(
+        _last_msg_id=Subquery(last_msg_subquery.values('id')[:1]),
+        _last_msg_text=Subquery(last_msg_subquery.values('message')[:1]),
+        _last_msg_time=Subquery(last_msg_subquery.values('created_at')[:1]),
+        _unread_count=Count(
+            'messages',
+            filter=Q(messages__is_read=False) & ~Q(messages__sender=request.user)
+        ),
+    )
+
     room_data = []
     for room in rooms:
-        last = room.last_message
-        unread = room.messages.filter(is_read=False).exclude(sender=request.user).count()
         room_data.append({
             'room': room,
-            'last_message': last,
-            'unread': unread,
+            'last_message_text': getattr(room, '_last_msg_text', None),
+            'last_message_time': getattr(room, '_last_msg_time', None),
+            'unread': getattr(room, '_unread_count', 0),
         })
     return render(request, 'healer_chat_list.html', {'healer': healer, 'rooms': room_data})
 
@@ -495,17 +511,20 @@ def healer_chat_room(request, room_id):
         return redirect('home')
     from healers.models import ChatRoom, ChatMessage, HealerService
     from bookings.models import Booking
-    room = get_object_or_404(ChatRoom, id=room_id, healer=healer)
+    room = get_object_or_404(
+        ChatRoom.objects.select_related('customer', 'healer'),
+        id=room_id, healer=healer
+    )
     room.messages.filter(is_read=False).exclude(sender=request.user).update(is_read=True)
     services = healer.services.filter(is_active=True)
     customer_bookings = Booking.objects.filter(
         healer=healer,
         customer_email=room.customer.email,
-    ).order_by('-created_at')[:5]
+    ).select_related('healer').order_by('-created_at')[:5]
     return render(request, 'chat_room.html', {
         'room': room,
         'healer': healer,
-        'messages': room.messages.all(),
+        'messages': room.messages.select_related('sender').all(),
         'services': services,
         'chat_role': 'healer',
         'customer_bookings': customer_bookings,

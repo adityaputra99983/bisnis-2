@@ -13,7 +13,7 @@ from payments.models import Payment, TransactionLog
 
 
 def create_booking(request, healer_id):
-    healer = get_object_or_404(Healer, id=healer_id)
+    healer = get_object_or_404(Healer.objects.select_related('category'), id=healer_id)
     services = healer.services.filter(is_active=True)
     currencies = get_all_currencies()
 
@@ -91,13 +91,16 @@ def create_booking(request, healer_id):
 
 
 def booking_list(request):
-    bookings = Booking.objects.all().order_by('-created_at')[:20]
+    bookings = Booking.objects.select_related('healer', 'customer').order_by('-created_at')[:20]
     return render(request, 'booking_list.html', {'bookings': bookings})
 
 
 def booking_detail(request, booking_code):
-    booking = get_object_or_404(Booking, booking_code=booking_code)
-    status_logs = booking.status_logs.all()[:10]
+    booking = get_object_or_404(
+        Booking.objects.select_related('healer', 'customer'),
+        booking_code=booking_code
+    )
+    status_logs = booking.status_logs.select_related('changed_by').all()[:10]
     try:
         payment = booking.payment
     except Payment.DoesNotExist:

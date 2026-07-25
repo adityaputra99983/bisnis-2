@@ -182,8 +182,21 @@
     }
 
     var lastId = {{ messages.last.id|default:0 }};
+    var chatInterval = null;
+    var chatVisible = true;
 
-    setInterval(function(){
+    document.addEventListener('visibilitychange', function(){
+        chatVisible = !document.hidden;
+        if(chatVisible && !chatInterval){
+            startChatPoll();
+        } else if(!chatVisible && chatInterval){
+            clearInterval(chatInterval);
+            chatInterval = null;
+        }
+    });
+
+    function pollMessages(){
+        if(!chatVisible) return;
         fetch("{% url 'chat_messages_api' room.id %}?last_id=" + lastId)
         .then(function(r){ return r.json(); })
         .then(function(data){
@@ -200,8 +213,14 @@
                 });
                 el.scrollTop = el.scrollHeight;
             }
-        });
-    }, 3000);
+        }).catch(function(){});
+    }
+
+    function startChatPoll(){
+        if(chatInterval) clearInterval(chatInterval);
+        chatInterval = setInterval(pollMessages, 3000);
+    }
+    startChatPoll();
 
     var chatInput = document.getElementById('chat-input');
     if(chatInput){

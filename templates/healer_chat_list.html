@@ -17,13 +17,13 @@
             <div class="chat-list-content">
                 <div class="chat-list-top">
                     <strong>{{ r.room.customer.get_full_name|default:r.room.customer.username }}</strong>
-                    {% if r.last_message %}
-                    <span class="chat-list-time">{{ r.last_message.created_at|timesince }} {% trans "ago" %}</span>
+                    {% if r.last_message_time %}
+                    <span class="chat-list-time">{{ r.last_message_time|timesince }} {% trans "ago" %}</span>
                     {% endif %}
                 </div>
-                {% if r.last_message %}
+                {% if r.last_message_text %}
                 <p class="chat-list-preview">
-                    {% if r.last_message.sender == request.user %}<span class="chat-list-you">{% trans "You:" %}</span>{% endif %}{{ r.last_message.message }}
+                    {{ r.last_message_text|truncatewords:12 }}
                 </p>
                 {% endif %}
                 <div class="chat-list-meta">

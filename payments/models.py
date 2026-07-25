@@ -62,7 +62,7 @@ class Payment(models.Model):
     currency = models.ForeignKey(Currency, on_delete=models.SET_NULL, null=True)
     amount_converted = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     exchange_rate = models.DecimalField(max_digits=15, decimal_places=6, default=1.0)
-    status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='pending')
+    status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='pending', db_index=True)
     paid_at = models.DateTimeField(null=True, blank=True)
     held_at = models.DateTimeField(null=True, blank=True)
     released_at = models.DateTimeField(null=True, blank=True)
@@ -102,7 +102,7 @@ class TransactionLog(models.Model):
 
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE, related_name='logs', null=True, blank=True)
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE, related_name='transaction_logs', null=True, blank=True)
-    log_type = models.CharField(max_length=30, choices=LOG_TYPES, default='payment_created')
+    log_type = models.CharField(max_length=30, choices=LOG_TYPES, default='payment_created', db_index=True)
     action = models.CharField(max_length=100)
     details = models.TextField(blank=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)

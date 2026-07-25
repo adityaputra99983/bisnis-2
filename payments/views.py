@@ -17,7 +17,10 @@ from .services import convert_currency, format_currency, get_all_currencies, CUR
 
 
 def payment_process(request, booking_code):
-    booking = get_object_or_404(Booking, booking_code=booking_code)
+    booking = get_object_or_404(
+        Booking.objects.select_related('healer'),
+        booking_code=booking_code
+    )
     if booking.status not in ('pending_payment',):
         messages.info(request, _('Booking ini sudah diproses.'))
         return redirect('booking_detail', booking_code=booking_code)
@@ -120,7 +123,10 @@ def create_payment(request, booking_code):
 
 
 def payment_detail(request, payment_code):
-    payment = get_object_or_404(Payment, payment_code=payment_code)
+    payment = get_object_or_404(
+        Payment.objects.select_related('booking', 'currency', 'payment_method'),
+        payment_code=payment_code
+    )
     logs = payment.logs.all()
 
     currency_code = payment.currency.code if payment.currency else 'IDR'
@@ -197,7 +203,9 @@ def payment_simulate(request, payment_code):
 
 
 def payment_history(request):
-    payments = Payment.objects.all().order_by('-created_at')[:20]
+    payments = Payment.objects.select_related(
+        'booking', 'currency', 'payment_method'
+    ).order_by('-created_at')[:20]
     return render(request, 'payment_history.html', {'payments': payments})
 
 
@@ -245,8 +253,10 @@ def dashboard(request):
 
     total_payments = Payment.objects.filter(status__in=('success', 'held', 'released')).count()
 
-    recent_bookings = Booking.objects.all()[:10]
-    recent_payments = Payment.objects.all()[:10]
+    recent_bookings = Booking.objects.select_related('healer', 'customer')[:10]
+    recent_payments = Payment.objects.select_related(
+        'booking', 'currency', 'payment_method'
+    )[:10]
 
     return render(request, 'dashboard.html', {
         'total_bookings': total_bookings,
