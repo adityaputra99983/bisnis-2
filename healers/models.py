@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.db.models import Subquery, OuterRef
 import uuid
 
 
@@ -29,7 +30,7 @@ class Healer(models.Model):
     address = models.TextField()
     price_idr = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=5.0)
-    is_available = models.BooleanField(default=True)
+    is_available = models.BooleanField(default=True, db_index=True)
     specializations = models.TextField(blank=True, help_text='Pisahkan dengan koma')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -213,11 +214,26 @@ class HealerPaymentSetting(models.Model):
         return f'Payment Settings - {self.healer.name}'
 
 
+class ChatRoomQuerySet(models.QuerySet):
+    def with_last_message(self):
+        last_msg = ChatMessage.objects.filter(
+            room=OuterRef('pk')
+        ).order_by('-created_at')
+        return self.annotate(
+            _last_message_id=Subquery(last_msg.values('id')[:1]),
+            _last_message_text=Subquery(last_msg.values('message')[:1]),
+            _last_message_time=Subquery(last_msg.values('created_at')[:1]),
+            _last_message_sender_id=Subquery(last_msg.values('sender_id')[:1]),
+        )
+
+
 class ChatRoom(models.Model):
     healer = models.ForeignKey(Healer, on_delete=models.CASCADE, related_name='chat_rooms')
     customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_rooms')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = ChatRoomQuerySet.as_manager()
 
     class Meta:
         unique_together = ['healer', 'customer']
@@ -235,7 +251,7 @@ class ChatMessage(models.Model):
     room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE, related_name='messages')
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
     message = models.TextField()
-    is_read = models.BooleanField(default=False)
+    is_read = models.BooleanField(default=False, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

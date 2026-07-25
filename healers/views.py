@@ -1,15 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Q, Avg
+from django.db.models import Q, Avg, Prefetch
 from django.http import JsonResponse
 from .models import Healer, HealerCategory, HealerReview, HealerSchedule, Location, HealingCenter, Speciality, Testimonial
 from payments.services import convert_currency, format_currency, get_all_currencies
 
 
 def home(request):
-    healers = Healer.objects.filter(is_available=True)[:6]
+    featured_healers = Healer.objects.filter(is_available=True).select_related(
+        'category'
+    ).prefetch_related(
+        'reviews',
+        Prefetch('schedules', queryset=HealerSchedule.objects.filter(is_active=True)),
+    ).order_by('-rating')[:6]
     categories = HealerCategory.objects.all()
-    featured_healers = Healer.objects.filter(is_available=True).order_by('-rating')[:6]
-    centers = HealingCenter.objects.filter(is_active=True)[:3]
+    centers = HealingCenter.objects.filter(is_active=True).select_related('location')[:3]
     locations = Location.objects.all()[:5]
     specialities = Speciality.objects.all()[:8]
     testimonials = Testimonial.objects.filter(is_featured=True)[:6]
@@ -24,7 +28,7 @@ def home(request):
 
 
 def healer_list(request):
-    healers = Healer.objects.filter(is_available=True)
+    healers = Healer.objects.filter(is_available=True).select_related('category').prefetch_related('reviews')
     categories = HealerCategory.objects.all()
     locations = Location.objects.all()
     query = request.GET.get('q')
@@ -43,7 +47,9 @@ def healer_list(request):
     if category_id:
         healers = healers.filter(category_id=category_id)
     if location_id:
-        healers = healers.filter(address__icontains=Location.objects.filter(id=location_id).first().name if Location.objects.filter(id=location_id).exists() else '')
+        loc = Location.objects.filter(id=location_id).first()
+        if loc:
+            healers = healers.filter(address__icontains=loc.name)
     if min_price:
         healers = healers.filter(price_idr__gte=min_price)
     if max_price:
@@ -61,10 +67,17 @@ def healer_list(request):
 
 
 def healer_detail(request, slug):
-    healer = get_object_or_404(Healer, slug=slug)
+    healer = get_object_or_404(
+        Healer.objects.select_related('category').prefetch_related(
+            'reviews',
+            'services',
+            Prefetch('schedules', queryset=HealerSchedule.objects.filter(is_active=True)),
+        ),
+        slug=slug
+    )
     reviews = healer.reviews.all().order_by('-created_at')[:10]
-    schedules = healer.schedules.filter(is_active=True)
-    services = healer.services.filter(is_active=True)
+    schedules = healer.schedules.all()
+    services = healer.services.all()
     avg_rating = healer.reviews.aggregate(avg=Avg('rating'))['avg'] or healer.rating
     currencies = get_all_currencies()
 
@@ -87,7 +100,7 @@ def healer_detail(request, slug):
 
 
 def center_list(request):
-    centers = HealingCenter.objects.filter(is_active=True)
+    centers = HealingCenter.objects.filter(is_active=True).select_related('location')
     return render(request, 'center_list.html', {'centers': centers})
 
 

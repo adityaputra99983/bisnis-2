@@ -1,4 +1,5 @@
 import decimal
+from django.db.models import Subquery, OuterRef, Count, Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -79,7 +80,9 @@ def logout_view(request):
 def customer_dashboard(request):
     profile, _created = UserProfile.objects.get_or_create(user=request.user)
     from bookings.models import Booking
-    bookings = Booking.objects.filter(customer_email=request.user.email).order_by('-created_at')[:20]
+    bookings = Booking.objects.filter(
+        customer_email=request.user.email
+    ).select_related('healer').order_by('-created_at')[:20]
     return render(request, 'customer_dashboard.html', {
         'profile': profile,
         'bookings': bookings,
@@ -108,7 +111,9 @@ def healer_dashboard(request):
         for s in healer.schedules.filter(is_active=True):
             schedules_list[s.day_of_week] = s
         services = healer.services.filter(is_active=True)
-        recent_bookings = Booking.objects.filter(healer=healer).order_by('-created_at')[:10]
+        recent_bookings = Booking.objects.filter(
+            healer=healer
+        ).select_related('customer').order_by('-created_at')[:10]
         pending_count = Booking.objects.filter(healer=healer, status='pending_confirm').count()
         in_progress_count = Booking.objects.filter(healer=healer, status='in_progress').count()
         completed_count = Booking.objects.filter(healer=healer, status='completed').count()
@@ -257,9 +262,9 @@ def healer_messages(request):
     if not healer:
         return redirect('home')
     all_messages = healer.messages.all()
-    unread = all_messages.filter(is_read=False)
+    unread_count = all_messages.filter(is_read=False).count()
     return render(request, 'healer_messages.html', {
-        'healer': healer, 'messages_list': all_messages, 'unread_count': unread.count(),
+        'healer': healer, 'messages_list': all_messages, 'unread_count': unread_count,
     })
 
 
@@ -430,16 +435,30 @@ def chat_messages_api(request, room_id):
 
 @login_required
 def customer_chat_list(request):
-    from healers.models import ChatRoom
-    rooms = ChatRoom.objects.filter(customer=request.user).select_related('healer')
+    from healers.models import ChatRoom, ChatMessage
+    last_msg_subquery = ChatMessage.objects.filter(
+        room=OuterRef('pk')
+    ).order_by('-created_at')
+
+    rooms = ChatRoom.objects.filter(
+        customer=request.user
+    ).select_related('healer').annotate(
+        _last_msg_id=Subquery(last_msg_subquery.values('id')[:1]),
+        _last_msg_text=Subquery(last_msg_subquery.values('message')[:1]),
+        _last_msg_time=Subquery(last_msg_subquery.values('created_at')[:1]),
+        _unread_count=Count(
+            'messages',
+            filter=Q(messages__is_read=False) & ~Q(messages__sender=request.user)
+        ),
+    )
+
     room_data = []
     for room in rooms:
-        last = room.last_message
-        unread = room.messages.filter(is_read=False).exclude(sender=request.user).count()
         room_data.append({
             'room': room,
-            'last_message': last,
-            'unread': unread,
+            'last_message_text': getattr(room, '_last_msg_text', None),
+            'last_message_time': getattr(room, '_last_msg_time', None),
+            'unread': getattr(room, '_unread_count', 0),
         })
     return render(request, 'customer_chat_list.html', {'rooms': room_data})
 

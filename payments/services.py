@@ -1,6 +1,9 @@
 from decimal import Decimal
+from django.core.cache import cache
 from .models import Currency
 
+EXCHANGE_RATES_CACHE_KEY = 'exchange_rates_all'
+EXCHANGE_RATES_CACHE_TIMEOUT = 600
 
 EXCHANGE_RATES_FALLBACK = {
     'IDR': 1.0,
@@ -215,6 +218,9 @@ CURRENCY_SYMBOLS = {
 
 
 def get_exchange_rates():
+    cached = cache.get(EXCHANGE_RATES_CACHE_KEY)
+    if cached:
+        return cached
     rates = {}
     try:
         for currency in Currency.objects.filter(is_active=True):
@@ -223,6 +229,7 @@ def get_exchange_rates():
         pass
     if not rates:
         rates = EXCHANGE_RATES_FALLBACK.copy()
+    cache.set(EXCHANGE_RATES_CACHE_KEY, rates, EXCHANGE_RATES_CACHE_TIMEOUT)
     return rates
 
 
