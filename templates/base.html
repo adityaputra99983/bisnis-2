@@ -386,7 +386,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="currency-dropdown" id="currencyDropdown">
-                        <div class="currency-header"><i class="fas fa-coins"></i> {% trans "Pilih Mata Uang" %}</div>
+                        <div class="currency-header"><i class="fas fa-coins"></i> {% trans "Select Currency" %}</div>
                         <div class="currency-item active" data-currency="IDR" data-symbol="Rp" data-flag="🇮🇩" data-rate="1">
                             <span class="cur-flag">🇮🇩</span>
                             <div class="cur-info"><div class="cur-code">IDR</div><div class="cur-name">Indonesian Rupiah</div></div>
@@ -518,7 +518,7 @@
                         <div class="lang-panel lang-panel-main" id="langPanelMain">
                             <div class="lang-panel-header">
                                 <i class="fas fa-globe"></i>
-                                {% trans "Pilih Bahasa" %}
+                                {% trans "Select Language" %}
                             </div>
                             {% for lang in languages %}
                             <div class="lang-item {% if lang.code == CURRENT_LANGUAGE %}active{% endif %}" data-lang="{{ lang.code }}">
@@ -527,7 +527,7 @@
                                 </span>
                                 <span class="lang-name">{{ lang.name_local }}</span>
                                 <i class="fas fa-check lang-check"></i>
-                                <button class="lang-region-btn" title="{% trans 'Pilih Region' %}">
+                                <button class="lang-region-btn" title="{% trans 'Select Region' %}">
                                     <i class="fas fa-globe"></i>
                                 </button>
                             </div>
@@ -540,7 +540,7 @@
                                 <button class="lang-back-btn">
                                     <i class="fas fa-arrow-left"></i>
                                 </button>
-                                <span id="regionPanelTitle">{% trans "Pilih Region" %}</span>
+                                <span id="regionPanelTitle">{% trans "Select Region" %}</span>
                             </div>
                             <div class="region-list" id="regionList">
                                 <!-- Filled dynamically by JS -->
@@ -553,8 +553,8 @@
                 <a href="{% if user.profile.is_healer %}{% url 'healer_dashboard' %}{% else %}{% url 'customer_dashboard' %}{% endif %}" class="nav-link"><i class="fas fa-user"></i> {{ user.first_name|default:user.username }}</a>
                 <a href="{% url 'logout' %}" class="btn-find" style="background:transparent;color:var(--stone-400);border:1px solid var(--border)"><i class="fas fa-right-from-bracket"></i></a>
                 {% else %}
-                <a href="{% url 'login' %}" class="nav-link"><i class="fas fa-right-to-bracket"></i> {% trans "Masuk" %}</a>
-                <a href="{% url 'register_choose' %}" class="btn-find"><i class="fas fa-user-plus"></i> {% trans "Daftar" %}</a>
+                <a href="{% url 'login' %}" class="nav-link"><i class="fas fa-right-to-bracket"></i> {% trans "Login" %}</a>
+                <a href="{% url 'register_choose' %}" class="btn-find"><i class="fas fa-user-plus"></i> {% trans "Register" %}</a>
                 {% endif %}
 
                 <button class="nav-mobile-toggle" onclick="document.querySelector('.mobile-nav').classList.toggle('open')">

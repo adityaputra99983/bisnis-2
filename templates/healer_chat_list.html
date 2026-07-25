@@ -7,7 +7,7 @@
 <div class="section" style="padding-top:10px">
     <div style="max-width:700px;margin:0 auto">
         <a href="{% url 'healer_dashboard' %}" class="chat-back-link"><i class="fas fa-arrow-left"></i> {% trans "Dashboard" %}</a>
-        <h2 style="color:var(--fg);font-size:18px;margin-bottom:14px"><i class="fas fa-comments" style="color:var(--gold);margin-right:6px"></i>{% trans "Chat dengan Pelanggan" %}</h2>
+        <h2 style="color:var(--fg);font-size:18px;margin-bottom:14px"><i class="fas fa-comments" style="color:var(--gold);margin-right:6px"></i>{% trans "Chat with Customers" %}</h2>
 
         {% for r in rooms %}
         <a href="{% url 'healer_chat_room' r.room.id %}" class="chat-list-card">
@@ -18,12 +18,12 @@
                 <div class="chat-list-top">
                     <strong>{{ r.room.customer.get_full_name|default:r.room.customer.username }}</strong>
                     {% if r.last_message %}
-                    <span class="chat-list-time">{{ r.last_message.created_at|timesince }} {% trans "lalu" %}</span>
+                    <span class="chat-list-time">{{ r.last_message.created_at|timesince }} {% trans "ago" %}</span>
                     {% endif %}
                 </div>
                 {% if r.last_message %}
                 <p class="chat-list-preview">
-                    {% if r.last_message.sender == request.user %}<span class="chat-list-you">{% trans "Anda:" %}</span>{% endif %}{{ r.last_message.message }}
+                    {% if r.last_message.sender == request.user %}<span class="chat-list-you">{% trans "You:" %}</span>{% endif %}{{ r.last_message.message }}
                 </p>
                 {% endif %}
                 <div class="chat-list-meta">
@@ -37,8 +37,8 @@
         {% empty %}
         <div class="card" style="text-align:center;padding:48px">
             <i class="fas fa-comments" style="font-size:36px;color:var(--stone-600);margin-bottom:12px;display:block"></i>
-            <h3 style="color:var(--fg);font-size:15px;margin-bottom:6px">{% trans "Belum Ada Percakapan" %}</h3>
-            <p style="color:var(--stone-500);font-size:12px">{% trans "Pelanggan yang menghubungi Anda akan muncul di sini." %}</p>
+            <h3 style="color:var(--fg);font-size:15px;margin-bottom:6px">{% trans "No Conversations Yet" %}</h3>
+            <p style="color:var(--stone-500);font-size:12px">{% trans "Customers who contact you will appear here." %}</p>
         </div>
         {% endfor %}
     </div>

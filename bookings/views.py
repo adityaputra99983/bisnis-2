@@ -49,7 +49,7 @@ def create_booking(request, healer_id):
                 pass
 
         if not service_name:
-            service_name = healer.specializations.split(',')[0].strip() if healer.specializations else 'Konsultasi Umum'
+            service_name = healer.specializations.split(',')[0].strip() if healer.specializations else _('General Consultation')
 
         total_price_converted = convert_currency(service_price, 'IDR', currency)
 

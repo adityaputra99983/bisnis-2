@@ -5,7 +5,7 @@
 {% block content %}
 <div class="page-header">
     <div class="container">
-        <a href="{% url 'home' %}" class="back-link"><i class="fas fa-arrow-left"></i> Home</a>
+        <a href="{% url 'home' %}" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Home" %}</a>
         <div style="position:relative;display:inline-block">
             <h1>{% trans "Booking" %} <em>{% trans "History" %}</em></h1>
             <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>

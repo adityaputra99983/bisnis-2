@@ -1,1511 +1,1164 @@
-# Django translations for Indonesian
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: dukun 1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-20 10:00+0000\n"
-"PO-Revision-Date: 2026-07-20 10:00+0000\n"
-"Last-Translator: \n"
-"Language-Team: Indonesian\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: compile_all_translations.py\n"
+"Language-Name: Indonesian\n"
 
-#: templates/base.html
-msgid "Bali Healer — Discover · Book · Heal"
-msgstr "Bali Healer — Jelajahi · Pesan · Sembuh"
-
-#: templates/base.html
-msgid "Find and book trusted healing experiences across Bali. Connect with verified healers for spiritual wellness and ancient Balinese healing traditions."
-msgstr "Temukan dan pesan pengalaman penyembuhan terpercaya di Bali. Terhubung dengan penyembuh terverifikasi untuk kesejahteraan spiritual dan tradisi penyembuhan Bali kuno."
-
-#: templates/base.html
-msgid "Bali Healer, healing, spiritual healing, Reiki, chakra healing, sound healing, Balinese healing, meditation, wellness, Bali"
-msgstr "Bali Healer, penyembuhan, penyembuhan spiritual, Reiki, penyembuhan chakra, penyembuhan suara, penyembuhan Bali, meditasi, kesejahteraan, Bali"
-
-#: templates/base.html
-msgid "Ancient Healing Wisdom"
-msgstr "Kebijaksanaan Penyembuhan Kuno"
-
-#: templates/base.html
-msgid "Home"
-msgstr "Beranda"
-
-#: templates/base.html
-msgid "Find Healers"
-msgstr "Cari Penyembuh"
-
-#: templates/base.html
-msgid "Centers"
-msgstr "Pusat"
-
-#: templates/base.html
-msgid "Specialities"
-msgstr "Spesialisasi"
-
-#: templates/base.html
-msgid "Consultation"
-msgstr "Konsultasi"
-
-#: templates/base.html
-msgid "Masuk"
-msgstr "Masuk"
-
-#: templates/base.html
-msgid "Daftar"
-msgstr "Daftar"
-
-#: templates/base.html
-msgid "Login"
-msgstr "Masuk"
-
-#: templates/base.html
-msgid "Account"
-msgstr "Akun"
-
-#: templates/base.html
-msgid "Search"
-msgstr "Cari"
-
-#: templates/base.html
-msgid "Consult"
-msgstr "Konsultasi"
-
-#: templates/base.html
-msgid "Discover"
-msgstr "Jelajahi"
-
-#: templates/base.html
-msgid "Healing Centers"
-msgstr "Pusat Penyembuhan"
-
-#: templates/base.html
-msgid "Healing Specialities"
-msgstr "Spesialisasi Penyembuhan"
-
-#: templates/base.html
-msgid "Online Consultation"
-msgstr "Konsultasi Online"
-
-#: templates/base.html
-msgid "Popular Areas"
-msgstr "Area Populer"
-
-#: templates/base.html
-msgid "Support"
-msgstr "Dukungan"
-
-#: templates/base.html
 msgid "About Bali Healer"
 msgstr "Tentang Bali Healer"
 
-#: templates/base.html
-msgid "Contact Us"
-msgstr "Hubungi Kami"
-
-#: templates/base.html
-msgid "Become a Provider"
-msgstr "Menjadi Penyedia"
-
-#: templates/base.html
-msgid "Stay Updated"
-msgstr "Tetap Terbaru"
-
-#: templates/base.html
-msgid "Enter your email..."
-msgstr "Masukkan email Anda..."
-
-#: templates/base.html
-msgid "Subscribe"
-msgstr "Berlangganan"
-
-#: templates/base.html
-msgid "All rights reserved."
-msgstr "Hak cipta dilindungi."
-
-#: templates/base.html
-msgid "Privacy Policy"
-msgstr "Kebijakan Privasi"
-
-#: templates/base.html
-msgid "Terms of Service"
-msgstr "Ketentuan Layanan"
-
-#: templates/home.html
-msgid "Trusted Bali Healing"
-msgstr "Penyembuhan Bali Terpercaya"
-
-#: templates/home.html
-msgid "Discover Your <span class=\"gold-text-gradient\" style=\"font-style: normal;\">Healing</span> Journey in Bali"
-msgstr "Jelajahi Perjalanan <span class=\"gold-text-gradient\" style=\"font-style: normal;\">Penyembuhan</span> Anda di Bali"
-
-#: templates/home.html
-msgid "Connect with Bali's most authentic healers and discover ancient rituals for your body, mind, and soul."
-msgstr "Terhubung dengan penyembuh Bali paling otentik dan temukan ritual kuno untuk tubuh, pikiran, dan jiwa Anda."
-
-#: templates/home.html
-msgid "Search healers, centres, specialities..."
-msgstr "Cari penyembuh, pusat, spesialisasi..."
-
-#: templates/home.html
-msgid "Popular:"
-msgstr "Populer:"
-
-#: templates/home.html
-msgid "Featured Healers"
-msgstr "Penyembuh Unggulan"
-
-#: templates/home.html
-msgid "Trusted <em>Mobile Healers</em>"
-msgstr "<em>Penyembuh Mobile</em> Terpercaya"
-
-#: templates/home.html
-msgid "Verified healers who come to you"
-msgstr "Penyembuh terverifikasi yang datang ke Anda"
-
-#: templates/home.html
-msgid "yrs"
-msgstr "thn"
-
-#: templates/home.html
-msgid "Top Rated"
-msgstr "Peringkat Tertinggi"
-
-#: templates/home.html
-msgid "Available"
-msgstr "Tersedia"
-
-#: templates/home.html
-msgid "High Demand"
-msgstr "Permintaan Tinggi"
-
-#: templates/home.html
-msgid "From"
-msgstr "Mulai"
-
-#: templates/home.html
-msgid "Book Now"
-msgstr "Pesan Sekarang"
-
-#: templates/home.html
-msgid "Profile"
-msgstr "Profil"
-
-#: templates/home.html
-msgid "Healers Coming Soon"
-msgstr "Penyembuh Segera Hadir"
-
-#: templates/home.html
-msgid "Verified healers will be available shortly."
-msgstr "Penyembuh terverifikasi akan segera tersedia."
-
-#: templates/home.html
-msgid "View All Healers"
-msgstr "Lihat Semua Penyembuh"
-
-#: templates/home.html
-msgid "Sacred Spaces"
-msgstr "Ruang Suci"
-
-#: templates/home.html
-msgid "Healing <em>Centers</em> Across Bali"
-msgstr "<em>Pusat</em> Penyembuhan di Seluruh Bali"
-
-#: templates/home.html
-msgid "Beautiful spaces for your healing journey"
-msgstr "Ruang indah untuk perjalanan penyembuhan Anda"
-
-#: templates/home.html
-msgid "Details"
-msgstr "Detail"
-
-#: templates/home.html
-msgid "Centers Coming Soon"
-msgstr "Pusat Segera Hadir"
-
-#: templates/home.html
-msgid "Healing centers will be listed here."
-msgstr "Pusat penyembuhan akan terdaftar di sini."
-
-#: templates/home.html
-msgid "View All Centers"
-msgstr "Lihat Semua Pusat"
-
-#: templates/home.html
-msgid "Ancient Traditions"
-msgstr "Tradisi Kuno"
-
-#: templates/home.html
-msgid "Healing <em>Specialities</em>"
-msgstr "<em>Spesialisasi</em> Penyembuhan"
-
-#: templates/home.html
-msgid "Explore the diverse healing traditions of Bali"
-msgstr "Jelajahi tradisi penyembuhan Bali yang beragam"
-
-#: templates/home.html
-msgid "Explore"
-msgstr "Jelajahi"
-
-#: templates/home.html
-msgid "Destinations"
-msgstr "Tujuan"
-
-#: templates/home.html
-msgid "Popular <em>Locations</em>"
-msgstr "<em>Lokasi</em> Populer"
-
-#: templates/home.html
-msgid "Explore healing experiences across Bali's most sought-after areas"
-msgstr "Jelajahi pengalaman penyembuhan di area paling dicari di Bali"
-
-#: templates/home.html
-msgid "Healers"
-msgstr "Penyembuh"
-
-#: templates/home.html
-msgid "Simple Process"
-msgstr "Proses Sederhana"
-
-#: templates/home.html
-msgid "How It <em>Works</em>"
-msgstr "Bagaimana <em>Bekerja</em>"
-
-#: templates/home.html
-msgid "Three simple steps to begin your healing journey"
-msgstr "Tiga langkah sederhana untuk memulai perjalanan penyembuhan Anda"
-
-#: templates/home.html
-msgid "Explore verified healers, healing centres, and specialities across Bali. Read reviews and find the perfect match."
-msgstr "Jelajahi penyembuh terverifikasi, pusat penyembuhan, dan spesialisasi di seluruh Bali. Baca ulasan dan temukan yang paling cocok."
-
-#: templates/home.html
-msgid "Book"
-msgstr "Pesan"
-
-#: templates/home.html
-msgid "Choose your session — on-site, home service, or online consultation. Pick a date and time that works for you."
-msgstr "Pilih sesi Anda — di lokasi, layanan rumah, atau konsultasi online. Pilih tanggal dan waktu yang sesuai untuk Anda."
-
-#: templates/home.html
-msgid "Heal"
-msgstr "Sembuh"
-
-#: templates/home.html
-msgid "Experience authentic healing wherever you are. Connect with Bali's ancient wisdom for transformation."
-msgstr "Rasakan penyembuhan otentik di mana pun Anda berada. Terhubung dengan kebijaksanaan kuno Bali untuk transformasi."
-
-#: templates/home.html
-msgid "Client Stories"
-msgstr "Cerita Klien"
-
-#: templates/home.html
-msgid "What Our Clients <em>Say</em>"
-msgstr "Apa yang <em>Katakan</em> Klien Kami"
-
-#: templates/home.html
-msgid "Real experiences from healing seekers"
-msgstr "Pengalaman nyata dari pencari penyembuhan"
-
-#: templates/home.html
-msgid "Verified"
-msgstr "Terverifikasi"
-
-#: templates/home.html
-msgid "Wayan's healing session was truly transformative. I felt a deep sense of peace and renewal that I hadn't experienced in years."
-msgstr "Sesi penyembuhan Wayan benar-benar transformatif. Saya merasakan kedamaian dan pembaruan yang mendalam yang belum saya rasakan selama bertahun-tahun."
-
-#: templates/home.html
-msgid "Anjali has an incredible gift. Her Reiki session helped me release years of stored emotional tension."
-msgstr "Anjali memiliki karunia yang luar biasa. Sesi Reiki-nya membantu saya melepaskan ketegangan emosional yang tersimpan selama bertahun-tahun."
-
-#: templates/home.html
-msgid "The sound bath with Kadek was beyond words. The vibrations of the singing bowls took me to a state of deep relaxation."
-msgstr "Mandi suara dengan Kadek tidak dapat diungkapkan dengan kata-kata. Getaran mangkuk nyanyian membawa saya ke kondisi relaksasi yang mendalam."
-
-#: templates/home.html
-msgid "The healing center in Ubud was breathtaking. The combination of traditional and modern approaches was exactly what I needed."
-msgstr "Pusat penyembuhan di Ubud sangat menakjubkan. Kombinasi pendekatan tradisional dan modern tepat yang saya butuhkan."
-
-#: templates/home.html
-msgid "I was skeptical at first, but the chakra balancing session completely changed my energy. I feel more centered than ever."
-msgstr "Awalnya saya ragu, tetapi sesi keseimbangan chakra sepenuhnya mengubah energi saya. Saya merasa lebih seimbang dari sebelumnya."
-
-#: templates/home.html
-msgid "A truly authentic Balinese healing experience. Made's traditional knowledge is priceless."
-msgstr "Pengalaman penyembuhan Bali yang benar-benar otentik. Pengetahuan tradisional Made tidak ternilai harganya."
-
-#: templates/home.html
-msgid "Ready to Begin Your <em>Healing Journey?</em>"
-msgstr "Siap Memulai <em>Perjalanan Penyembuhan</em> Anda?"
-
-#: templates/home.html
-msgid "Find your perfect healer and book a session today."
-msgstr "Temukan penyembuh yang tepat dan pesan sesi hari ini."
-
-#: templates/home.html
-msgid "Find a Healer"
-msgstr "Cari Penyembuh"
-
-#: templates/login.html
-msgid "Login to Account"
-msgstr "Masuk ke Akun"
-
-#: templates/login.html
-msgid "Welcome back, Healer."
-msgstr "Selamat datang kembali, Penyembuh."
-
-#: templates/login.html
-msgid "Invalid username or password."
-msgstr "Username atau password salah."
-
-#: templates/login.html
-msgid "Username"
-msgstr "Username"
-
-#: templates/login.html
-msgid "Enter username"
-msgstr "Masukkan username"
-
-#: templates/login.html
-msgid "Password"
-msgstr "Password"
-
-#: templates/login.html
-msgid "Enter password"
-msgstr "Masukkan password"
-
-#: templates/login.html
-msgid "or"
-msgstr "atau"
-
-#: templates/login.html
-msgid "Don't have an account?"
-msgstr "Belum punya akun?"
-
-#: templates/login.html
-msgid "Register as Customer"
-msgstr "Daftar sebagai Pelanggan"
-
-#: templates/login.html
-msgid "Register as Healer"
-msgstr "Daftar sebagai Penyembuh"
-
-#: templates/login.html
-msgid "Back to Home"
-msgstr "Kembali ke Beranda"
-
-#: templates/register_choose.html
-msgid "Register"
-msgstr "Daftar"
-
-#: templates/register_choose.html
-msgid "Choose your role to start your healing journey"
-msgstr "Pilih peran Anda untuk memulai perjalanan penyembuhan"
-
-#: templates/register_choose.html
-msgid "Customer"
-msgstr "Pelanggan"
-
-#: templates/register_choose.html
-msgid "Find the best healers in Bali and book healing sessions for your body, mind, and soul health."
-msgstr "Temukan penyembuh terbaik di Bali dan pesan sesi penyembuhan untuk kesehatan tubuh, pikiran, dan jiwa Anda."
-
-#: templates/register_choose.html
-msgid "Search & compare healers"
-msgstr "Cari & bandingkan penyembuh"
-
-#: templates/register_choose.html
-msgid "Book healing sessions"
-msgstr "Pesan sesi penyembuhan"
-
-#: templates/register_choose.html
-msgid "Booking history"
-msgstr "Riwayat pemesanan"
-
-#: templates/register_choose.html
-msgid "Pay online"
-msgstr "Bayar online"
-
-#: templates/register_choose.html
-msgid "POPULAR"
-msgstr "POPULER"
-
-#: templates/register_choose.html
-msgid "Healer"
-msgstr "Penyembuh"
-
-#: templates/register_choose.html
-msgid "Open your healing practice, manage services, schedules, and reach thousands of seekers."
-msgstr "Buka praktik penyembuhan Anda, kelola layanan, jadwal, dan jangkau ribuan pencari."
-
-#: templates/register_choose.html
-msgid "Professional business profile"
-msgstr "Profil bisnis profesional"
-
-#: templates/register_choose.html
-msgid "Manage services & pricing"
-msgstr "Kelola layanan & harga"
-
-#: templates/register_choose.html
-msgid "Set practice schedule"
-msgstr "Atur jadwal praktik"
-
-#: templates/register_choose.html
-msgid "Receive & manage bookings"
-msgstr "Terima & kelola pemesanan"
-
-#: templates/register_choose.html
-msgid "Message inbox"
-msgstr "Kotak pesan"
-
-#: templates/register_choose.html
-msgid "Payment settings"
-msgstr "Pengaturan pembayaran"
-
-#: templates/register_choose.html
-msgid "Start Healing Business"
-msgstr "Mulai Bisnis Penyembuhan"
-
-#: templates/register_choose.html
-msgid "Already have an account?"
-msgstr "Sudah punya akun?"
-
-#: templates/register_choose.html
-msgid "Login now"
-msgstr "Masuk sekarang"
-
-#: templates/register_customer.html
-msgid "Register Customer"
-msgstr "Daftar Pelanggan"
-
-#: templates/register_customer.html
-msgid "Create Customer Account"
-msgstr "Buat Akun Pelanggan"
-
-#: templates/register_customer.html
-msgid "Find and book healing sessions with the best healers in Bali."
-msgstr "Temukan dan pesan sesi penyembuhan dengan penyembuh terbaik di Bali."
-
-#: templates/register_customer.html
-msgid "Account Data"
-msgstr "Data Akun"
-
-#: templates/register_customer.html
-msgid "First Name"
-msgstr "Nama Depan"
-
-#: templates/register_customer.html
-msgid "Last Name"
-msgstr "Nama Belakang"
-
-#: templates/register_customer.html
-msgid "Email"
-msgstr "Email"
-
-#: templates/register_customer.html
-msgid "Phone"
-msgstr "Telepon"
-
-#: templates/register_customer.html
-msgid "Confirm Password"
-msgstr "Konfirmasi Password"
-
-#: templates/register_customer.html
-msgid "Register Now"
-msgstr "Daftar Sekarang"
-
-#: templates/register_customer.html
-msgid "Want to become a healer?"
-msgstr "Ingin menjadi penyembuh?"
-
-#: templates/register_customer.html
-msgid "Back to selection"
-msgstr "Kembali ke pilihan"
-
-#: templates/register_healer.html
-msgid "Register Healer"
-msgstr "Daftar Penyembuh"
-
-#: templates/register_healer.html
-msgid "Open Healing Business"
-msgstr "Buka Bisnis Penyembuhan"
-
-#: templates/register_healer.html
-msgid "Register your healing practice and reach thousands of seekers in Bali."
-msgstr "Daftarkan praktik penyembuhan Anda dan jangkau ribuan pencari di Bali."
-
-#: templates/register_healer.html
-msgid "Healing Profile"
-msgstr "Profil Penyembuhan"
-
-#: templates/register_healer.html
-msgid "Professional Name"
-msgstr "Nama Profesional"
-
-#: templates/register_healer.html
-msgid "Name that will be seen by customers"
-msgstr "Nama yang akan dilihat oleh pelanggan"
-
-#: templates/register_healer.html
-msgid "Specializations"
-msgstr "Spesialisasi"
-
-#: templates/register_healer.html
-msgid "Separate with commas"
-msgstr "Pisahkan dengan koma"
-
-#: templates/register_healer.html
-msgid "Years of Experience"
-msgstr "Tahun Pengalaman"
-
-#: templates/register_healer.html
-msgid "Session Price (IDR)"
-msgstr "Harga Sesi (IDR)"
-
-#: templates/register_healer.html
-msgid "Practice Address"
-msgstr "Alamat Praktik"
-
-#: templates/register_healer.html
 msgid "About Yourself"
 msgstr "Tentang Anda"
 
-#: templates/register_healer.html
-msgid "Want to become a customer?"
-msgstr "Ingin menjadi pelanggan?"
+msgid "Accept cash payment during healing session"
+msgstr "Terima pembayaran tunai saat sesi healing"
 
-#: templates/dashboard.html
-msgid "Admin Dashboard"
-msgstr "Dashboard Admin"
+msgid "Accept payments via PayPal (Visa / Mastercard / PayPal Balance)"
+msgstr "Terima pembayaran via PayPal (Visa / Mastercard / Saldo PayPal)"
 
-#: templates/dashboard.html
-msgid "Dashboard"
-msgstr "Dashboard"
+msgid "Account"
+msgstr "Akun"
 
-#: templates/dashboard.html
-msgid "Admin"
-msgstr "Admin"
+msgid "Account Holder"
+msgstr "Atas Nama"
 
-#: templates/dashboard.html
-msgid "Manage bookings, payments, and healer data"
-msgstr "Kelola pemesanan, pembayaran, dan data penyembuh"
-
-#: templates/dashboard.html
-msgid "Total Bookings"
-msgstr "Total Pemesanan"
-
-#: templates/dashboard.html
-msgid "Pending"
-msgstr "Menunggu"
-
-#: templates/dashboard.html
-msgid "Confirmed"
-msgstr "Dikonfirmasi"
-
-#: templates/dashboard.html
-msgid "Completed"
-msgstr "Selesai"
-
-#: templates/dashboard.html
-msgid "Revenue (IDR)"
-msgstr "Pendapatan (IDR)"
-
-#: templates/dashboard.html
-msgid "Successful Payments"
-msgstr "Pembayaran Berhasil"
-
-#: templates/dashboard.html
-msgid "Recent Bookings"
-msgstr "Pemesanan Terbaru"
-
-#: templates/dashboard.html
-msgid "View All"
-msgstr "Lihat Semua"
-
-#: templates/dashboard.html
-msgid "Code"
-msgstr "Kode"
-
-#: templates/dashboard.html
-msgid "Customer"
-msgstr "Pelanggan"
-
-#: templates/dashboard.html
-msgid "Healer"
-msgstr "Penyembuh"
-
-#: templates/dashboard.html
-msgid "Status"
-msgstr "Status"
-
-#: templates/dashboard.html
-msgid "Action"
-msgstr "Aksi"
-
-#: templates/dashboard.html
-msgid "No bookings yet."
-msgstr "Belum ada pemesanan."
-
-#: templates/dashboard.html
-msgid "Recent Payments"
-msgstr "Pembayaran Terbaru"
-
-#: templates/dashboard.html
-msgid "Amount"
-msgstr "Jumlah"
-
-#: templates/dashboard.html
-msgid "No payments yet."
-msgstr "Belum ada pembayaran."
-
-#: templates/dashboard.html
-msgid "Quick Access"
-msgstr "Akses Cepat"
-
-#: templates/dashboard.html
-msgid "Bookings"
-msgstr "Pemesanan"
-
-#: templates/dashboard.html
-msgid "Payments"
-msgstr "Pembayaran"
-
-#: templates/dashboard.html
-msgid "Admin Panel"
-msgstr "Panel Admin"
-
-#: templates/customer_dashboard.html
-msgid "Customer Dashboard"
-msgstr "Dashboard Pelanggan"
-
-#: templates/customer_dashboard.html
-msgid "Manage your bookings and activities"
-msgstr "Kelola pemesanan dan aktivitas Anda"
-
-#: templates/customer_dashboard.html
-msgid "My Bookings"
-msgstr "Pemesanan Saya"
-
-#: templates/customer_dashboard.html
-msgid "Service"
-msgstr "Layanan"
-
-#: templates/customer_dashboard.html
-msgid "Date"
-msgstr "Tanggal"
-
-#: templates/customer_dashboard.html
-msgid "No Bookings Yet"
-msgstr "Belum Ada Pemesanan"
-
-#: templates/customer_dashboard.html
-msgid "Start exploring healers and make your first booking."
-msgstr "Mulai menjelajahi penyembuh dan buat pemesanan pertama Anda."
-
-#: templates/customer_dashboard.html
-msgid "Find Healer"
-msgstr "Cari Penyembuh"
-
-#: templates/healer_dashboard.html
-msgid "Healer Dashboard"
-msgstr "Dashboard Penyembuh"
-
-#: templates/healer_dashboard.html
-msgid "Manage your healing business"
-msgstr "Kelola bisnis penyembuhan Anda"
-
-#: templates/healer_dashboard.html
-msgid "Active Services"
-msgstr "Layanan Aktif"
-
-#: templates/healer_dashboard.html
-msgid "New Bookings"
-msgstr "Pemesanan Baru"
-
-#: templates/healer_dashboard.html
-msgid "New Messages"
-msgstr "Pesan Baru"
-
-#: templates/healer_dashboard.html
-msgid "Rating"
-msgstr "Penilaian"
-
-#: templates/healer_dashboard.html
-msgid "Total Revenue"
-msgstr "Total Pendapatan"
-
-#: templates/healer_dashboard.html
-msgid "Business Profile"
-msgstr "Profil Bisnis"
-
-#: templates/healer_dashboard.html
-msgid "Edit name, bio, specializations, price"
-msgstr "Ubah nama, bio, spesialisasi, harga"
-
-#: templates/healer_dashboard.html
-msgid "Services"
-msgstr "Layanan"
-
-#: templates/healer_dashboard.html
-msgid "Manage offered service listings"
-msgstr "Kelola daftar layanan yang ditawarkan"
-
-#: templates/healer_dashboard.html
-msgid "Schedule"
-msgstr "Jadwal"
-
-#: templates/healer_dashboard.html
-msgid "Set weekly practice hours"
-msgstr "Atur jam praktik mingguan"
-
-#: templates/healer_dashboard.html
-msgid "Messages"
-msgstr "Pesan"
-
-#: templates/healer_dashboard.html
-msgid "new messages"
-msgstr "pesan baru"
-
-#: templates/healer_dashboard.html
-msgid "Inbox"
-msgstr "Kotak Masuk"
-
-#: templates/healer_dashboard.html
-msgid "Set accepted payment methods"
-msgstr "Atur metode pembayaran yang diterima"
-
-#: templates/healer_dashboard.html
-msgid "View Public Profile"
-msgstr "Lihat Profil Publik"
-
-#: templates/healer_dashboard.html
-msgid "See what customers see"
-msgstr "Lihat apa yang dilihat pelanggan"
-
-#: templates/healer_dashboard.html
-msgid "Manage booking and payment data"
-msgstr "Kelola data pemesanan dan pembayaran"
-
-#: templates/healer_dashboard.html
-msgid "Profile & Schedule"
-msgstr "Profil & Jadwal"
-
-#: templates/healer_dashboard.html
-msgid "Price"
-msgstr "Harga"
-
-#: templates/healer_dashboard.html
-msgid "Experience"
-msgstr "Pengalaman"
-
-#: templates/healer_dashboard.html
-msgid "years"
-msgstr "tahun"
-
-#: templates/healer_dashboard.html
-msgid "Address"
-msgstr "Alamat"
-
-#: templates/healer_dashboard.html
-msgid "Manage"
-msgstr "Kelola"
-
-#: templates/healer_dashboard.html
-msgid "minutes"
-msgstr "menit"
-
-#: templates/healer_dashboard.html
-msgid "No services yet."
-msgstr "Belum ada layanan."
-
-#: templates/healer_dashboard.html
-msgid "Add Service"
-msgstr "Tambah Layanan"
-
-#: templates/healer_dashboard.html
-msgid "Incoming Bookings"
-msgstr "Pemesanan Masuk"
-
-#: templates/healer_dashboard.html
-msgid "Bookings from customers will appear here."
-msgstr "Pemesanan dari pelanggan akan muncul di sini."
-
-#: templates/healer_dashboard.html
-msgid "Healer Profile Not Yet Created"
-msgstr "Profil Penyembuh Belum Dibuat"
-
-#: templates/healer_dashboard.html
-msgid "You need to fill in your healer profile data to start receiving bookings."
-msgstr "Anda perlu mengisi data profil penyembuh Anda untuk mulai menerima pemesanan."
-
-#: templates/healer_profile_edit.html
-msgid "Edit Healer Profile"
-msgstr "Ubah Profil Penyembuh"
-
-#: templates/healer_profile_edit.html
-msgid "Back"
-msgstr "Kembali"
-
-#: templates/healer_profile_edit.html
-msgid "Edit Profile"
-msgstr "Ubah Profil"
-
-#: templates/healer_profile_edit.html
-msgid "Save Changes"
-msgstr "Simpan Perubahan"
-
-#: templates/healer_schedule_edit.html
-msgid "Manage Schedule"
-msgstr "Kelola Jadwal"
-
-#: templates/healer_schedule_edit.html
-msgid "Manage Practice Schedule"
-msgstr "Kelola Jadwal Praktik"
-
-#: templates/healer_schedule_edit.html
-msgid "Weekly Schedule"
-msgstr "Jadwal Mingguan"
-
-#: templates/healer_schedule_edit.html
-msgid "Fill in start and end times for active days. Leave empty for days off."
-msgstr "Isi waktu mulai dan selesai untuk hari aktif. Biarkan kosong untuk hari libur."
-
-#: templates/healer_schedule_edit.html
-msgid "Monday"
-msgstr "Senin"
-
-#: templates/healer_schedule_edit.html
-msgid "Tuesday"
-msgstr "Selasa"
-
-#: templates/healer_schedule_edit.html
-msgid "Wednesday"
-msgstr "Rabu"
-
-#: templates/healer_schedule_edit.html
-msgid "Thursday"
-msgstr "Kamis"
-
-#: templates/healer_schedule_edit.html
-msgid "Friday"
-msgstr "Jumat"
-
-#: templates/healer_schedule_edit.html
-msgid "Saturday"
-msgstr "Sabtu"
-
-#: templates/healer_schedule_edit.html
-msgid "Sunday"
-msgstr "Minggu"
-
-#: templates/healer_schedule_edit.html
-msgid "Save Schedule"
-msgstr "Simpan Jadwal"
-
-#: templates/healer_services.html
-msgid "Manage Services"
-msgstr "Kelola Layanan"
-
-#: templates/healer_services.html
-msgid "Add New Service"
-msgstr "Tambah Layanan Baru"
-
-#: templates/healer_services.html
-msgid "Service Name"
-msgstr "Nama Layanan"
-
-#: templates/healer_services.html
-msgid "Example: Reiki Healing 60 Minutes"
-msgstr "Contoh: Penyembuhan Reiki 60 Menit"
-
-#: templates/healer_services.html
-msgid "Price (IDR)"
-msgstr "Harga (IDR)"
-
-#: templates/healer_services.html
-msgid "Duration (minutes)"
-msgstr "Durasi (menit)"
-
-#: templates/healer_services.html
-msgid "Description"
-msgstr "Deskripsi"
-
-#: templates/healer_services.html
-msgid "Short service description"
-msgstr "Deskripsi singkat layanan"
-
-#: templates/healer_services.html
-msgid "All Services"
-msgstr "Semua Layanan"
-
-#: templates/healer_services.html
-#, python-format
-msgid "%(counter)s service"
-msgid_plural "%(counter)s services"
-msgstr[0] "%(counter)s layanan"
-msgstr[1] "%(counter)s layanan"
-
-#: templates/healer_services.html
-msgid "Active"
-msgstr "Aktif"
-
-#: templates/healer_services.html
-msgid "Inactive"
-msgstr "Tidak Aktif"
-
-#: templates/healer_services.html
-#, python-format
-msgid "%(duration)s minutes"
-msgstr "%(duration)s menit"
-
-#: templates/healer_services.html
-msgid "Deactivate"
-msgstr "Nonaktifkan"
-
-#: templates/healer_services.html
-msgid "Activate"
-msgstr "Aktifkan"
-
-#: templates/healer_services.html
-msgid "Delete this service?"
-msgstr "Hapus layanan ini?"
-
-#: templates/healer_services.html
-msgid "No Services Yet"
-msgstr "Belum Ada Layanan"
-
-#: templates/healer_services.html
-msgid "Add your first service using the form above."
-msgstr "Tambah layanan pertama Anda menggunakan formulir di atas."
-
-#: templates/healer_messages.html
-#, python-format
-msgid "%(count)s unread message"
-msgid_plural "%(count)s unread messages"
-msgstr[0] "%(count)s pesan belum dibaca"
-msgstr[1] "%(count)s pesan belum dibaca"
-
-#: templates/healer_messages.html
-msgid "No Messages Yet"
-msgstr "Belum Ada Pesan"
-
-#: templates/healer_messages.html
-msgid "Messages from customers will appear here."
-msgstr "Pesan dari pelanggan akan muncul di sini."
-
-#: templates/healer_message_detail.html
-msgid "Message Detail"
-msgstr "Detail Pesan"
-
-#: templates/healer_message_detail.html
-#, python-format
-msgid "Message from %(name)s"
-msgstr "Pesan dari %(name)s"
-
-#: templates/healer_message_detail.html
-msgid "Reply"
-msgstr "Balas"
-
-#: templates/healer_message_detail.html
-msgid "Reply Message"
-msgstr "Pesan Balasan"
-
-#: templates/healer_message_detail.html
-msgid "Write your reply..."
-msgstr "Tulis balasan Anda..."
-
-#: templates/healer_message_detail.html
-msgid "Send Reply"
-msgstr "Kirim Balasan"
-
-#: templates/healer_payments.html
-msgid "Payment Settings"
-msgstr "Pengaturan Pembayaran"
-
-#: templates/healer_payments.html
-msgid "Payment Methods"
-msgstr "Metode Pembayaran"
-
-#: templates/healer_payments.html
-msgid "Bank Account"
-msgstr "Rekening Bank"
-
-#: templates/healer_payments.html
-msgid "Bank Name"
-msgstr "Nama Bank"
-
-#: templates/healer_payments.html
-msgid "Example: BCA, Mandiri, BRI"
-msgstr "Contoh: BCA, Mandiri, BRI"
-
-#: templates/healer_payments.html
 msgid "Account Number"
 msgstr "Nomor Rekening"
 
-#: templates/healer_payments.html
-msgid "Your account number"
-msgstr "Nomor rekening Anda"
-
-#: templates/healer_payments.html
-msgid "Account Holder Name"
-msgstr "Nama Pemegang Rekening"
-
-#: templates/healer_payments.html
 msgid "Account holder name"
-msgstr "Nama pemegang rekening"
+msgstr "Nama pemilik rekening"
 
-#: templates/healer_payments.html
-msgid "Your e-wallet number"
-msgstr "Nomor e-wallet Anda"
+msgid "Action"
+msgstr "Aksi"
 
-#: templates/healer_payments.html
-msgid "Save Settings"
-msgstr "Simpan Pengaturan"
-
-#: templates/healer_list.html
-msgid "Discover verified healing professionals across Bali"
-msgstr "Temukan profesional penyembuhan terverifikasi di seluruh Bali"
-
-#: templates/healer_list.html
-msgid "Search by name, speciality, or location..."
-msgstr "Cari berdasarkan nama, spesialisasi, atau lokasi..."
-
-#: templates/healer_list.html
-msgid "Filter:"
-msgstr "Filter:"
-
-#: templates/healer_list.html
-msgid "All"
-msgstr "Semua"
-
-#: templates/healer_list.html
-msgid "No Healers Found"
-msgstr "Tidak Ada Penyembuh Ditemukan"
-
-#: templates/healer_list.html
-msgid "Try adjusting your search criteria."
-msgstr "Coba sesuaikan kriteria pencarian Anda."
-
-#: templates/healer_detail.html
-msgid "years experience"
-msgstr "tahun pengalaman"
-
-#: templates/healer_detail.html
-msgid "reviews"
-msgstr "ulasan"
-
-#: templates/healer_detail.html
-msgid "Years"
-msgstr "Tahun"
-
-#: templates/healer_detail.html
-msgid "Reviews"
-msgstr "Ulasan"
-
-#: templates/center_list.html
-msgid "Explore healing centres across Bali"
-msgstr "Jelajahi pusat penyembuhan di seluruh Bali"
-
-#: templates/center_list.html
-msgid "Search centers by name or location..."
-msgstr "Cari pusat berdasarkan nama atau lokasi..."
-
-#: templates/center_list.html
-msgid "No Centers Found"
-msgstr "Tidak Ada Pusat Ditemukan"
-
-#: templates/center_detail.html
-msgid "Healers at This Center"
-msgstr "Penyembuh di Pusat Ini"
-
-#: templates/speciality_list.html
-msgid "Explore the diverse healing traditions of Bali"
-msgstr "Jelajahi tradisi penyembuhan Bali yang beragam"
-
-#: templates/location_list.html
-msgid "Locations"
-msgstr "Lokasi"
-
-#: templates/location_list.html
-msgid "Popular <span class=\"gold-text-gradient\">Locations</span>"
-msgstr "<span class=\"gold-text-gradient\">Lokasi</span> Populer"
-
-#: templates/location_list.html
-msgid "Explore healing experiences across Bali"
-msgstr "Jelajahi pengalaman penyembuhan di seluruh Bali"
-
-#: templates/booking_form.html
-msgid "Book Healing Session"
-msgstr "Pesan Sesi Penyembuhan"
-
-#: templates/booking_form.html
-msgid "Healing Session"
-msgstr "Sesi Penyembuhan"
-
-#: templates/booking_form.html
-msgid "Session Price"
-msgstr "Harga Sesi"
-
-#: templates/booking_form.html
-msgid "Booking Form"
-msgstr "Formulir Pemesanan"
-
-#: templates/booking_form.html
-msgid "Personal Information"
-msgstr "Informasi Pribadi"
-
-#: templates/booking_form.html
-msgid "Full Name"
-msgstr "Nama Lengkap"
-
-#: templates/booking_form.html
-msgid "Your phone number"
-msgstr "Nomor telepon Anda"
-
-#: templates/booking_form.html
-msgid "Your email"
-msgstr "Email Anda"
-
-#: templates/booking_form.html
-msgid "Session Details"
-msgstr "Detail Sesi"
-
-#: templates/booking_form.html
-msgid "Select service..."
-msgstr "Pilih layanan..."
-
-#: templates/booking_form.html
-msgid "Time"
-msgstr "Waktu"
-
-#: templates/booking_form.html
-msgid "Session Type"
-msgstr "Jenis Sesi"
-
-#: templates/booking_form.html
-msgid "On-site (Visit Healer Location)"
-msgstr "Di Lokasi (Kunjungi Lokasi Penyembuh)"
-
-#: templates/booking_form.html
-msgid "Home Service (Healer Comes to You)"
-msgstr "Layanan Rumah (Penyembuh Datang ke Anda)"
-
-#: templates/booking_form.html
-msgid "Additional Notes"
-msgstr "Catatan Tambahan"
-
-#: templates/booking_form.html
-msgid "Describe your condition or special requests..."
-msgstr "Deskripsikan kondisi atau permintaan khusus Anda..."
-
-#: templates/booking_form.html
-msgid "Confirm Booking"
-msgstr "Konfirmasi Pemesanan"
-
-#: templates/booking_list.html
-msgid "Booking History"
-msgstr "Riwayat Pemesanan"
-
-#: templates/booking_list.html
-msgid "History"
-msgstr "Riwayat"
-
-#: templates/booking_list.html
 msgid "Actions"
 msgstr "Aksi"
 
-#: templates/booking_list.html
-msgid "Bookings will appear here."
-msgstr "Pemesanan akan muncul di sini."
+msgid "Active"
+msgstr "Aktif"
 
-#: templates/booking_detail.html
-msgid "Booking Details"
-msgstr "Detail Pemesanan"
+msgid "Active Services"
+msgstr "Layanan Aktif"
 
-#: templates/booking_detail.html
-msgid "Booking Code"
-msgstr "Kode Pemesanan"
+msgid "Add"
+msgstr "Tambah"
 
-#: templates/booking_detail.html
-msgid "Notes"
-msgstr "Catatan"
+msgid "Add New Service"
+msgstr "Tambah Layanan Baru"
 
-#: templates/booking_detail.html
-msgid "Price Summary"
-msgstr "Ringkasan Harga"
+msgid "Add Service"
+msgstr "Tambah Layanan"
 
-#: templates/booking_detail.html
-#, python-format
-msgid "Total (%(currency)s)"
-msgstr "Total (%(currency)s)"
+msgid "Additional Notes"
+msgstr "Catatan Tambahan"
 
-#: templates/booking_detail.html
-msgid "Total"
-msgstr "Total"
+msgid "Address"
+msgstr "Alamat"
 
-#: templates/booking_detail.html
-msgid "Pay Now"
-msgstr "Bayar Sekarang"
+msgid "All"
+msgstr "Semua"
 
-#: templates/booking_detail.html
-msgid "Cancel this booking?"
-msgstr "Batalkan pemesanan ini?"
+msgid "All rights reserved."
+msgstr "Hak cipta dilindungi."
 
-#: templates/booking_detail.html
-msgid "Cancel"
-msgstr "Batal"
+msgid "Already have an account?"
+msgstr "Sudah punya akun?"
 
-#: templates/booking_track.html
-msgid "Track Booking"
-msgstr "Lacak Pemesanan"
+msgid "Amount"
+msgstr "Jumlah"
 
-#: templates/booking_track.html
-msgid "Track"
-msgstr "Lacak"
+msgid "Amount (IDR)"
+msgstr "Jumlah (IDR)"
 
-#: templates/booking_track.html
-msgid "Enter booking code to track status"
-msgstr "Masukkan kode pemesanan untuk melacak status"
+msgid "An error occurred. Please check your form."
+msgstr "Terjadi kesalahan. Silakan periksa form Anda."
 
-#: templates/booking_track.html
-msgid "Track Booking Status"
-msgstr "Lacak Status Pemesanan"
+msgid "Ancient Healing Wisdom"
+msgstr "Kebijaksanaan Penyembuhan Kuno"
 
-#: templates/booking_track.html
-msgid "Enter the booking code you received"
-msgstr "Masukkan kode pemesanan yang Anda terima"
+msgid "Are you sure you want to delete this service?"
+msgstr "Apakah Anda yakin ingin menghapus layanan ini?"
 
-#: templates/booking_track.html
-msgid "Enter booking code..."
-msgstr "Masukkan kode pemesanan..."
+msgid "Available"
+msgstr "Tersedia"
 
-#: templates/booking_track.html
-msgid "Booking Found"
-msgstr "Pemesanan Ditemukan"
+msgid "Awaiting Healer Confirmation"
+msgstr "Menunggu Konfirmasi Healer"
 
-#: templates/booking_track.html
-msgid "View Details"
-msgstr "Lihat Detail"
-
-#: templates/payment_process.html
-msgid "Payment"
-msgstr "Pembayaran"
-
-#: templates/payment_process.html
-msgid "Select Payment Method"
-msgstr "Pilih Metode Pembayaran"
-
-#: templates/payment_process.html
 msgid "Awaiting Payment"
 msgstr "Menunggu Pembayaran"
 
-#: templates/payment_process.html
+msgid "Back"
+msgstr "Kembali"
+
+msgid "Back to Home"
+msgstr "Kembali ke Beranda"
+
+msgid "Bali Healer — Discover · Book · Heal"
+msgstr "Bali Healer — Temukan · Booking · Sembuh"
+
+msgid ""
+"Bali Healer, healing, spiritual healing, Reiki, chakra healing, sound "
+"healing, Balinese healing, meditation, wellness, Bali"
+msgstr ""
+"Bali Healer, penyembuhan, penyembuhan spiritual, Reiki, penyembuhan chakra, "
+"penyembuhan suara, penyembuhan Bali, meditasi, kesejahteraan, Bali"
+
+msgid "Bank Name"
+msgstr "Nama Bank"
+
+msgid "Bank Transfer"
+msgstr "Transfer Bank"
+
+msgid "Become a Provider"
+msgstr "Jadi Penyedia"
+
+msgid "Being worked on by healer."
+msgstr "Sedang dikerjakan oleh healer."
+
+msgid "Bio"
+msgstr "Bio"
+
+msgid "Book"
+msgstr "Booking"
+
+msgid "Book Healing Session"
+msgstr "Booking Sesi Penyembuhan"
+
+msgid "Book Now"
+msgstr "Booking Sekarang"
+
+msgid "Booking"
+msgstr "Booking"
+
+msgid "Booking %(code)s completed. Funds have been released."
+msgstr "Booking %(code)s selesai. Dana telah dirilis."
+
+msgid "Booking %(code)s confirmed. Please proceed."
+msgstr "Booking %(code)s dikonfirmasi. Silakan kerjakan."
+
+msgid "Booking Code"
+msgstr "Kode Booking"
+
+msgid "Booking Details"
+msgstr "Detail Booking"
+
+msgid "Booking Form"
+msgstr "Formulir Booking"
+
+msgid "Booking History"
+msgstr "Riwayat Booking"
+
+msgid "Booking Status"
+msgstr "Status Booking"
+
+msgid "Booking code not found."
+msgstr "Kode booking tidak ditemukan."
+
+msgid "Booking created by customer"
+msgstr "Booking dibuat oleh pelanggan"
+
+msgid "Booking status updated to %(status)s"
+msgstr "Status booking diperbarui ke %(status)s"
+
+msgid "Booking successfully created! Booking code: %(code)s"
+msgstr "Booking berhasil dibuat! Kode booking: %(code)s"
+
+msgid "Bookings from This Customer"
+msgstr "Booking dari Pelanggan Ini"
+
+msgid "Bookings will appear here."
+msgstr "Booking akan muncul di sini."
+
+msgid "Cancel"
+msgstr "Batalkan"
+
+msgid "Cancel this booking?"
+msgstr "Batalkan booking ini?"
+
+msgid "Cancel this booking? Funds will be refunded."
+msgstr "Batalkan booking ini? Dana akan dikembalikan."
+
+msgid "Cancelled"
+msgstr "Dibatalkan"
+
+msgid "Cash"
+msgstr "Tunai"
+
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Center Details"
+msgstr "Detail Pusat"
+
+msgid "Centers"
+msgstr "Pusat"
+
+msgid "Chat"
+msgstr "Chat"
+
+msgid "Chat Healer"
+msgstr "Chat Healer"
+
+msgid "Chat with Customers"
+msgstr "Chat dengan Pelanggan"
+
+msgid "Chat with Healer"
+msgstr "Chat dengan Healer"
+
+msgid "Chat with customers"
+msgstr "Chat dengan pelanggan"
+
+msgid "Close"
+msgstr "Tutup"
+
+msgid "Code"
+msgstr "Kode"
+
+msgid "Complete"
+msgstr "Selesai"
+
 msgid "Complete Payment"
 msgstr "Selesaikan Pembayaran"
 
-#: templates/payment_process.html
-msgid "Payment code"
-msgstr "Kode pembayaran"
+msgid "Completed"
+msgstr "Selesai"
 
-#: templates/payment_process.html
-msgid "Waiting for payment confirmation..."
-msgstr "Menunggu konfirmasi pembayaran..."
+msgid "Confirm"
+msgstr "Konfirmasi"
 
-#: templates/payment_process.html
+msgid "Confirm Booking"
+msgstr "Konfirmasi Booking"
+
+msgid "Confirmed"
+msgstr "Dikonfirmasi"
+
+msgid "Consult"
+msgstr "Konsultasi"
+
+msgid "Consultation"
+msgstr "Konsultasi"
+
+msgid "Contact Us"
+msgstr "Hubungi Kami"
+
+msgid "Create Account"
+msgstr "Buat Akun"
+
+msgid "Create your customer account"
+msgstr "Buat akun pelanggan Anda"
+
+msgid "Create your healer profile"
+msgstr "Buat profil healer Anda"
+
+msgid "Created"
+msgstr "Dibuat"
+
 msgid "Currency"
 msgstr "Mata Uang"
 
-#: templates/payment_process.html
-msgid "Payment Method"
-msgstr "Metode Pembayaran"
+msgid "Customer"
+msgstr "Pelanggan"
 
-#: templates/payment_process.html
-msgid "Total Payment"
-msgstr "Total Pembayaran"
+msgid "Customer Dashboard"
+msgstr "Dasbor Pelanggan"
 
-#: templates/payment_history.html
-msgid "Payment History"
-msgstr "Riwayat Pembayaran"
+msgid "Customer Registration"
+msgstr "Registrasi Pelanggan"
 
-#: templates/payment_history.html
-msgid "No Payments Yet"
-msgstr "Belum Ada Pembayaran"
+msgid "Customer bookings will appear here."
+msgstr "Booking dari pelanggan akan muncul di sini."
 
-#: templates/payment_history.html
-msgid "Payment history will appear here."
-msgstr "Riwayat pembayaran akan muncul di sini."
+msgid ""
+"Customers can pay with Visa or Mastercard through your PayPal account. Make "
+"sure your PayPal account is verified."
+msgstr ""
+"Pelanggan dapat membayar dengan Visa atau Mastercard melalui akun PayPal "
+"Anda. Pastikan akun PayPal sudah terverifikasi."
 
-#: templates/payment_detail.html
-msgid "Payment Details"
-msgstr "Detail Pembayaran"
+msgid "Customers who contact you will appear here."
+msgstr "Pelanggan yang menghubungi Anda akan muncul di sini."
 
-#: templates/payment_detail.html
-msgid "Successful"
-msgstr "Berhasil"
+msgid "DANA"
+msgstr "DANA"
 
-#: templates/payment_detail.html
+msgid "DANA Number"
+msgstr "Nomor DANA"
+
+msgid "Dashboard"
+msgstr "Dasbor"
+
+msgid "Date"
+msgstr "Tanggal"
+
+msgid "Delete"
+msgstr "Hapus"
+
+msgid "Describe your condition or special requests..."
+msgstr "Deskripsikan kondisi atau permintaan khusus Anda..."
+
+msgid "Description"
+msgstr "Deskripsi"
+
+msgid "Discover"
+msgstr "Jelajahi"
+
+msgid "Discover healing centers across Bali"
+msgstr "Temukan pusat penyembuhan di seluruh Bali"
+
+msgid "Don't have an account?"
+msgstr "Belum punya akun?"
+
+msgid "Duration (minutes)"
+msgstr "Durasi (menit)"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Edit Healer Profile"
+msgstr "Edit Profil Healer"
+
+msgid "Edit Profile"
+msgstr "Edit Profil"
+
+msgid "Edit name, bio, specializations"
+msgstr "Edit nama, bio, spesialisasi"
+
+msgid "Enter your booking code"
+msgstr "Masukkan kode booking Anda"
+
+msgid "Enter your email..."
+msgstr "Masukkan email Anda..."
+
+msgid "Error"
+msgstr "Kesalahan"
+
+msgid "Experience"
+msgstr "Pengalaman"
+
+msgid "Explore different healing modalities"
+msgstr "Jelajahi berbagai modalitas penyembuhan"
+
 msgid "Failed"
 msgstr "Gagal"
 
-#: templates/payment_detail.html
+msgid "Fill in start and end times for active days. Leave empty for days off."
+msgstr ""
+"Isi waktu mulai dan selesai untuk hari aktif. Kosongkan untuk hari libur."
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Filter by"
+msgstr "Filter berdasarkan"
+
+msgid "Find Healer"
+msgstr "Temukan Healer"
+
+msgid "Find Healers"
+msgstr "Temukan Healer"
+
+msgid "Find and book healers"
+msgstr "Temukan dan booking healer"
+
+msgid ""
+"Find and book trusted healing experiences across Bali. Connect with verified"
+" healers for spiritual wellness and ancient Balinese healing traditions."
+msgstr ""
+"Temukan dan booking pengalaman penyembuhan terpercaya di Bali. Terhubung "
+"dengan healer terverifikasi untuk kesejahteraan spiritual dan tradisi "
+"penyembuhan Bali kuno."
+
+msgid "Find healing centers and wellness retreats"
+msgstr "Temukan pusat penyembuhan dan retret kesehatan"
+
+msgid "Friday"
+msgstr "Jumat"
+
+msgid "From"
+msgstr "Dari"
+
+msgid "Full Name"
+msgstr "Nama Lengkap"
+
+msgid ""
+"Funds are safe in escrow. Will be released to healer after work is "
+"completed."
+msgstr ""
+"Dana aman di escrow. Akan dirilis ke healer setelah pekerjaan selesai."
+
+msgid "Funds have been released to healer."
+msgstr "Dana telah dirilis ke healer."
+
+msgid "Funds held (escrow)"
+msgstr "Dana ditahan (escrow)"
+
+msgid "Funds released to healer"
+msgstr "Dana dirilis ke healer"
+
+msgid "General Consultation"
+msgstr "Konsultasi Umum"
+
+msgid "Go Back"
+msgstr "Kembali"
+
+msgid "GoPay"
+msgstr "GoPay"
+
+msgid "GoPay Number"
+msgstr "Nomor GoPay"
+
+msgid "Healer"
+msgstr "Healer"
+
+msgid "Healer Profile Not Created"
+msgstr "Profil Healer Belum Dibuat"
+
+msgid "Healer Registration"
+msgstr "Registrasi Healer"
+
+msgid "Healer has confirmed. Awaiting work to begin."
+msgstr "Healer sudah mengkonfirmasi. Menunggu pengerjaan."
+
+msgid "Healer profile not found."
+msgstr "Profil healer tidak ditemukan."
+
+msgid "Healer profile updated successfully."
+msgstr "Profil healer berhasil diperbarui."
+
+msgid "Healing Centers"
+msgstr "Pusat Penyembuhan"
+
+msgid "Healing Profile"
+msgstr "Profil Penyembuhan"
+
+msgid "Healing Session"
+msgstr "Sesi Penyembuhan"
+
+msgid "Healing Specialities"
+msgstr "Spesialisasi Penyembuhan"
+
+msgid "Held (Escrow)"
+msgstr "Ditahan (Escrow)"
+
+msgid "Held Funds"
+msgstr "Dana Ditahan"
+
+msgid "Hello, I would like to ask about your services."
+msgstr "Halo, saya ingin bertanya tentang layanan Anda."
+
+msgid "Hide"
+msgstr "Sembunyikan"
+
+msgid "High Demand"
+msgstr "Peminat Tinggi"
+
+msgid "Home"
+msgstr "Beranda"
+
+msgid "Home Service (Healer Comes to You)"
+msgstr "Layanan Rumah (Healer Datang ke Anda)"
+
+msgid "How would you like to join?"
+msgstr "Bagaimana Anda ingin bergabung?"
+
+msgid "In Progress"
+msgstr "Sedang Dikerjakan"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Instant payment"
+msgstr "Pembayaran instan"
+
+msgid "Invalid payment status."
+msgstr "Status pembayaran tidak valid."
+
+msgid "Invalid username or password."
+msgstr "Username atau password salah."
+
+msgid "Loading..."
+msgstr "Memuat..."
+
+msgid "Login"
+msgstr "Masuk"
+
+msgid "Manage"
+msgstr "Kelola"
+
+msgid "Manage Practice Schedule"
+msgstr "Kelola Jadwal Praktek"
+
+msgid "Manage Schedule"
+msgstr "Kelola Jadwal"
+
+msgid "Manage Services"
+msgstr "Kelola Layanan"
+
+msgid "Manage service list"
+msgstr "Kelola daftar layanan"
+
+msgid "Manage your bookings and activities"
+msgstr "Kelola booking dan aktivitas Anda"
+
+msgid "Manage your healing business"
+msgstr "Kelola bisnis penyembuhan Anda"
+
+msgid "Manage your healing services"
+msgstr "Kelola layanan penyembuhan Anda"
+
+msgid "Message Detail"
+msgstr "Detail Pesan"
+
+msgid "Messages"
+msgstr "Pesan"
+
 msgid "Method"
 msgstr "Metode"
 
-#: templates/payment_detail.html
-msgid "Payment Simulation"
-msgstr "Simulasi Pembayaran"
-
-#: templates/payment_detail.html
-msgid "Simulation Actions"
-msgstr "Aksi Simulasi"
-
-#: templates/payment_detail.html
-msgid "Simulate Success"
-msgstr "Simulasikan Keberhasilan"
-
-#: templates/payment_detail.html
-msgid "Simulate Failure"
-msgstr "Simulasikan Kegagalan"
-
-#: templates/payment_detail.html
-msgid "Transaction Log"
-msgstr "Log Transaksi"
-
-#: accounts/views.py
-#, python-format
-msgid "Selamat datang, %(name)s!"
-msgstr "Selamat datang, %(name)s!"
-
-#: accounts/views.py
-msgid "Terjadi kesalahan. Silakan periksa form Anda."
-msgstr "Terjadi kesalahan. Silakan periksa formulir Anda."
-
-#: accounts/views.py
-#, python-format
-msgid "Selamat datang, %(name)s! Profil healer Anda berhasil dibuat."
-msgstr "Selamat datang, %(name)s! Profil penyembuh Anda berhasil dibuat."
-
-#: accounts/views.py
-msgid "Username atau password salah."
-msgstr "Username atau password salah."
-
-#: accounts/views.py
-msgid "Anda berhasil logout."
-msgstr "Anda berhasil logout."
-
-#: accounts/views.py
-msgid "Anda tidak memiliki akses ke dashboard healer."
-msgstr "Anda tidak memiliki akses ke dashboard penyembuh."
-
-#: accounts/views.py
-msgid "Anda tidak memiliki akses."
-msgstr "Anda tidak memiliki akses."
-
-#: accounts/views.py
-msgid "Profil healer tidak ditemukan."
-msgstr "Profil penyembuh tidak ditemukan."
-
-#: accounts/views.py
-msgid "Profil healer berhasil diperbarui."
-msgstr "Profil penyembuh berhasil diperbarui."
-
-#: accounts/views.py
-msgid "Jadwal berhasil diperbarui."
-msgstr "Jadwal berhasil diperbarui."
-
-#: accounts/views.py
-#, python-format
-msgid "Layanan \"%(name)s\" berhasil ditambahkan."
-msgstr "Layanan \"%(name)s\" berhasil ditambahkan."
-
-#: accounts/views.py
-msgid "Layanan berhasil dihapus."
-msgstr "Layanan berhasil dihapus."
-
-#: accounts/views.py
-msgid "Balasan berhasil dikirim."
-msgstr "Balasan berhasil dikirim."
-
-#: accounts/views.py
-msgid "Pengaturan pembayaran berhasil diperbarui."
-msgstr "Pengaturan pembayaran berhasil diperbarui."
-
-#: accounts/views.py
-#, python-format
-msgid "Status booking %(code)s diperbarui."
-msgstr "Status booking %(code)s diperbarui."
-
-#: bookings/views.py
-msgid "Mohon lengkapi semua field yang wajib diisi."
-msgstr "Mohon lengkapi semua field yang wajib diisi."
-
-#: bookings/views.py
-#, python-format
-msgid "Booking berhasil dibuat! Kode booking: %(code)s"
-msgstr "Booking berhasil dibuat! Kode booking: %(code)s"
-
-#: bookings/views.py
-msgid "Kode booking tidak ditemukan."
-msgstr "Kode booking tidak ditemukan."
-
-#: bookings/views.py
-msgid "Booking berhasil dibatalkan."
-msgstr "Booking berhasil dibatalkan."
-
-#: bookings/views.py
-msgid "Booking tidak dapat dibatalkan."
-msgstr "Booking tidak dapat dibatalkan."
-
-#: payments/views.py
 msgid "Method not allowed"
-msgstr "Metode tidak diizinkan"
+msgstr "Method not allowed"
 
-#: payments/views.py
-msgid "Payment Created"
-msgstr "Pembayaran Dibuat"
+msgid "Monday"
+msgstr "Senin"
 
-#: payments/views.py
-#, python-format
-msgid "Payment created with %(method)s in %(currency)s"
-msgstr "Pembayaran dibuat dengan %(method)s dalam %(currency)s"
+msgid "My Bookings"
+msgstr "Booking Saya"
 
-#: payments/views.py
-msgid "Pembayaran berhasil dibuat. Silakan selesaikan pembayaran."
-msgstr "Pembayaran berhasil dibuat. Silakan selesaikan pembayaran."
+msgid "My Chats"
+msgstr "Chat Saya"
 
-#: payments/views.py
-msgid "Payment Success"
-msgstr "Pembayaran Berhasil"
+msgid "Name"
+msgstr "Nama"
 
-#: payments/views.py
-#, python-format
-msgid "Payment of %(amount)s completed successfully."
-msgstr "Pembayaran sebesar %(amount)s berhasil diselesaikan."
+msgid "Needs Confirmation"
+msgstr "Perlu Dikonfirmasi"
 
-#: payments/views.py
-msgid "Pembayaran berhasil!"
-msgstr "Pembayaran berhasil!"
+msgid "Newest"
+msgstr "Terbaru"
 
-#: payments/views.py
-msgid "Payment Failed"
-msgstr "Pembayaran Gagal"
+msgid "Next"
+msgstr "Selanjutnya"
 
-#: payments/views.py
-msgid "Payment processing failed."
-msgstr "Pemrosesan pembayaran gagal."
+msgid "No"
+msgstr "Tidak"
 
-#: payments/views.py
-msgid "Pembayaran gagal."
+msgid "No Bookings Yet"
+msgstr "Belum Ada Booking"
+
+msgid "No Conversations Yet"
+msgstr "Belum Ada Percakapan"
+
+msgid "No Payments Yet"
+msgstr "Belum Ada Pembayaran"
+
+msgid "No bookings from this customer yet."
+msgstr "Belum ada booking dari pelanggan ini."
+
+msgid "No healers found"
+msgstr "Tidak ada healer ditemukan"
+
+msgid "No services yet."
+msgstr "Belum ada layanan."
+
+msgid "None"
+msgstr "Tidak ada"
+
+msgid "Notes"
+msgstr "Catatan"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "OVO"
+msgstr "OVO"
+
+msgid "OVO Number"
+msgstr "Nomor OVO"
+
+msgid "Offer your healing services"
+msgstr "Tawarkan layanan penyembuhan Anda"
+
+msgid "Oldest"
+msgstr "Terlama"
+
+msgid "On-site (Visit Healer Location)"
+msgstr "On-site (Kunjungi Lokasi Healer)"
+
+msgid "Online Consultation"
+msgstr "Konsultasi Online"
+
+msgid "Page Not Found"
+msgstr "Halaman Tidak Ditemukan"
+
+msgid "Paid"
+msgstr "Dibayar"
+
+msgid "Password"
+msgstr "Kata Sandi"
+
+msgid "Pay Now"
+msgstr "Bayar Sekarang"
+
+msgid "PayPal Email"
+msgstr "Email PayPal"
+
+msgid "Payment"
+msgstr "Pembayaran"
+
+msgid "Payment %(amount)s processed successfully"
+msgstr "Pembayaran %(amount)s berhasil diproses"
+
+msgid "Payment %(method)s of Rp %(amount)s created"
+msgstr "Pembayaran %(method)s sebesar Rp %(amount)s dibuat"
+
+msgid "Payment Code"
+msgstr "Kode Pembayaran"
+
+msgid "Payment Detail"
+msgstr "Detail Pembayaran"
+
+msgid "Payment History"
+msgstr "Riwayat Pembayaran"
+
+msgid "Payment Method"
+msgstr "Metode Pembayaran"
+
+msgid "Payment Rp %(amount)s has been released to healer %(healer)s"
+msgstr "Pembayaran Rp %(amount)s telah dirilis ke healer %(healer)s"
+
+msgid "Payment Rp %(amount)s held until work is completed"
+msgstr "Pembayaran Rp %(amount)s ditahan hingga pekerjaan selesai"
+
+msgid "Payment Rp %(amount)s released to healer %(healer)s"
+msgstr "Pembayaran Rp %(amount)s dirilis ke healer %(healer)s"
+
+msgid "Payment Settings"
+msgstr "Pengaturan Pembayaran"
+
+msgid "Payment Status"
+msgstr "Status Pembayaran"
+
+msgid "Payment code"
+msgstr "Kode pembayaran"
+
+msgid "Payment created"
+msgstr "Pembayaran dibuat"
+
+msgid "Payment failed"
+msgstr "Pembayaran gagal"
+
+msgid "Payment failed."
 msgstr "Pembayaran gagal."
 
-#: payments/views.py
-msgid "Anda tidak memiliki akses ke dashboard ini."
+msgid "Payment history will appear here."
+msgstr "Riwayat pembayaran akan muncul di sini."
+
+msgid "Payment processing failed"
+msgstr "Pembayaran gagal diproses"
+
+msgid "Payment refunded"
+msgstr "Pembayaran dikembalikan"
+
+msgid "Payment refunded due to booking cancellation: %(reason)s"
+msgstr "Pembayaran dikembalikan karena pembatalan booking: %(reason)s"
+
+msgid "Payment settings updated successfully."
+msgstr "Pengaturan pembayaran berhasil diperbarui."
+
+msgid "Payment successful"
+msgstr "Pembayaran berhasil"
+
+msgid "Payment successful! Awaiting healer confirmation."
+msgstr "Pembayaran berhasil! Menunggu konfirmasi healer."
+
+msgid "Payment successfully created. Please complete payment."
+msgstr "Pembayaran berhasil dibuat. Silakan selesaikan pembayaran."
+
+msgid "Payments"
+msgstr "Pembayaran"
+
+msgid "Pending"
+msgstr "Menunggu"
+
+msgid "Personal Information"
+msgstr "Informasi Pribadi"
+
+msgid "Phone"
+msgstr "Telepon"
+
+msgid "Please complete your healer profile to start receiving bookings."
+msgstr "Silakan lengkapi profil healer Anda untuk mulai menerima booking."
+
+msgid "Please fill in all required fields."
+msgstr "Mohon lengkapi semua field yang wajib diisi."
+
+msgid "Popular Areas"
+msgstr "Area Populer"
+
+msgid "Popular Areas in Bali"
+msgstr "Area Populer di Bali"
+
+msgid "Practice"
+msgstr "Praktek"
+
+msgid "Practice Address"
+msgstr "Alamat Praktek"
+
+msgid "Previous"
+msgstr "Sebelumnya"
+
+msgid "Price"
+msgstr "Harga"
+
+msgid "Price (IDR)"
+msgstr "Harga (IDR)"
+
+msgid "Price cannot be negative."
+msgstr "Harga tidak boleh negatif"
+
+msgid "Price must be a valid number."
+msgstr "Harga harus berupa angka yang valid."
+
+msgid "Price: High to Low"
+msgstr "Harga: Tinggi ke Rendah"
+
+msgid "Price: Low to High"
+msgstr "Harga: Rendah ke Tinggi"
+
+msgid "Privacy Policy"
+msgstr "Kebijakan Privasi"
+
+msgid "Professional Name"
+msgstr "Nama Profesional"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Profile & Schedule"
+msgstr "Profil & Jadwal"
+
+msgid "Rating"
+msgstr "Penilaian"
+
+msgid "Recent Bookings"
+msgstr "Booking Terbaru"
+
+msgid "Recent Payments"
+msgstr "Pembayaran Terbaru"
+
+msgid "Refunded"
+msgstr "Dikembalikan"
+
+msgid "Register"
+msgstr "Daftar"
+
+msgid "Register as Customer"
+msgstr "Daftar sebagai Pelanggan"
+
+msgid "Register as Healer"
+msgstr "Daftar sebagai Healer"
+
+msgid "Register as a Customer"
+msgstr "Daftar sebagai Pelanggan"
+
+msgid "Register as a Healer"
+msgstr "Daftar sebagai Healer"
+
+msgid "Reject"
+msgstr "Tolak"
+
+msgid "Reject this booking?"
+msgstr "Tolak booking ini?"
+
+msgid "Released"
+msgstr "Dirilis"
+
+msgid "Reply"
+msgstr "Balas"
+
+msgid "Reply sent successfully."
+msgstr "Balasan berhasil dikirim."
+
+msgid "Return to Home"
+msgstr "Kembali ke Beranda"
+
+msgid "Reviews"
+msgstr "Ulasan"
+
+msgid "SWIFT/BIC Code"
+msgstr "Kode SWIFT/BIC"
+
+msgid "Saturday"
+msgstr "Sabtu"
+
+msgid "Save"
+msgstr "Simpan"
+
+msgid "Save Changes"
+msgstr "Simpan Perubahan"
+
+msgid "Save Schedule"
+msgstr "Simpan Jadwal"
+
+msgid "Save Settings"
+msgstr "Simpan Pengaturan"
+
+msgid "Schedule"
+msgstr "Jadwal"
+
+msgid "Schedule updated successfully."
+msgstr "Jadwal berhasil diperbarui."
+
+msgid "Search"
+msgstr "Cari"
+
+msgid "Search healers..."
+msgstr "Cari healer..."
+
+msgid "Select Currency"
+msgstr "Pilih Mata Uang"
+
+msgid "Select Language"
+msgstr "Pilih Bahasa"
+
+msgid "Select Payment Method"
+msgstr "Pilih Metode Pembayaran"
+
+msgid "Select Region"
+msgstr "Pilih Region"
+
+msgid "Select service..."
+msgstr "Pilih layanan..."
+
+msgid "Send"
+msgstr "Kirim"
+
+msgid "Service"
+msgstr "Layanan"
+
+msgid "Service \"%(name)s\" added successfully."
+msgstr "Layanan \"%(name)s\" berhasil ditambahkan."
+
+msgid "Service Name"
+msgstr "Nama Layanan"
+
+msgid "Service deleted successfully."
+msgstr "Layanan berhasil dihapus."
+
+msgid "Service name is required."
+msgstr "Nama layanan wajib diisi."
+
+msgid "Services"
+msgstr "Layanan"
+
+msgid "Session Details"
+msgstr "Detail Sesi"
+
+msgid "Session Price"
+msgstr "Harga Sesi"
+
+msgid "Session Price (IDR)"
+msgstr "Harga Sesi (IDR)"
+
+msgid "Session Type"
+msgstr "Tipe Sesi"
+
+msgid "Set practice hours"
+msgstr "Atur jam praktik"
+
+msgid "Set up your accepted payment methods"
+msgstr "Atur metode pembayaran yang Anda terima"
+
+msgid "Settings"
+msgstr "Pengaturan"
+
+msgid "Show"
+msgstr "Tampilkan"
+
+msgid "Sort by"
+msgstr "Urutkan berdasarkan"
+
+msgid "Specialities"
+msgstr "Spesialisasi"
+
+msgid "Specializations"
+msgstr "Spesialisasi"
+
+msgid "Start Work"
+msgstr "Mulai Kerja"
+
+msgid "Start a conversation..."
+msgstr "Mulai percakapan..."
+
+msgid "Start chatting with a healer to ask about services."
+msgstr "Mulai chat dengan healer untuk bertanya tentang layanan."
+
+msgid "Start exploring healers and make your first booking."
+msgstr "Mulai jelajahi healer dan buat booking pertama Anda."
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Status History"
+msgstr "Riwayat Status"
+
+msgid "Stay Updated"
+msgstr "Tetap Terupdate"
+
+msgid "Submit"
+msgstr "Kirim"
+
+msgid "Subscribe"
+msgstr "Berlangganan"
+
+msgid "Success"
+msgstr "Berhasil"
+
+msgid "Successful"
+msgstr "Berhasil"
+
+msgid "Sunday"
+msgstr "Minggu"
+
+msgid "Support"
+msgstr "Dukungan"
+
+msgid "Tell us about your experience and expertise..."
+msgstr "Ceritakan tentang pengalaman dan keahlian Anda..."
+
+msgid "Terms of Service"
+msgstr "Syarat Layanan"
+
+msgid "The page you are looking for does not exist."
+msgstr "Halaman yang Anda cari tidak ada."
+
+msgid "There is broken service data. Please contact the administrator."
+msgstr "Terdapat data layanan yang rusak. Silakan hubungi administrator."
+
+msgid "This booking cannot be paid."
+msgstr "Booking ini tidak bisa dibayar."
+
+msgid "This booking has already been processed."
+msgstr "Booking ini sudah diproses."
+
+msgid "Thursday"
+msgstr "Kamis"
+
+msgid "Time"
+msgstr "Waktu"
+
+msgid "Toggle"
+msgstr "Ubah"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Total Bookings"
+msgstr "Total Booking"
+
+msgid "Total Payment"
+msgstr "Total Pembayaran"
+
+msgid "Total Payments"
+msgstr "Total Pembayaran"
+
+msgid "Total Revenue"
+msgstr "Total Pendapatan"
+
+msgid "Track"
+msgstr "Lacak"
+
+msgid "Track Booking"
+msgstr "Lacak Booking"
+
+msgid "Try adjusting your search or filters."
+msgstr "Coba sesuaikan pencarian atau filter Anda."
+
+msgid "Tuesday"
+msgstr "Selasa"
+
+msgid "Type"
+msgstr "Tipe"
+
+msgid "Type a message..."
+msgstr "Ketik pesan..."
+
+msgid "Unknown action."
+msgstr "Aksi tidak dikenali."
+
+msgid "Username"
+msgstr "Nama Pengguna"
+
+msgid "View"
+msgstr "Lihat"
+
+msgid "View All Chats"
+msgstr "Lihat Semua Chat"
+
+msgid "View Details"
+msgstr "Lihat Detail"
+
+msgid "View Profile"
+msgstr "Lihat Profil"
+
+msgid "Waiting"
+msgstr "Menunggu"
+
+msgid "Waiting for healer confirmation. Your payment is safe in escrow."
+msgstr "Menunggu konfirmasi dari healer. Pembayaran Anda aman di escrow."
+
+msgid "Waiting for payment confirmation..."
+msgstr "Menunggu konfirmasi pembayaran..."
+
+msgid "Warning"
+msgstr "Peringatan"
+
+msgid "Wednesday"
+msgstr "Rabu"
+
+msgid "Weekly Schedule"
+msgstr "Jadwal Mingguan"
+
+msgid "Welcome Back"
+msgstr "Selamat Datang Kembali"
+
+msgid "Welcome, %(name)s!"
+msgstr "Selamat datang, %(name)s!"
+
+msgid "Welcome, %(name)s! Your healer profile has been created."
+msgstr "Selamat datang, %(name)s! Profil healer Anda berhasil dibuat."
+
+msgid "Work completed. Funds have been released to healer."
+msgstr "Pekerjaan selesai. Dana telah dirilis ke healer."
+
+msgid "Work started for booking %(code)s."
+msgstr "Pekerjaan dimulai untuk booking %(code)s."
+
+msgid "Years"
+msgstr "Tahun"
+
+msgid "Years of Experience"
+msgstr "Tahun Pengalaman"
+
+msgid "Yes"
+msgstr "Ya"
+
+msgid "You don't have access to the healer dashboard."
+msgstr "Anda tidak memiliki akses ke dashboard healer."
+
+msgid "You don't have access to this dashboard."
 msgstr "Anda tidak memiliki akses ke dashboard ini."
 
-#: payments/views.py
-#, python-format
-msgid "Status booking diperbarui ke %(status)s"
-msgstr "Status booking diperbarui ke %(status)s"
+msgid "You don't have access."
+msgstr "Anda tidak memiliki akses."
+
+msgid "You have been logged out."
+msgstr "Anda berhasil logout."
+
+msgid "You:"
+msgstr "Anda:"
+
+msgid "Your email"
+msgstr "Email Anda"
+
+msgid "Your phone number"
+msgstr "Nomor telepon Anda"
+
+msgid "ago"
+msgstr "lalu"
+
+msgid "by"
+msgstr "oleh"
+
+msgid "day"
+msgstr "hari"
+
+msgid "days"
+msgstr "hari"
+
+msgid "days ago"
+msgstr "hari yang lalu"
+
+msgid "for international transfers"
+msgstr "untuk transfer internasional"
+
+msgid "hour"
+msgstr "jam"
+
+msgid "hours"
+msgstr "jam"
+
+msgid "hours ago"
+msgstr "jam yang lalu"
+
+msgid "just now"
+msgstr "baru saja"
+
+msgid "messages"
+msgstr "pesan"
+
+msgid "min"
+msgstr "mnt"
+
+msgid "minute"
+msgstr "menit"
+
+msgid "minutes"
+msgstr "menit"
+
+msgid "minutes ago"
+msgstr "menit yang lalu"
+
+msgid "month"
+msgstr "bulan"
+
+msgid "months"
+msgstr "bulan"
+
+msgid "months ago"
+msgstr "bulan yang lalu"
+
+msgid "of"
+msgstr "dari"
+
+msgid "reviews"
+msgstr "ulasan"
+
+msgid "second"
+msgstr "detik"
+
+msgid "seconds"
+msgstr "detik"
+
+msgid "service(s)"
+msgstr "layanan"
+
+msgid "session(s)"
+msgstr "sesi"
+
+msgid "to process Visa/Mastercard payments"
+msgstr "untuk memproses pembayaran Visa/Mastercard"
+
+msgid "weeks ago"
+msgstr "minggu yang lalu"
+
+msgid "year"
+msgstr "tahun"
+
+msgid "years"
+msgstr "tahun"
+
+msgid "years ago"
+msgstr "tahun yang lalu"
+
+msgid "years experience"
+msgstr "tahun pengalaman"
+
+msgid "yr"
+msgstr "thn"

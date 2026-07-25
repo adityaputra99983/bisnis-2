@@ -1,1511 +1,1164 @@
-# Django translations for English
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: dukun 1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-20 10:00+0000\n"
-"PO-Revision-Date: 2026-07-20 10:00+0000\n"
-"Last-Translator: \n"
-"Language-Team: English\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: compile_all_translations.py\n"
+"Language-Name: English\n"
 
-#: templates/base.html
-msgid "Bali Healer — Discover · Book · Heal"
-msgstr "Bali Healer — Discover · Book · Heal"
-
-#: templates/base.html
-msgid "Find and book trusted healing experiences across Bali. Connect with verified healers for spiritual wellness and ancient Balinese healing traditions."
-msgstr "Find and book trusted healing experiences across Bali. Connect with verified healers for spiritual wellness and ancient Balinese healing traditions."
-
-#: templates/base.html
-msgid "Bali Healer, healing, spiritual healing, Reiki, chakra healing, sound healing, Balinese healing, meditation, wellness, Bali"
-msgstr "Bali Healer, healing, spiritual healing, Reiki, chakra healing, sound healing, Balinese healing, meditation, wellness, Bali"
-
-#: templates/base.html
-msgid "Ancient Healing Wisdom"
-msgstr "Ancient Healing Wisdom"
-
-#: templates/base.html
-msgid "Home"
-msgstr "Home"
-
-#: templates/base.html
-msgid "Find Healers"
-msgstr "Find Healers"
-
-#: templates/base.html
-msgid "Centers"
-msgstr "Centers"
-
-#: templates/base.html
-msgid "Specialities"
-msgstr "Specialities"
-
-#: templates/base.html
-msgid "Consultation"
-msgstr "Consultation"
-
-#: templates/base.html
-msgid "Masuk"
-msgstr "Sign In"
-
-#: templates/base.html
-msgid "Daftar"
-msgstr "Register"
-
-#: templates/base.html
-msgid "Login"
-msgstr "Login"
-
-#: templates/base.html
-msgid "Account"
-msgstr "Account"
-
-#: templates/base.html
-msgid "Search"
-msgstr "Search"
-
-#: templates/base.html
-msgid "Consult"
-msgstr "Consult"
-
-#: templates/base.html
-msgid "Discover"
-msgstr "Discover"
-
-#: templates/base.html
-msgid "Healing Centers"
-msgstr "Healing Centers"
-
-#: templates/base.html
-msgid "Healing Specialities"
-msgstr "Healing Specialities"
-
-#: templates/base.html
-msgid "Online Consultation"
-msgstr "Online Consultation"
-
-#: templates/base.html
-msgid "Popular Areas"
-msgstr "Popular Areas"
-
-#: templates/base.html
-msgid "Support"
-msgstr "Support"
-
-#: templates/base.html
 msgid "About Bali Healer"
 msgstr "About Bali Healer"
 
-#: templates/base.html
-msgid "Contact Us"
-msgstr "Contact Us"
-
-#: templates/base.html
-msgid "Become a Provider"
-msgstr "Become a Provider"
-
-#: templates/base.html
-msgid "Stay Updated"
-msgstr "Stay Updated"
-
-#: templates/base.html
-msgid "Enter your email..."
-msgstr "Enter your email..."
-
-#: templates/base.html
-msgid "Subscribe"
-msgstr "Subscribe"
-
-#: templates/base.html
-msgid "All rights reserved."
-msgstr "All rights reserved."
-
-#: templates/base.html
-msgid "Privacy Policy"
-msgstr "Privacy Policy"
-
-#: templates/base.html
-msgid "Terms of Service"
-msgstr "Terms of Service"
-
-#: templates/home.html
-msgid "Trusted Bali Healing"
-msgstr "Trusted Bali Healing"
-
-#: templates/home.html
-msgid "Discover Your <span class=\"gold-text-gradient\" style=\"font-style: normal;\">Healing</span> Journey in Bali"
-msgstr "Discover Your <span class=\"gold-text-gradient\" style=\"font-style: normal;\">Healing</span> Journey in Bali"
-
-#: templates/home.html
-msgid "Connect with Bali's most authentic healers and discover ancient rituals for your body, mind, and soul."
-msgstr "Connect with Bali's most authentic healers and discover ancient rituals for your body, mind, and soul."
-
-#: templates/home.html
-msgid "Search healers, centres, specialities..."
-msgstr "Search healers, centres, specialities..."
-
-#: templates/home.html
-msgid "Popular:"
-msgstr "Popular:"
-
-#: templates/home.html
-msgid "Featured Healers"
-msgstr "Featured Healers"
-
-#: templates/home.html
-msgid "Trusted <em>Mobile Healers</em>"
-msgstr "Trusted <em>Mobile Healers</em>"
-
-#: templates/home.html
-msgid "Verified healers who come to you"
-msgstr "Verified healers who come to you"
-
-#: templates/home.html
-msgid "yrs"
-msgstr "yrs"
-
-#: templates/home.html
-msgid "Top Rated"
-msgstr "Top Rated"
-
-#: templates/home.html
-msgid "Available"
-msgstr "Available"
-
-#: templates/home.html
-msgid "High Demand"
-msgstr "High Demand"
-
-#: templates/home.html
-msgid "From"
-msgstr "From"
-
-#: templates/home.html
-msgid "Book Now"
-msgstr "Book Now"
-
-#: templates/home.html
-msgid "Profile"
-msgstr "Profile"
-
-#: templates/home.html
-msgid "Healers Coming Soon"
-msgstr "Healers Coming Soon"
-
-#: templates/home.html
-msgid "Verified healers will be available shortly."
-msgstr "Verified healers will be available shortly."
-
-#: templates/home.html
-msgid "View All Healers"
-msgstr "View All Healers"
-
-#: templates/home.html
-msgid "Sacred Spaces"
-msgstr "Sacred Spaces"
-
-#: templates/home.html
-msgid "Healing <em>Centers</em> Across Bali"
-msgstr "Healing <em>Centers</em> Across Bali"
-
-#: templates/home.html
-msgid "Beautiful spaces for your healing journey"
-msgstr "Beautiful spaces for your healing journey"
-
-#: templates/home.html
-msgid "Details"
-msgstr "Details"
-
-#: templates/home.html
-msgid "Centers Coming Soon"
-msgstr "Centers Coming Soon"
-
-#: templates/home.html
-msgid "Healing centers will be listed here."
-msgstr "Healing centers will be listed here."
-
-#: templates/home.html
-msgid "View All Centers"
-msgstr "View All Centers"
-
-#: templates/home.html
-msgid "Ancient Traditions"
-msgstr "Ancient Traditions"
-
-#: templates/home.html
-msgid "Healing <em>Specialities</em>"
-msgstr "Healing <em>Specialities</em>"
-
-#: templates/home.html
-msgid "Explore the diverse healing traditions of Bali"
-msgstr "Explore the diverse healing traditions of Bali"
-
-#: templates/home.html
-msgid "Explore"
-msgstr "Explore"
-
-#: templates/home.html
-msgid "Destinations"
-msgstr "Destinations"
-
-#: templates/home.html
-msgid "Popular <em>Locations</em>"
-msgstr "Popular <em>Locations</em>"
-
-#: templates/home.html
-msgid "Explore healing experiences across Bali's most sought-after areas"
-msgstr "Explore healing experiences across Bali's most sought-after areas"
-
-#: templates/home.html
-msgid "Healers"
-msgstr "Healers"
-
-#: templates/home.html
-msgid "Simple Process"
-msgstr "Simple Process"
-
-#: templates/home.html
-msgid "How It <em>Works</em>"
-msgstr "How It <em>Works</em>"
-
-#: templates/home.html
-msgid "Three simple steps to begin your healing journey"
-msgstr "Three simple steps to begin your healing journey"
-
-#: templates/home.html
-msgid "Explore verified healers, healing centres, and specialities across Bali. Read reviews and find the perfect match."
-msgstr "Explore verified healers, healing centres, and specialities across Bali. Read reviews and find the perfect match."
-
-#: templates/home.html
-msgid "Book"
-msgstr "Book"
-
-#: templates/home.html
-msgid "Choose your session — on-site, home service, or online consultation. Pick a date and time that works for you."
-msgstr "Choose your session — on-site, home service, or online consultation. Pick a date and time that works for you."
-
-#: templates/home.html
-msgid "Heal"
-msgstr "Heal"
-
-#: templates/home.html
-msgid "Experience authentic healing wherever you are. Connect with Bali's ancient wisdom for transformation."
-msgstr "Experience authentic healing wherever you are. Connect with Bali's ancient wisdom for transformation."
-
-#: templates/home.html
-msgid "Client Stories"
-msgstr "Client Stories"
-
-#: templates/home.html
-msgid "What Our Clients <em>Say</em>"
-msgstr "What Our Clients <em>Say</em>"
-
-#: templates/home.html
-msgid "Real experiences from healing seekers"
-msgstr "Real experiences from healing seekers"
-
-#: templates/home.html
-msgid "Verified"
-msgstr "Verified"
-
-#: templates/home.html
-msgid "Wayan's healing session was truly transformative. I felt a deep sense of peace and renewal that I hadn't experienced in years."
-msgstr "Wayan's healing session was truly transformative. I felt a deep sense of peace and renewal that I hadn't experienced in years."
-
-#: templates/home.html
-msgid "Anjali has an incredible gift. Her Reiki session helped me release years of stored emotional tension."
-msgstr "Anjali has an incredible gift. Her Reiki session helped me release years of stored emotional tension."
-
-#: templates/home.html
-msgid "The sound bath with Kadek was beyond words. The vibrations of the singing bowls took me to a state of deep relaxation."
-msgstr "The sound bath with Kadek was beyond words. The vibrations of the singing bowls took me to a state of deep relaxation."
-
-#: templates/home.html
-msgid "The healing center in Ubud was breathtaking. The combination of traditional and modern approaches was exactly what I needed."
-msgstr "The healing center in Ubud was breathtaking. The combination of traditional and modern approaches was exactly what I needed."
-
-#: templates/home.html
-msgid "I was skeptical at first, but the chakra balancing session completely changed my energy. I feel more centered than ever."
-msgstr "I was skeptical at first, but the chakra balancing session completely changed my energy. I feel more centered than ever."
-
-#: templates/home.html
-msgid "A truly authentic Balinese healing experience. Made's traditional knowledge is priceless."
-msgstr "A truly authentic Balinese healing experience. Made's traditional knowledge is priceless."
-
-#: templates/home.html
-msgid "Ready to Begin Your <em>Healing Journey?</em>"
-msgstr "Ready to Begin Your <em>Healing Journey?</em>"
-
-#: templates/home.html
-msgid "Find your perfect healer and book a session today."
-msgstr "Find your perfect healer and book a session today."
-
-#: templates/home.html
-msgid "Find a Healer"
-msgstr "Find a Healer"
-
-#: templates/login.html
-msgid "Login to Account"
-msgstr "Login to Account"
-
-#: templates/login.html
-msgid "Welcome back, Healer."
-msgstr "Welcome back, Healer."
-
-#: templates/login.html
-msgid "Invalid username or password."
-msgstr "Invalid username or password."
-
-#: templates/login.html
-msgid "Username"
-msgstr "Username"
-
-#: templates/login.html
-msgid "Enter username"
-msgstr "Enter username"
-
-#: templates/login.html
-msgid "Password"
-msgstr "Password"
-
-#: templates/login.html
-msgid "Enter password"
-msgstr "Enter password"
-
-#: templates/login.html
-msgid "or"
-msgstr "or"
-
-#: templates/login.html
-msgid "Don't have an account?"
-msgstr "Don't have an account?"
-
-#: templates/login.html
-msgid "Register as Customer"
-msgstr "Register as Customer"
-
-#: templates/login.html
-msgid "Register as Healer"
-msgstr "Register as Healer"
-
-#: templates/login.html
-msgid "Back to Home"
-msgstr "Back to Home"
-
-#: templates/register_choose.html
-msgid "Register"
-msgstr "Register"
-
-#: templates/register_choose.html
-msgid "Choose your role to start your healing journey"
-msgstr "Choose your role to start your healing journey"
-
-#: templates/register_choose.html
-msgid "Customer"
-msgstr "Customer"
-
-#: templates/register_choose.html
-msgid "Find the best healers in Bali and book healing sessions for your body, mind, and soul health."
-msgstr "Find the best healers in Bali and book healing sessions for your body, mind, and soul health."
-
-#: templates/register_choose.html
-msgid "Search & compare healers"
-msgstr "Search & compare healers"
-
-#: templates/register_choose.html
-msgid "Book healing sessions"
-msgstr "Book healing sessions"
-
-#: templates/register_choose.html
-msgid "Booking history"
-msgstr "Booking history"
-
-#: templates/register_choose.html
-msgid "Pay online"
-msgstr "Pay online"
-
-#: templates/register_choose.html
-msgid "POPULAR"
-msgstr "POPULAR"
-
-#: templates/register_choose.html
-msgid "Healer"
-msgstr "Healer"
-
-#: templates/register_choose.html
-msgid "Open your healing practice, manage services, schedules, and reach thousands of seekers."
-msgstr "Open your healing practice, manage services, schedules, and reach thousands of seekers."
-
-#: templates/register_choose.html
-msgid "Professional business profile"
-msgstr "Professional business profile"
-
-#: templates/register_choose.html
-msgid "Manage services & pricing"
-msgstr "Manage services & pricing"
-
-#: templates/register_choose.html
-msgid "Set practice schedule"
-msgstr "Set practice schedule"
-
-#: templates/register_choose.html
-msgid "Receive & manage bookings"
-msgstr "Receive & manage bookings"
-
-#: templates/register_choose.html
-msgid "Message inbox"
-msgstr "Message inbox"
-
-#: templates/register_choose.html
-msgid "Payment settings"
-msgstr "Payment settings"
-
-#: templates/register_choose.html
-msgid "Start Healing Business"
-msgstr "Start Healing Business"
-
-#: templates/register_choose.html
-msgid "Already have an account?"
-msgstr "Already have an account?"
-
-#: templates/register_choose.html
-msgid "Login now"
-msgstr "Login now"
-
-#: templates/register_customer.html
-msgid "Register Customer"
-msgstr "Register Customer"
-
-#: templates/register_customer.html
-msgid "Create Customer Account"
-msgstr "Create Customer Account"
-
-#: templates/register_customer.html
-msgid "Find and book healing sessions with the best healers in Bali."
-msgstr "Find and book healing sessions with the best healers in Bali."
-
-#: templates/register_customer.html
-msgid "Account Data"
-msgstr "Account Data"
-
-#: templates/register_customer.html
-msgid "First Name"
-msgstr "First Name"
-
-#: templates/register_customer.html
-msgid "Last Name"
-msgstr "Last Name"
-
-#: templates/register_customer.html
-msgid "Email"
-msgstr "Email"
-
-#: templates/register_customer.html
-msgid "Phone"
-msgstr "Phone"
-
-#: templates/register_customer.html
-msgid "Confirm Password"
-msgstr "Confirm Password"
-
-#: templates/register_customer.html
-msgid "Register Now"
-msgstr "Register Now"
-
-#: templates/register_customer.html
-msgid "Want to become a healer?"
-msgstr "Want to become a healer?"
-
-#: templates/register_customer.html
-msgid "Back to selection"
-msgstr "Back to selection"
-
-#: templates/register_healer.html
-msgid "Register Healer"
-msgstr "Register Healer"
-
-#: templates/register_healer.html
-msgid "Open Healing Business"
-msgstr "Open Healing Business"
-
-#: templates/register_healer.html
-msgid "Register your healing practice and reach thousands of seekers in Bali."
-msgstr "Register your healing practice and reach thousands of seekers in Bali."
-
-#: templates/register_healer.html
-msgid "Healing Profile"
-msgstr "Healing Profile"
-
-#: templates/register_healer.html
-msgid "Professional Name"
-msgstr "Professional Name"
-
-#: templates/register_healer.html
-msgid "Name that will be seen by customers"
-msgstr "Name that will be seen by customers"
-
-#: templates/register_healer.html
-msgid "Specializations"
-msgstr "Specializations"
-
-#: templates/register_healer.html
-msgid "Separate with commas"
-msgstr "Separate with commas"
-
-#: templates/register_healer.html
-msgid "Years of Experience"
-msgstr "Years of Experience"
-
-#: templates/register_healer.html
-msgid "Session Price (IDR)"
-msgstr "Session Price (IDR)"
-
-#: templates/register_healer.html
-msgid "Practice Address"
-msgstr "Practice Address"
-
-#: templates/register_healer.html
 msgid "About Yourself"
 msgstr "About Yourself"
 
-#: templates/register_healer.html
-msgid "Want to become a customer?"
-msgstr "Want to become a customer?"
+msgid "Accept cash payment during healing session"
+msgstr "Accept cash payment during healing session"
 
-#: templates/dashboard.html
-msgid "Admin Dashboard"
-msgstr "Admin Dashboard"
+msgid "Accept payments via PayPal (Visa / Mastercard / PayPal Balance)"
+msgstr "Accept payments via PayPal (Visa / Mastercard / PayPal Balance)"
 
-#: templates/dashboard.html
-msgid "Dashboard"
-msgstr "Dashboard"
+msgid "Account"
+msgstr "Account"
 
-#: templates/dashboard.html
-msgid "Admin"
-msgstr "Admin"
+msgid "Account Holder"
+msgstr "Account Holder"
 
-#: templates/dashboard.html
-msgid "Manage bookings, payments, and healer data"
-msgstr "Manage bookings, payments, and healer data"
-
-#: templates/dashboard.html
-msgid "Total Bookings"
-msgstr "Total Bookings"
-
-#: templates/dashboard.html
-msgid "Pending"
-msgstr "Pending"
-
-#: templates/dashboard.html
-msgid "Confirmed"
-msgstr "Confirmed"
-
-#: templates/dashboard.html
-msgid "Completed"
-msgstr "Completed"
-
-#: templates/dashboard.html
-msgid "Revenue (IDR)"
-msgstr "Revenue (IDR)"
-
-#: templates/dashboard.html
-msgid "Successful Payments"
-msgstr "Successful Payments"
-
-#: templates/dashboard.html
-msgid "Recent Bookings"
-msgstr "Recent Bookings"
-
-#: templates/dashboard.html
-msgid "View All"
-msgstr "View All"
-
-#: templates/dashboard.html
-msgid "Code"
-msgstr "Code"
-
-#: templates/dashboard.html
-msgid "Customer"
-msgstr "Customer"
-
-#: templates/dashboard.html
-msgid "Healer"
-msgstr "Healer"
-
-#: templates/dashboard.html
-msgid "Status"
-msgstr "Status"
-
-#: templates/dashboard.html
-msgid "Action"
-msgstr "Action"
-
-#: templates/dashboard.html
-msgid "No bookings yet."
-msgstr "No bookings yet."
-
-#: templates/dashboard.html
-msgid "Recent Payments"
-msgstr "Recent Payments"
-
-#: templates/dashboard.html
-msgid "Amount"
-msgstr "Amount"
-
-#: templates/dashboard.html
-msgid "No payments yet."
-msgstr "No payments yet."
-
-#: templates/dashboard.html
-msgid "Quick Access"
-msgstr "Quick Access"
-
-#: templates/dashboard.html
-msgid "Bookings"
-msgstr "Bookings"
-
-#: templates/dashboard.html
-msgid "Payments"
-msgstr "Payments"
-
-#: templates/dashboard.html
-msgid "Admin Panel"
-msgstr "Admin Panel"
-
-#: templates/customer_dashboard.html
-msgid "Customer Dashboard"
-msgstr "Customer Dashboard"
-
-#: templates/customer_dashboard.html
-msgid "Manage your bookings and activities"
-msgstr "Manage your bookings and activities"
-
-#: templates/customer_dashboard.html
-msgid "My Bookings"
-msgstr "My Bookings"
-
-#: templates/customer_dashboard.html
-msgid "Service"
-msgstr "Service"
-
-#: templates/customer_dashboard.html
-msgid "Date"
-msgstr "Date"
-
-#: templates/customer_dashboard.html
-msgid "No Bookings Yet"
-msgstr "No Bookings Yet"
-
-#: templates/customer_dashboard.html
-msgid "Start exploring healers and make your first booking."
-msgstr "Start exploring healers and make your first booking."
-
-#: templates/customer_dashboard.html
-msgid "Find Healer"
-msgstr "Find Healer"
-
-#: templates/healer_dashboard.html
-msgid "Healer Dashboard"
-msgstr "Healer Dashboard"
-
-#: templates/healer_dashboard.html
-msgid "Manage your healing business"
-msgstr "Manage your healing business"
-
-#: templates/healer_dashboard.html
-msgid "Active Services"
-msgstr "Active Services"
-
-#: templates/healer_dashboard.html
-msgid "New Bookings"
-msgstr "New Bookings"
-
-#: templates/healer_dashboard.html
-msgid "New Messages"
-msgstr "New Messages"
-
-#: templates/healer_dashboard.html
-msgid "Rating"
-msgstr "Rating"
-
-#: templates/healer_dashboard.html
-msgid "Total Revenue"
-msgstr "Total Revenue"
-
-#: templates/healer_dashboard.html
-msgid "Business Profile"
-msgstr "Business Profile"
-
-#: templates/healer_dashboard.html
-msgid "Edit name, bio, specializations, price"
-msgstr "Edit name, bio, specializations, price"
-
-#: templates/healer_dashboard.html
-msgid "Services"
-msgstr "Services"
-
-#: templates/healer_dashboard.html
-msgid "Manage offered service listings"
-msgstr "Manage offered service listings"
-
-#: templates/healer_dashboard.html
-msgid "Schedule"
-msgstr "Schedule"
-
-#: templates/healer_dashboard.html
-msgid "Set weekly practice hours"
-msgstr "Set weekly practice hours"
-
-#: templates/healer_dashboard.html
-msgid "Messages"
-msgstr "Messages"
-
-#: templates/healer_dashboard.html
-msgid "new messages"
-msgstr "new messages"
-
-#: templates/healer_dashboard.html
-msgid "Inbox"
-msgstr "Inbox"
-
-#: templates/healer_dashboard.html
-msgid "Set accepted payment methods"
-msgstr "Set accepted payment methods"
-
-#: templates/healer_dashboard.html
-msgid "View Public Profile"
-msgstr "View Public Profile"
-
-#: templates/healer_dashboard.html
-msgid "See what customers see"
-msgstr "See what customers see"
-
-#: templates/healer_dashboard.html
-msgid "Manage booking and payment data"
-msgstr "Manage booking and payment data"
-
-#: templates/healer_dashboard.html
-msgid "Profile & Schedule"
-msgstr "Profile & Schedule"
-
-#: templates/healer_dashboard.html
-msgid "Price"
-msgstr "Price"
-
-#: templates/healer_dashboard.html
-msgid "Experience"
-msgstr "Experience"
-
-#: templates/healer_dashboard.html
-msgid "years"
-msgstr "years"
-
-#: templates/healer_dashboard.html
-msgid "Address"
-msgstr "Address"
-
-#: templates/healer_dashboard.html
-msgid "Manage"
-msgstr "Manage"
-
-#: templates/healer_dashboard.html
-msgid "minutes"
-msgstr "minutes"
-
-#: templates/healer_dashboard.html
-msgid "No services yet."
-msgstr "No services yet."
-
-#: templates/healer_dashboard.html
-msgid "Add Service"
-msgstr "Add Service"
-
-#: templates/healer_dashboard.html
-msgid "Incoming Bookings"
-msgstr "Incoming Bookings"
-
-#: templates/healer_dashboard.html
-msgid "Bookings from customers will appear here."
-msgstr "Bookings from customers will appear here."
-
-#: templates/healer_dashboard.html
-msgid "Healer Profile Not Yet Created"
-msgstr "Healer Profile Not Yet Created"
-
-#: templates/healer_dashboard.html
-msgid "You need to fill in your healer profile data to start receiving bookings."
-msgstr "You need to fill in your healer profile data to start receiving bookings."
-
-#: templates/healer_profile_edit.html
-msgid "Edit Healer Profile"
-msgstr "Edit Healer Profile"
-
-#: templates/healer_profile_edit.html
-msgid "Back"
-msgstr "Back"
-
-#: templates/healer_profile_edit.html
-msgid "Edit Profile"
-msgstr "Edit Profile"
-
-#: templates/healer_profile_edit.html
-msgid "Save Changes"
-msgstr "Save Changes"
-
-#: templates/healer_schedule_edit.html
-msgid "Manage Schedule"
-msgstr "Manage Schedule"
-
-#: templates/healer_schedule_edit.html
-msgid "Manage Practice Schedule"
-msgstr "Manage Practice Schedule"
-
-#: templates/healer_schedule_edit.html
-msgid "Weekly Schedule"
-msgstr "Weekly Schedule"
-
-#: templates/healer_schedule_edit.html
-msgid "Fill in start and end times for active days. Leave empty for days off."
-msgstr "Fill in start and end times for active days. Leave empty for days off."
-
-#: templates/healer_schedule_edit.html
-msgid "Monday"
-msgstr "Monday"
-
-#: templates/healer_schedule_edit.html
-msgid "Tuesday"
-msgstr "Tuesday"
-
-#: templates/healer_schedule_edit.html
-msgid "Wednesday"
-msgstr "Wednesday"
-
-#: templates/healer_schedule_edit.html
-msgid "Thursday"
-msgstr "Thursday"
-
-#: templates/healer_schedule_edit.html
-msgid "Friday"
-msgstr "Friday"
-
-#: templates/healer_schedule_edit.html
-msgid "Saturday"
-msgstr "Saturday"
-
-#: templates/healer_schedule_edit.html
-msgid "Sunday"
-msgstr "Sunday"
-
-#: templates/healer_schedule_edit.html
-msgid "Save Schedule"
-msgstr "Save Schedule"
-
-#: templates/healer_services.html
-msgid "Manage Services"
-msgstr "Manage Services"
-
-#: templates/healer_services.html
-msgid "Add New Service"
-msgstr "Add New Service"
-
-#: templates/healer_services.html
-msgid "Service Name"
-msgstr "Service Name"
-
-#: templates/healer_services.html
-msgid "Example: Reiki Healing 60 Minutes"
-msgstr "Example: Reiki Healing 60 Minutes"
-
-#: templates/healer_services.html
-msgid "Price (IDR)"
-msgstr "Price (IDR)"
-
-#: templates/healer_services.html
-msgid "Duration (minutes)"
-msgstr "Duration (minutes)"
-
-#: templates/healer_services.html
-msgid "Description"
-msgstr "Description"
-
-#: templates/healer_services.html
-msgid "Short service description"
-msgstr "Short service description"
-
-#: templates/healer_services.html
-msgid "All Services"
-msgstr "All Services"
-
-#: templates/healer_services.html
-#, python-format
-msgid "%(counter)s service"
-msgid_plural "%(counter)s services"
-msgstr[0] "%(counter)s service"
-msgstr[1] "%(counter)s services"
-
-#: templates/healer_services.html
-msgid "Active"
-msgstr "Active"
-
-#: templates/healer_services.html
-msgid "Inactive"
-msgstr "Inactive"
-
-#: templates/healer_services.html
-#, python-format
-msgid "%(duration)s minutes"
-msgstr "%(duration)s minutes"
-
-#: templates/healer_services.html
-msgid "Deactivate"
-msgstr "Deactivate"
-
-#: templates/healer_services.html
-msgid "Activate"
-msgstr "Activate"
-
-#: templates/healer_services.html
-msgid "Delete this service?"
-msgstr "Delete this service?"
-
-#: templates/healer_services.html
-msgid "No Services Yet"
-msgstr "No Services Yet"
-
-#: templates/healer_services.html
-msgid "Add your first service using the form above."
-msgstr "Add your first service using the form above."
-
-#: templates/healer_messages.html
-#, python-format
-msgid "%(count)s unread message"
-msgid_plural "%(count)s unread messages"
-msgstr[0] "%(count)s unread message"
-msgstr[1] "%(count)s unread messages"
-
-#: templates/healer_messages.html
-msgid "No Messages Yet"
-msgstr "No Messages Yet"
-
-#: templates/healer_messages.html
-msgid "Messages from customers will appear here."
-msgstr "Messages from customers will appear here."
-
-#: templates/healer_message_detail.html
-msgid "Message Detail"
-msgstr "Message Detail"
-
-#: templates/healer_message_detail.html
-#, python-format
-msgid "Message from %(name)s"
-msgstr "Message from %(name)s"
-
-#: templates/healer_message_detail.html
-msgid "Reply"
-msgstr "Reply"
-
-#: templates/healer_message_detail.html
-msgid "Reply Message"
-msgstr "Reply Message"
-
-#: templates/healer_message_detail.html
-msgid "Write your reply..."
-msgstr "Write your reply..."
-
-#: templates/healer_message_detail.html
-msgid "Send Reply"
-msgstr "Send Reply"
-
-#: templates/healer_payments.html
-msgid "Payment Settings"
-msgstr "Payment Settings"
-
-#: templates/healer_payments.html
-msgid "Payment Methods"
-msgstr "Payment Methods"
-
-#: templates/healer_payments.html
-msgid "Bank Account"
-msgstr "Bank Account"
-
-#: templates/healer_payments.html
-msgid "Bank Name"
-msgstr "Bank Name"
-
-#: templates/healer_payments.html
-msgid "Example: BCA, Mandiri, BRI"
-msgstr "Example: BCA, Mandiri, BRI"
-
-#: templates/healer_payments.html
 msgid "Account Number"
 msgstr "Account Number"
 
-#: templates/healer_payments.html
-msgid "Your account number"
-msgstr "Your account number"
-
-#: templates/healer_payments.html
-msgid "Account Holder Name"
-msgstr "Account Holder Name"
-
-#: templates/healer_payments.html
 msgid "Account holder name"
 msgstr "Account holder name"
 
-#: templates/healer_payments.html
-msgid "Your e-wallet number"
-msgstr "Your e-wallet number"
+msgid "Action"
+msgstr "Action"
 
-#: templates/healer_payments.html
-msgid "Save Settings"
-msgstr "Save Settings"
-
-#: templates/healer_list.html
-msgid "Discover verified healing professionals across Bali"
-msgstr "Discover verified healing professionals across Bali"
-
-#: templates/healer_list.html
-msgid "Search by name, speciality, or location..."
-msgstr "Search by name, speciality, or location..."
-
-#: templates/healer_list.html
-msgid "Filter:"
-msgstr "Filter:"
-
-#: templates/healer_list.html
-msgid "All"
-msgstr "All"
-
-#: templates/healer_list.html
-msgid "No Healers Found"
-msgstr "No Healers Found"
-
-#: templates/healer_list.html
-msgid "Try adjusting your search criteria."
-msgstr "Try adjusting your search criteria."
-
-#: templates/healer_detail.html
-msgid "years experience"
-msgstr "years experience"
-
-#: templates/healer_detail.html
-msgid "reviews"
-msgstr "reviews"
-
-#: templates/healer_detail.html
-msgid "Years"
-msgstr "Years"
-
-#: templates/healer_detail.html
-msgid "Reviews"
-msgstr "Reviews"
-
-#: templates/center_list.html
-msgid "Explore healing centres across Bali"
-msgstr "Explore healing centres across Bali"
-
-#: templates/center_list.html
-msgid "Search centers by name or location..."
-msgstr "Search centers by name or location..."
-
-#: templates/center_list.html
-msgid "No Centers Found"
-msgstr "No Centers Found"
-
-#: templates/center_detail.html
-msgid "Healers at This Center"
-msgstr "Healers at This Center"
-
-#: templates/speciality_list.html
-msgid "Explore the diverse healing traditions of Bali"
-msgstr "Explore the diverse healing traditions of Bali"
-
-#: templates/location_list.html
-msgid "Locations"
-msgstr "Locations"
-
-#: templates/location_list.html
-msgid "Popular <span class=\"gold-text-gradient\">Locations</span>"
-msgstr "Popular <span class=\"gold-text-gradient\">Locations</span>"
-
-#: templates/location_list.html
-msgid "Explore healing experiences across Bali"
-msgstr "Explore healing experiences across Bali"
-
-#: templates/booking_form.html
-msgid "Book Healing Session"
-msgstr "Book Healing Session"
-
-#: templates/booking_form.html
-msgid "Healing Session"
-msgstr "Healing Session"
-
-#: templates/booking_form.html
-msgid "Session Price"
-msgstr "Session Price"
-
-#: templates/booking_form.html
-msgid "Booking Form"
-msgstr "Booking Form"
-
-#: templates/booking_form.html
-msgid "Personal Information"
-msgstr "Personal Information"
-
-#: templates/booking_form.html
-msgid "Full Name"
-msgstr "Full Name"
-
-#: templates/booking_form.html
-msgid "Your phone number"
-msgstr "Your phone number"
-
-#: templates/booking_form.html
-msgid "Your email"
-msgstr "Your email"
-
-#: templates/booking_form.html
-msgid "Session Details"
-msgstr "Session Details"
-
-#: templates/booking_form.html
-msgid "Select service..."
-msgstr "Select service..."
-
-#: templates/booking_form.html
-msgid "Time"
-msgstr "Time"
-
-#: templates/booking_form.html
-msgid "Session Type"
-msgstr "Session Type"
-
-#: templates/booking_form.html
-msgid "On-site (Visit Healer Location)"
-msgstr "On-site (Visit Healer Location)"
-
-#: templates/booking_form.html
-msgid "Home Service (Healer Comes to You)"
-msgstr "Home Service (Healer Comes to You)"
-
-#: templates/booking_form.html
-msgid "Additional Notes"
-msgstr "Additional Notes"
-
-#: templates/booking_form.html
-msgid "Describe your condition or special requests..."
-msgstr "Describe your condition or special requests..."
-
-#: templates/booking_form.html
-msgid "Confirm Booking"
-msgstr "Confirm Booking"
-
-#: templates/booking_list.html
-msgid "Booking History"
-msgstr "Booking History"
-
-#: templates/booking_list.html
-msgid "History"
-msgstr "History"
-
-#: templates/booking_list.html
 msgid "Actions"
 msgstr "Actions"
 
-#: templates/booking_list.html
-msgid "Bookings will appear here."
-msgstr "Bookings will appear here."
+msgid "Active"
+msgstr "Active"
 
-#: templates/booking_detail.html
-msgid "Booking Details"
-msgstr "Booking Details"
+msgid "Active Services"
+msgstr "Active Services"
 
-#: templates/booking_detail.html
-msgid "Booking Code"
-msgstr "Booking Code"
+msgid "Add"
+msgstr "Add"
 
-#: templates/booking_detail.html
-msgid "Notes"
-msgstr "Notes"
+msgid "Add New Service"
+msgstr "Add New Service"
 
-#: templates/booking_detail.html
-msgid "Price Summary"
-msgstr "Price Summary"
+msgid "Add Service"
+msgstr "Add Service"
 
-#: templates/booking_detail.html
-#, python-format
-msgid "Total (%(currency)s)"
-msgstr "Total (%(currency)s)"
+msgid "Additional Notes"
+msgstr "Additional Notes"
 
-#: templates/booking_detail.html
-msgid "Total"
-msgstr "Total"
+msgid "Address"
+msgstr "Address"
 
-#: templates/booking_detail.html
-msgid "Pay Now"
-msgstr "Pay Now"
+msgid "All"
+msgstr "All"
 
-#: templates/booking_detail.html
-msgid "Cancel this booking?"
-msgstr "Cancel this booking?"
+msgid "All rights reserved."
+msgstr "All rights reserved."
 
-#: templates/booking_detail.html
-msgid "Cancel"
-msgstr "Cancel"
+msgid "Already have an account?"
+msgstr "Already have an account?"
 
-#: templates/booking_track.html
-msgid "Track Booking"
-msgstr "Track Booking"
+msgid "Amount"
+msgstr "Amount"
 
-#: templates/booking_track.html
-msgid "Track"
-msgstr "Track"
+msgid "Amount (IDR)"
+msgstr "Amount (IDR)"
 
-#: templates/booking_track.html
-msgid "Enter booking code to track status"
-msgstr "Enter booking code to track status"
+msgid "An error occurred. Please check your form."
+msgstr "An error occurred. Please check your form."
 
-#: templates/booking_track.html
-msgid "Track Booking Status"
-msgstr "Track Booking Status"
+msgid "Ancient Healing Wisdom"
+msgstr "Ancient Healing Wisdom"
 
-#: templates/booking_track.html
-msgid "Enter the booking code you received"
-msgstr "Enter the booking code you received"
+msgid "Are you sure you want to delete this service?"
+msgstr "Are you sure you want to delete this service?"
 
-#: templates/booking_track.html
-msgid "Enter booking code..."
-msgstr "Enter booking code..."
+msgid "Available"
+msgstr "Available"
 
-#: templates/booking_track.html
-msgid "Booking Found"
-msgstr "Booking Found"
+msgid "Awaiting Healer Confirmation"
+msgstr "Awaiting Healer Confirmation"
 
-#: templates/booking_track.html
-msgid "View Details"
-msgstr "View Details"
-
-#: templates/payment_process.html
-msgid "Payment"
-msgstr "Payment"
-
-#: templates/payment_process.html
-msgid "Select Payment Method"
-msgstr "Select Payment Method"
-
-#: templates/payment_process.html
 msgid "Awaiting Payment"
 msgstr "Awaiting Payment"
 
-#: templates/payment_process.html
+msgid "Back"
+msgstr "Back"
+
+msgid "Back to Home"
+msgstr "Back to Home"
+
+msgid "Bali Healer — Discover · Book · Heal"
+msgstr "Bali Healer — Discover · Book · Heal"
+
+msgid ""
+"Bali Healer, healing, spiritual healing, Reiki, chakra healing, sound "
+"healing, Balinese healing, meditation, wellness, Bali"
+msgstr ""
+"Bali Healer, healing, spiritual healing, Reiki, chakra healing, sound "
+"healing, Balinese healing, meditation, wellness, Bali"
+
+msgid "Bank Name"
+msgstr "Bank Name"
+
+msgid "Bank Transfer"
+msgstr "Bank Transfer"
+
+msgid "Become a Provider"
+msgstr "Become a Provider"
+
+msgid "Being worked on by healer."
+msgstr "Being worked on by healer."
+
+msgid "Bio"
+msgstr "Bio"
+
+msgid "Book"
+msgstr "Book"
+
+msgid "Book Healing Session"
+msgstr "Book Healing Session"
+
+msgid "Book Now"
+msgstr "Book Now"
+
+msgid "Booking"
+msgstr "Booking"
+
+msgid "Booking %(code)s completed. Funds have been released."
+msgstr "Booking %(code)s completed. Funds have been released."
+
+msgid "Booking %(code)s confirmed. Please proceed."
+msgstr "Booking %(code)s confirmed. Please proceed."
+
+msgid "Booking Code"
+msgstr "Booking Code"
+
+msgid "Booking Details"
+msgstr "Booking Details"
+
+msgid "Booking Form"
+msgstr "Booking Form"
+
+msgid "Booking History"
+msgstr "Booking History"
+
+msgid "Booking Status"
+msgstr "Booking Status"
+
+msgid "Booking code not found."
+msgstr "Booking code not found."
+
+msgid "Booking created by customer"
+msgstr "Booking created by customer"
+
+msgid "Booking status updated to %(status)s"
+msgstr "Booking status updated to %(status)s"
+
+msgid "Booking successfully created! Booking code: %(code)s"
+msgstr "Booking successfully created! Booking code: %(code)s"
+
+msgid "Bookings from This Customer"
+msgstr "Bookings from This Customer"
+
+msgid "Bookings will appear here."
+msgstr "Bookings will appear here."
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Cancel this booking?"
+msgstr "Cancel this booking?"
+
+msgid "Cancel this booking? Funds will be refunded."
+msgstr "Cancel this booking? Funds will be refunded."
+
+msgid "Cancelled"
+msgstr "Cancelled"
+
+msgid "Cash"
+msgstr "Cash"
+
+msgid "Category"
+msgstr "Category"
+
+msgid "Center Details"
+msgstr "Center Details"
+
+msgid "Centers"
+msgstr "Centers"
+
+msgid "Chat"
+msgstr "Chat"
+
+msgid "Chat Healer"
+msgstr "Chat Healer"
+
+msgid "Chat with Customers"
+msgstr "Chat with Customers"
+
+msgid "Chat with Healer"
+msgstr "Chat with Healer"
+
+msgid "Chat with customers"
+msgstr "Chat with customers"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "Code"
+msgstr "Code"
+
+msgid "Complete"
+msgstr "Complete"
+
 msgid "Complete Payment"
 msgstr "Complete Payment"
 
-#: templates/payment_process.html
-msgid "Payment code"
-msgstr "Payment code"
+msgid "Completed"
+msgstr "Completed"
 
-#: templates/payment_process.html
-msgid "Waiting for payment confirmation..."
-msgstr "Waiting for payment confirmation..."
+msgid "Confirm"
+msgstr "Confirm"
 
-#: templates/payment_process.html
+msgid "Confirm Booking"
+msgstr "Confirm Booking"
+
+msgid "Confirmed"
+msgstr "Confirmed"
+
+msgid "Consult"
+msgstr "Consult"
+
+msgid "Consultation"
+msgstr "Consultation"
+
+msgid "Contact Us"
+msgstr "Contact Us"
+
+msgid "Create Account"
+msgstr "Create Account"
+
+msgid "Create your customer account"
+msgstr "Create your customer account"
+
+msgid "Create your healer profile"
+msgstr "Create your healer profile"
+
+msgid "Created"
+msgstr "Created"
+
 msgid "Currency"
 msgstr "Currency"
 
-#: templates/payment_process.html
-msgid "Payment Method"
-msgstr "Payment Method"
+msgid "Customer"
+msgstr "Customer"
 
-#: templates/payment_process.html
-msgid "Total Payment"
-msgstr "Total Payment"
+msgid "Customer Dashboard"
+msgstr "Customer Dashboard"
 
-#: templates/payment_history.html
-msgid "Payment History"
-msgstr "Payment History"
+msgid "Customer Registration"
+msgstr "Customer Registration"
 
-#: templates/payment_history.html
-msgid "No Payments Yet"
-msgstr "No Payments Yet"
+msgid "Customer bookings will appear here."
+msgstr "Customer bookings will appear here."
 
-#: templates/payment_history.html
-msgid "Payment history will appear here."
-msgstr "Payment history will appear here."
+msgid ""
+"Customers can pay with Visa or Mastercard through your PayPal account. Make "
+"sure your PayPal account is verified."
+msgstr ""
+"Customers can pay with Visa or Mastercard through your PayPal account. Make "
+"sure your PayPal account is verified."
 
-#: templates/payment_detail.html
-msgid "Payment Details"
-msgstr "Payment Details"
+msgid "Customers who contact you will appear here."
+msgstr "Customers who contact you will appear here."
 
-#: templates/payment_detail.html
-msgid "Successful"
-msgstr "Successful"
+msgid "DANA"
+msgstr "DANA"
 
-#: templates/payment_detail.html
+msgid "DANA Number"
+msgstr "DANA Number"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Describe your condition or special requests..."
+msgstr "Describe your condition or special requests..."
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Discover"
+msgstr "Discover"
+
+msgid "Discover healing centers across Bali"
+msgstr "Discover healing centers across Bali"
+
+msgid "Don't have an account?"
+msgstr "Don't have an account?"
+
+msgid "Duration (minutes)"
+msgstr "Duration (minutes)"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Edit Healer Profile"
+msgstr "Edit Healer Profile"
+
+msgid "Edit Profile"
+msgstr "Edit Profile"
+
+msgid "Edit name, bio, specializations"
+msgstr "Edit name, bio, specializations"
+
+msgid "Enter your booking code"
+msgstr "Enter your booking code"
+
+msgid "Enter your email..."
+msgstr "Enter your email..."
+
+msgid "Error"
+msgstr "Error"
+
+msgid "Experience"
+msgstr "Experience"
+
+msgid "Explore different healing modalities"
+msgstr "Explore different healing modalities"
+
 msgid "Failed"
 msgstr "Failed"
 
-#: templates/payment_detail.html
+msgid "Fill in start and end times for active days. Leave empty for days off."
+msgstr ""
+"Fill in start and end times for active days. Leave empty for days off."
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Filter by"
+msgstr "Filter by"
+
+msgid "Find Healer"
+msgstr "Find Healer"
+
+msgid "Find Healers"
+msgstr "Find Healers"
+
+msgid "Find and book healers"
+msgstr "Find and book healers"
+
+msgid ""
+"Find and book trusted healing experiences across Bali. Connect with verified"
+" healers for spiritual wellness and ancient Balinese healing traditions."
+msgstr ""
+"Find and book trusted healing experiences across Bali. Connect with verified"
+" healers for spiritual wellness and ancient Balinese healing traditions."
+
+msgid "Find healing centers and wellness retreats"
+msgstr "Find healing centers and wellness retreats"
+
+msgid "Friday"
+msgstr "Friday"
+
+msgid "From"
+msgstr "From"
+
+msgid "Full Name"
+msgstr "Full Name"
+
+msgid ""
+"Funds are safe in escrow. Will be released to healer after work is "
+"completed."
+msgstr ""
+"Funds are safe in escrow. Will be released to healer after work is "
+"completed."
+
+msgid "Funds have been released to healer."
+msgstr "Funds have been released to healer."
+
+msgid "Funds held (escrow)"
+msgstr "Funds held (escrow)"
+
+msgid "Funds released to healer"
+msgstr "Funds released to healer"
+
+msgid "General Consultation"
+msgstr "General Consultation"
+
+msgid "Go Back"
+msgstr "Go Back"
+
+msgid "GoPay"
+msgstr "GoPay"
+
+msgid "GoPay Number"
+msgstr "GoPay Number"
+
+msgid "Healer"
+msgstr "Healer"
+
+msgid "Healer Profile Not Created"
+msgstr "Healer Profile Not Created"
+
+msgid "Healer Registration"
+msgstr "Healer Registration"
+
+msgid "Healer has confirmed. Awaiting work to begin."
+msgstr "Healer has confirmed. Awaiting work to begin."
+
+msgid "Healer profile not found."
+msgstr "Healer profile not found."
+
+msgid "Healer profile updated successfully."
+msgstr "Healer profile updated successfully."
+
+msgid "Healing Centers"
+msgstr "Healing Centers"
+
+msgid "Healing Profile"
+msgstr "Healing Profile"
+
+msgid "Healing Session"
+msgstr "Healing Session"
+
+msgid "Healing Specialities"
+msgstr "Healing Specialities"
+
+msgid "Held (Escrow)"
+msgstr "Held (Escrow)"
+
+msgid "Held Funds"
+msgstr "Held Funds"
+
+msgid "Hello, I would like to ask about your services."
+msgstr "Hello, I would like to ask about your services."
+
+msgid "Hide"
+msgstr "Hide"
+
+msgid "High Demand"
+msgstr "High Demand"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Home Service (Healer Comes to You)"
+msgstr "Home Service (Healer Comes to You)"
+
+msgid "How would you like to join?"
+msgstr "How would you like to join?"
+
+msgid "In Progress"
+msgstr "In Progress"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Instant payment"
+msgstr "Instant payment"
+
+msgid "Invalid payment status."
+msgstr "Invalid payment status."
+
+msgid "Invalid username or password."
+msgstr "Invalid username or password."
+
+msgid "Loading..."
+msgstr "Loading..."
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Manage"
+msgstr "Manage"
+
+msgid "Manage Practice Schedule"
+msgstr "Manage Practice Schedule"
+
+msgid "Manage Schedule"
+msgstr "Manage Schedule"
+
+msgid "Manage Services"
+msgstr "Manage Services"
+
+msgid "Manage service list"
+msgstr "Manage service list"
+
+msgid "Manage your bookings and activities"
+msgstr "Manage your bookings and activities"
+
+msgid "Manage your healing business"
+msgstr "Manage your healing business"
+
+msgid "Manage your healing services"
+msgstr "Manage your healing services"
+
+msgid "Message Detail"
+msgstr "Message Detail"
+
+msgid "Messages"
+msgstr "Messages"
+
 msgid "Method"
 msgstr "Method"
 
-#: templates/payment_detail.html
-msgid "Payment Simulation"
-msgstr "Payment Simulation"
-
-#: templates/payment_detail.html
-msgid "Simulation Actions"
-msgstr "Simulation Actions"
-
-#: templates/payment_detail.html
-msgid "Simulate Success"
-msgstr "Simulate Success"
-
-#: templates/payment_detail.html
-msgid "Simulate Failure"
-msgstr "Simulate Failure"
-
-#: templates/payment_detail.html
-msgid "Transaction Log"
-msgstr "Transaction Log"
-
-#: accounts/views.py
-#, python-format
-msgid "Selamat datang, %(name)s!"
-msgstr "Welcome, %(name)s!"
-
-#: accounts/views.py
-msgid "Terjadi kesalahan. Silakan periksa form Anda."
-msgstr "An error occurred. Please check your form."
-
-#: accounts/views.py
-#, python-format
-msgid "Selamat datang, %(name)s! Profil healer Anda berhasil dibuat."
-msgstr "Welcome, %(name)s! Your healer profile has been successfully created."
-
-#: accounts/views.py
-msgid "Username atau password salah."
-msgstr "Username or password is incorrect."
-
-#: accounts/views.py
-msgid "Anda berhasil logout."
-msgstr "You have been successfully logged out."
-
-#: accounts/views.py
-msgid "Anda tidak memiliki akses ke dashboard healer."
-msgstr "You do not have access to the healer dashboard."
-
-#: accounts/views.py
-msgid "Anda tidak memiliki akses."
-msgstr "You do not have access."
-
-#: accounts/views.py
-msgid "Profil healer tidak ditemukan."
-msgstr "Healer profile not found."
-
-#: accounts/views.py
-msgid "Profil healer berhasil diperbarui."
-msgstr "Healer profile has been successfully updated."
-
-#: accounts/views.py
-msgid "Jadwal berhasil diperbarui."
-msgstr "Schedule has been successfully updated."
-
-#: accounts/views.py
-#, python-format
-msgid "Layanan \"%(name)s\" berhasil ditambahkan."
-msgstr "Service \"%(name)s\" has been successfully added."
-
-#: accounts/views.py
-msgid "Layanan berhasil dihapus."
-msgstr "Service has been successfully deleted."
-
-#: accounts/views.py
-msgid "Balasan berhasil dikirim."
-msgstr "Reply has been successfully sent."
-
-#: accounts/views.py
-msgid "Pengaturan pembayaran berhasil diperbarui."
-msgstr "Payment settings have been successfully updated."
-
-#: accounts/views.py
-#, python-format
-msgid "Status booking %(code)s diperbarui."
-msgstr "Booking status %(code)s has been updated."
-
-#: bookings/views.py
-msgid "Mohon lengkapi semua field yang wajib diisi."
-msgstr "Please fill in all required fields."
-
-#: bookings/views.py
-#, python-format
-msgid "Booking berhasil dibuat! Kode booking: %(code)s"
-msgstr "Booking successfully created! Booking code: %(code)s"
-
-#: bookings/views.py
-msgid "Kode booking tidak ditemukan."
-msgstr "Booking code not found."
-
-#: bookings/views.py
-msgid "Booking berhasil dibatalkan."
-msgstr "Booking has been successfully cancelled."
-
-#: bookings/views.py
-msgid "Booking tidak dapat dibatalkan."
-msgstr "Booking cannot be cancelled."
-
-#: payments/views.py
 msgid "Method not allowed"
 msgstr "Method not allowed"
 
-#: payments/views.py
-msgid "Payment Created"
-msgstr "Payment Created"
+msgid "Monday"
+msgstr "Monday"
 
-#: payments/views.py
-#, python-format
-msgid "Payment created with %(method)s in %(currency)s"
-msgstr "Payment created with %(method)s in %(currency)s"
+msgid "My Bookings"
+msgstr "My Bookings"
 
-#: payments/views.py
-msgid "Pembayaran berhasil dibuat. Silakan selesaikan pembayaran."
-msgstr "Payment has been successfully created. Please complete the payment."
+msgid "My Chats"
+msgstr "My Chats"
 
-#: payments/views.py
-msgid "Payment Success"
-msgstr "Payment Success"
+msgid "Name"
+msgstr "Name"
 
-#: payments/views.py
-#, python-format
-msgid "Payment of %(amount)s completed successfully."
-msgstr "Payment of %(amount)s completed successfully."
+msgid "Needs Confirmation"
+msgstr "Needs Confirmation"
 
-#: payments/views.py
-msgid "Pembayaran berhasil!"
-msgstr "Payment successful!"
+msgid "Newest"
+msgstr "Newest"
 
-#: payments/views.py
-msgid "Payment Failed"
-msgstr "Payment Failed"
+msgid "Next"
+msgstr "Next"
 
-#: payments/views.py
-msgid "Payment processing failed."
-msgstr "Payment processing failed."
+msgid "No"
+msgstr "No"
 
-#: payments/views.py
-msgid "Pembayaran gagal."
+msgid "No Bookings Yet"
+msgstr "No Bookings Yet"
+
+msgid "No Conversations Yet"
+msgstr "No Conversations Yet"
+
+msgid "No Payments Yet"
+msgstr "No Payments Yet"
+
+msgid "No bookings from this customer yet."
+msgstr "No bookings from this customer yet."
+
+msgid "No healers found"
+msgstr "No healers found"
+
+msgid "No services yet."
+msgstr "No services yet."
+
+msgid "None"
+msgstr "None"
+
+msgid "Notes"
+msgstr "Notes"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "OVO"
+msgstr "OVO"
+
+msgid "OVO Number"
+msgstr "OVO Number"
+
+msgid "Offer your healing services"
+msgstr "Offer your healing services"
+
+msgid "Oldest"
+msgstr "Oldest"
+
+msgid "On-site (Visit Healer Location)"
+msgstr "On-site (Visit Healer Location)"
+
+msgid "Online Consultation"
+msgstr "Online Consultation"
+
+msgid "Page Not Found"
+msgstr "Page Not Found"
+
+msgid "Paid"
+msgstr "Paid"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Pay Now"
+msgstr "Pay Now"
+
+msgid "PayPal Email"
+msgstr "PayPal Email"
+
+msgid "Payment"
+msgstr "Payment"
+
+msgid "Payment %(amount)s processed successfully"
+msgstr "Payment %(amount)s processed successfully"
+
+msgid "Payment %(method)s of Rp %(amount)s created"
+msgstr "Payment %(method)s of Rp %(amount)s created"
+
+msgid "Payment Code"
+msgstr "Payment Code"
+
+msgid "Payment Detail"
+msgstr "Payment Detail"
+
+msgid "Payment History"
+msgstr "Payment History"
+
+msgid "Payment Method"
+msgstr "Payment Method"
+
+msgid "Payment Rp %(amount)s has been released to healer %(healer)s"
+msgstr "Payment Rp %(amount)s has been released to healer %(healer)s"
+
+msgid "Payment Rp %(amount)s held until work is completed"
+msgstr "Payment Rp %(amount)s held until work is completed"
+
+msgid "Payment Rp %(amount)s released to healer %(healer)s"
+msgstr "Payment Rp %(amount)s released to healer %(healer)s"
+
+msgid "Payment Settings"
+msgstr "Payment Settings"
+
+msgid "Payment Status"
+msgstr "Payment Status"
+
+msgid "Payment code"
+msgstr "Payment code"
+
+msgid "Payment created"
+msgstr "Payment created"
+
+msgid "Payment failed"
+msgstr "Payment failed"
+
+msgid "Payment failed."
 msgstr "Payment failed."
 
-#: payments/views.py
-msgid "Anda tidak memiliki akses ke dashboard ini."
-msgstr "You do not have access to this dashboard."
+msgid "Payment history will appear here."
+msgstr "Payment history will appear here."
 
-#: payments/views.py
-#, python-format
-msgid "Status booking diperbarui ke %(status)s"
-msgstr "Booking status updated to %(status)s"
+msgid "Payment processing failed"
+msgstr "Payment processing failed"
+
+msgid "Payment refunded"
+msgstr "Payment refunded"
+
+msgid "Payment refunded due to booking cancellation: %(reason)s"
+msgstr "Payment refunded due to booking cancellation: %(reason)s"
+
+msgid "Payment settings updated successfully."
+msgstr "Payment settings updated successfully."
+
+msgid "Payment successful"
+msgstr "Payment successful"
+
+msgid "Payment successful! Awaiting healer confirmation."
+msgstr "Payment successful! Awaiting healer confirmation."
+
+msgid "Payment successfully created. Please complete payment."
+msgstr "Payment successfully created. Please complete payment."
+
+msgid "Payments"
+msgstr "Payments"
+
+msgid "Pending"
+msgstr "Pending"
+
+msgid "Personal Information"
+msgstr "Personal Information"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Please complete your healer profile to start receiving bookings."
+msgstr "Please complete your healer profile to start receiving bookings."
+
+msgid "Please fill in all required fields."
+msgstr "Please fill in all required fields."
+
+msgid "Popular Areas"
+msgstr "Popular Areas"
+
+msgid "Popular Areas in Bali"
+msgstr "Popular Areas in Bali"
+
+msgid "Practice"
+msgstr "Practice"
+
+msgid "Practice Address"
+msgstr "Practice Address"
+
+msgid "Previous"
+msgstr "Previous"
+
+msgid "Price"
+msgstr "Price"
+
+msgid "Price (IDR)"
+msgstr "Price (IDR)"
+
+msgid "Price cannot be negative."
+msgstr "Price cannot be negative."
+
+msgid "Price must be a valid number."
+msgstr "Price must be a valid number."
+
+msgid "Price: High to Low"
+msgstr "Price: High to Low"
+
+msgid "Price: Low to High"
+msgstr "Price: Low to High"
+
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+msgid "Professional Name"
+msgstr "Professional Name"
+
+msgid "Profile"
+msgstr "Profile"
+
+msgid "Profile & Schedule"
+msgstr "Profile & Schedule"
+
+msgid "Rating"
+msgstr "Rating"
+
+msgid "Recent Bookings"
+msgstr "Recent Bookings"
+
+msgid "Recent Payments"
+msgstr "Recent Payments"
+
+msgid "Refunded"
+msgstr "Refunded"
+
+msgid "Register"
+msgstr "Register"
+
+msgid "Register as Customer"
+msgstr "Register as Customer"
+
+msgid "Register as Healer"
+msgstr "Register as Healer"
+
+msgid "Register as a Customer"
+msgstr "Register as a Customer"
+
+msgid "Register as a Healer"
+msgstr "Register as a Healer"
+
+msgid "Reject"
+msgstr "Reject"
+
+msgid "Reject this booking?"
+msgstr "Reject this booking?"
+
+msgid "Released"
+msgstr "Released"
+
+msgid "Reply"
+msgstr "Reply"
+
+msgid "Reply sent successfully."
+msgstr "Reply sent successfully."
+
+msgid "Return to Home"
+msgstr "Return to Home"
+
+msgid "Reviews"
+msgstr "Reviews"
+
+msgid "SWIFT/BIC Code"
+msgstr "SWIFT/BIC Code"
+
+msgid "Saturday"
+msgstr "Saturday"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Save Changes"
+msgstr "Save Changes"
+
+msgid "Save Schedule"
+msgstr "Save Schedule"
+
+msgid "Save Settings"
+msgstr "Save Settings"
+
+msgid "Schedule"
+msgstr "Schedule"
+
+msgid "Schedule updated successfully."
+msgstr "Schedule updated successfully."
+
+msgid "Search"
+msgstr "Search"
+
+msgid "Search healers..."
+msgstr "Search healers..."
+
+msgid "Select Currency"
+msgstr "Select Currency"
+
+msgid "Select Language"
+msgstr "Select Language"
+
+msgid "Select Payment Method"
+msgstr "Select Payment Method"
+
+msgid "Select Region"
+msgstr "Select Region"
+
+msgid "Select service..."
+msgstr "Select service..."
+
+msgid "Send"
+msgstr "Send"
+
+msgid "Service"
+msgstr "Service"
+
+msgid "Service \"%(name)s\" added successfully."
+msgstr "Service \"%(name)s\" added successfully."
+
+msgid "Service Name"
+msgstr "Service Name"
+
+msgid "Service deleted successfully."
+msgstr "Service deleted successfully."
+
+msgid "Service name is required."
+msgstr "Service name is required."
+
+msgid "Services"
+msgstr "Services"
+
+msgid "Session Details"
+msgstr "Session Details"
+
+msgid "Session Price"
+msgstr "Session Price"
+
+msgid "Session Price (IDR)"
+msgstr "Session Price (IDR)"
+
+msgid "Session Type"
+msgstr "Session Type"
+
+msgid "Set practice hours"
+msgstr "Set practice hours"
+
+msgid "Set up your accepted payment methods"
+msgstr "Set up your accepted payment methods"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Show"
+msgstr "Show"
+
+msgid "Sort by"
+msgstr "Sort by"
+
+msgid "Specialities"
+msgstr "Specialities"
+
+msgid "Specializations"
+msgstr "Specializations"
+
+msgid "Start Work"
+msgstr "Start Work"
+
+msgid "Start a conversation..."
+msgstr "Start a conversation..."
+
+msgid "Start chatting with a healer to ask about services."
+msgstr "Start chatting with a healer to ask about services."
+
+msgid "Start exploring healers and make your first booking."
+msgstr "Start exploring healers and make your first booking."
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Status History"
+msgstr "Status History"
+
+msgid "Stay Updated"
+msgstr "Stay Updated"
+
+msgid "Submit"
+msgstr "Submit"
+
+msgid "Subscribe"
+msgstr "Subscribe"
+
+msgid "Success"
+msgstr "Success"
+
+msgid "Successful"
+msgstr "Successful"
+
+msgid "Sunday"
+msgstr "Sunday"
+
+msgid "Support"
+msgstr "Support"
+
+msgid "Tell us about your experience and expertise..."
+msgstr "Tell us about your experience and expertise..."
+
+msgid "Terms of Service"
+msgstr "Terms of Service"
+
+msgid "The page you are looking for does not exist."
+msgstr "The page you are looking for does not exist."
+
+msgid "There is broken service data. Please contact the administrator."
+msgstr "There is broken service data. Please contact the administrator."
+
+msgid "This booking cannot be paid."
+msgstr "This booking cannot be paid."
+
+msgid "This booking has already been processed."
+msgstr "This booking has already been processed."
+
+msgid "Thursday"
+msgstr "Thursday"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Toggle"
+msgstr "Toggle"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Total Bookings"
+msgstr "Total Bookings"
+
+msgid "Total Payment"
+msgstr "Total Payment"
+
+msgid "Total Payments"
+msgstr "Total Payments"
+
+msgid "Total Revenue"
+msgstr "Total Revenue"
+
+msgid "Track"
+msgstr "Track"
+
+msgid "Track Booking"
+msgstr "Track Booking"
+
+msgid "Try adjusting your search or filters."
+msgstr "Try adjusting your search or filters."
+
+msgid "Tuesday"
+msgstr "Tuesday"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Type a message..."
+msgstr "Type a message..."
+
+msgid "Unknown action."
+msgstr "Unknown action."
+
+msgid "Username"
+msgstr "Username"
+
+msgid "View"
+msgstr "View"
+
+msgid "View All Chats"
+msgstr "View All Chats"
+
+msgid "View Details"
+msgstr "View Details"
+
+msgid "View Profile"
+msgstr "View Profile"
+
+msgid "Waiting"
+msgstr "Waiting"
+
+msgid "Waiting for healer confirmation. Your payment is safe in escrow."
+msgstr "Waiting for healer confirmation. Your payment is safe in escrow."
+
+msgid "Waiting for payment confirmation..."
+msgstr "Waiting for payment confirmation..."
+
+msgid "Warning"
+msgstr "Warning"
+
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "Weekly Schedule"
+msgstr "Weekly Schedule"
+
+msgid "Welcome Back"
+msgstr "Welcome Back"
+
+msgid "Welcome, %(name)s!"
+msgstr "Welcome, %(name)s!"
+
+msgid "Welcome, %(name)s! Your healer profile has been created."
+msgstr "Welcome, %(name)s! Your healer profile has been created."
+
+msgid "Work completed. Funds have been released to healer."
+msgstr "Work completed. Funds have been released to healer."
+
+msgid "Work started for booking %(code)s."
+msgstr "Work started for booking %(code)s."
+
+msgid "Years"
+msgstr "Years"
+
+msgid "Years of Experience"
+msgstr "Years of Experience"
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "You don't have access to the healer dashboard."
+msgstr "You don't have access to the healer dashboard."
+
+msgid "You don't have access to this dashboard."
+msgstr "You don't have access to this dashboard."
+
+msgid "You don't have access."
+msgstr "You don't have access."
+
+msgid "You have been logged out."
+msgstr "You have been logged out."
+
+msgid "You:"
+msgstr "You:"
+
+msgid "Your email"
+msgstr "Your email"
+
+msgid "Your phone number"
+msgstr "Your phone number"
+
+msgid "ago"
+msgstr "ago"
+
+msgid "by"
+msgstr "by"
+
+msgid "day"
+msgstr "day"
+
+msgid "days"
+msgstr "days"
+
+msgid "days ago"
+msgstr "days ago"
+
+msgid "for international transfers"
+msgstr "for international transfers"
+
+msgid "hour"
+msgstr "hour"
+
+msgid "hours"
+msgstr "hours"
+
+msgid "hours ago"
+msgstr "hours ago"
+
+msgid "just now"
+msgstr "just now"
+
+msgid "messages"
+msgstr "messages"
+
+msgid "min"
+msgstr "min"
+
+msgid "minute"
+msgstr "minute"
+
+msgid "minutes"
+msgstr "minutes"
+
+msgid "minutes ago"
+msgstr "minutes ago"
+
+msgid "month"
+msgstr "month"
+
+msgid "months"
+msgstr "months"
+
+msgid "months ago"
+msgstr "months ago"
+
+msgid "of"
+msgstr "of"
+
+msgid "reviews"
+msgstr "reviews"
+
+msgid "second"
+msgstr "second"
+
+msgid "seconds"
+msgstr "seconds"
+
+msgid "service(s)"
+msgstr "service(s)"
+
+msgid "session(s)"
+msgstr "session(s)"
+
+msgid "to process Visa/Mastercard payments"
+msgstr "to process Visa/Mastercard payments"
+
+msgid "weeks ago"
+msgstr "weeks ago"
+
+msgid "year"
+msgstr "year"
+
+msgid "years"
+msgstr "years"
+
+msgid "years ago"
+msgstr "years ago"
+
+msgid "years experience"
+msgstr "years experience"
+
+msgid "yr"
+msgstr "yr"

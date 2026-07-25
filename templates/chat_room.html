@@ -8,7 +8,7 @@
 <div class="section" style="padding-top:10px">
     <div style="max-width:960px;margin:0 auto">
         <a href="{% if chat_role == 'healer' %}{% url 'healer_chat_list' %}{% else %}{% url 'customer_chat_list' %}{% endif %}" class="chat-back-link">
-            <i class="fas fa-arrow-left"></i> {% trans "Kembali" %}
+            <i class="fas fa-arrow-left"></i> {% trans "Back" %}
         </a>
 
         <div class="chat-container">
@@ -23,7 +23,7 @@
                     <span><i class="fas fa-star" style="color:var(--gold);font-size:9px;margin-right:2px"></i>{{ healer.specializations|truncatewords:3 }}</span>
                 </div>
                 <div class="chat-header-actions">
-                    <a href="{% url 'healer_detail' healer.slug %}" class="chat-action-btn" title="{% trans 'Lihat Profil' %}"><i class="fas fa-user"></i></a>
+                    <a href="{% url 'healer_detail' healer.slug %}" class="chat-action-btn" title="{% trans 'View Profile' %}"><i class="fas fa-user"></i></a>
                     <a href="{% url 'create_booking' healer.id %}" class="chat-action-btn gold" title="{% trans 'Booking' %}"><i class="fas fa-calendar-plus"></i></a>
                 </div>
                 {% else %}
@@ -68,7 +68,7 @@
                     {% else %}
                     <div class="chat-empty">
                         <i class="fas fa-comments"></i>
-                        <p>{% trans "Mulai percakapan..." %}</p>
+                        <p>{% trans "Start a conversation..." %}</p>
                     </div>
                     {% endif %}
                 </div>
@@ -90,17 +90,17 @@
                     </div>
 
                     <a href="{% url 'create_booking' healer.id %}" class="sidebar-book-btn">
-                        <i class="fas fa-calendar-plus"></i> {% trans "Booking Sekarang" %}
+                        <i class="fas fa-calendar-plus"></i> {% trans "Book Now" %}
                     </a>
 
                     {% if services %}
                     <div class="sidebar-section">
-                        <h4>{% trans "Layanan" %}</h4>
+                        <h4>{% trans "Services" %}</h4>
                         {% for svc in services %}
                         <div class="sidebar-service">
                             <div>
                                 <strong>{{ svc.name }}</strong>
-                                <span>{{ svc.duration_minutes }} {% trans "menit" %}</span>
+                                <span>{{ svc.duration_minutes }} {% trans "min" %}</span>
                             </div>
                             <span class="sidebar-price" data-price-idr="{{ svc.price_idr|floatformat:0 }}">{{ svc.price_idr|convert_price:LANGUAGE_CODE }}</span>
                         </div>
@@ -116,7 +116,7 @@
                         </div>
                         <div class="sidebar-info-row">
                             <i class="fas fa-briefcase"></i>
-                            <span>{{ healer.experience_years }} {% trans "tahun pengalaman" %}</span>
+                            <span>{{ healer.experience_years }} {% trans "years experience" %}</span>
                         </div>
                     </div>
 
@@ -132,7 +132,7 @@
 
                     {% if customer_bookings %}
                     <div class="sidebar-section">
-                        <h4>{% trans "Booking dari Pelanggan Ini" %}</h4>
+                        <h4>{% trans "Bookings from This Customer" %}</h4>
                         {% for b in customer_bookings %}
                         <a href="{% url 'booking_detail' b.booking_code %}" class="sidebar-booking">
                             <div class="sidebar-booking-header">
@@ -147,14 +147,14 @@
                     </div>
                     {% else %}
                     <div class="sidebar-section">
-                        <p style="font-size:12px;color:var(--stone-500);text-align:center">{% trans "Belum ada booking dari pelanggan ini." %}</p>
+                        <p style="font-size:12px;color:var(--stone-500);text-align:center">{% trans "No bookings from this customer yet." %}</p>
                     </div>
                     {% endif %}
 
                     <div class="sidebar-section">
-                        <h4>{% trans "Aksi" %}</h4>
+                        <h4>{% trans "Actions" %}</h4>
                         <a href="{% url 'customer_chat_list' %}" class="sidebar-action-btn">
-                            <i class="fas fa-comments"></i> {% trans "Lihat Semua Chat" %}
+                            <i class="fas fa-comments"></i> {% trans "View All Chats" %}
                         </a>
                     </div>
                     {% endif %}
@@ -164,8 +164,8 @@
             <!-- Input -->
             <form method="post" action="{% if chat_role == 'healer' %}{% url 'healer_chat_send' room.id %}{% else %}{% url 'chat_send' room.id %}{% endif %}" class="chat-input-form">
                 {% csrf_token %}
-                <input type="text" name="message" placeholder="{% trans 'Ketik pesan...' %}" required autocomplete="off" id="chat-input">
-                <button type="submit" title="{% trans 'Kirim' %}"><i class="fas fa-paper-plane"></i></button>
+                <input type="text" name="message" placeholder="{% trans 'Type a message...' %}" required autocomplete="off" id="chat-input">
+                <button type="submit" title="{% trans 'Send' %}"><i class="fas fa-paper-plane"></i></button>
             </form>
         </div>
     </div>

@@ -78,14 +78,14 @@
 
             {% if services %}
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-concierge-bell" style="color:var(--gold)"></i> {% trans "Layanan" %}</h3></div>
+                <div class="card-header"><h3><i class="fas fa-concierge-bell" style="color:var(--gold)"></i> {% trans "Services" %}</h3></div>
                 <div class="card-body">
                     {% for svc in services %}
                     <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
                         <div>
                             <strong style="color:var(--fg);font-size:13px">{{ svc.name }}</strong>
                             {% if svc.description %}<p style="font-size:11px;color:var(--stone-500);margin:3px 0 0">{{ svc.description|truncatewords:15 }}</p>{% endif %}
-                            <span style="font-size:11px;color:var(--stone-500)"><i class="fas fa-clock" style="margin-right:3px"></i>{{ svc.duration_minutes }} {% trans "menit" %}</span>
+                            <span style="font-size:11px;color:var(--stone-500)"><i class="fas fa-clock" style="margin-right:3px"></i>{{ svc.duration_minutes }} {% trans "min" %}</span>
                         </div>
                         <strong style="color:var(--gold);font-size:14px;white-space:nowrap" data-price-idr="{{ svc.price_idr|floatformat:0 }}">{{ svc.price_idr|convert_price:LANGUAGE_CODE }}</strong>
                     </div>

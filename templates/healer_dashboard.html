@@ -24,28 +24,28 @@
                 <div class="stat-icon blue"><i class="fas fa-concierge-bell"></i></div>
                 <div class="stat-info">
                     <span class="stat-number">{{ services|length }}</span>
-                    <span class="stat-label">{% trans "Layanan Aktif" %}</span>
+                    <span class="stat-label">{% trans "Active Services" %}</span>
                 </div>
             </a>
             <div class="stat-card">
                 <div class="stat-icon yellow"><i class="fas fa-clock"></i></div>
                 <div class="stat-info">
                     <span class="stat-number">{{ pending_count }}</span>
-                    <span class="stat-label">{% trans "Perlu Dikonfirmasi" %}</span>
+                    <span class="stat-label">{% trans "Needs Confirmation" %}</span>
                 </div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon blue"><i class="fas fa-spinner"></i></div>
                 <div class="stat-info">
                     <span class="stat-number">{{ in_progress_count }}</span>
-                    <span class="stat-label">{% trans "Sedang Dikerjakan" %}</span>
+                    <span class="stat-label">{% trans "In Progress" %}</span>
                 </div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
                 <div class="stat-info">
                     <span class="stat-number">{{ completed_count }}</span>
-                    <span class="stat-label">{% trans "Selesai" %}</span>
+                    <span class="stat-label">{% trans "Completed" %}</span>
                 </div>
             </div>
         </div>
@@ -54,28 +54,28 @@
             <a href="{% url 'healer_profile_edit' %}" class="healer-nav-card">
                 <div class="healer-nav-icon"><i class="fas fa-user-pen"></i></div>
                 <div>
-                    <strong>{% trans "Profil" %}</strong>
-                    <span>{% trans "Edit nama, bio, spesialisasi" %}</span>
+                    <strong>{% trans "Profile" %}</strong>
+                    <span>{% trans "Edit name, bio, specializations" %}</span>
                 </div>
             </a>
             <a href="{% url 'healer_services' %}" class="healer-nav-card">
                 <div class="healer-nav-icon"><i class="fas fa-concierge-bell"></i></div>
                 <div>
-                    <strong>{% trans "Layanan" %}</strong>
-                    <span>{% trans "Kelola daftar layanan" %}</span>
+                    <strong>{% trans "Services" %}</strong>
+                    <span>{% trans "Manage service list" %}</span>
                 </div>
             </a>
             <a href="{% url 'healer_schedule_edit' %}" class="healer-nav-card">
                 <div class="healer-nav-icon"><i class="fas fa-calendar-days"></i></div>
                 <div>
-                    <strong>{% trans "Jadwal" %}</strong>
-                    <span>{% trans "Atur jam praktik" %}</span>
+                    <strong>{% trans "Schedule" %}</strong>
+                    <span>{% trans "Set practice hours" %}</span>
                 </div>
             </a>
             <a href="{% url 'healer_payments' %}" class="healer-nav-card">
                 <div class="healer-nav-icon"><i class="fas fa-wallet"></i></div>
                 <div>
-                    <strong>{% trans "Pembayaran" %}</strong>
+                    <strong>{% trans "Payments" %}</strong>
                     <span>{% trans "Bank, e-wallet, Visa/MC" %}</span>
                 </div>
             </a>
@@ -83,7 +83,7 @@
                 <div class="healer-nav-icon"><i class="fas fa-comments"></i></div>
                 <div>
                     <strong>{% trans "Chat" %}</strong>
-                    <span>{% trans "Percakapan dengan pelanggan" %}</span>
+                    <span>{% trans "Chat with customers" %}</span>
                 </div>
             </a>
         </div>
@@ -91,7 +91,7 @@
         <div class="dashboard-grid">
             <div class="card">
                 <div class="card-header">
-                    <h3><i class="fas fa-calendar" style="color:var(--gold)"></i> {% trans "Profil & Jadwal" %}</h3>
+                    <h3><i class="fas fa-calendar" style="color:var(--gold)"></i> {% trans "Profile & Schedule" %}</h3>
                 </div>
                 <div class="card-body">
                     <div class="healer-mini" style="margin-bottom:14px">
@@ -106,12 +106,12 @@
                         </div>
                     </div>
                     <div class="detail-grid">
-                        <div class="detail-item"><label>{% trans "Harga" %}</label><strong style="color:var(--gold)" data-price-idr="{{ healer.price_idr|floatformat:0 }}">{{ healer.price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
-                        <div class="detail-item"><label>{% trans "Pengalaman" %}</label><span>{{ healer.experience_years }} {% trans "tahun" %}</span></div>
-                        <div class="detail-item full"><label>{% trans "Alamat" %}</label><span>{{ healer.address }}</span></div>
+                        <div class="detail-item"><label>{% trans "Price" %}</label><strong style="color:var(--gold)" data-price-idr="{{ healer.price_idr|floatformat:0 }}">{{ healer.price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
+                        <div class="detail-item"><label>{% trans "Experience" %}</label><span>{{ healer.experience_years }} {% trans "years" %}</span></div>
+                        <div class="detail-item full"><label>{% trans "Address" %}</label><span>{{ healer.address }}</span></div>
                     </div>
                     <hr style="border:none;border-top:1px solid var(--border);margin:14px 0">
-                    <strong style="font-size:12px;color:var(--fg);display:block;margin-bottom:8px">{% trans "Jadwal" %}</strong>
+                    <strong style="font-size:12px;color:var(--fg);display:block;margin-bottom:8px">{% trans "Schedule" %}</strong>
                     {% for s in schedules %}
                     {% if s %}
                     <div class="schedule-row">
@@ -125,8 +125,8 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h3><i class="fas fa-concierge-bell" style="color:var(--gold)"></i> {% trans "Layanan Aktif" %}</h3>
-                    <a href="{% url 'healer_services' %}" class="btn btn-sm btn-outline">{% trans "Kelola" %}</a>
+                    <h3><i class="fas fa-concierge-bell" style="color:var(--gold)"></i> {% trans "Active Services" %}</h3>
+                    <a href="{% url 'healer_services' %}" class="btn btn-sm btn-outline">{% trans "Manage" %}</a>
                 </div>
                 <div class="card-body">
                     {% if services %}
@@ -134,7 +134,7 @@
                     <div class="schedule-row">
                         <div>
                             <strong style="color:var(--fg)">{{ svc.name }}</strong>
-                            <small style="color:var(--stone-500);display:block">{{ svc.duration_minutes }} {% trans "menit" %}</small>
+                            <small style="color:var(--stone-500);display:block">{{ svc.duration_minutes }} {% trans "minutes" %}</small>
                         </div>
                         <strong style="color:var(--gold)">{{ svc.price_idr|convert_price:LANGUAGE_CODE }}</strong>
                     </div>
@@ -142,8 +142,8 @@
                     {% else %}
                     <div class="empty-state" style="padding:24px">
                         <i class="fas fa-concierge-bell"></i>
-                        <p>{% trans "Belum ada layanan." %}</p>
-                        <a href="{% url 'healer_services' %}" class="btn btn-gold btn-sm" style="margin-top:8px"><i class="fas fa-plus"></i> {% trans "Tambah Layanan" %}</a>
+                        <p>{% trans "No services yet." %}</p>
+                        <a href="{% url 'healer_services' %}" class="btn btn-gold btn-sm" style="margin-top:8px"><i class="fas fa-plus"></i> {% trans "Add Service" %}</a>
                     </div>
                     {% endif %}
                 </div>
@@ -152,14 +152,14 @@
 
         <div class="card">
             <div class="card-header">
-                <h3><i class="fas fa-calendar-check" style="color:var(--gold)"></i> {% trans "Booking Terbaru" %}</h3>
+                <h3><i class="fas fa-calendar-check" style="color:var(--gold)"></i> {% trans "Recent Bookings" %}</h3>
             </div>
             <div class="card-body">
                 {% if recent_bookings %}
                 <div class="table-container">
                     <table class="data-table">
                         <thead>
-                            <tr><th>{% trans "Kode" %}</th><th>{% trans "Pelanggan" %}</th><th>{% trans "Layanan" %}</th><th>{% trans "Tanggal" %}</th><th>{% trans "Status" %}</th><th>{% trans "Aksi" %}</th></tr>
+                            <tr><th>{% trans "Code" %}</th><th>{% trans "Customer" %}</th><th>{% trans "Service" %}</th><th>{% trans "Date" %}</th><th>{% trans "Status" %}</th><th>{% trans "Actions" %}</th></tr>
                         </thead>
                         <tbody>
                             {% for b in recent_bookings %}
@@ -174,29 +174,29 @@
                                     <form method="POST" action="{% url 'healer_booking_update' b.booking_code %}" style="display:inline">
                                         {% csrf_token %}
                                         <input type="hidden" name="action" value="confirm">
-                                        <button type="submit" class="btn btn-sm btn-success" title="{% trans 'Konfirmasi' %}"><i class="fas fa-check"></i></button>
+                                        <button type="submit" class="btn btn-sm btn-success" title="{% trans 'Confirm' %}"><i class="fas fa-check"></i></button>
                                     </form>
-                                    <form method="POST" action="{% url 'booking_cancel' b.booking_code %}" style="display:inline" onsubmit="return confirm('{% trans "Tolak booking ini?" %}')">
+                                    <form method="POST" action="{% url 'booking_cancel' b.booking_code %}" style="display:inline" onsubmit="return confirm('{% trans "Reject this booking?" %}')">
                                         {% csrf_token %}
-                                        <input type="hidden" name="reason" value="Ditolak oleh healer">
-                                        <button type="submit" class="btn btn-sm btn-danger" title="{% trans 'Tolak' %}"><i class="fas fa-xmark"></i></button>
+                                        <input type="hidden" name="reason" value="Rejected by healer">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="{% trans 'Reject' %}"><i class="fas fa-xmark"></i></button>
                                     </form>
                                     {% elif b.status == 'confirmed' %}
                                     <form method="POST" action="{% url 'healer_booking_update' b.booking_code %}" style="display:inline">
                                         {% csrf_token %}
                                         <input type="hidden" name="action" value="start">
-                                        <button type="submit" class="btn btn-sm btn-gold" title="{% trans 'Mulai Kerja' %}"><i class="fas fa-play"></i></button>
+                                        <button type="submit" class="btn btn-sm btn-gold" title="{% trans 'Start Work' %}"><i class="fas fa-play"></i></button>
                                     </form>
                                     {% elif b.status == 'in_progress' %}
                                     <form method="POST" action="{% url 'healer_booking_update' b.booking_code %}" style="display:inline">
                                         {% csrf_token %}
                                         <input type="hidden" name="action" value="complete">
-                                        <button type="submit" class="btn btn-sm btn-success" title="{% trans 'Selesai' %}"><i class="fas fa-check-double"></i></button>
+                                        <button type="submit" class="btn btn-sm btn-success" title="{% trans 'Complete' %}"><i class="fas fa-check-double"></i></button>
                                     </form>
                                     {% elif b.status == 'completed' %}
-                                    <span style="font-size:11px;color:var(--emerald-500)"><i class="fas fa-check-circle"></i> {% trans "Selesai" %}</span>
+                                    <span style="font-size:11px;color:var(--emerald-500)"><i class="fas fa-check-circle"></i> {% trans "Completed" %}</span>
                                     {% elif b.status == 'cancelled' %}
-                                    <span style="font-size:11px;color:var(--red)"><i class="fas fa-xmark-circle"></i> {% trans "Dibatalkan" %}</span>
+                                    <span style="font-size:11px;color:var(--red)"><i class="fas fa-xmark-circle"></i> {% trans "Cancelled" %}</span>
                                     {% else %}
                                     <a href="{% url 'booking_detail' b.booking_code %}" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i></a>
                                     {% endif %}
@@ -209,8 +209,8 @@
                 {% else %}
                 <div class="empty-state" style="padding:36px">
                     <i class="fas fa-inbox"></i>
-                    <h3>{% trans "Belum Ada Booking" %}</h3>
-                    <p>{% trans "Booking dari pelanggan akan muncul di sini." %}</p>
+                    <h3>{% trans "No Bookings Yet" %}</h3>
+                    <p>{% trans "Customer bookings will appear here." %}</p>
                 </div>
                 {% endif %}
             </div>
@@ -219,8 +219,8 @@
         <div class="card">
             <div class="card-body" style="text-align:center;padding:48px">
                 <i class="fas fa-triangle-exclamation" style="font-size:40px;color:var(--gold);margin-bottom:14px;display:block"></i>
-                <h3 style="margin-bottom:6px">{% trans "Profil Healer Belum Dibuat" %}</h3>
-                <p class="text-muted" style="font-size:13px">{% trans "Silakan lengkapi profil healer Anda untuk mulai menerima booking." %}</p>
+                <h3 style="margin-bottom:6px">{% trans "Healer Profile Not Created" %}</h3>
+                <p class="text-muted" style="font-size:13px">{% trans "Please complete your healer profile to start receiving bookings." %}</p>
             </div>
         </div>
         {% endif %}

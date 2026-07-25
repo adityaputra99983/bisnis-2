@@ -5,12 +5,12 @@
 {% block content %}
 <div class="page-header">
     <div class="container">
-        <a href="{% url 'healer_dashboard' %}" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Kembali" %}</a>
+        <a href="{% url 'healer_dashboard' %}" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Back" %}</a>
         <div style="position:relative;display:inline-block">
-            <h1>{% trans "Pengaturan" %} <em>{% trans "Pembayaran" %}</em></h1>
+            <h1>{% trans "Settings" %} <em>{% trans "Payment" %}</em></h1>
             <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>
         </div>
-        <p>{% trans "Atur metode pembayaran yang Anda terima" %}</p>
+        <p>{% trans "Set up your accepted payment methods" %}</p>
     </div>
 </div>
 <section class="section" data-reveal>
@@ -20,29 +20,29 @@
 
             <div class="card" style="margin-bottom:16px">
                 <div class="card-header">
-                    <h3><i class="fas fa-building-columns" style="color:var(--gold)"></i> {% trans "Transfer Bank" %}</h3>
+                    <h3><i class="fas fa-building-columns" style="color:var(--gold)"></i> {% trans "Bank Transfer" %}</h3>
                     <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--stone-400);cursor:pointer">
                         <input type="checkbox" name="accept_transfer" value="1" {% if settings.accept_transfer %}checked{% endif %} style="accent-color:var(--gold)">
-                        {% trans "Aktif" %}
+                        {% trans "Active" %}
                     </label>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label>{% trans "Nama Bank" %}</label>
+                        <label>{% trans "Bank Name" %}</label>
                         <input type="text" name="bank_name" class="form-control" value="{{ settings.bank_name }}" placeholder="BCA, Mandiri, BRI, BNI...">
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>{% trans "Nomor Rekening" %}</label>
+                            <label>{% trans "Account Number" %}</label>
                             <input type="text" name="bank_account_number" class="form-control" value="{{ settings.bank_account_number }}" placeholder="1234567890">
                         </div>
                         <div class="form-group">
-                            <label>{% trans "Atas Nama" %}</label>
-                            <input type="text" name="bank_account_name" class="form-control" value="{{ settings.bank_account_name }}" placeholder="Nama pemilik rekening">
+                            <label>{% trans "Account Holder" %}</label>
+                            <input type="text" name="bank_account_name" class="form-control" value="{{ settings.bank_account_name }}" placeholder="{% trans 'Account holder name' %}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>{% trans "Kode SWIFT/BIC" %} <span style="color:var(--stone-600);font-weight:400">({% trans "untuk transfer internasional" %})</span></label>
+                        <label>{% trans "SWIFT/BIC Code" %} <span style="color:var(--stone-600);font-weight:400">({% trans "for international transfers" %})</span></label>
                         <input type="text" name="swift_code" class="form-control" value="{{ settings.swift_code }}" placeholder="CENAIDJA" style="text-transform:uppercase">
                     </div>
                 </div>
@@ -53,24 +53,24 @@
                     <h3><i class="fab fa-cc-visa" style="color:var(--gold)"></i> {% trans "Visa / Mastercard" %}</h3>
                     <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--stone-400);cursor:pointer">
                         <input type="checkbox" name="visa_mc_enabled" value="1" {% if settings.visa_mc_enabled %}checked{% endif %} style="accent-color:var(--gold)">
-                        {% trans "Aktif" %}
+                        {% trans "Active" %}
                     </label>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label>{% trans "Email PayPal" %} <span style="color:var(--stone-600);font-weight:400">({% trans "untuk memproses pembayaran Visa/Mastercard" %})</span></label>
+                        <label>{% trans "PayPal Email" %} <span style="color:var(--stone-600);font-weight:400">({% trans "to process Visa/Mastercard payments" %})</span></label>
                         <input type="email" name="paypal_email" class="form-control" value="{{ settings.paypal_email }}" placeholder="email@anda.com">
                     </div>
                     <div style="padding:10px 14px;border-radius:var(--radius);background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.1);margin-top:4px">
                         <p style="font-size:11px;color:var(--stone-400);margin:0">
                             <i class="fas fa-info-circle" style="color:var(--info);margin-right:4px"></i>
-                            {% trans "Pelanggan dapat membayar dengan Visa atau Mastercard melalui akun PayPal Anda. Pastikan akun PayPal sudah terverifikasi." %}
+                            {% trans "Customers can pay with Visa or Mastercard through your PayPal account. Make sure your PayPal account is verified." %}
                         </p>
                     </div>
                     <div class="form-group" style="margin-top:12px;margin-bottom:0">
                         <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
                             <input type="checkbox" name="accept_paypal" value="1" {% if settings.accept_paypal %}checked{% endif %} style="accent-color:var(--gold)">
-                            <span>{% trans "Terima pembayaran via PayPal (Visa / Mastercard / Saldo PayPal)" %}</span>
+                            <span>{% trans "Accept payments via PayPal (Visa / Mastercard / PayPal Balance)" %}</span>
                         </label>
                     </div>
                 </div>
@@ -86,39 +86,39 @@
                             <input type="checkbox" name="accept_gopay" value="1" {% if settings.accept_gopay %}checked{% endif %} style="accent-color:var(--gold)">
                             <span>{% trans "GoPay" %}</span>
                         </label>
-                        <input type="text" name="gopay_number" class="form-control" value="{{ settings.gopay_number }}" placeholder="{% trans 'Nomor GoPay' %}">
+                        <input type="text" name="gopay_number" class="form-control" value="{{ settings.gopay_number }}" placeholder="{% trans 'GoPay Number' %}">
                     </div>
                     <div class="form-group">
                         <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:8px">
                             <input type="checkbox" name="accept_ovo" value="1" {% if settings.accept_ovo %}checked{% endif %} style="accent-color:var(--gold)">
                             <span>{% trans "OVO" %}</span>
                         </label>
-                        <input type="text" name="ovo_number" class="form-control" value="{{ settings.ovo_number }}" placeholder="{% trans 'Nomor OVO' %}">
+                        <input type="text" name="ovo_number" class="form-control" value="{{ settings.ovo_number }}" placeholder="{% trans 'OVO Number' %}">
                     </div>
                     <div class="form-group" style="margin-bottom:0">
                         <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:8px">
                             <input type="checkbox" name="accept_dana" value="1" {% if settings.accept_dana %}checked{% endif %} style="accent-color:var(--gold)">
                             <span>{% trans "DANA" %}</span>
                         </label>
-                        <input type="text" name="dana_number" class="form-control" value="{{ settings.dana_number }}" placeholder="{% trans 'Nomor DANA' %}">
+                        <input type="text" name="dana_number" class="form-control" value="{{ settings.dana_number }}" placeholder="{% trans 'DANA Number' %}">
                     </div>
                 </div>
             </div>
 
             <div class="card" style="margin-bottom:20px">
                 <div class="card-header">
-                    <h3><i class="fas fa-money-bill" style="color:var(--gold)"></i> {% trans "Tunai" %}</h3>
+                    <h3><i class="fas fa-money-bill" style="color:var(--gold)"></i> {% trans "Cash" %}</h3>
                 </div>
                 <div class="card-body">
                     <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
                         <input type="checkbox" name="accept_cash" value="1" {% if settings.accept_cash %}checked{% endif %} style="accent-color:var(--gold)">
-                        <span>{% trans "Terima pembayaran tunai saat sesi healing" %}</span>
+                        <span>{% trans "Accept cash payment during healing session" %}</span>
                     </label>
                 </div>
             </div>
 
             <button type="submit" class="btn btn-gold btn-lg btn-block">
-                <i class="fas fa-floppy-disk"></i> {% trans "Simpan Pengaturan" %}
+                <i class="fas fa-floppy-disk"></i> {% trans "Save Settings" %}
             </button>
         </form>
     </div>

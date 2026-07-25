@@ -1,0 +1,1164 @@
+#
+msgid ""
+msgstr ""
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: compile_all_translations.py\n"
+"Language-Name: Turkish\n"
+
+msgid "About Bali Healer"
+msgstr "About Bali Healer"
+
+msgid "About Yourself"
+msgstr "About Yourself"
+
+msgid "Accept cash payment during healing session"
+msgstr "Accept cash payment during healing session"
+
+msgid "Accept payments via PayPal (Visa / Mastercard / PayPal Balance)"
+msgstr "Accept payments via PayPal (Visa / Mastercard / PayPal Balance)"
+
+msgid "Account"
+msgstr "Hesap"
+
+msgid "Account Holder"
+msgstr "Account Holder"
+
+msgid "Account Number"
+msgstr "Account Number"
+
+msgid "Account holder name"
+msgstr "Account holder name"
+
+msgid "Action"
+msgstr "Action"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Active Services"
+msgstr "Active Services"
+
+msgid "Add"
+msgstr "Add"
+
+msgid "Add New Service"
+msgstr "Add New Service"
+
+msgid "Add Service"
+msgstr "Add Service"
+
+msgid "Additional Notes"
+msgstr "Additional Notes"
+
+msgid "Address"
+msgstr "Adres"
+
+msgid "All"
+msgstr "All"
+
+msgid "All rights reserved."
+msgstr "All rights reserved."
+
+msgid "Already have an account?"
+msgstr "Already have an account?"
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Amount (IDR)"
+msgstr "Amount (IDR)"
+
+msgid "An error occurred. Please check your form."
+msgstr "An error occurred. Please check your form."
+
+msgid "Ancient Healing Wisdom"
+msgstr "Ancient Healing Wisdom"
+
+msgid "Are you sure you want to delete this service?"
+msgstr "Are you sure you want to delete this service?"
+
+msgid "Available"
+msgstr "Available"
+
+msgid "Awaiting Healer Confirmation"
+msgstr "Awaiting Healer Confirmation"
+
+msgid "Awaiting Payment"
+msgstr "Awaiting Payment"
+
+msgid "Back"
+msgstr "Geri"
+
+msgid "Back to Home"
+msgstr "Back to Home"
+
+msgid "Bali Healer — Discover · Book · Heal"
+msgstr "Bali Healer — Discover · Book · Heal"
+
+msgid ""
+"Bali Healer, healing, spiritual healing, Reiki, chakra healing, sound "
+"healing, Balinese healing, meditation, wellness, Bali"
+msgstr ""
+"Bali Healer, healing, spiritual healing, Reiki, chakra healing, sound "
+"healing, Balinese healing, meditation, wellness, Bali"
+
+msgid "Bank Name"
+msgstr "Bank Name"
+
+msgid "Bank Transfer"
+msgstr "Bank Transfer"
+
+msgid "Become a Provider"
+msgstr "Become a Provider"
+
+msgid "Being worked on by healer."
+msgstr "Being worked on by healer."
+
+msgid "Bio"
+msgstr "Bio"
+
+msgid "Book"
+msgstr "Book"
+
+msgid "Book Healing Session"
+msgstr "Book Healing Session"
+
+msgid "Book Now"
+msgstr "Book Now"
+
+msgid "Booking"
+msgstr "Booking"
+
+msgid "Booking %(code)s completed. Funds have been released."
+msgstr "Booking %(code)s completed. Funds have been released."
+
+msgid "Booking %(code)s confirmed. Please proceed."
+msgstr "Booking %(code)s confirmed. Please proceed."
+
+msgid "Booking Code"
+msgstr "Booking Code"
+
+msgid "Booking Details"
+msgstr "Booking Details"
+
+msgid "Booking Form"
+msgstr "Booking Form"
+
+msgid "Booking History"
+msgstr "Booking History"
+
+msgid "Booking Status"
+msgstr "Booking Status"
+
+msgid "Booking code not found."
+msgstr "Booking code not found."
+
+msgid "Booking created by customer"
+msgstr "Booking created by customer"
+
+msgid "Booking status updated to %(status)s"
+msgstr "Booking status updated to %(status)s"
+
+msgid "Booking successfully created! Booking code: %(code)s"
+msgstr "Booking successfully created! Booking code: %(code)s"
+
+msgid "Bookings from This Customer"
+msgstr "Bookings from This Customer"
+
+msgid "Bookings will appear here."
+msgstr "Bookings will appear here."
+
+msgid "Cancel"
+msgstr "İptal"
+
+msgid "Cancel this booking?"
+msgstr "Cancel this booking?"
+
+msgid "Cancel this booking? Funds will be refunded."
+msgstr "Cancel this booking? Funds will be refunded."
+
+msgid "Cancelled"
+msgstr "İptal edildi"
+
+msgid "Cash"
+msgstr "Cash"
+
+msgid "Category"
+msgstr "Category"
+
+msgid "Center Details"
+msgstr "Center Details"
+
+msgid "Centers"
+msgstr "Centers"
+
+msgid "Chat"
+msgstr "Sohbet"
+
+msgid "Chat Healer"
+msgstr "Chat Healer"
+
+msgid "Chat with Customers"
+msgstr "Chat with Customers"
+
+msgid "Chat with Healer"
+msgstr "Chat with Healer"
+
+msgid "Chat with customers"
+msgstr "Chat with customers"
+
+msgid "Close"
+msgstr "Kapat"
+
+msgid "Code"
+msgstr "Code"
+
+msgid "Complete"
+msgstr "Complete"
+
+msgid "Complete Payment"
+msgstr "Complete Payment"
+
+msgid "Completed"
+msgstr "Tamamlandı"
+
+msgid "Confirm"
+msgstr "Confirm"
+
+msgid "Confirm Booking"
+msgstr "Confirm Booking"
+
+msgid "Confirmed"
+msgstr "Confirmed"
+
+msgid "Consult"
+msgstr "Consult"
+
+msgid "Consultation"
+msgstr "Consultation"
+
+msgid "Contact Us"
+msgstr "Contact Us"
+
+msgid "Create Account"
+msgstr "Create Account"
+
+msgid "Create your customer account"
+msgstr "Create your customer account"
+
+msgid "Create your healer profile"
+msgstr "Create your healer profile"
+
+msgid "Created"
+msgstr "Created"
+
+msgid "Currency"
+msgstr "Currency"
+
+msgid "Customer"
+msgstr "Customer"
+
+msgid "Customer Dashboard"
+msgstr "Customer Dashboard"
+
+msgid "Customer Registration"
+msgstr "Customer Registration"
+
+msgid "Customer bookings will appear here."
+msgstr "Customer bookings will appear here."
+
+msgid ""
+"Customers can pay with Visa or Mastercard through your PayPal account. Make "
+"sure your PayPal account is verified."
+msgstr ""
+"Customers can pay with Visa or Mastercard through your PayPal account. Make "
+"sure your PayPal account is verified."
+
+msgid "Customers who contact you will appear here."
+msgstr "Customers who contact you will appear here."
+
+msgid "DANA"
+msgstr "DANA"
+
+msgid "DANA Number"
+msgstr "DANA Number"
+
+msgid "Dashboard"
+msgstr "Kontrol Paneli"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Delete"
+msgstr "Sil"
+
+msgid "Describe your condition or special requests..."
+msgstr "Describe your condition or special requests..."
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Discover"
+msgstr "Discover"
+
+msgid "Discover healing centers across Bali"
+msgstr "Discover healing centers across Bali"
+
+msgid "Don't have an account?"
+msgstr "Don't have an account?"
+
+msgid "Duration (minutes)"
+msgstr "Duration (minutes)"
+
+msgid "Edit"
+msgstr "Düzenle"
+
+msgid "Edit Healer Profile"
+msgstr "Edit Healer Profile"
+
+msgid "Edit Profile"
+msgstr "Edit Profile"
+
+msgid "Edit name, bio, specializations"
+msgstr "Edit name, bio, specializations"
+
+msgid "Enter your booking code"
+msgstr "Enter your booking code"
+
+msgid "Enter your email..."
+msgstr "Enter your email..."
+
+msgid "Error"
+msgstr "Hata"
+
+msgid "Experience"
+msgstr "Deneyim"
+
+msgid "Explore different healing modalities"
+msgstr "Explore different healing modalities"
+
+msgid "Failed"
+msgstr "Failed"
+
+msgid "Fill in start and end times for active days. Leave empty for days off."
+msgstr ""
+"Fill in start and end times for active days. Leave empty for days off."
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Filter by"
+msgstr "Filter by"
+
+msgid "Find Healer"
+msgstr "Find Healer"
+
+msgid "Find Healers"
+msgstr "İyileştiricileri Bul"
+
+msgid "Find and book healers"
+msgstr "Find and book healers"
+
+msgid ""
+"Find and book trusted healing experiences across Bali. Connect with verified"
+" healers for spiritual wellness and ancient Balinese healing traditions."
+msgstr ""
+"Find and book trusted healing experiences across Bali. Connect with verified"
+" healers for spiritual wellness and ancient Balinese healing traditions."
+
+msgid "Find healing centers and wellness retreats"
+msgstr "Find healing centers and wellness retreats"
+
+msgid "Friday"
+msgstr "Friday"
+
+msgid "From"
+msgstr "From"
+
+msgid "Full Name"
+msgstr "Tam Ad"
+
+msgid ""
+"Funds are safe in escrow. Will be released to healer after work is "
+"completed."
+msgstr ""
+"Funds are safe in escrow. Will be released to healer after work is "
+"completed."
+
+msgid "Funds have been released to healer."
+msgstr "Funds have been released to healer."
+
+msgid "Funds held (escrow)"
+msgstr "Funds held (escrow)"
+
+msgid "Funds released to healer"
+msgstr "Funds released to healer"
+
+msgid "General Consultation"
+msgstr "General Consultation"
+
+msgid "Go Back"
+msgstr "Go Back"
+
+msgid "GoPay"
+msgstr "GoPay"
+
+msgid "GoPay Number"
+msgstr "GoPay Number"
+
+msgid "Healer"
+msgstr "İyileştirici"
+
+msgid "Healer Profile Not Created"
+msgstr "Healer Profile Not Created"
+
+msgid "Healer Registration"
+msgstr "Healer Registration"
+
+msgid "Healer has confirmed. Awaiting work to begin."
+msgstr "Healer has confirmed. Awaiting work to begin."
+
+msgid "Healer profile not found."
+msgstr "Healer profile not found."
+
+msgid "Healer profile updated successfully."
+msgstr "Healer profile updated successfully."
+
+msgid "Healing Centers"
+msgstr "Healing Centers"
+
+msgid "Healing Profile"
+msgstr "Healing Profile"
+
+msgid "Healing Session"
+msgstr "Healing Session"
+
+msgid "Healing Specialities"
+msgstr "Healing Specialities"
+
+msgid "Held (Escrow)"
+msgstr "Held (Escrow)"
+
+msgid "Held Funds"
+msgstr "Held Funds"
+
+msgid "Hello, I would like to ask about your services."
+msgstr "Hello, I would like to ask about your services."
+
+msgid "Hide"
+msgstr "Hide"
+
+msgid "High Demand"
+msgstr "High Demand"
+
+msgid "Home"
+msgstr "Ana Sayfa"
+
+msgid "Home Service (Healer Comes to You)"
+msgstr "Home Service (Healer Comes to You)"
+
+msgid "How would you like to join?"
+msgstr "How would you like to join?"
+
+msgid "In Progress"
+msgstr "In Progress"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Instant payment"
+msgstr "Instant payment"
+
+msgid "Invalid payment status."
+msgstr "Invalid payment status."
+
+msgid "Invalid username or password."
+msgstr "Invalid username or password."
+
+msgid "Loading..."
+msgstr "Yükleniyor..."
+
+msgid "Login"
+msgstr "Giriş Yap"
+
+msgid "Manage"
+msgstr "Manage"
+
+msgid "Manage Practice Schedule"
+msgstr "Manage Practice Schedule"
+
+msgid "Manage Schedule"
+msgstr "Manage Schedule"
+
+msgid "Manage Services"
+msgstr "Manage Services"
+
+msgid "Manage service list"
+msgstr "Manage service list"
+
+msgid "Manage your bookings and activities"
+msgstr "Manage your bookings and activities"
+
+msgid "Manage your healing business"
+msgstr "Manage your healing business"
+
+msgid "Manage your healing services"
+msgstr "Manage your healing services"
+
+msgid "Message Detail"
+msgstr "Message Detail"
+
+msgid "Messages"
+msgstr "Messages"
+
+msgid "Method"
+msgstr "Method"
+
+msgid "Method not allowed"
+msgstr "Method not allowed"
+
+msgid "Monday"
+msgstr "Monday"
+
+msgid "My Bookings"
+msgstr "My Bookings"
+
+msgid "My Chats"
+msgstr "My Chats"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Needs Confirmation"
+msgstr "Needs Confirmation"
+
+msgid "Newest"
+msgstr "Newest"
+
+msgid "Next"
+msgstr "Next"
+
+msgid "No"
+msgstr "Hayır"
+
+msgid "No Bookings Yet"
+msgstr "No Bookings Yet"
+
+msgid "No Conversations Yet"
+msgstr "No Conversations Yet"
+
+msgid "No Payments Yet"
+msgstr "No Payments Yet"
+
+msgid "No bookings from this customer yet."
+msgstr "No bookings from this customer yet."
+
+msgid "No healers found"
+msgstr "No healers found"
+
+msgid "No services yet."
+msgstr "No services yet."
+
+msgid "None"
+msgstr "None"
+
+msgid "Notes"
+msgstr "Notes"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "OVO"
+msgstr "OVO"
+
+msgid "OVO Number"
+msgstr "OVO Number"
+
+msgid "Offer your healing services"
+msgstr "Offer your healing services"
+
+msgid "Oldest"
+msgstr "Oldest"
+
+msgid "On-site (Visit Healer Location)"
+msgstr "On-site (Visit Healer Location)"
+
+msgid "Online Consultation"
+msgstr "Online Consultation"
+
+msgid "Page Not Found"
+msgstr "Page Not Found"
+
+msgid "Paid"
+msgstr "Paid"
+
+msgid "Password"
+msgstr "Şifre"
+
+msgid "Pay Now"
+msgstr "Şimdi Öde"
+
+msgid "PayPal Email"
+msgstr "PayPal Email"
+
+msgid "Payment"
+msgstr "Ödeme"
+
+msgid "Payment %(amount)s processed successfully"
+msgstr "Payment %(amount)s processed successfully"
+
+msgid "Payment %(method)s of Rp %(amount)s created"
+msgstr "Payment %(method)s of Rp %(amount)s created"
+
+msgid "Payment Code"
+msgstr "Payment Code"
+
+msgid "Payment Detail"
+msgstr "Payment Detail"
+
+msgid "Payment History"
+msgstr "Payment History"
+
+msgid "Payment Method"
+msgstr "Payment Method"
+
+msgid "Payment Rp %(amount)s has been released to healer %(healer)s"
+msgstr "Payment Rp %(amount)s has been released to healer %(healer)s"
+
+msgid "Payment Rp %(amount)s held until work is completed"
+msgstr "Payment Rp %(amount)s held until work is completed"
+
+msgid "Payment Rp %(amount)s released to healer %(healer)s"
+msgstr "Payment Rp %(amount)s released to healer %(healer)s"
+
+msgid "Payment Settings"
+msgstr "Payment Settings"
+
+msgid "Payment Status"
+msgstr "Payment Status"
+
+msgid "Payment code"
+msgstr "Payment code"
+
+msgid "Payment created"
+msgstr "Payment created"
+
+msgid "Payment failed"
+msgstr "Payment failed"
+
+msgid "Payment failed."
+msgstr "Payment failed."
+
+msgid "Payment history will appear here."
+msgstr "Payment history will appear here."
+
+msgid "Payment processing failed"
+msgstr "Payment processing failed"
+
+msgid "Payment refunded"
+msgstr "Payment refunded"
+
+msgid "Payment refunded due to booking cancellation: %(reason)s"
+msgstr "Payment refunded due to booking cancellation: %(reason)s"
+
+msgid "Payment settings updated successfully."
+msgstr "Payment settings updated successfully."
+
+msgid "Payment successful"
+msgstr "Payment successful"
+
+msgid "Payment successful! Awaiting healer confirmation."
+msgstr "Payment successful! Awaiting healer confirmation."
+
+msgid "Payment successfully created. Please complete payment."
+msgstr "Payment successfully created. Please complete payment."
+
+msgid "Payments"
+msgstr "Ödemeler"
+
+msgid "Pending"
+msgstr "Pending"
+
+msgid "Personal Information"
+msgstr "Personal Information"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Please complete your healer profile to start receiving bookings."
+msgstr "Please complete your healer profile to start receiving bookings."
+
+msgid "Please fill in all required fields."
+msgstr "Please fill in all required fields."
+
+msgid "Popular Areas"
+msgstr "Popular Areas"
+
+msgid "Popular Areas in Bali"
+msgstr "Popular Areas in Bali"
+
+msgid "Practice"
+msgstr "Practice"
+
+msgid "Practice Address"
+msgstr "Practice Address"
+
+msgid "Previous"
+msgstr "Previous"
+
+msgid "Price"
+msgstr "Fiyat"
+
+msgid "Price (IDR)"
+msgstr "Price (IDR)"
+
+msgid "Price cannot be negative."
+msgstr "Price cannot be negative."
+
+msgid "Price must be a valid number."
+msgstr "Price must be a valid number."
+
+msgid "Price: High to Low"
+msgstr "Price: High to Low"
+
+msgid "Price: Low to High"
+msgstr "Price: Low to High"
+
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+msgid "Professional Name"
+msgstr "Professional Name"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Profile & Schedule"
+msgstr "Profile & Schedule"
+
+msgid "Rating"
+msgstr "Rating"
+
+msgid "Recent Bookings"
+msgstr "Recent Bookings"
+
+msgid "Recent Payments"
+msgstr "Recent Payments"
+
+msgid "Refunded"
+msgstr "Refunded"
+
+msgid "Register"
+msgstr "Kayıt Ol"
+
+msgid "Register as Customer"
+msgstr "Register as Customer"
+
+msgid "Register as Healer"
+msgstr "Register as Healer"
+
+msgid "Register as a Customer"
+msgstr "Register as a Customer"
+
+msgid "Register as a Healer"
+msgstr "Register as a Healer"
+
+msgid "Reject"
+msgstr "Reject"
+
+msgid "Reject this booking?"
+msgstr "Reject this booking?"
+
+msgid "Released"
+msgstr "Released"
+
+msgid "Reply"
+msgstr "Reply"
+
+msgid "Reply sent successfully."
+msgstr "Reply sent successfully."
+
+msgid "Return to Home"
+msgstr "Return to Home"
+
+msgid "Reviews"
+msgstr "Reviews"
+
+msgid "SWIFT/BIC Code"
+msgstr "SWIFT/BIC Code"
+
+msgid "Saturday"
+msgstr "Saturday"
+
+msgid "Save"
+msgstr "Kaydet"
+
+msgid "Save Changes"
+msgstr "Save Changes"
+
+msgid "Save Schedule"
+msgstr "Save Schedule"
+
+msgid "Save Settings"
+msgstr "Save Settings"
+
+msgid "Schedule"
+msgstr "Program"
+
+msgid "Schedule updated successfully."
+msgstr "Schedule updated successfully."
+
+msgid "Search"
+msgstr "Ara"
+
+msgid "Search healers..."
+msgstr "Search healers..."
+
+msgid "Select Currency"
+msgstr "Select Currency"
+
+msgid "Select Language"
+msgstr "Select Language"
+
+msgid "Select Payment Method"
+msgstr "Select Payment Method"
+
+msgid "Select Region"
+msgstr "Select Region"
+
+msgid "Select service..."
+msgstr "Select service..."
+
+msgid "Send"
+msgstr "Gönder"
+
+msgid "Service"
+msgstr "Service"
+
+msgid "Service \"%(name)s\" added successfully."
+msgstr "Service \"%(name)s\" added successfully."
+
+msgid "Service Name"
+msgstr "Service Name"
+
+msgid "Service deleted successfully."
+msgstr "Service deleted successfully."
+
+msgid "Service name is required."
+msgstr "Service name is required."
+
+msgid "Services"
+msgstr "Hizmetler"
+
+msgid "Session Details"
+msgstr "Session Details"
+
+msgid "Session Price"
+msgstr "Session Price"
+
+msgid "Session Price (IDR)"
+msgstr "Session Price (IDR)"
+
+msgid "Session Type"
+msgstr "Session Type"
+
+msgid "Set practice hours"
+msgstr "Set practice hours"
+
+msgid "Set up your accepted payment methods"
+msgstr "Set up your accepted payment methods"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Show"
+msgstr "Show"
+
+msgid "Sort by"
+msgstr "Sort by"
+
+msgid "Specialities"
+msgstr "Specialities"
+
+msgid "Specializations"
+msgstr "Specializations"
+
+msgid "Start Work"
+msgstr "Start Work"
+
+msgid "Start a conversation..."
+msgstr "Start a conversation..."
+
+msgid "Start chatting with a healer to ask about services."
+msgstr "Start chatting with a healer to ask about services."
+
+msgid "Start exploring healers and make your first booking."
+msgstr "Start exploring healers and make your first booking."
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Status History"
+msgstr "Status History"
+
+msgid "Stay Updated"
+msgstr "Stay Updated"
+
+msgid "Submit"
+msgstr "Submit"
+
+msgid "Subscribe"
+msgstr "Subscribe"
+
+msgid "Success"
+msgstr "Başarılı"
+
+msgid "Successful"
+msgstr "Successful"
+
+msgid "Sunday"
+msgstr "Sunday"
+
+msgid "Support"
+msgstr "Support"
+
+msgid "Tell us about your experience and expertise..."
+msgstr "Tell us about your experience and expertise..."
+
+msgid "Terms of Service"
+msgstr "Terms of Service"
+
+msgid "The page you are looking for does not exist."
+msgstr "The page you are looking for does not exist."
+
+msgid "There is broken service data. Please contact the administrator."
+msgstr "There is broken service data. Please contact the administrator."
+
+msgid "This booking cannot be paid."
+msgstr "This booking cannot be paid."
+
+msgid "This booking has already been processed."
+msgstr "This booking has already been processed."
+
+msgid "Thursday"
+msgstr "Thursday"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Toggle"
+msgstr "Toggle"
+
+msgid "Total"
+msgstr "Toplam"
+
+msgid "Total Bookings"
+msgstr "Total Bookings"
+
+msgid "Total Payment"
+msgstr "Total Payment"
+
+msgid "Total Payments"
+msgstr "Total Payments"
+
+msgid "Total Revenue"
+msgstr "Total Revenue"
+
+msgid "Track"
+msgstr "Track"
+
+msgid "Track Booking"
+msgstr "Track Booking"
+
+msgid "Try adjusting your search or filters."
+msgstr "Try adjusting your search or filters."
+
+msgid "Tuesday"
+msgstr "Tuesday"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Type a message..."
+msgstr "Type a message..."
+
+msgid "Unknown action."
+msgstr "Unknown action."
+
+msgid "Username"
+msgstr "Kullanıcı Adı"
+
+msgid "View"
+msgstr "View"
+
+msgid "View All Chats"
+msgstr "View All Chats"
+
+msgid "View Details"
+msgstr "View Details"
+
+msgid "View Profile"
+msgstr "View Profile"
+
+msgid "Waiting"
+msgstr "Waiting"
+
+msgid "Waiting for healer confirmation. Your payment is safe in escrow."
+msgstr "Waiting for healer confirmation. Your payment is safe in escrow."
+
+msgid "Waiting for payment confirmation..."
+msgstr "Waiting for payment confirmation..."
+
+msgid "Warning"
+msgstr "Warning"
+
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "Weekly Schedule"
+msgstr "Weekly Schedule"
+
+msgid "Welcome Back"
+msgstr "Tekrar Hoş Geldiniz"
+
+msgid "Welcome, %(name)s!"
+msgstr "Welcome, %(name)s!"
+
+msgid "Welcome, %(name)s! Your healer profile has been created."
+msgstr "Welcome, %(name)s! Your healer profile has been created."
+
+msgid "Work completed. Funds have been released to healer."
+msgstr "Work completed. Funds have been released to healer."
+
+msgid "Work started for booking %(code)s."
+msgstr "Work started for booking %(code)s."
+
+msgid "Years"
+msgstr "Years"
+
+msgid "Years of Experience"
+msgstr "Years of Experience"
+
+msgid "Yes"
+msgstr "Evet"
+
+msgid "You don't have access to the healer dashboard."
+msgstr "You don't have access to the healer dashboard."
+
+msgid "You don't have access to this dashboard."
+msgstr "You don't have access to this dashboard."
+
+msgid "You don't have access."
+msgstr "You don't have access."
+
+msgid "You have been logged out."
+msgstr "You have been logged out."
+
+msgid "You:"
+msgstr "You:"
+
+msgid "Your email"
+msgstr "Your email"
+
+msgid "Your phone number"
+msgstr "Your phone number"
+
+msgid "ago"
+msgstr "ago"
+
+msgid "by"
+msgstr "by"
+
+msgid "day"
+msgstr "day"
+
+msgid "days"
+msgstr "days"
+
+msgid "days ago"
+msgstr "days ago"
+
+msgid "for international transfers"
+msgstr "for international transfers"
+
+msgid "hour"
+msgstr "hour"
+
+msgid "hours"
+msgstr "hours"
+
+msgid "hours ago"
+msgstr "hours ago"
+
+msgid "just now"
+msgstr "just now"
+
+msgid "messages"
+msgstr "messages"
+
+msgid "min"
+msgstr "min"
+
+msgid "minute"
+msgstr "minute"
+
+msgid "minutes"
+msgstr "dakika"
+
+msgid "minutes ago"
+msgstr "minutes ago"
+
+msgid "month"
+msgstr "month"
+
+msgid "months"
+msgstr "months"
+
+msgid "months ago"
+msgstr "months ago"
+
+msgid "of"
+msgstr "of"
+
+msgid "reviews"
+msgstr "reviews"
+
+msgid "second"
+msgstr "second"
+
+msgid "seconds"
+msgstr "seconds"
+
+msgid "service(s)"
+msgstr "service(s)"
+
+msgid "session(s)"
+msgstr "session(s)"
+
+msgid "to process Visa/Mastercard payments"
+msgstr "to process Visa/Mastercard payments"
+
+msgid "weeks ago"
+msgstr "weeks ago"
+
+msgid "year"
+msgstr "year"
+
+msgid "years"
+msgstr "yıl"
+
+msgid "years ago"
+msgstr "years ago"
+
+msgid "years experience"
+msgstr "years experience"
+
+msgid "yr"
+msgstr "yr"

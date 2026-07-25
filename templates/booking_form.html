@@ -60,7 +60,7 @@
                                     <input type="text" name="customer_phone" class="form-control" required placeholder="{% trans 'Your phone number' %}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Email</label>
+                                    <label>{% trans "Email" %}</label>
                                     <input type="email" name="customer_email" class="form-control" value="{{ user.email|default:'' }}" placeholder="{% trans 'Your email' %}">
                                 </div>
                             </div>
