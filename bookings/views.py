@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import gettext as _
 from django.utils import timezone
+from datetime import datetime
 import json
 from .models import Booking, BookingTimeSlot, BookingStatusLog
 from healers.models import Healer, HealerService
@@ -16,6 +17,7 @@ def create_booking(request, healer_id):
     healer = get_object_or_404(Healer.objects.select_related('category'), id=healer_id)
     services = healer.services.filter(is_active=True)
     currencies = get_all_currencies()
+    today = timezone.now().date()
 
     if request.method == 'POST':
         customer_name = request.POST.get('customer_name', '').strip()
@@ -34,6 +36,19 @@ def create_booking(request, healer_id):
                 'services': services,
                 'currencies': currencies,
                 'form_data': request.POST,
+                'today': today,
+            })
+
+        try:
+            parsed_date = datetime.strptime(booking_date, '%Y-%m-%d').date()
+        except (ValueError, TypeError):
+            messages.error(request, _('Format tanggal tidak valid. Gunakan format YYYY-MM-DD.'))
+            return render(request, 'booking_form.html', {
+                'healer': healer,
+                'services': services,
+                'currencies': currencies,
+                'form_data': request.POST,
+                'today': today,
             })
 
         selected_service = None
@@ -63,7 +78,7 @@ def create_booking(request, healer_id):
             customer_phone=customer_phone,
             service_type=service_name,
             service_price_idr=service_price,
-            booking_date=booking_date,
+            booking_date=parsed_date,
             booking_time=booking_time,
             notes=notes,
             total_price_idr=service_price,
@@ -87,6 +102,7 @@ def create_booking(request, healer_id):
         'healer': healer,
         'services': services,
         'currencies': currencies,
+        'today': today,
     })
 
 

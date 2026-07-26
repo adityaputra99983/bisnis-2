@@ -60,8 +60,8 @@
                                 <h4><i class="fas fa-globe"></i> {% trans "Currency" %}</h4>
                                 <div class="currency-grid">
                                     {% for curr in currencies %}
-                                    <label class="currency-option {% if forloop.first %}selected{% endif %}">
-                                        <input type="radio" name="currency" value="{{ curr.code }}" {% if forloop.first %}checked{% endif %}>
+                                    <label class="currency-option">
+                                        <input type="radio" name="currency" value="{{ curr.code }}" data-rate="{{ curr.rate_to_idr }}" data-symbol="{{ curr.symbol }}" {% if forloop.first %}checked{% endif %}>
                                         <div class="currency-box">
                                             <div class="currency-symbol">{{ curr.symbol }}</div>
                                             <div class="currency-code">{{ curr.code }}</div>
@@ -91,7 +91,7 @@
                             <div class="payment-total-section">
                                 <div class="payment-total-row">
                                     <span>{% trans "Total Payment" %}</span>
-                                    <strong>{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong>
+                                    <strong id="paymentTotalAmount" data-price-idr="{{ booking.total_price_idr|floatformat:0 }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-gold btn-lg btn-block">
@@ -105,4 +105,35 @@
         </div>
     </div>
 </section>
+<script>
+(function() {
+    var NO_DECIMAL = ['IDR','JPY','KRW','VND','INR','RUB','CNY','TWD','TRY','PKR','BDT','UGX','TZS','UZS','MMK','LAK','MNT','KZT','KHR','AFN','LKR','KES','NGN','EGP','MXN','ZAR','ISK','BGN','RON','HUF','SEK','NOK','DKK','UAH','BYN','OMR','KWD','BHD','QAR','AED'];
+    var totalEl = document.getElementById('paymentTotalAmount');
+    if (!totalEl) return;
+    var totalIdr = parseFloat(totalEl.getAttribute('data-price-idr'));
+    if (isNaN(totalIdr)) return;
+
+    var summaryEl = document.querySelector('.summary-row.total strong[data-price-idr]');
+
+    function convertAndFormat(amount, rate, symbol, code) {
+        var converted = amount * rate;
+        var decimals = NO_DECIMAL.indexOf(code) !== -1 ? 0 : 2;
+        var val = decimals === 0 ? Math.round(converted).toLocaleString('en-US') :
+            converted.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+        return symbol + ' ' + val;
+    }
+
+    document.querySelectorAll('input[name="currency"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            var rate = parseFloat(this.getAttribute('data-rate'));
+            var symbol = this.getAttribute('data-symbol');
+            var code = this.value;
+            if (isNaN(rate)) return;
+            var formatted = convertAndFormat(totalIdr, rate, symbol, code);
+            totalEl.textContent = formatted;
+            if (summaryEl) summaryEl.textContent = formatted;
+        });
+    });
+})();
+</script>
 {% endblock %}

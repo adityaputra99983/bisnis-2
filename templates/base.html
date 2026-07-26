@@ -367,14 +367,15 @@
             </a>
 
             <nav class="nav-links">
-                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">{% trans "Home" %}</a>
-                <a href="{% url 'healer_list' %}" class="nav-link {% if request.resolver_match.url_name == 'healer_list' %}active{% endif %}">{% trans "Find Healers" %}</a>
-                <a href="{% url 'center_list' %}" class="nav-link {% if request.resolver_match.url_name == 'center_list' %}active{% endif %}">{% trans "Centers" %}</a>
-                <a href="{% url 'speciality_list' %}" class="nav-link {% if request.resolver_match.url_name == 'speciality_list' %}active{% endif %}">{% trans "Specialities" %}</a>
-                <a href="{% url 'booking_track' %}" class="nav-link">{% trans "Consultation" %}</a>
+                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i class="fas fa-house"></i> {% trans "Home" %}</a>
+                <a href="{% url 'healer_list' %}" class="nav-link {% if request.resolver_match.url_name == 'healer_list' or request.resolver_match.url_name == 'healer_detail' %}active{% endif %}"><i class="fas fa-search"></i> {% trans "Find Healer" %}</a>
+                <a href="{% url 'center_list' %}" class="nav-link {% if request.resolver_match.url_name == 'center_list' or request.resolver_match.url_name == 'center_detail' %}active{% endif %}"><i class="fas fa-spa"></i> {% trans "Healing Centers" %}</a>
+                <a href="{% url 'speciality_list' %}" class="nav-link {% if request.resolver_match.url_name == 'speciality_list' %}active{% endif %}"><i class="fas fa-star-of-life"></i> {% trans "Specialities" %}</a>
+                <a href="{% url 'booking_track' %}" class="nav-link {% if request.resolver_match.url_name == 'booking_track' %}active{% endif %}"><i class="fas fa-comment-dots"></i> {% trans "Consult" %}</a>
             </nav>
 
             <div class="nav-right">
+
                 {% get_current_language as CURRENT_LANGUAGE %}
                 {% get_available_languages as AVAILABLE_LANGUAGES %}
                 {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}

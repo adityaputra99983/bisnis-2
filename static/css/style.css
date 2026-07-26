@@ -1482,7 +1482,6 @@ select.form-control { cursor: pointer; appearance: none; }
   border: 1px solid var(--border); background: var(--bg);
   transition: all 0.25s; text-align: center;
 }
-.currency-option.selected .currency-box,
 .currency-option input:checked + .currency-box {
   border-color: var(--gold); background: var(--gold-glow);
   box-shadow: 0 0 0 2px var(--gold-glow);
