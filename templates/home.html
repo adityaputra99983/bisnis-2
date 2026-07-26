@@ -23,9 +23,9 @@
         </div>
         <div class="popular-tags">
             <span class="popular-label">{% trans "Popular:" %}</span>
-            <a href="{% url 'healer_list' %}?q=Reiki" class="tag-pill">Reiki Healing</a>
-            <a href="{% url 'healer_list' %}?q=Chakra" class="tag-pill">Chakra Balancing</a>
-            <a href="{% url 'healer_list' %}?q=Sound" class="tag-pill">Sound Healing</a>
+            <a href="{% url 'healer_list' %}?q=Reiki" class="tag-pill">{% trans "Reiki Healing" %}</a>
+            <a href="{% url 'healer_list' %}?q=Chakra" class="tag-pill">{% trans "Chakra Balancing" %}</a>
+            <a href="{% url 'healer_list' %}?q=Sound" class="tag-pill">{% trans "Sound Healing" %}</a>
         </div>
     </div>
 </section>
@@ -169,7 +169,11 @@
                         {% endfor %}
                     </div>
                     <div class="center-divider"></div>
-                    <div class="center-price">{{ center.price_range|default:"Rp 300.000 — Rp 1.500.000" }}</div>
+                    <div class="center-price">
+                        {% if center.min_price_idr %}{% trans "From" %} <span class="center-price-min" data-price-idr="{{ center.min_price_idr|floatformat:0 }}">{{ center.min_price_idr|price_with_original:LANGUAGE_CODE }}</span>{% endif %}
+                        {% if center.max_price_idr and center.max_price_idr > center.min_price_idr %} — <span class="center-price-max" data-price-idr="{{ center.max_price_idr|floatformat:0 }}">{{ center.max_price_idr|price_with_original:LANGUAGE_CODE }}</span>{% endif %}
+                        {% if not center.min_price_idr and not center.max_price_idr %}{{ center.price_range|default:_("Price on request") }}{% endif %}
+                    </div>
                     <div class="center-actions">
                         <a href="{% url 'center_detail' center.slug %}" class="btn-book">{% trans "Book Now" %}</a>
                         <a href="{% url 'center_detail' center.slug %}" class="btn-profile">{% trans "Details" %}</a>

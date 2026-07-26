@@ -13,6 +13,7 @@ from payments.services import convert_currency, format_currency, get_all_currenc
 from payments.models import Payment, TransactionLog
 
 
+@login_required
 def create_booking(request, healer_id):
     healer = get_object_or_404(Healer.objects.select_related('category'), id=healer_id)
     services = healer.services.filter(is_active=True)

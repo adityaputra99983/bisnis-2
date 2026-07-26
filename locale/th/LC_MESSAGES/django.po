@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "รูเปียห์อินโดนีเซีย"
+
+msgid "US Dollar"
+msgstr "ดอลลาร์สหรัฐ"
+
+msgid "Euro"
+msgstr "ยูโร"
+
+msgid "British Pound"
+msgstr "ปอนด์สเตอร์ลิง"
+
+msgid "Chinese Yuan"
+msgstr "หยวนจีน"
+
+msgid "Japanese Yen"
+msgstr "เยนญี่ปุ่น"
+
+msgid "South Korean Won"
+msgstr "วอนเกาหลี"
+
+msgid "New Taiwan Dollar"
+msgstr "ดอลลาร์ไต้หวันใหม่"
+
+msgid "Singapore Dollar"
+msgstr "ดอลลาร์สิงคโปร์"
+
+msgid "Thai Baht"
+msgstr "บาทไทย"
+
+msgid "Vietnamese Dong"
+msgstr "ดองเวียดนาม"
+
+msgid "Indian Rupee"
+msgstr "รูปีอินเดีย"
+
+msgid "Russian Ruble"
+msgstr "รูเบิลรัสเซีย"
+
+msgid "Saudi Riyal"
+msgstr "ริยัลซาอุดี"
+
+msgid "Turkish Lira"
+msgstr "ลีราตุรกี"
+
+msgid "Brazilian Real"
+msgstr "เรียลบราซิล"
+
+msgid "Australian Dollar"
+msgstr "ดอลลาร์ออสเตรเลีย"
+
+msgid "Canadian Dollar"
+msgstr "ดอลลาร์แคนาดา"
+
+msgid "Malaysian Ringgit"
+msgstr "ริงกิตมาเลเซีย"
+
+msgid "Philippine Peso"
+msgstr "เปโซฟิลิปปินส์"
+
+msgid "New Zealand Dollar"
+msgstr "ดอลลาร์นิวซีแลนด์"
+
+msgid "Hong Kong Dollar"
+msgstr "ดอลลาร์ฮ่องกง"
+
+msgid "Polish Zloty"
+msgstr "ซโลตีโปแลนด์"
+
+msgid "Reiki Healing"
+msgstr "การรักษาเรกิ"
+
+msgid "Chakra Balancing"
+msgstr "การปรับสมดุลจักรา"
+
+msgid "Sound Healing"
+msgstr "การรักษาด้วยเสียง"
+
+msgid "Login to Book"
+msgstr "เข้าสู่ระบบเพื่อจอง"

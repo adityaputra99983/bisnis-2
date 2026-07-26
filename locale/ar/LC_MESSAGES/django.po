@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "روبية إندونيسية"
+
+msgid "US Dollar"
+msgstr "دولار أمريكي"
+
+msgid "Euro"
+msgstr "يورو"
+
+msgid "British Pound"
+msgstr "جنيه إسترليني"
+
+msgid "Chinese Yuan"
+msgstr "يوان صيني"
+
+msgid "Japanese Yen"
+msgstr "ين ياباني"
+
+msgid "South Korean Won"
+msgstr "وون كوري جنوبي"
+
+msgid "New Taiwan Dollar"
+msgstr "دولار تايواني جديد"
+
+msgid "Singapore Dollar"
+msgstr "دولار سنغافوري"
+
+msgid "Thai Baht"
+msgstr "بات تايلاندي"
+
+msgid "Vietnamese Dong"
+msgstr "دونغ فيتنامي"
+
+msgid "Indian Rupee"
+msgstr "روبية هندية"
+
+msgid "Russian Ruble"
+msgstr "روبل روسي"
+
+msgid "Saudi Riyal"
+msgstr "ريال سعودي"
+
+msgid "Turkish Lira"
+msgstr "ليرة تركية"
+
+msgid "Brazilian Real"
+msgstr "ريال برازيلي"
+
+msgid "Australian Dollar"
+msgstr "دولار أسترالي"
+
+msgid "Canadian Dollar"
+msgstr "دولار كندي"
+
+msgid "Malaysian Ringgit"
+msgstr "رينغيت ماليزي"
+
+msgid "Philippine Peso"
+msgstr "بيزو فلبيني"
+
+msgid "New Zealand Dollar"
+msgstr "دولار نيوزيلندي"
+
+msgid "Hong Kong Dollar"
+msgstr "دولار هونغ كونغ"
+
+msgid "Polish Zloty"
+msgstr "زولتي بولندي"
+
+msgid "Reiki Healing"
+msgstr "علاج ريكي"
+
+msgid "Chakra Balancing"
+msgstr "توازن الشakra"
+
+msgid "Sound Healing"
+msgstr "علاج الصوت"
+
+msgid "Login to Book"
+msgstr "تسجيل الدخول للحجز"

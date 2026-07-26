@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{% block title %}{% trans "Bali Healer — Discover · Book · Heal" %}{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/lotus.svg' %}">
+    <link rel="shortcut icon" type="image/svg+xml" href="{% static 'images/lotus.svg' %}">
     <meta name="description" content="{% trans 'Find and book trusted healing experiences across Bali. Connect with verified healers for spiritual wellness and ancient Balinese healing traditions.' %}">
     <meta name="keywords" content="{% trans 'Bali Healer, healing, spiritual healing, Reiki, chakra healing, sound healing, Balinese healing, meditation, wellness, Bali' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -391,117 +393,117 @@
                         <div class="currency-header"><i class="fas fa-coins"></i> {% trans "Select Currency" %}</div>
                         <div class="currency-item active" data-currency="IDR" data-symbol="Rp" data-flag="🇮🇩" data-rate="1">
                             <span class="cur-flag">🇮🇩</span>
-                            <div class="cur-info"><div class="cur-code">IDR</div><div class="cur-name">Indonesian Rupiah</div></div>
+                            <div class="cur-info"><div class="cur-code">IDR</div><div class="cur-name">{% trans "Indonesian Rupiah" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="USD" data-symbol="$" data-flag="🇺🇸" data-rate="0.000063">
                             <span class="cur-flag">🇺🇸</span>
-                            <div class="cur-info"><div class="cur-code">USD</div><div class="cur-name">US Dollar</div></div>
+                            <div class="cur-info"><div class="cur-code">USD</div><div class="cur-name">{% trans "US Dollar" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="EUR" data-symbol="€" data-flag="🇪🇺" data-rate="0.000058">
                             <span class="cur-flag">🇪🇺</span>
-                            <div class="cur-info"><div class="cur-code">EUR</div><div class="cur-name">Euro</div></div>
+                            <div class="cur-info"><div class="cur-code">EUR</div><div class="cur-name">{% trans "Euro" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="GBP" data-symbol="£" data-flag="🇬🇧" data-rate="0.000050">
                             <span class="cur-flag">🇬🇧</span>
-                            <div class="cur-info"><div class="cur-code">GBP</div><div class="cur-name">British Pound</div></div>
+                            <div class="cur-info"><div class="cur-code">GBP</div><div class="cur-name">{% trans "British Pound" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="CNY" data-symbol="¥" data-flag="🇨🇳" data-rate="0.00046">
                             <span class="cur-flag">🇨🇳</span>
-                            <div class="cur-info"><div class="cur-code">CNY</div><div class="cur-name">Chinese Yuan</div></div>
+                            <div class="cur-info"><div class="cur-code">CNY</div><div class="cur-name">{% trans "Chinese Yuan" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="JPY" data-symbol="¥" data-flag="🇯🇵" data-rate="0.0096">
                             <span class="cur-flag">🇯🇵</span>
-                            <div class="cur-info"><div class="cur-code">JPY</div><div class="cur-name">Japanese Yen</div></div>
+                            <div class="cur-info"><div class="cur-code">JPY</div><div class="cur-name">{% trans "Japanese Yen" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="KRW" data-symbol="₩" data-flag="🇰🇷" data-rate="0.083">
                             <span class="cur-flag">🇰🇷</span>
-                            <div class="cur-info"><div class="cur-code">KRW</div><div class="cur-name">South Korean Won</div></div>
+                            <div class="cur-info"><div class="cur-code">KRW</div><div class="cur-name">{% trans "South Korean Won" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="TWD" data-symbol="NT$" data-flag="🇹🇼" data-rate="0.0020">
                             <span class="cur-flag">🇹🇼</span>
-                            <div class="cur-info"><div class="cur-code">TWD</div><div class="cur-name">New Taiwan Dollar</div></div>
+                            <div class="cur-info"><div class="cur-code">TWD</div><div class="cur-name">{% trans "New Taiwan Dollar" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="SGD" data-symbol="S$" data-flag="🇸🇬" data-rate="0.000085">
                             <span class="cur-flag">🇸🇬</span>
-                            <div class="cur-info"><div class="cur-code">SGD</div><div class="cur-name">Singapore Dollar</div></div>
+                            <div class="cur-info"><div class="cur-code">SGD</div><div class="cur-name">{% trans "Singapore Dollar" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="THB" data-symbol="฿" data-flag="🇹🇭" data-rate="0.0022">
                             <span class="cur-flag">🇹🇭</span>
-                            <div class="cur-info"><div class="cur-code">THB</div><div class="cur-name">Thai Baht</div></div>
+                            <div class="cur-info"><div class="cur-code">THB</div><div class="cur-name">{% trans "Thai Baht" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="VND" data-symbol="₫" data-flag="🇻🇳" data-rate="1.56">
                             <span class="cur-flag">🇻🇳</span>
-                            <div class="cur-info"><div class="cur-code">VND</div><div class="cur-name">Vietnamese Dong</div></div>
+                            <div class="cur-info"><div class="cur-code">VND</div><div class="cur-name">{% trans "Vietnamese Dong" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="INR" data-symbol="₹" data-flag="🇮🇳" data-rate="0.0053">
                             <span class="cur-flag">🇮🇳</span>
-                            <div class="cur-info"><div class="cur-code">INR</div><div class="cur-name">Indian Rupee</div></div>
+                            <div class="cur-info"><div class="cur-code">INR</div><div class="cur-name">{% trans "Indian Rupee" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="RUB" data-symbol="₽" data-flag="🇷🇺" data-rate="0.0058">
                             <span class="cur-flag">🇷🇺</span>
-                            <div class="cur-info"><div class="cur-code">RUB</div><div class="cur-name">Russian Ruble</div></div>
+                            <div class="cur-info"><div class="cur-code">RUB</div><div class="cur-name">{% trans "Russian Ruble" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="SAR" data-symbol="﷼" data-flag="🇸🇦" data-rate="0.00024">
                             <span class="cur-flag">🇸🇦</span>
-                            <div class="cur-info"><div class="cur-code">SAR</div><div class="cur-name">Saudi Riyal</div></div>
+                            <div class="cur-info"><div class="cur-code">SAR</div><div class="cur-name">{% trans "Saudi Riyal" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="TRY" data-symbol="₺" data-flag="🇹🇷" data-rate="0.0021">
                             <span class="cur-flag">🇹🇷</span>
-                            <div class="cur-info"><div class="cur-code">TRY</div><div class="cur-name">Turkish Lira</div></div>
+                            <div class="cur-info"><div class="cur-code">TRY</div><div class="cur-name">{% trans "Turkish Lira" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="BRL" data-symbol="R$" data-flag="🇧🇷" data-rate="0.00031">
                             <span class="cur-flag">🇧🇷</span>
-                            <div class="cur-info"><div class="cur-code">BRL</div><div class="cur-name">Brazilian Real</div></div>
+                            <div class="cur-info"><div class="cur-code">BRL</div><div class="cur-name">{% trans "Brazilian Real" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="AUD" data-symbol="A$" data-flag="🇦🇺" data-rate="0.000096">
                             <span class="cur-flag">🇦🇺</span>
-                            <div class="cur-info"><div class="cur-code">AUD</div><div class="cur-name">Australian Dollar</div></div>
+                            <div class="cur-info"><div class="cur-code">AUD</div><div class="cur-name">{% trans "Australian Dollar" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="CAD" data-symbol="C$" data-flag="🇨🇦" data-rate="0.000086">
                             <span class="cur-flag">🇨🇦</span>
-                            <div class="cur-info"><div class="cur-code">CAD</div><div class="cur-name">Canadian Dollar</div></div>
+                            <div class="cur-info"><div class="cur-code">CAD</div><div class="cur-name">{% trans "Canadian Dollar" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="MYR" data-symbol="RM" data-flag="🇲🇾" data-rate="0.00029">
                             <span class="cur-flag">🇲🇾</span>
-                            <div class="cur-info"><div class="cur-code">MYR</div><div class="cur-name">Malaysian Ringgit</div></div>
+                            <div class="cur-info"><div class="cur-code">MYR</div><div class="cur-name">{% trans "Malaysian Ringgit" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="PHP" data-symbol="₱" data-flag="🇵🇭" data-rate="0.0035">
                             <span class="cur-flag">🇵🇭</span>
-                            <div class="cur-info"><div class="cur-code">PHP</div><div class="cur-name">Philippine Peso</div></div>
+                            <div class="cur-info"><div class="cur-code">PHP</div><div class="cur-name">{% trans "Philippine Peso" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="NZD" data-symbol="NZ$" data-flag="🇳🇿" data-rate="0.00010">
                             <span class="cur-flag">🇳🇿</span>
-                            <div class="cur-info"><div class="cur-code">NZD</div><div class="cur-name">New Zealand Dollar</div></div>
+                            <div class="cur-info"><div class="cur-code">NZD</div><div class="cur-name">{% trans "New Zealand Dollar" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="HKD" data-symbol="HK$" data-flag="🇭🇰" data-rate="0.00049">
                             <span class="cur-flag">🇭🇰</span>
-                            <div class="cur-info"><div class="cur-code">HKD</div><div class="cur-name">Hong Kong Dollar</div></div>
+                            <div class="cur-info"><div class="cur-code">HKD</div><div class="cur-name">{% trans "Hong Kong Dollar" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                         <div class="currency-item" data-currency="PLN" data-symbol="zł" data-flag="🇵🇱" data-rate="0.00025">
                             <span class="cur-flag">🇵🇱</span>
-                            <div class="cur-info"><div class="cur-code">PLN</div><div class="cur-name">Polish Zloty</div></div>
+                            <div class="cur-info"><div class="cur-code">PLN</div><div class="cur-name">{% trans "Polish Zloty" %}</div></div>
                             <i class="fas fa-check cur-check"></i>
                         </div>
                     </div>

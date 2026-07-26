@@ -6,7 +6,7 @@
 {% block content %}
 <div class="page-header">
     <div class="container">
-        <a href="{% url 'booking_detail' booking.booking_code %}" class="back-link"><i class="fas fa-arrow-left"></i> Booking {{ booking.booking_code }}</a>
+        <a href="{% url 'booking_detail' booking.booking_code %}" class="back-link"><i class="fas fa-arrow-left"></i> {% trans "Booking" %} {{ booking.booking_code }}</a>
         <div style="position:relative;display:inline-block">
             <h1>{% trans "Payment" %} <em>{% trans "Booking" %}</em></h1>
             <div style="height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:8px;opacity:0.3"></div>

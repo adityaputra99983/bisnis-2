@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "Rupia indonésia"
+
+msgid "US Dollar"
+msgstr "Dólar americano"
+
+msgid "Euro"
+msgstr "Euro"
+
+msgid "British Pound"
+msgstr "Libra esterlina"
+
+msgid "Chinese Yuan"
+msgstr "Yuan chinês"
+
+msgid "Japanese Yen"
+msgstr "Iene japonês"
+
+msgid "South Korean Won"
+msgstr "Won sul-coreano"
+
+msgid "New Taiwan Dollar"
+msgstr "Dólar taiwanês"
+
+msgid "Singapore Dollar"
+msgstr "Dólar de Singapura"
+
+msgid "Thai Baht"
+msgstr "Baht tailandês"
+
+msgid "Vietnamese Dong"
+msgstr "Dong vietnamita"
+
+msgid "Indian Rupee"
+msgstr "Rupia indiana"
+
+msgid "Russian Ruble"
+msgstr "Rublo russo"
+
+msgid "Saudi Riyal"
+msgstr "Rial saudita"
+
+msgid "Turkish Lira"
+msgstr "Lira turca"
+
+msgid "Brazilian Real"
+msgstr "Real brasileiro"
+
+msgid "Australian Dollar"
+msgstr "Dólar australiano"
+
+msgid "Canadian Dollar"
+msgstr "Dólar canadense"
+
+msgid "Malaysian Ringgit"
+msgstr "Ringgit malaio"
+
+msgid "Philippine Peso"
+msgstr "Peso filipino"
+
+msgid "New Zealand Dollar"
+msgstr "Dólar neozelandês"
+
+msgid "Hong Kong Dollar"
+msgstr "Dólar de Hong Kong"
+
+msgid "Polish Zloty"
+msgstr "Zloty polonês"
+
+msgid "Reiki Healing"
+msgstr "Cura Reiki"
+
+msgid "Chakra Balancing"
+msgstr "Equilíbrio dos chakras"
+
+msgid "Sound Healing"
+msgstr "Cura pelo som"
+
+msgid "Login to Book"
+msgstr "Entrar para reservar"

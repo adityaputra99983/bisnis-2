@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "Rupiah Indonesia"
+
+msgid "US Dollar"
+msgstr "Đô la Mỹ"
+
+msgid "Euro"
+msgstr "Euro"
+
+msgid "British Pound"
+msgstr "Bảng Anh"
+
+msgid "Chinese Yuan"
+msgstr "Nhân dân tệ"
+
+msgid "Japanese Yen"
+msgstr "Yên Nhật"
+
+msgid "South Korean Won"
+msgstr "Won Hàn Quốc"
+
+msgid "New Taiwan Dollar"
+msgstr "Đô la Đài Loan mới"
+
+msgid "Singapore Dollar"
+msgstr "Đô la Singapore"
+
+msgid "Thai Baht"
+msgstr "Baht Thái Lan"
+
+msgid "Vietnamese Dong"
+msgstr "Đồng Việt Nam"
+
+msgid "Indian Rupee"
+msgstr "Rupee Ấn Độ"
+
+msgid "Russian Ruble"
+msgstr "Ruble Nga"
+
+msgid "Saudi Riyal"
+msgstr "Riyal Ả Rập Xê Út"
+
+msgid "Turkish Lira"
+msgstr "Lira Thổ Nhĩ Kỳ"
+
+msgid "Brazilian Real"
+msgstr "Real Brazil"
+
+msgid "Australian Dollar"
+msgstr "Đô la Úc"
+
+msgid "Canadian Dollar"
+msgstr "Đô la Canada"
+
+msgid "Malaysian Ringgit"
+msgstr "Ringgit Malaysia"
+
+msgid "Philippine Peso"
+msgstr "Peso Philippines"
+
+msgid "New Zealand Dollar"
+msgstr "Đô la New Zealand"
+
+msgid "Hong Kong Dollar"
+msgstr "Đô la Hồng Kông"
+
+msgid "Polish Zloty"
+msgstr "Zloty Ba Lan"
+
+msgid "Reiki Healing"
+msgstr "Chữa lành Reiki"
+
+msgid "Chakra Balancing"
+msgstr "Cân bằng luân xa"
+
+msgid "Sound Healing"
+msgstr "Chữa lành bằng âm thanh"
+
+msgid "Login to Book"
+msgstr "Đăng nhập để đặt chỗ"

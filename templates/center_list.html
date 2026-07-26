@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load currency_tags %}
 {% block title %}{% trans "Healing Centers" %} — Bali Healer{% endblock %}
 {% block content %}
 <div class="page-header">
@@ -46,7 +47,11 @@
                     </div>
                     <div class="center-tags">{% for spec in center.specializations|truncatewords:2 %}<span class="healer-tag">{{ spec }}</span>{% endfor %}</div>
                     <div class="center-divider"></div>
-                    <div class="center-price">{{ center.price_range|default:"Rp 300.000 — Rp 1.500.000" }}</div>
+                    <div class="center-price">
+                        {% if center.min_price_idr %}{% trans "From" %} <span data-price-idr="{{ center.min_price_idr|floatformat:0 }}">{{ center.min_price_idr|price_with_original:LANGUAGE_CODE }}</span>{% endif %}
+                        {% if center.max_price_idr and center.max_price_idr > center.min_price_idr %} — <span data-price-idr="{{ center.max_price_idr|floatformat:0 }}">{{ center.max_price_idr|price_with_original:LANGUAGE_CODE }}</span>{% endif %}
+                        {% if not center.min_price_idr and not center.max_price_idr %}{{ center.price_range|default:_("Price on request") }}{% endif %}
+                    </div>
                     <div class="center-actions">
                         <a href="{% url 'center_detail' center.slug %}" class="btn-book">{% trans "Book Now" %}</a>
                         <a href="{% url 'center_detail' center.slug %}" class="btn-profile">{% trans "Details" %}</a>

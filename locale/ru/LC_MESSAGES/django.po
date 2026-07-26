@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "Индонезийская рупия"
+
+msgid "US Dollar"
+msgstr "Американский доллар"
+
+msgid "Euro"
+msgstr "Евро"
+
+msgid "British Pound"
+msgstr "Британский фунт"
+
+msgid "Chinese Yuan"
+msgstr "Китайский юань"
+
+msgid "Japanese Yen"
+msgstr "Японская иена"
+
+msgid "South Korean Won"
+msgstr "Южнокорейская вона"
+
+msgid "New Taiwan Dollar"
+msgstr "Новый тайваньский доллар"
+
+msgid "Singapore Dollar"
+msgstr "Сингапурский доллар"
+
+msgid "Thai Baht"
+msgstr "Тайский бат"
+
+msgid "Vietnamese Dong"
+msgstr "Вьетнамский донг"
+
+msgid "Indian Rupee"
+msgstr "Индийская рупия"
+
+msgid "Russian Ruble"
+msgstr "Российский рубль"
+
+msgid "Saudi Riyal"
+msgstr "Саудовский риял"
+
+msgid "Turkish Lira"
+msgstr "Турецкая лира"
+
+msgid "Brazilian Real"
+msgstr "Бразильский реал"
+
+msgid "Australian Dollar"
+msgstr "Австралийский доллар"
+
+msgid "Canadian Dollar"
+msgstr "Канадский доллар"
+
+msgid "Malaysian Ringgit"
+msgstr "Малайзийский ринггит"
+
+msgid "Philippine Peso"
+msgstr "Филиппинское песо"
+
+msgid "New Zealand Dollar"
+msgstr "Новозеландский доллар"
+
+msgid "Hong Kong Dollar"
+msgstr "Гонконгский доллар"
+
+msgid "Polish Zloty"
+msgstr "Польский злотый"
+
+msgid "Reiki Healing"
+msgstr "Рейки-исцеление"
+
+msgid "Chakra Balancing"
+msgstr "Балансировка чакр"
+
+msgid "Sound Healing"
+msgstr "Звуковое исцеление"
+
+msgid "Login to Book"
+msgstr "Войдите для бронирования"

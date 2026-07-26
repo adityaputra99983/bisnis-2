@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "Endonezya Rupisi"
+
+msgid "US Dollar"
+msgstr "ABD Doları"
+
+msgid "Euro"
+msgstr "Euro"
+
+msgid "British Pound"
+msgstr "İngiliz Sterlini"
+
+msgid "Chinese Yuan"
+msgstr "Çin Yuanı"
+
+msgid "Japanese Yen"
+msgstr "Japon Yeni"
+
+msgid "South Korean Won"
+msgstr "Güney Kore Wonu"
+
+msgid "New Taiwan Dollar"
+msgstr "Yeni Tayvan Doları"
+
+msgid "Singapore Dollar"
+msgstr "Singapur Doları"
+
+msgid "Thai Baht"
+msgstr "Tayland Bahtı"
+
+msgid "Vietnamese Dong"
+msgstr "Vietnam Dongu"
+
+msgid "Indian Rupee"
+msgstr "Hindistan Rupisi"
+
+msgid "Russian Ruble"
+msgstr "Rus Rublesi"
+
+msgid "Saudi Riyal"
+msgstr "Suudi Riyali"
+
+msgid "Turkish Lira"
+msgstr "Türk Lirası"
+
+msgid "Brazilian Real"
+msgstr "Brezilya Reali"
+
+msgid "Australian Dollar"
+msgstr "Avustralya Doları"
+
+msgid "Canadian Dollar"
+msgstr "Kanada Doları"
+
+msgid "Malaysian Ringgit"
+msgstr "Malezya Ringgit'i"
+
+msgid "Philippine Peso"
+msgstr "Filipin Pesosu"
+
+msgid "New Zealand Dollar"
+msgstr "Yeni Zelanda Doları"
+
+msgid "Hong Kong Dollar"
+msgstr "Hong Kong Doları"
+
+msgid "Polish Zloty"
+msgstr "Polonya Zlotisi"
+
+msgid "Reiki Healing"
+msgstr "Reiki Şifası"
+
+msgid "Chakra Balancing"
+msgstr "Çakra Dengesi"
+
+msgid "Sound Healing"
+msgstr "Ses Şifası"
+
+msgid "Login to Book"
+msgstr "Rezervasyon için giriş yapın"

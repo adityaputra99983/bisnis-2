@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "インドネシアルピア"
+
+msgid "US Dollar"
+msgstr "米ドル"
+
+msgid "Euro"
+msgstr "ユーロ"
+
+msgid "British Pound"
+msgstr "イギリスポンド"
+
+msgid "Chinese Yuan"
+msgstr "中国人民元"
+
+msgid "Japanese Yen"
+msgstr "日本円"
+
+msgid "South Korean Won"
+msgstr "韓国ウォン"
+
+msgid "New Taiwan Dollar"
+msgstr "新台湾ドル"
+
+msgid "Singapore Dollar"
+msgstr "シンガポールドル"
+
+msgid "Thai Baht"
+msgstr "タイバーツ"
+
+msgid "Vietnamese Dong"
+msgstr "ベトナムドン"
+
+msgid "Indian Rupee"
+msgstr "インドルピー"
+
+msgid "Russian Ruble"
+msgstr "ロシアルーブル"
+
+msgid "Saudi Riyal"
+msgstr "サウディアラビアリヤル"
+
+msgid "Turkish Lira"
+msgstr "トルコリラ"
+
+msgid "Brazilian Real"
+msgstr "ブラジルレアル"
+
+msgid "Australian Dollar"
+msgstr "豪ドル"
+
+msgid "Canadian Dollar"
+msgstr "カナダドル"
+
+msgid "Malaysian Ringgit"
+msgstr "マレーシアリンギット"
+
+msgid "Philippine Peso"
+msgstr "フィリピンペソ"
+
+msgid "New Zealand Dollar"
+msgstr "ニュージーランドドル"
+
+msgid "Hong Kong Dollar"
+msgstr "香港ドル"
+
+msgid "Polish Zloty"
+msgstr "ポーランドズロチ"
+
+msgid "Reiki Healing"
+msgstr "レイキヒーリング"
+
+msgid "Chakra Balancing"
+msgstr "チャクラバランス"
+
+msgid "Sound Healing"
+msgstr "サウンドヒーリング"
+
+msgid "Login to Book"
+msgstr "予約するにはログイン"

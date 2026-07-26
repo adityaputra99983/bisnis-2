@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "印尼盾"
+
+msgid "US Dollar"
+msgstr "美元"
+
+msgid "Euro"
+msgstr "歐元"
+
+msgid "British Pound"
+msgstr "英鎊"
+
+msgid "Chinese Yuan"
+msgstr "人民幣"
+
+msgid "Japanese Yen"
+msgstr "日圓"
+
+msgid "South Korean Won"
+msgstr "韓元"
+
+msgid "New Taiwan Dollar"
+msgstr "新台幣"
+
+msgid "Singapore Dollar"
+msgstr "新加坡元"
+
+msgid "Thai Baht"
+msgstr "泰銖"
+
+msgid "Vietnamese Dong"
+msgstr "越南盾"
+
+msgid "Indian Rupee"
+msgstr "印度盧比"
+
+msgid "Russian Ruble"
+msgstr "俄羅斯盧布"
+
+msgid "Saudi Riyal"
+msgstr "沙烏地里亞爾"
+
+msgid "Turkish Lira"
+msgstr "土耳其里拉"
+
+msgid "Brazilian Real"
+msgstr "巴西雷亞爾"
+
+msgid "Australian Dollar"
+msgstr "澳幣"
+
+msgid "Canadian Dollar"
+msgstr "加幣"
+
+msgid "Malaysian Ringgit"
+msgstr "馬來西亞令吉"
+
+msgid "Philippine Peso"
+msgstr "菲律賓比索"
+
+msgid "New Zealand Dollar"
+msgstr "紐西蘭元"
+
+msgid "Hong Kong Dollar"
+msgstr "港幣"
+
+msgid "Polish Zloty"
+msgstr "波蘭茲羅提"
+
+msgid "Reiki Healing"
+msgstr "灵气療癒"
+
+msgid "Chakra Balancing"
+msgstr "脈輪平衡"
+
+msgid "Sound Healing"
+msgstr "聲音療癒"
+
+msgid "Login to Book"
+msgstr "登入以預約"

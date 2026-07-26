@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "Indonesian Rupiah"
+
+msgid "US Dollar"
+msgstr "US Dollar"
+
+msgid "Euro"
+msgstr "Euro"
+
+msgid "British Pound"
+msgstr "British Pound"
+
+msgid "Chinese Yuan"
+msgstr "Chinese Yuan"
+
+msgid "Japanese Yen"
+msgstr "Japanese Yen"
+
+msgid "South Korean Won"
+msgstr "South Korean Won"
+
+msgid "New Taiwan Dollar"
+msgstr "New Taiwan Dollar"
+
+msgid "Singapore Dollar"
+msgstr "Singapore Dollar"
+
+msgid "Thai Baht"
+msgstr "Thai Baht"
+
+msgid "Vietnamese Dong"
+msgstr "Vietnamese Dong"
+
+msgid "Indian Rupee"
+msgstr "Indian Rupee"
+
+msgid "Russian Ruble"
+msgstr "Russian Ruble"
+
+msgid "Saudi Riyal"
+msgstr "Saudi Riyal"
+
+msgid "Turkish Lira"
+msgstr "Turkish Lira"
+
+msgid "Brazilian Real"
+msgstr "Brazilian Real"
+
+msgid "Australian Dollar"
+msgstr "Australian Dollar"
+
+msgid "Canadian Dollar"
+msgstr "Canadian Dollar"
+
+msgid "Malaysian Ringgit"
+msgstr "Malaysian Ringgit"
+
+msgid "Philippine Peso"
+msgstr "Philippine Peso"
+
+msgid "New Zealand Dollar"
+msgstr "New Zealand Dollar"
+
+msgid "Hong Kong Dollar"
+msgstr "Hong Kong Dollar"
+
+msgid "Polish Zloty"
+msgstr "Polish Zloty"
+
+msgid "Reiki Healing"
+msgstr "Reiki Healing"
+
+msgid "Chakra Balancing"
+msgstr "Chakra Balancing"
+
+msgid "Sound Healing"
+msgstr "Sound Healing"
+
+msgid "Login to Book"
+msgstr "Login to Book"

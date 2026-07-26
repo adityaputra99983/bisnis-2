@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load currency_tags %}
 {% block title %}{{ center.name }} — Bali Healer{% endblock %}
 {% block content %}
 <div class="page-header">
@@ -33,7 +34,11 @@
                 <p style="color:var(--stone-400);font-size:13px;line-height:1.7">{{ center.description|default:"A beautiful healing centre in Bali." }}</p>
                 <div class="healer-divider"></div>
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
-                    <div class="healer-price" style="font-size:13px">{{ center.price_range|default:"Rp 300.000 — Rp 1.500.000" }}</div>
+                    <div class="healer-price" style="font-size:13px">
+                        {% if center.min_price_idr %}{% trans "From" %} <span data-price-idr="{{ center.min_price_idr|floatformat:0 }}">{{ center.min_price_idr|price_with_original:LANGUAGE_CODE }}</span>{% endif %}
+                        {% if center.max_price_idr and center.max_price_idr > center.min_price_idr %} — <span data-price-idr="{{ center.max_price_idr|floatformat:0 }}">{{ center.max_price_idr|price_with_original:LANGUAGE_CODE }}</span>{% endif %}
+                        {% if not center.min_price_idr and not center.max_price_idr %}{{ center.price_range|default:_("Price on request") }}{% endif %}
+                    </div>
                 </div>
             </div>
         </div>

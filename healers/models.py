@@ -109,6 +109,8 @@ class HealingCenter(models.Model):
     review_count = models.PositiveIntegerField(default=0)
     specializations = models.TextField(blank=True, help_text='Pisahkan dengan koma')
     price_range = models.CharField(max_length=100, blank=True, help_text='Contoh: Rp 300.000 - Rp 1.500.000')
+    min_price_idr = models.DecimalField(max_digits=12, decimal_places=2, default=0, help_text='Harga minimum dalam IDR')
+    max_price_idr = models.DecimalField(max_digits=12, decimal_places=2, default=0, help_text='Harga maksimum dalam IDR')
     has_google_badge = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     gradient = models.CharField(max_length=200, default='from-cyan-800 to-teal-700')

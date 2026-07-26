@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "인도네시아 루피아"
+
+msgid "US Dollar"
+msgstr "미국 달러"
+
+msgid "Euro"
+msgstr "유로"
+
+msgid "British Pound"
+msgstr "영국 파운드"
+
+msgid "Chinese Yuan"
+msgstr "중국 위안"
+
+msgid "Japanese Yen"
+msgstr "일본 엔"
+
+msgid "South Korean Won"
+msgstr "대한민국 원"
+
+msgid "New Taiwan Dollar"
+msgstr "신 타이완 달러"
+
+msgid "Singapore Dollar"
+msgstr "싱가포르 달러"
+
+msgid "Thai Baht"
+msgstr "태국 바트"
+
+msgid "Vietnamese Dong"
+msgstr "베트남 동"
+
+msgid "Indian Rupee"
+msgstr "인도 루피"
+
+msgid "Russian Ruble"
+msgstr "러시아 루블"
+
+msgid "Saudi Riyal"
+msgstr "사우디 리얄"
+
+msgid "Turkish Lira"
+msgstr "터키 리라"
+
+msgid "Brazilian Real"
+msgstr "브라질 레알"
+
+msgid "Australian Dollar"
+msgstr "호주 달러"
+
+msgid "Canadian Dollar"
+msgstr "캐나다 달러"
+
+msgid "Malaysian Ringgit"
+msgstr "말레이시아 링깃"
+
+msgid "Philippine Peso"
+msgstr "필리핀 페소"
+
+msgid "New Zealand Dollar"
+msgstr "뉴질랜드 달러"
+
+msgid "Hong Kong Dollar"
+msgstr "홍콩 달러"
+
+msgid "Polish Zloty"
+msgstr "폴란드 즐로티"
+
+msgid "Reiki Healing"
+msgstr "레이키 힐링"
+
+msgid "Chakra Balancing"
+msgstr "차크라 밸런싱"
+
+msgid "Sound Healing"
+msgstr "사운드 힐링"
+
+msgid "Login to Book"
+msgstr "예약하려면 로그인"

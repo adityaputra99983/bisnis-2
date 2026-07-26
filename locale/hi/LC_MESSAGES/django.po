@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "इंडोनेशियाई रुपिया"
+
+msgid "US Dollar"
+msgstr "अमेरिकी डॉलर"
+
+msgid "Euro"
+msgstr "यूरो"
+
+msgid "British Pound"
+msgstr "ब्रिटिश पाउंड"
+
+msgid "Chinese Yuan"
+msgstr "चीनी युआन"
+
+msgid "Japanese Yen"
+msgstr "जापानी येन"
+
+msgid "South Korean Won"
+msgstr "दक्षिण कोरियाई वोन"
+
+msgid "New Taiwan Dollar"
+msgstr "नया ताइवान डॉलर"
+
+msgid "Singapore Dollar"
+msgstr "सिंगापुर डॉलर"
+
+msgid "Thai Baht"
+msgstr "थाई बाथ"
+
+msgid "Vietnamese Dong"
+msgstr "वियतनामी डोंग"
+
+msgid "Indian Rupee"
+msgstr "भारतीय रुपया"
+
+msgid "Russian Ruble"
+msgstr "रूसी रूबल"
+
+msgid "Saudi Riyal"
+msgstr "सऊदी रियाल"
+
+msgid "Turkish Lira"
+msgstr "तुर्की लीरा"
+
+msgid "Brazilian Real"
+msgstr "ब्राज़ीलियाई रियल"
+
+msgid "Australian Dollar"
+msgstr "ऑस्ट्रेलियाई डॉलर"
+
+msgid "Canadian Dollar"
+msgstr "कनाडाई डॉलर"
+
+msgid "Malaysian Ringgit"
+msgstr "मलेशियाई रिंगिट"
+
+msgid "Philippine Peso"
+msgstr "फिलिपीनी पेसो"
+
+msgid "New Zealand Dollar"
+msgstr "न्यूज़ीलैंड डॉलर"
+
+msgid "Hong Kong Dollar"
+msgstr "हांगकांग डॉलर"
+
+msgid "Polish Zloty"
+msgstr "पोलिश ज़्लॉटी"
+
+msgid "Reiki Healing"
+msgstr "रीकी उपचार"
+
+msgid "Chakra Balancing"
+msgstr "चक्र संतुलन"
+
+msgid "Sound Healing"
+msgstr "ध्वनि उपचार"
+
+msgid "Login to Book"
+msgstr "बुक करने के लिए लॉगिन करें"

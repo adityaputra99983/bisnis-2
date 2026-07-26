@@ -1162,3 +1162,84 @@ msgstr "years experience"
 
 msgid "yr"
 msgstr "yr"
+
+msgid "Indonesian Rupiah"
+msgstr "Rupia indonezyjska"
+
+msgid "US Dollar"
+msgstr "Dolar amerykański"
+
+msgid "Euro"
+msgstr "Euro"
+
+msgid "British Pound"
+msgstr "Funt brytyjski"
+
+msgid "Chinese Yuan"
+msgstr "Chiński juan"
+
+msgid "Japanese Yen"
+msgstr "Jen japoński"
+
+msgid "South Korean Won"
+msgstr "Won południowokoreański"
+
+msgid "New Taiwan Dollar"
+msgstr "Nowy dolar tajwański"
+
+msgid "Singapore Dollar"
+msgstr "Dolar singapurski"
+
+msgid "Thai Baht"
+msgstr "Baht tajski"
+
+msgid "Vietnamese Dong"
+msgstr "Dong wietnamski"
+
+msgid "Indian Rupee"
+msgstr "Rupia indyjska"
+
+msgid "Russian Ruble"
+msgstr "Rubel rosyjski"
+
+msgid "Saudi Riyal"
+msgstr "Rial saudyjski"
+
+msgid "Turkish Lira"
+msgstr "Lira turecka"
+
+msgid "Brazilian Real"
+msgstr "Real brazylijski"
+
+msgid "Australian Dollar"
+msgstr "Dolar australijski"
+
+msgid "Canadian Dollar"
+msgstr "Dolar kanadyjski"
+
+msgid "Malaysian Ringgit"
+msgstr "Ringgit malezyjski"
+
+msgid "Philippine Peso"
+msgstr "Peso filipińskie"
+
+msgid "New Zealand Dollar"
+msgstr "Dolar nowozelandzki"
+
+msgid "Hong Kong Dollar"
+msgstr "Dolar hongkoński"
+
+msgid "Polish Zloty"
+msgstr "Złoty polski"
+
+msgid "Reiki Healing"
+msgstr "Uzdrawianie Reiki"
+
+msgid "Chakra Balancing"
+msgstr "Równowaga czakr"
+
+msgid "Sound Healing"
+msgstr "Uzdrawianie dźwiękiem"
+
+msgid "Login to Book"
+msgstr "Zaloguj się, aby zarezerwować"

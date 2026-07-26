@@ -1162,3 +1162,84 @@ msgstr "tahun pengalaman"
 
 msgid "yr"
 msgstr "thn"
+
+msgid "Indonesian Rupiah"
+msgstr "Rupiah Indonesia"
+
+msgid "US Dollar"
+msgstr "Dolar Amerika"
+
+msgid "Euro"
+msgstr "Euro"
+
+msgid "British Pound"
+msgstr "Pound Sterling"
+
+msgid "Chinese Yuan"
+msgstr "Yuan Tiongkok"
+
+msgid "Japanese Yen"
+msgstr "Yen Jepang"
+
+msgid "South Korean Won"
+msgstr "Won Korea Selatan"
+
+msgid "New Taiwan Dollar"
+msgstr "Dolar Taiwan Baru"
+
+msgid "Singapore Dollar"
+msgstr "Dolar Singapura"
+
+msgid "Thai Baht"
+msgstr "Baht Thailand"
+
+msgid "Vietnamese Dong"
+msgstr "Dong Vietnam"
+
+msgid "Indian Rupee"
+msgstr "Rupee India"
+
+msgid "Russian Ruble"
+msgstr "Ruble Rusia"
+
+msgid "Saudi Riyal"
+msgstr "Riyal Arab Saudi"
+
+msgid "Turkish Lira"
+msgstr "Lira Turki"
+
+msgid "Brazilian Real"
+msgstr "Real Brasil"
+
+msgid "Australian Dollar"
+msgstr "Dolar Australia"
+
+msgid "Canadian Dollar"
+msgstr "Dolar Kanada"
+
+msgid "Malaysian Ringgit"
+msgstr "Ringgit Malaysia"
+
+msgid "Philippine Peso"
+msgstr "Peso Filipina"
+
+msgid "New Zealand Dollar"
+msgstr "Dolar Selandia Baru"
+
+msgid "Hong Kong Dollar"
+msgstr "Dolar Hong Kong"
+
+msgid "Polish Zloty"
+msgstr "Zloty Polandia"
+
+msgid "Reiki Healing"
+msgstr "Penyembuhan Reiki"
+
+msgid "Chakra Balancing"
+msgstr "Penyeimbangan Cakra"
+
+msgid "Sound Healing"
+msgstr "Penyembuhan Suara"
+
+msgid "Login to Book"
+msgstr "Masuk untuk Booking"

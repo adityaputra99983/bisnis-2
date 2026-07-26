@@ -73,20 +73,24 @@ def register_healer(request):
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('home')
+    next_url = request.GET.get('next', '')
     if request.method == 'POST':
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
+        next_url = request.POST.get('next', next_url)
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             profile, _created = UserProfile.objects.get_or_create(user=user)
+            if next_url:
+                return redirect(next_url)
             if profile.is_healer:
                 return redirect('healer_dashboard')
             else:
                 return redirect('home')
         else:
             messages.error(request, _('Username atau password salah.'))
-    return render(request, 'login.html')
+    return render(request, 'login.html', {'next_url': next_url})
 
 
 @login_required
