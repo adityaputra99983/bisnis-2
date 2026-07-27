@@ -9,7 +9,8 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 from .models import UserProfile
 from .forms import CustomerRegistrationForm, HealerRegistrationForm
-from healers.models import Healer as HealerModel, HealerSchedule, HealerService, HealerMessage, HealerPaymentSetting, ChatRoom, ChatMessage
+from healers.models import Healer as HealerModel, HealerSchedule, HealerService, HealerMessage, HealerPaymentSetting, ChatRoom, ChatMessage, Notification
+from healers.notifications import create_notification, get_unread_count, get_recent_notifications
 from bookings.models import Booking
 from payments.models import Payment, TransactionLog
 
@@ -106,9 +107,13 @@ def customer_dashboard(request):
     bookings = Booking.objects.filter(
         customer_email=request.user.email
     ).select_related('healer').order_by('-created_at')[:20]
+    unread_notifications = get_unread_count(request.user)
+    recent_notifications = get_recent_notifications(request.user, 5)
     return render(request, 'customer_dashboard.html', {
         'profile': profile,
         'bookings': bookings,
+        'unread_notifications': unread_notifications,
+        'recent_notifications': recent_notifications,
     })
 
 
@@ -159,6 +164,8 @@ def healer_dashboard(request):
         'completed_count': completed_count,
         'total_revenue': total_revenue,
         'held_funds': held_funds,
+        'unread_notifications': get_unread_count(request.user),
+        'recent_notifications': get_recent_notifications(request.user, 5),
     })
 
 
@@ -382,6 +389,18 @@ def chat_send(request, room_id):
     if text:
         ChatMessage.objects.create(room=room, sender=request.user, message=text)
         room.save()
+        healer_user = getattr(room.healer, 'user', None)
+        if healer_user:
+            create_notification(
+                user=healer_user,
+                title=_('Pesan Baru dari Pelanggan'),
+                message=_('%(name)s: %(msg)s') % {
+                    'name': request.user.get_full_name() or request.user.username,
+                    'msg': text[:100],
+                },
+                notification_type='chat',
+                link=f'/dashboard/healer/chat/{room.id}/',
+            )
     return redirect('chat_with_healer', healer_id=room.healer.id)
 
 
@@ -497,4 +516,45 @@ def healer_chat_send(request, profile, healer, room_id):
     if text:
         ChatMessage.objects.create(room=room, sender=request.user, message=text)
         room.save()
+        create_notification(
+            user=room.customer,
+            title=_('Pesan Baru dari Healer'),
+            message=_('%(name)s: %(msg)s') % {
+                'name': healer.name,
+                'msg': text[:100],
+            },
+            notification_type='chat',
+            link=f'/chat/healer/{healer.id}/',
+        )
     return redirect('healer_chat_room', room_id=room.id)
+
+
+@login_required
+def notification_list(request):
+    all_notifications = Notification.objects.filter(user=request.user)[:50]
+    return render(request, 'notification_list.html', {
+        'notifications': all_notifications,
+    })
+
+
+@login_required
+def notification_read(request, notification_id):
+    notif = get_object_or_404(Notification, id=notification_id, user=request.user)
+    notif.mark_as_read()
+    if notif.link:
+        return redirect(notif.link)
+    return redirect('notification_list')
+
+
+@login_required
+def notification_read_all(request):
+    if request.method == 'POST':
+        Notification.objects.filter(user=request.user, is_read=False).update(is_read=True)
+    return redirect('notification_list')
+
+
+@login_required
+def notification_api(request):
+    from django.http import JsonResponse
+    count = Notification.objects.filter(user=request.user, is_read=False).count()
+    return JsonResponse({'unread_count': count})

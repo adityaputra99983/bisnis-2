@@ -9,6 +9,7 @@ from datetime import datetime
 import json
 from .models import Booking, BookingTimeSlot, BookingStatusLog
 from healers.models import Healer, HealerService
+from healers.notifications import create_notification
 from payments.services import convert_currency, format_currency, get_all_currencies, CURRENCY_NAMES
 from payments.models import Payment, TransactionLog
 
@@ -97,6 +98,21 @@ def create_booking(request, healer_id):
         )
 
         messages.success(request, _('Booking berhasil dibuat! Kode booking: %(code)s') % {'code': booking.booking_code})
+
+        healer_user = getattr(healer, 'user', None)
+        if healer_user:
+            create_notification(
+                user=healer_user,
+                title=_('Booking Baru!'),
+                message=_('%(name)s memesan layanan %(service)s pada tanggal %(date)s') % {
+                    'name': customer_name,
+                    'service': service_name,
+                    'date': parsed_date.strftime('%d %m %Y'),
+                },
+                notification_type='booking',
+                link=f'/dashboard/healer/',
+            )
+
         return redirect('payment_process', booking_code=booking.booking_code)
 
     return render(request, 'booking_form.html', {
@@ -154,6 +170,18 @@ def booking_cancel(request, booking_code):
     reason = request.POST.get('reason', '').strip()
     success, msg = booking.transition_to('cancelled', user=request.user, reason=reason)
     if success:
+        healer_user = getattr(booking.healer, 'user', None)
+        if healer_user:
+            create_notification(
+                user=healer_user,
+                title=_('Booking Dibatalkan'),
+                message=_('Booking %(code)s oleh %(customer)s telah dibatalkan.') % {
+                    'code': booking.booking_code,
+                    'customer': booking.customer_name,
+                },
+                notification_type='booking',
+                link=f'/dashboard/healer/',
+            )
         try:
             payment = booking.payment
             if payment.status in ('pending', 'processing'):
@@ -210,6 +238,17 @@ def booking_confirm(request, booking_code):
         except Payment.DoesNotExist:
             pass
         messages.success(request, _('Booking %(code)s dikonfirmasi. Silakan kerjakan.') % {'code': booking.booking_code})
+        if booking.customer:
+            create_notification(
+                user=booking.customer,
+                title=_('Booking Dikonfirmasi'),
+                message=_('Booking %(code)s oleh %(healer)s telah dikonfirmasi.') % {
+                    'code': booking.booking_code,
+                    'healer': healer.name,
+                },
+                notification_type='booking',
+                link=f'/booking/{booking.booking_code}/',
+            )
     else:
         messages.error(request, msg)
     return redirect('healer_dashboard')
@@ -230,6 +269,17 @@ def booking_start_work(request, booking_code):
     success, msg = booking.transition_to('in_progress', user=request.user)
     if success:
         messages.success(request, _('Pekerjaan dimulai untuk booking %(code)s.') % {'code': booking.booking_code})
+        if booking.customer:
+            create_notification(
+                user=booking.customer,
+                title=_('Pekerjaan Dimulai'),
+                message=_('Healer %(healer)s mulai mengerjakan booking %(code)s.') % {
+                    'healer': healer.name,
+                    'code': booking.booking_code,
+                },
+                notification_type='booking',
+                link=f'/booking/{booking.booking_code}/',
+            )
     else:
         messages.error(request, msg)
     return redirect('healer_dashboard')
@@ -269,6 +319,17 @@ def booking_complete_work(request, booking_code):
         except Payment.DoesNotExist:
             pass
         messages.success(request, _('Booking %(code)s selesai. Dana telah dirilis.') % {'code': booking.booking_code})
+        if booking.customer:
+            create_notification(
+                user=booking.customer,
+                title=_('Booking Selesai'),
+                message=_('Booking %(code)s oleh %(healer)s telah selesai. Terima kasih!') % {
+                    'code': booking.booking_code,
+                    'healer': healer.name,
+                },
+                notification_type='booking',
+                link=f'/booking/{booking.booking_code}/',
+            )
     else:
         messages.error(request, msg)
     return redirect('healer_dashboard')

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Notifications" %} — Bali Healer{% endblock %}
+
+{% block content %}
+<div class="section" style="padding-top:10px">
+    <div style="max-width:700px;margin:0 auto">
+        <a href="{% if user.profile.is_healer %}{% url 'healer_dashboard' %}{% else %}{% url 'customer_dashboard' %}{% endif %}" class="chat-back-link">
+            <i class="fas fa-arrow-left"></i> {% trans "Dashboard" %}
+        </a>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <h2 style="color:var(--fg);font-size:18px"><i class="fas fa-bell" style="color:var(--gold);margin-right:6px"></i>{% trans "Notifications" %}</h2>
+            {% if notifications %}
+            <form method="POST" action="{% url 'notification_read_all' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline" style="font-size:11px"><i class="fas fa-check-double"></i> {% trans "Mark all read" %}</button>
+            </form>
+            {% endif %}
+        </div>
+
+        {% for notif in notifications %}
+        <a href="{% url 'notification_read' notif.id %}" class="notif-list-item {% if not notif.is_read %}unread{% endif %}">
+            <div class="notif-list-icon {% if notif.notification_type == 'booking' %}booking{% elif notif.notification_type == 'chat' %}chat{% else %}system{% endif %}">
+                {% if notif.notification_type == 'booking' %}
+                <i class="fas fa-calendar-check"></i>
+                {% elif notif.notification_type == 'chat' %}
+                <i class="fas fa-comment-dots"></i>
+                {% else %}
+                <i class="fas fa-info-circle"></i>
+                {% endif %}
+            </div>
+            <div class="notif-list-content">
+                <div class="notif-list-top">
+                    <strong>{{ notif.title }}</strong>
+                    <span class="notif-list-time">{{ notif.created_at|timesince }} {% trans "ago" %}</span>
+                </div>
+                <p class="notif-list-msg">{{ notif.message }}</p>
+            </div>
+            {% if not notif.is_read %}
+            <span class="notif-unread-dot"></span>
+            {% endif %}
+        </a>
+        {% empty %}
+        <div class="card" style="text-align:center;padding:48px">
+            <i class="fas fa-bell-slash" style="font-size:36px;color:var(--stone-600);margin-bottom:12px;display:block"></i>
+            <h3 style="color:var(--fg);font-size:15px;margin-bottom:6px">{% trans "No Notifications Yet" %}</h3>
+            <p style="color:var(--stone-500);font-size:12px">{% trans "You will be notified about bookings, messages, and updates here." %}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

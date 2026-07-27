@@ -23,4 +23,8 @@ urlpatterns = [
     path('dashboard/healer/chat/', views.healer_chat_list, name='healer_chat_list'),
     path('dashboard/healer/chat/<int:room_id>/', views.healer_chat_room, name='healer_chat_room'),
     path('dashboard/healer/chat/<int:room_id>/send/', views.healer_chat_send, name='healer_chat_send'),
+    path('notifications/', views.notification_list, name='notification_list'),
+    path('notifications/<int:notification_id>/read/', views.notification_read, name='notification_read'),
+    path('notifications/read-all/', views.notification_read_all, name='notification_read_all'),
+    path('api/notifications/', views.notification_api, name='notification_api'),
 ]

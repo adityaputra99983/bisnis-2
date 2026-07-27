@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+Display:wght@400;500;600;700&family=Cinzel:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=11">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=12">
     {% block extra_css %}{% endblock %}
     <style>
         body > .splash-wrap {
@@ -86,16 +86,17 @@
         }
 
         /* Language + Region Switcher */
-        .lang-switcher { position: relative; display: inline-block; }
+        .lang-switcher { position: relative; display: none; }
+        @media (min-width: 1024px) { .lang-switcher { display: inline-block; } }
         .lang-switcher-btn {
-            background: #1a1714; border: 2px solid rgba(200,169,81,0.7); color: #ffffff;
-            padding: 10px 16px; border-radius: var(--radius-sm); cursor: pointer;
-            font-size: 14px; display: flex; align-items: center; gap: 8px;
-            transition: all 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 700;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            background: #1a1714; border: 1px solid rgba(200,169,81,0.5); color: #ffffff;
+            padding: 6px 12px; border-radius: var(--radius-sm); cursor: pointer;
+            font-size: 12px; display: flex; align-items: center; gap: 6px;
+            transition: all 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
         }
-        .lang-switcher-btn:hover { border-color: var(--gold); color: var(--gold); background: #242018; transform: translateY(-1px); }
-        .lang-switcher-btn i { font-size: 14px; }
+        .lang-switcher-btn:hover { border-color: var(--gold); color: var(--gold); background: #242018; }
+        .lang-switcher-btn i { font-size: 12px; }
         .lang-dropdown {
             display: none; position: fixed; top: 0; left: 0;
             background: #0f0d0b !important; border: 2px solid rgba(200,169,81,0.8) !important;
@@ -219,22 +220,19 @@
             to { opacity: 0; transform: translateX(-40px); }
         }
 
-        @media (max-width: 640px) {
-            .lang-switcher { position: static; }
-        }
-
         /* Currency Selector */
-        .currency-switcher { position: relative; display: inline-block; }
+        .currency-switcher { position: relative; display: none; }
+        @media (min-width: 1024px) { .currency-switcher { display: inline-block; } }
         .currency-switcher-btn {
             background: #1a1714; border: 1px solid rgba(200,169,81,0.5); color: #ffffff;
-            padding: 8px 14px; border-radius: var(--radius-sm); cursor: pointer;
-            font-size: 13px; display: flex; align-items: center; gap: 8px;
+            padding: 6px 12px; border-radius: var(--radius-sm); cursor: pointer;
+            font-size: 12px; display: flex; align-items: center; gap: 6px;
             transition: all 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 600;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
         }
         .currency-switcher-btn:hover { border-color: var(--gold); color: var(--gold); background: #242018; }
-        .currency-switcher-btn .currency-flag { font-size: 16px; }
-        .currency-switcher-btn i { font-size: 12px; }
+        .currency-switcher-btn .currency-flag { font-size: 14px; }
+        .currency-switcher-btn i { font-size: 10px; }
         .currency-dropdown {
             display: none; position: fixed; top: 0; left: 0;
             background: #1a1714 !important; border: 1px solid rgba(200,169,81,0.5) !important;
@@ -323,8 +321,252 @@
         }
         .currency-carousel-pause:hover { color: var(--gold); }
 
+        /* ═══ NOTIFICATION BELL & DROPDOWN ═══ */
+        .notif-bell-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: var(--radius-full);
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--stone-400);
+            font-size: 13px;
+            transition: all 0.2s;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+            padding: 0;
+        }
+        @media (min-width: 640px) { .notif-bell-btn { display: flex; } }
+
+        .notif-bell-btn:hover {
+            color: var(--gold);
+            border-color: var(--gold-border);
+            background: var(--gold-glow);
+        }
+
+        .notif-bell-badge {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 8px;
+            font-weight: 700;
+            min-width: 14px;
+            height: 14px;
+            line-height: 14px;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 3px;
+            border: 1.5px solid var(--stone-950);
+            animation: notif-pulse 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes notif-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* ═══ NOTIFICATION DROPDOWN ═══ */
+        .notif-dropdown {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #0f0d0b !important;
+            border: 2px solid rgba(200,169,81,0.6) !important;
+            border-radius: var(--radius-lg);
+            min-width: 320px;
+            max-width: 360px;
+            z-index: 9999999 !important;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.9), 0 0 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,169,81,0.15) !important;
+            animation: dropdownFadeIn 0.2s ease;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            opacity: 1 !important;
+        }
+
+        .notif-dropdown.open {
+            display: block !important;
+        }
+
+        .notif-dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(200,169,81,0.2);
+            background: #0f0d0b !important;
+        }
+
+        .notif-dropdown-header i {
+            color: var(--gold);
+            font-size: 12px;
+        }
+
+        .notif-mark-all {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 10px;
+            cursor: pointer;
+            padding: 2px 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            font-family: var(--font-body);
+        }
+
+        .notif-mark-all:hover {
+            background: rgba(214,170,67,0.15);
+        }
+
+        .notif-dropdown-body {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .notif-dropdown-body::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .notif-dropdown-body::-webkit-scrollbar-thumb {
+            background: rgba(200,169,81,0.3);
+            border-radius: 3px;
+        }
+
+        .notif-dropdown-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(200,169,81,0.06);
+            transition: all 0.15s;
+            text-decoration: none;
+            color: #fff;
+            background: #0f0d0b !important;
+        }
+
+        .notif-dropdown-item:hover {
+            background: rgba(214,170,67,0.08) !important;
+        }
+
+        .notif-dropdown-item.unread {
+            background: rgba(214,170,67,0.04) !important;
+            border-left: 2px solid var(--gold);
+        }
+
+        .notif-dropdown-item-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .notif-dropdown-item-icon.booking {
+            background: rgba(251,191,36,0.12);
+            color: #fbbf24;
+        }
+
+        .notif-dropdown-item-icon.chat {
+            background: rgba(96,165,250,0.12);
+            color: #60a5fa;
+        }
+
+        .notif-dropdown-item-icon.system {
+            background: rgba(163,163,163,0.12);
+            color: #a3a3a3;
+        }
+
+        .notif-dropdown-item-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notif-dropdown-item-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .notif-dropdown-item-msg {
+            font-size: 11px;
+            color: var(--stone-400);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .notif-dropdown-item-time {
+            font-size: 10px;
+            color: var(--stone-600);
+            margin-top: 2px;
+        }
+
+        .notif-dropdown-footer {
+            display: block;
+            text-align: center;
+            padding: 9px;
+            font-size: 11px;
+            color: var(--gold);
+            border-top: 1px solid rgba(200,169,81,0.2);
+            background: rgba(214,170,67,0.03);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .notif-dropdown-footer:hover {
+            background: rgba(214,170,67,0.12);
+        }
+
+        .notif-empty {
+            text-align: center;
+            padding: 28px 16px;
+            color: var(--stone-500);
+        }
+
+        .notif-empty i {
+            font-size: 22px;
+            color: var(--stone-600);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .notif-empty p {
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .notif-unread-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--gold);
+            flex-shrink: 0;
+            margin-top: 5px;
+        }
+
         @media (max-width: 640px) {
-            .currency-switcher { position: static; }
+            .notif-dropdown {
+                min-width: 280px;
+                max-width: calc(100vw - 24px);
+            }
         }
     </style>
 </head>
@@ -554,8 +796,35 @@
                 </div>
 
                 {% if user.is_authenticated %}
-                <a href="{% if user.profile.is_healer %}{% url 'healer_dashboard' %}{% else %}{% url 'customer_dashboard' %}{% endif %}" class="nav-link"><i class="fas fa-user"></i> {{ user.first_name|default:user.username }}</a>
-                <a href="{% url 'logout' %}" class="btn-find" style="background:transparent;color:var(--stone-400);border:1px solid var(--border)"><i class="fas fa-right-from-bracket"></i></a>
+                <button type="button" class="notif-bell-btn" id="notifBellBtn" title="{% trans 'Notifications' %}">
+                    <i class="fas fa-bell"></i>
+                    {% if global_unread_notifications > 0 %}
+                    <span class="notif-bell-badge" id="notifBadge">{{ global_unread_notifications }}</span>
+                    {% endif %}
+                </button>
+                <div class="notif-dropdown" id="notifDropdown">
+                    <div class="notif-dropdown-header">
+                        <i class="fas fa-bell"></i> {% trans "Notifications" %}
+                        {% if global_unread_notifications > 0 %}
+                        <form method="POST" action="{% url 'notification_read_all' %}" style="margin-left:auto">
+                            {% csrf_token %}
+                            <button type="submit" class="notif-mark-all">{% trans "Mark all read" %}</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div class="notif-dropdown-body" id="notifDropdownBody">
+                        <div class="notif-empty">
+                            <i class="fas fa-bell-slash"></i>
+                            <p>{% trans "No notifications yet" %}</p>
+                        </div>
+                    </div>
+                    <a href="{% url 'notification_list' %}" class="notif-dropdown-footer">{% trans "View All Notifications" %}</a>
+                </div>
+                <a href="{% if user.profile.is_healer %}{% url 'healer_dashboard' %}{% else %}{% url 'customer_dashboard' %}{% endif %}" class="nav-user-link" title="{{ user.first_name|default:user.username }}">
+                    <div class="nav-user-avatar">{{ user.first_name|default:user.username|truncatechars:1 }}</div>
+                    <span class="nav-user-name">{{ user.first_name|default:user.username }}</span>
+                </a>
+                <a href="{% url 'logout' %}" class="nav-logout-btn" title="{% trans 'Logout' %}"><i class="fas fa-right-from-bracket"></i></a>
                 {% else %}
                 <a href="{% url 'login' %}" class="nav-link"><i class="fas fa-right-to-bracket"></i> {% trans "Login" %}</a>
                 <a href="{% url 'register_choose' %}" class="btn-find"><i class="fas fa-user-plus"></i> {% trans "Register" %}</a>
@@ -659,11 +928,16 @@
             <i class="fas fa-magnifying-glass"></i>
             <span>{% trans "Search" %}</span>
         </a>
-        <a href="{% url 'center_list' %}" class="mobile-nav-item {% if request.resolver_match.url_name == 'center_list' %}active{% endif %}">
-            <i class="fas fa-spa"></i>
-            <span>{% trans "Centers" %}</span>
+        {% if user.is_authenticated %}
+        <a href="{% url 'notification_list' %}" class="mobile-nav-item {% if request.resolver_match.url_name == 'notification_list' %}active{% endif %}" style="position:relative">
+            <i class="fas fa-bell"></i>
+            {% if global_unread_notifications > 0 %}
+            <span class="mobile-notif-badge">{{ global_unread_notifications }}</span>
+            {% endif %}
+            <span>{% trans "Alerts" %}</span>
         </a>
-        <a href="{% url 'booking_track' %}" class="mobile-nav-item">
+        {% endif %}
+        <a href="{% url 'booking_track' %}" class="mobile-nav-item {% if request.resolver_match.url_name == 'booking_track' %}active{% endif %}">
             <i class="fas fa-comment-dots"></i>
             <span>{% trans "Consult" %}</span>
         </a>
@@ -1142,6 +1416,84 @@
 
     }); /* end DOMContentLoaded */
     </script>
+
+    {% if user.is_authenticated %}
+    <script>
+    (function(){
+        var bellBtn = document.getElementById('notifBellBtn');
+        var dropdown = document.getElementById('notifDropdown');
+        var badge = document.getElementById('notifBadge');
+
+        if(!bellBtn || !dropdown) return;
+
+        function positionNotifDropdown() {
+            if(!dropdown || !bellBtn) return;
+            var r = bellBtn.getBoundingClientRect();
+            var ddWidth = dropdown.offsetWidth || 320;
+            var gap = 8;
+            var top = r.bottom + gap;
+            var left = r.left;
+            if(left + ddWidth > window.innerWidth - 12) left = window.innerWidth - ddWidth - 12;
+            if(left < 12) left = 12;
+            if(top + 340 > window.innerHeight - 12) top = r.top - 340 - gap;
+            dropdown.style.top = top + 'px';
+            dropdown.style.left = left + 'px';
+            dropdown.style.right = 'auto';
+        }
+
+        bellBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            var wasOpen = dropdown.classList.contains('open');
+            document.querySelectorAll('.notif-dropdown, .lang-dropdown, .currency-dropdown').forEach(function(d){ d.classList.remove('open'); });
+            if(!wasOpen){
+                dropdown.classList.add('open');
+                positionNotifDropdown();
+                loadNotifDropdown();
+            }
+        });
+
+        document.addEventListener('click', function(e){
+            if(!bellBtn.contains(e.target) && !dropdown.contains(e.target)){
+                dropdown.classList.remove('open');
+            }
+        });
+
+        function loadNotifDropdown(){
+            fetch('{% url "notification_api" %}')
+            .then(function(r){ return r.json(); })
+            .then(function(data){
+                if(data.unread_count !== undefined){
+                    if(badge){
+                        badge.textContent = data.unread_count;
+                        if(data.unread_count === 0){ badge.style.display = 'none'; }
+                        else { badge.style.display = 'flex'; }
+                    } else if(data.unread_count > 0){
+                        var newBadge = document.createElement('span');
+                        newBadge.className = 'notif-bell-badge';
+                        newBadge.id = 'notifBadge';
+                        newBadge.textContent = data.unread_count;
+                        bellBtn.appendChild(newBadge);
+                    }
+                }
+            }).catch(function(){});
+        }
+
+        setInterval(loadNotifDropdown, 15000);
+
+        document.addEventListener('visibilitychange', function(){
+            if(!document.hidden) loadNotifDropdown();
+        });
+
+        window.addEventListener('scroll', function(){
+            if(dropdown.classList.contains('open')) positionNotifDropdown();
+        }, { passive: true });
+        window.addEventListener('resize', function(){
+            if(dropdown.classList.contains('open')) positionNotifDropdown();
+        }, { passive: true });
+    })();
+    </script>
+    {% endif %}
     {% block extra_js %}{% endblock %}
 </body>
 </html>
