@@ -45,8 +45,8 @@
             <div class="chat-body">
                 <!-- Messages -->
                 <div class="chat-messages" id="chat-messages">
-                    {% if messages %}
-                    {% regroup messages by created_at.date as date_groups %}
+                    {% if chat_messages %}
+                    {% regroup chat_messages by created_at.date as date_groups %}
                     {% for date_group in date_groups %}
                     <div class="chat-date-divider">
                         <span>{{ date_group.grouper|date:"d M Y" }}</span>
@@ -181,7 +181,7 @@
         if(sb) sb.classList.add('visible');
     }
 
-    var lastId = {{ messages.last.id|default:0 }};
+    var lastId = {{ chat_messages.last.id|default:0 }};
     var chatInterval = null;
     var chatVisible = true;
     var pollCount = 0;

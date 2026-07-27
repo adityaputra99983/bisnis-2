@@ -194,26 +194,71 @@ class HealerMessage(models.Model):
 
 class HealerPaymentSetting(models.Model):
     healer = models.OneToOneField(Healer, on_delete=models.CASCADE, related_name='payment_settings')
+
     bank_name = models.CharField(max_length=100, blank=True)
     bank_account_name = models.CharField(max_length=200, blank=True)
     bank_account_number = models.CharField(max_length=50, blank=True)
     swift_code = models.CharField(max_length=20, blank=True, help_text='Kode SWIFT/BIC untuk transfer internasional')
+
     gopay_number = models.CharField(max_length=20, blank=True)
     ovo_number = models.CharField(max_length=20, blank=True)
     dana_number = models.CharField(max_length=20, blank=True)
+
+    qris_merchant_name = models.CharField(max_length=200, blank=True, help_text='Nama merchant QRIS')
+    qris_id = models.CharField(max_length=50, blank=True, help_text='ID Merchant QRIS')
+
     paypal_email = models.EmailField(blank=True)
     visa_mc_enabled = models.BooleanField(default=False, help_text='Aktifkan pembayaran Visa/Mastercard via PayPal')
+
     accept_cash = models.BooleanField(default=True)
     accept_transfer = models.BooleanField(default=True)
     accept_gopay = models.BooleanField(default=False)
     accept_ovo = models.BooleanField(default=False)
     accept_dana = models.BooleanField(default=False)
+    accept_qris = models.BooleanField(default=False)
     accept_paypal = models.BooleanField(default=False)
+    accept_visa_mc = models.BooleanField(default=False)
+
+    min_payment_idr = models.DecimalField(max_digits=12, decimal_places=2, default=0, help_text='Minimum pembayaran dalam IDR (0 = tanpa minimum)')
+    require_deposit = models.BooleanField(default=False, help_text='Wajibkan deposit sebelum booking')
+    deposit_percent = models.PositiveIntegerField(default=50, help_text='Persentase deposit (1-100)')
+    auto_confirm = models.BooleanField(default=False, help_text='Konfirmasi otomatis setelah pembayaran berhasil')
+    payment_timeout_hours = models.PositiveIntegerField(default=24, help_text='Batas waktu pembayaran dalam jam')
+    enable_escrow = models.BooleanField(default=True, help_text='Aktifkan escrow (dana ditahan hingga pekerjaan selesai)')
+    enable_refund = models.BooleanField(default=True, help_text='Aktifkan pengembalian dana')
+    require_proof = models.BooleanField(default=False, help_text='Wajibkan bukti transfer dari customer')
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name_plural = 'Healer Payment Settings'
+
     def __str__(self):
         return f'Payment Settings - {self.healer.name}'
+
+    def get_accepted_methods(self):
+        methods = []
+        if self.accept_transfer and self.bank_name and self.bank_account_number:
+            methods.append('transfer')
+        if self.accept_gopay and self.gopay_number:
+            methods.append('gopay')
+        if self.accept_ovo and self.ovo_number:
+            methods.append('ovo')
+        if self.accept_dana and self.dana_number:
+            methods.append('dana')
+        if self.accept_qris and self.qris_id:
+            methods.append('qris')
+        if self.accept_paypal and self.paypal_email:
+            methods.append('paypal')
+        if self.accept_visa_mc and self.visa_mc_enabled:
+            methods.append('visa_mc')
+        if self.accept_cash:
+            methods.append('cash')
+        return methods
+
+    def is_method_accepted(self, method):
+        return method in self.get_accepted_methods()
 
 
 class ChatRoomQuerySet(models.QuerySet):

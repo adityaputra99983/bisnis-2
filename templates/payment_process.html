@@ -37,6 +37,40 @@
                         <div class="summary-row total"><span>{% trans "Total" %}</span><strong data-price-idr="{{ booking.total_price_idr|floatformat:0 }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
                     </div>
                 </div>
+
+                <div class="card" style="margin-bottom:14px">
+                    <div class="card-header">
+                        <h3><i class="fas fa-shield-halved" style="color:var(--gold)"></i> {% trans "Security" %}</h3>
+                    </div>
+                    <div class="card-body" style="padding:12px 16px">
+                        <div style="display:flex;flex-direction:column;gap:8px">
+                            {% if healer_settings.enable_escrow %}
+                            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--stone-400)">
+                                <i class="fas fa-lock" style="color:var(--success);width:16px"></i>
+                                {% trans "Escrow protection — funds held until work complete" %}
+                            </div>
+                            {% endif %}
+                            {% if healer_settings.enable_refund %}
+                            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--stone-400)">
+                                <i class="fas fa-rotate-left" style="color:var(--info);width:16px"></i>
+                                {% trans "Refund available if service not delivered" %}
+                            </div>
+                            {% endif %}
+                            {% if healer_settings.payment_timeout_hours %}
+                            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--stone-400)">
+                                <i class="fas fa-clock" style="color:var(--warning);width:16px"></i>
+                                {% blocktrans with hours=healer_settings.payment_timeout_hours %}Payment must be completed within {{ hours }} hours{% endblocktrans %}
+                            </div>
+                            {% endif %}
+                            {% if healer_settings.require_deposit and healer_settings.deposit_percent %}
+                            <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--stone-400)">
+                                <i class="fas fa-percent" style="color:var(--gold);width:16px"></i>
+                                {% blocktrans with pct=healer_settings.deposit_percent %}Deposit required: {{ pct }}% of total{% endblocktrans %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div>
                 <div class="card">
@@ -76,9 +110,9 @@
                                 <div class="payment-methods">
                                     {% for method in payment_methods %}
                                     <label class="payment-method-option">
-                                        <input type="radio" name="payment_method" value="{{ method.id }}" {% if forloop.first %}checked{% endif %}>
+                                        <input type="radio" name="payment_method" value="{{ method.id }}" data-method-name="{{ method.name|lower }}" {% if forloop.first %}checked{% endif %}>
                                         <div class="method-box">
-                                            <i class="fas {% if method.bank_name %}fa-building-columns{% else %}fa-mobile-screen{% endif %}"></i>
+                                            <i class="fas {% if method.bank_name %}fa-building-columns{% elif 'gopay' in method.name|lower %}fa-google-pay{% elif 'ovo' in method.name|lower %}fa-wallet{% elif 'dana' in method.name|lower %}fa-money-bill-wave{% elif 'qris' in method.name|lower %}fa-qrcode{% elif 'paypal' in method.name|lower %}fa-paypal{% elif 'visa' in method.name|lower %}fa-cc-visa{% elif 'cash' in method.name|lower %}fa-money-bill{% else %}fa-mobile-screen{% endif %}"></i>
                                             <div>
                                                 <strong>{{ method.name }}</strong>
                                                 <small>{{ method.description|default:"Instant payment" }}</small>
@@ -88,6 +122,81 @@
                                     {% endfor %}
                                 </div>
                             </div>
+
+                            <div id="method-sop" style="margin:12px 0;padding:14px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1);display:none">
+                                <div id="sop-transfer" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-building-columns" style="color:var(--gold);margin-right:6px"></i>{% trans "Bank Transfer SOP" %}</h4>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "Transfer to the bank account shown below" %}</li>
+                                        <li>{% trans "Upload transfer proof (screenshot/receipt)" %}</li>
+                                        <li>{% trans "Wait for healer to verify and confirm" %}</li>
+                                        <li>{% trans "Booking status updates automatically" %}</li>
+                                    </ol>
+                                </div>
+                                <div id="sop-gopay" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fab fa-google-pay" style="color:var(--gold);margin-right:6px"></i>{% trans "GoPay SOP" %}</h4>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "Open GoPay app" %}</li>
+                                        <li>{% trans "Send to the GoPay number shown below" %}</li>
+                                        <li>{% trans "Upload screenshot as payment proof" %}</li>
+                                        <li>{% trans "Wait for healer confirmation" %}</li>
+                                    </ol>
+                                </div>
+                                <div id="sop-ovo" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-wallet" style="color:var(--gold);margin-right:6px"></i>{% trans "OVO SOP" %}</h4>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "Open OVO app" %}</li>
+                                        <li>{% trans "Send to the OVO number shown below" %}</li>
+                                        <li>{% trans "Upload screenshot as payment proof" %}</li>
+                                        <li>{% trans "Wait for healer confirmation" %}</li>
+                                    </ol>
+                                </div>
+                                <div id="sop-dana" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-right:6px"></i>{% trans "DANA SOP" %}</h4>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "Open DANA app" %}</li>
+                                        <li>{% trans "Send to the DANA number shown below" %}</li>
+                                        <li>{% trans "Upload screenshot as payment proof" %}</li>
+                                        <li>{% trans "Wait for healer confirmation" %}</li>
+                                    </ol>
+                                </div>
+                                <div id="sop-qris" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-qrcode" style="color:var(--gold);margin-right:6px"></i>{% trans "QRIS SOP" %}</h4>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "Scan the QR code with any QRIS-supported app" %}</li>
+                                        <li>{% trans "GoPay, OVO, DANA, ShopeePay, or mobile banking" %}</li>
+                                        <li>{% trans "Confirm payment on your app" %}</li>
+                                        <li>{% trans "Payment auto-confirmed instantly" %}</li>
+                                    </ol>
+                                </div>
+                                <div id="sop-paypal" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fab fa-paypal" style="color:var(--gold);margin-right:6px"></i>{% trans "PayPal SOP" %}</h4>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "You will be redirected to PayPal" %}</li>
+                                        <li>{% trans "Log in to your PayPal account" %}</li>
+                                        <li>{% trans "Confirm payment amount and details" %}</li>
+                                        <li>{% trans "Payment auto-confirmed upon success" %}</li>
+                                    </ol>
+                                </div>
+                                <div id="sop-visa_mc" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fab fa-cc-visa" style="color:var(--gold);margin-right:6px"></i>{% trans "Visa / Mastercard SOP" %}</h4>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "You will be redirected to PayPal secure checkout" %}</li>
+                                        <li>{% trans "Enter your Visa or Mastercard details" %}</li>
+                                        <li>{% trans "Complete 3D Secure verification if prompted" %}</li>
+                                        <li>{% trans "Payment auto-confirmed upon success" %}</li>
+                                    </ol>
+                                </div>
+                                <div id="sop-cash" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-money-bill" style="color:var(--gold);margin-right:6px"></i>{% trans "Cash Payment SOP" %}</h4>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "Booking confirmed with cash payment" %}</li>
+                                        <li>{% trans "Pay cash directly at the session location" %}</li>
+                                        <li>{% trans "Healer will confirm payment receipt" %}</li>
+                                    </ol>
+                                </div>
+                            </div>
+
                             <div class="payment-total-section">
                                 <div class="payment-total-row">
                                     <span>{% trans "Total Payment" %}</span>
@@ -134,6 +243,39 @@
             if (summaryEl) summaryEl.textContent = formatted;
         });
     });
+
+    var sopContainer = document.getElementById('method-sop');
+    var radios = document.querySelectorAll('input[name="payment_method"]');
+
+    function showSop() {
+        var selected = document.querySelector('input[name="payment_method"]:checked');
+        if (!selected) return;
+        var methodName = selected.getAttribute('data-method-name') || '';
+        sopContainer.style.display = 'block';
+
+        var allSops = sopContainer.querySelectorAll('div[id^="sop-"]');
+        allSops.forEach(function(el) { el.style.display = 'none'; });
+
+        var sopId = 'sop-' + methodName.replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_');
+        var sopEl = document.getElementById(sopId);
+        if (!sopEl) {
+            if (methodName.indexOf('gopay') !== -1) sopEl = document.getElementById('sop-gopay');
+            else if (methodName.indexOf('ovo') !== -1) sopEl = document.getElementById('sop-ovo');
+            else if (methodName.indexOf('dana') !== -1) sopEl = document.getElementById('sop-dana');
+            else if (methodName.indexOf('qris') !== -1) sopEl = document.getElementById('sop-qris');
+            else if (methodName.indexOf('paypal') !== -1) sopEl = document.getElementById('sop-paypal');
+            else if (methodName.indexOf('visa') !== -1 || methodName.indexOf('mastercard') !== -1) sopEl = document.getElementById('sop-visa_mc');
+            else if (methodName.indexOf('cash') !== -1) sopEl = document.getElementById('sop-cash');
+            else if (methodName.indexOf('transfer') !== -1 || methodName.indexOf('bank') !== -1) sopEl = document.getElementById('sop-transfer');
+        }
+        if (sopEl) sopEl.style.display = 'block';
+    }
+
+    radios.forEach(function(radio) {
+        radio.addEventListener('change', showSop);
+    });
+
+    showSop();
 })();
 </script>
 {% endblock %}

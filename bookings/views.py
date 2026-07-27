@@ -21,6 +21,10 @@ def create_booking(request, healer_id):
     currencies = get_all_currencies()
     today = timezone.now().date()
 
+    from healers.models import HealerPaymentSetting
+    healer_settings, created = HealerPaymentSetting.objects.get_or_create(healer=healer)
+    accepted_methods = healer_settings.get_accepted_methods()
+
     if request.method == 'POST':
         customer_name = request.POST.get('customer_name', '').strip()
         customer_email = request.POST.get('customer_email', '').strip()
@@ -39,6 +43,8 @@ def create_booking(request, healer_id):
                 'currencies': currencies,
                 'form_data': request.POST,
                 'today': today,
+                'accepted_methods': accepted_methods,
+                'healer_settings': healer_settings,
             })
 
         try:
@@ -51,6 +57,8 @@ def create_booking(request, healer_id):
                 'currencies': currencies,
                 'form_data': request.POST,
                 'today': today,
+                'accepted_methods': accepted_methods,
+                'healer_settings': healer_settings,
             })
 
         selected_service = None
@@ -120,6 +128,8 @@ def create_booking(request, healer_id):
         'services': services,
         'currencies': currencies,
         'today': today,
+        'accepted_methods': accepted_methods,
+        'healer_settings': healer_settings,
     })
 
 
@@ -142,11 +152,22 @@ def booking_detail(request, booking_code):
         'code': booking.currency,
         'name': CURRENCY_NAMES.get(booking.currency, booking.currency),
     }
+
+    is_healer_view = False
+    if request.user.is_authenticated:
+        from accounts.models import UserProfile
+        profile, _created = UserProfile.objects.get_or_create(user=request.user)
+        if profile.is_healer:
+            healer_profile = profile.get_healer_profile()
+            if healer_profile and healer_profile.id == booking.healer_id:
+                is_healer_view = True
+
     return render(request, 'booking_detail.html', {
         'booking': booking,
         'payment': payment,
         'status_logs': status_logs,
         'currency_info': currency_info,
+        'is_healer_view': is_healer_view,
     })
 
 
@@ -210,7 +231,7 @@ def booking_confirm(request, booking_code):
     if request.method != 'POST':
         return redirect('healer_dashboard')
     from accounts.models import UserProfile
-    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
     if not profile.is_healer:
         return redirect('home')
     healer = profile.get_healer_profile()
@@ -259,7 +280,7 @@ def booking_start_work(request, booking_code):
     if request.method != 'POST':
         return redirect('healer_dashboard')
     from accounts.models import UserProfile
-    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
     if not profile.is_healer:
         return redirect('home')
     healer = profile.get_healer_profile()
@@ -290,7 +311,7 @@ def booking_complete_work(request, booking_code):
     if request.method != 'POST':
         return redirect('healer_dashboard')
     from accounts.models import UserProfile
-    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
     if not profile.is_healer:
         return redirect('home')
     healer = profile.get_healer_profile()

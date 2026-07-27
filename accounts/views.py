@@ -297,6 +297,8 @@ def healer_payments(request, profile, healer):
         settings.gopay_number = request.POST.get('gopay_number', '')
         settings.ovo_number = request.POST.get('ovo_number', '')
         settings.dana_number = request.POST.get('dana_number', '')
+        settings.qris_merchant_name = request.POST.get('qris_merchant_name', '')
+        settings.qris_id = request.POST.get('qris_id', '')
         settings.paypal_email = request.POST.get('paypal_email', '')
         settings.visa_mc_enabled = 'visa_mc_enabled' in request.POST
         settings.accept_cash = 'accept_cash' in request.POST
@@ -304,7 +306,29 @@ def healer_payments(request, profile, healer):
         settings.accept_gopay = 'accept_gopay' in request.POST
         settings.accept_ovo = 'accept_ovo' in request.POST
         settings.accept_dana = 'accept_dana' in request.POST
+        settings.accept_qris = 'accept_qris' in request.POST
         settings.accept_paypal = 'accept_paypal' in request.POST
+        settings.accept_visa_mc = 'accept_visa_mc' in request.POST
+        min_payment = request.POST.get('min_payment_idr', '0')
+        try:
+            settings.min_payment_idr = decimal.Decimal(min_payment.strip())
+        except (decimal.InvalidOperation, ValueError, TypeError):
+            settings.min_payment_idr = 0
+        settings.require_deposit = 'require_deposit' in request.POST
+        deposit_pct = request.POST.get('deposit_percent', '50')
+        try:
+            settings.deposit_percent = int(deposit_pct)
+        except (ValueError, TypeError):
+            settings.deposit_percent = 50
+        settings.auto_confirm = 'auto_confirm' in request.POST
+        timeout = request.POST.get('payment_timeout_hours', '24')
+        try:
+            settings.payment_timeout_hours = int(timeout)
+        except (ValueError, TypeError):
+            settings.payment_timeout_hours = 24
+        settings.enable_escrow = 'enable_escrow' in request.POST
+        settings.enable_refund = 'enable_refund' in request.POST
+        settings.require_proof = 'require_proof' in request.POST
         settings.save()
         messages.success(request, _('Pengaturan pembayaran berhasil diperbarui.'))
         return redirect('healer_payments')
@@ -374,7 +398,7 @@ def chat_with_healer(request, healer_id):
     return render(request, 'chat_room.html', {
         'room': room,
         'healer': healer,
-        'messages': room.messages.select_related('sender').all(),
+        'chat_messages': room.messages.select_related('sender').all(),
         'services': services,
         'chat_role': 'customer',
     })
@@ -500,7 +524,7 @@ def healer_chat_room(request, profile, healer, room_id):
     return render(request, 'chat_room.html', {
         'room': room,
         'healer': healer,
-        'messages': room.messages.select_related('sender').all(),
+        'chat_messages': room.messages.select_related('sender').all(),
         'services': services,
         'chat_role': 'healer',
         'customer_bookings': customer_bookings,

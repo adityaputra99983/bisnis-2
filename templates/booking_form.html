@@ -40,6 +40,36 @@
                         </div>
                     </div>
                 </div>
+                {% if accepted_methods %}
+                <div class="card" style="margin-top:12px">
+                    <div class="card-header" style="padding:12px 16px">
+                        <h3 style="font-size:13px"><i class="fas fa-credit-card" style="color:var(--gold);margin-right:6px"></i> {% trans "Accepted Payments" %}</h3>
+                    </div>
+                    <div class="card-body" style="padding:10px 16px">
+                        <div style="display:flex;flex-wrap:wrap;gap:6px">
+                            {% for method in accepted_methods %}
+                            <span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;background:var(--stone-800);border:1px solid var(--border);font-size:11px;color:var(--stone-300)">
+                                {% if method == 'transfer' %}<i class="fas fa-building-columns" style="color:var(--gold)"></i> {% trans "Bank Transfer" %}
+                                {% elif method == 'gopay' %}<i class="fab fa-google-pay" style="color:var(--gold)"></i> GoPay
+                                {% elif method == 'ovo' %}<i class="fas fa-wallet" style="color:var(--gold)"></i> OVO
+                                {% elif method == 'dana' %}<i class="fas fa-money-bill-wave" style="color:var(--gold)"></i> DANA
+                                {% elif method == 'qris' %}<i class="fas fa-qrcode" style="color:var(--gold)"></i> QRIS
+                                {% elif method == 'paypal' %}<i class="fab fa-paypal" style="color:var(--gold)"></i> PayPal
+                                {% elif method == 'visa_mc' %}<i class="fab fa-cc-visa" style="color:var(--gold)"></i> Visa/MC
+                                {% elif method == 'cash' %}<i class="fas fa-money-bill" style="color:var(--gold)"></i> {% trans "Cash" %}
+                                {% endif %}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        {% if healer_settings.require_deposit %}
+                        <p style="font-size:10px;color:var(--stone-500);margin-top:8px">
+                            <i class="fas fa-info-circle" style="margin-right:3px"></i>
+                            {% blocktrans with pct=healer_settings.deposit_percent %}Deposit of {{ pct }}% required{% endblocktrans %}
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
             </div>
             <div>
                 <div class="card">

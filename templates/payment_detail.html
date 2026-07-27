@@ -21,6 +21,9 @@
                     <span class="payment-status-badge {{ payment.status }}">
                         {% if payment.status == 'pending' %}<i class="fas fa-clock"></i> {% trans "Pending" %}
                         {% elif payment.status == 'success' %}<i class="fas fa-check-circle"></i> {% trans "Successful" %}
+                        {% elif payment.status == 'held' %}<i class="fas fa-lock"></i> {% trans "Held (Escrow)" %}
+                        {% elif payment.status == 'released' %}<i class="fas fa-unlock"></i> {% trans "Released" %}
+                        {% elif payment.status == 'refunded' %}<i class="fas fa-rotate-left"></i> {% trans "Refunded" %}
                         {% else %}<i class="fas fa-times-circle"></i> {% trans "Failed" %}{% endif %}
                     </span>
                 </div>
@@ -34,8 +37,101 @@
                     </div>
                 </div>
             </div>
+
+            {% if payment.status == 'pending' and payment.payment_method %}
+            <div class="card" style="margin-bottom:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-shield-halved" style="color:var(--gold)"></i> {% trans "Payment Instructions" %}</h3>
+                </div>
+                <div class="card-body">
+                    {% with method_name=payment.payment_method.name|lower %}
+                    {% if 'transfer' in method_name or 'bank' in method_name %}
+                    <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
+                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fas fa-building-columns" style="color:var(--gold);margin-right:6px"></i>{% trans "Bank Transfer Instructions" %}</h4>
+                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
+                            <li>{% trans "Transfer to the healer's bank account" %}</li>
+                            <li>{% trans "Upload your transfer proof (screenshot/receipt)" %}</li>
+                            <li>{% trans "Wait for healer to verify and confirm payment" %}</li>
+                            <li>{% trans "Your booking will be confirmed after verification" %}</li>
+                        </ol>
+                    </div>
+                    {% elif 'gopay' in method_name %}
+                    <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
+                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fab fa-google-pay" style="color:var(--gold);margin-right:6px"></i>{% trans "GoPay Instructions" %}</h4>
+                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
+                            <li>{% trans "Open GoPay app on your phone" %}</li>
+                            <li>{% trans "Send payment to the healer's GoPay number" %}</li>
+                            <li>{% trans "Upload screenshot of the transfer confirmation" %}</li>
+                            <li>{% trans "Wait for healer to confirm payment" %}</li>
+                        </ol>
+                    </div>
+                    {% elif 'ovo' in method_name %}
+                    <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
+                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fas fa-wallet" style="color:var(--gold);margin-right:6px"></i>{% trans "OVO Instructions" %}</h4>
+                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
+                            <li>{% trans "Open OVO app on your phone" %}</li>
+                            <li>{% trans "Send payment to the healer's OVO number" %}</li>
+                            <li>{% trans "Upload screenshot of the transfer confirmation" %}</li>
+                            <li>{% trans "Wait for healer to confirm payment" %}</li>
+                        </ol>
+                    </div>
+                    {% elif 'dana' in method_name %}
+                    <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
+                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-right:6px"></i>{% trans "DANA Instructions" %}</h4>
+                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
+                            <li>{% trans "Open DANA app on your phone" %}</li>
+                            <li>{% trans "Send payment to the healer's DANA number" %}</li>
+                            <li>{% trans "Upload screenshot of the transfer confirmation" %}</li>
+                            <li>{% trans "Wait for healer to confirm payment" %}</li>
+                        </ol>
+                    </div>
+                    {% elif 'qris' in method_name %}
+                    <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
+                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fas fa-qrcode" style="color:var(--gold);margin-right:6px"></i>{% trans "QRIS Instructions" %}</h4>
+                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
+                            <li>{% trans "Scan the QR code with any QRIS-supported app" %}</li>
+                            <li>{% trans "Use GoPay, OVO, DANA, ShopeePay, or mobile banking" %}</li>
+                            <li>{% trans "Confirm the payment amount on your app" %}</li>
+                            <li>{% trans "Payment will be confirmed automatically" %}</li>
+                        </ol>
+                    </div>
+                    {% elif 'paypal' in method_name %}
+                    <div style="padding:12px;border-radius:var(--radius);background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.1)">
+                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fab fa-paypal" style="color:var(--info);margin-right:6px"></i>{% trans "PayPal Instructions" %}</h4>
+                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
+                            <li>{% trans "You will be redirected to PayPal" %}</li>
+                            <li>{% trans "Log in to your PayPal account" %}</li>
+                            <li>{% trans "Confirm payment amount and details" %}</li>
+                            <li>{% trans "Payment will be confirmed automatically" %}</li>
+                        </ol>
+                    </div>
+                    {% elif 'visa' in method_name or 'mastercard' in method_name %}
+                    <div style="padding:12px;border-radius:var(--radius);background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.1)">
+                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fab fa-cc-visa" style="color:var(--info);margin-right:6px"></i>{% trans "Card Payment Instructions" %}</h4>
+                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
+                            <li>{% trans "You will be redirected to PayPal secure checkout" %}</li>
+                            <li>{% trans "Enter your Visa or Mastercard details" %}</li>
+                            <li>{% trans "Complete 3D Secure verification if prompted" %}</li>
+                            <li>{% trans "Payment will be confirmed automatically" %}</li>
+                        </ol>
+                    </div>
+                    {% elif 'cash' in method_name %}
+                    <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
+                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fas fa-money-bill" style="color:var(--gold);margin-right:6px"></i>{% trans "Cash Payment Instructions" %}</h4>
+                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
+                            <li>{% trans "Booking confirmed — pay cash at the session" %}</li>
+                            <li>{% trans "Bring the exact amount if possible" %}</li>
+                            <li>{% trans "Healer will confirm payment receipt on-site" %}</li>
+                        </ol>
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+            {% endif %}
+
             {% if payment.status == 'pending' %}
-            <div class="card">
+            <div class="card" style="margin-bottom:16px">
                 <div class="card-header">
                     <h3><i class="fas fa-flask" style="color:var(--info)"></i> {% trans "Payment Simulation" %}</h3>
                 </div>

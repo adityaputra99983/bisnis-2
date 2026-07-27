@@ -164,46 +164,87 @@
                     {% endif %}
 
                     <div class="booking-actions">
-                        {% if booking.status == 'pending_payment' %}
-                        <a href="{% url 'payment_process' booking.booking_code %}" class="btn btn-gold"><i class="fas fa-credit-card"></i> {% trans "Pay Now" %}</a>
-                        <form method="POST" action="{% url 'booking_cancel' booking.booking_code %}" onsubmit="return confirm('{% trans "Cancel this booking?" %}')" style="display:inline">
-                            {% csrf_token %}
-                            <input type="hidden" name="reason" value="Cancelled by customer">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-xmark"></i> {% trans "Cancel" %}</button>
-                        </form>
-                        {% endif %}
+                        {% if is_healer_view %}
+                            {% if booking.status == 'pending_confirm' %}
+                            <form method="POST" action="{% url 'booking_confirm' booking.booking_code %}" style="display:inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-gold"><i class="fas fa-check"></i> {% trans "Confirm Booking" %}</button>
+                            </form>
+                            {% endif %}
 
-                        {% if booking.status == 'pending_confirm' %}
-                        <div style="padding:10px;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;font-size:12px;color:var(--gold)">
-                            <i class="fas fa-clock" style="margin-right:4px"></i>{% trans "Waiting for healer confirmation. Your payment is safe in escrow." %}
-                        </div>
-                        <form method="POST" action="{% url 'booking_cancel' booking.booking_code %}" onsubmit="return confirm('{% trans "Cancel this booking? Funds will be refunded." %}')" style="display:inline">
-                            {% csrf_token %}
-                            <input type="hidden" name="reason" value="Cancelled by customer before confirmation">
-                            <button type="submit" class="btn btn-danger"><i class="fas fa-xmark"></i> {% trans "Cancel" %}</button>
-                        </form>
-                        {% endif %}
+                            {% if booking.status == 'confirmed' %}
+                            <form method="POST" action="{% url 'booking_start_work' booking.booking_code %}" style="display:inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-gold"><i class="fas fa-play"></i> {% trans "Start Work" %}</button>
+                            </form>
+                            {% endif %}
 
-                        {% if booking.status == 'confirmed' %}
-                        <div style="padding:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;font-size:12px;color:var(--emerald-500)">
-                            <i class="fas fa-check-circle" style="margin-right:4px"></i>{% trans "Healer has confirmed. Awaiting work to begin." %}
-                        </div>
-                        {% endif %}
+                            {% if booking.status == 'in_progress' %}
+                            <form method="POST" action="{% url 'booking_complete_work' booking.booking_code %}" style="display:inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-gold"><i class="fas fa-check-double"></i> {% trans "Complete Work" %}</button>
+                            </form>
+                            {% endif %}
 
-                        {% if booking.status == 'in_progress' %}
-                        <div style="padding:10px;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;font-size:12px;color:var(--gold)">
-                            <i class="fas fa-spinner" style="margin-right:4px"></i>{% trans "Being worked on by healer." %}
-                        </div>
-                        {% endif %}
+                            {% if booking.status == 'pending_payment' %}
+                            <div style="padding:10px;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;font-size:12px;color:var(--gold)">
+                                <i class="fas fa-clock" style="margin-right:4px"></i>{% trans "Waiting for customer to complete payment." %}
+                            </div>
+                            {% endif %}
 
-                        {% if booking.status == 'completed' %}
-                        <div style="padding:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;font-size:12px;color:var(--emerald-500)">
-                            <i class="fas fa-check-double" style="margin-right:4px"></i>{% trans "Work completed. Funds have been released to healer." %}
-                        </div>
-                        {% endif %}
+                            {% if booking.status == 'completed' %}
+                            <div style="padding:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;font-size:12px;color:var(--emerald-500)">
+                                <i class="fas fa-check-double" style="margin-right:4px"></i>{% trans "Work completed. Funds have been released." %}
+                            </div>
+                            {% endif %}
 
-                        {% if booking.status == 'completed' and user.is_authenticated %}
-                        <a href="{% url 'chat_with_healer' booking.healer.id %}" class="btn btn-outline"><i class="fas fa-comments"></i> {% trans "Chat Healer" %}</a>
+                            {% if booking.status == 'cancelled' %}
+                            <div style="padding:10px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;font-size:12px;color:var(--red)">
+                                <i class="fas fa-xmark" style="margin-right:4px"></i>{% trans "This booking has been cancelled." %}
+                            </div>
+                            {% endif %}
+                        {% else %}
+                            {% if booking.status == 'pending_payment' %}
+                            <a href="{% url 'payment_process' booking.booking_code %}" class="btn btn-gold"><i class="fas fa-credit-card"></i> {% trans "Pay Now" %}</a>
+                            <form method="POST" action="{% url 'booking_cancel' booking.booking_code %}" onsubmit="return confirm('{% trans "Cancel this booking?" %}')" style="display:inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="reason" value="Cancelled by customer">
+                                <button type="submit" class="btn btn-danger"><i class="fas fa-xmark"></i> {% trans "Cancel" %}</button>
+                            </form>
+                            {% endif %}
+
+                            {% if booking.status == 'pending_confirm' %}
+                            <div style="padding:10px;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;font-size:12px;color:var(--gold)">
+                                <i class="fas fa-clock" style="margin-right:4px"></i>{% trans "Waiting for healer confirmation. Your payment is safe in escrow." %}
+                            </div>
+                            <form method="POST" action="{% url 'booking_cancel' booking.booking_code %}" onsubmit="return confirm('{% trans "Cancel this booking? Funds will be refunded." %}')" style="display:inline">
+                                {% csrf_token %}
+                                <input type="hidden" name="reason" value="Cancelled by customer before confirmation">
+                                <button type="submit" class="btn btn-danger"><i class="fas fa-xmark"></i> {% trans "Cancel" %}</button>
+                            </form>
+                            {% endif %}
+
+                            {% if booking.status == 'confirmed' %}
+                            <div style="padding:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;font-size:12px;color:var(--emerald-500)">
+                                <i class="fas fa-check-circle" style="margin-right:4px"></i>{% trans "Healer has confirmed. Awaiting work to begin." %}
+                            </div>
+                            {% endif %}
+
+                            {% if booking.status == 'in_progress' %}
+                            <div style="padding:10px;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;font-size:12px;color:var(--gold)">
+                                <i class="fas fa-spinner" style="margin-right:4px"></i>{% trans "Being worked on by healer." %}
+                            </div>
+                            {% endif %}
+
+                            {% if booking.status == 'completed' %}
+                            <div style="padding:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;font-size:12px;color:var(--emerald-500)">
+                                <i class="fas fa-check-double" style="margin-right:4px"></i>{% trans "Work completed. Funds have been released to healer." %}
+                            </div>
+                            {% endif %}
+
+                            {% if booking.status == 'completed' and user.is_authenticated %}
+                            <a href="{% url 'chat_with_healer' booking.healer.id %}" class="btn btn-outline"><i class="fas fa-comments"></i> {% trans "Chat Healer" %}</a>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>

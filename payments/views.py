@@ -24,6 +24,9 @@ def payment_process(request, booking_code):
     if booking.status not in ('pending_payment',):
         messages.info(request, _('Booking ini sudah diproses.'))
         return redirect('booking_detail', booking_code=booking_code)
+
+    from healers.models import HealerPaymentSetting
+    healer_settings, created = HealerPaymentSetting.objects.get_or_create(healer=booking.healer)
     payment_methods = PaymentMethod.objects.filter(is_active=True)
     currencies = get_all_currencies()
 
@@ -34,6 +37,7 @@ def payment_process(request, booking_code):
             'payment': existing_payment,
             'payment_methods': payment_methods,
             'currencies': currencies,
+            'healer_settings': healer_settings,
         })
 
     currency_code = booking.currency
@@ -48,6 +52,7 @@ def payment_process(request, booking_code):
         'currencies': currencies,
         'selected_currency': currency_code,
         'exchange_rate': exchange_rate,
+        'healer_settings': healer_settings,
     })
 
 
@@ -71,6 +76,32 @@ def create_payment(request, booking_code):
 
     payment_method = get_object_or_404(PaymentMethod, id=payment_method_id)
     currency_obj = Currency.objects.filter(code=currency_code).first()
+
+    from healers.models import HealerPaymentSetting
+    healer_settings, created = HealerPaymentSetting.objects.get_or_create(healer=booking.healer)
+
+    method_name = payment_method.name.lower()
+    method_key = None
+    if 'transfer' in method_name or 'bank' in method_name:
+        method_key = 'transfer'
+    elif 'gopay' in method_name:
+        method_key = 'gopay'
+    elif 'ovo' in method_name:
+        method_key = 'ovo'
+    elif 'dana' in method_name:
+        method_key = 'dana'
+    elif 'qris' in method_name:
+        method_key = 'qris'
+    elif 'paypal' in method_name:
+        method_key = 'paypal'
+    elif 'visa' in method_name or 'mastercard' in method_name:
+        method_key = 'visa_mc'
+    elif 'cash' in method_name:
+        method_key = 'cash'
+
+    if method_key and not healer_settings.is_method_accepted(method_key):
+        messages.error(request, _('Healer ini tidak menerima metode pembayaran tersebut.'))
+        return redirect('payment_process', booking_code=booking_code)
 
     amount_idr = booking.total_price_idr
     exchange_rate = 1.0
@@ -232,7 +263,7 @@ def currency_converter_api(request):
 
 @login_required
 def dashboard(request):
-    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
     if not profile.is_healer:
         messages.error(request, _('Anda tidak memiliki akses ke dashboard ini.'))
         return redirect('home')
