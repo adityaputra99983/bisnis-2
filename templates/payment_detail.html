@@ -40,132 +40,86 @@
 
             {# ========== INVOICE / RECEIPT ========== #}
             {% if payment.status == 'success' or payment.status == 'held' or payment.status == 'released' %}
-            <div class="card" style="margin-bottom:16px;border:1px solid rgba(52,211,153,0.3)" id="invoice-card">
+            <div class="card" style="margin-bottom:16px;border:1px solid rgba(52,211,153,0.3)">
                 <div class="card-header" style="background:rgba(52,211,153,0.05)">
                     <h3><i class="fas fa-file-invoice" style="color:var(--success)"></i> {% trans "Invoice / Receipt" %}</h3>
-                    <button onclick="window.print()" class="btn" style="font-size:11px;padding:4px 12px;border:1px solid var(--stone-600);border-radius:var(--radius);color:var(--stone-300);cursor:pointer;background:transparent">
-                        <i class="fas fa-print"></i> {% trans "Print" %}
+                    <button id="download-invoice-btn" onclick="downloadInvoice()" class="btn" style="font-size:11px;padding:6px 16px;border:1px solid var(--gold);border-radius:var(--radius);color:var(--gold);cursor:pointer;background:rgba(212,175,55,0.08);display:flex;align-items:center;gap:6px;transition:all 0.2s" onmouseover="this.style.background='rgba(212,175,55,0.18)'" onmouseout="this.style.background='rgba(212,175,55,0.08)'">
+                        <i class="fas fa-download"></i> {% trans "Download Invoice" %}
                     </button>
                 </div>
-                <div class="card-body" id="invoice-content">
-                    {# Invoice Header #}
-                    <div style="text-align:center;margin-bottom:20px;padding-bottom:16px;border-bottom:2px dashed var(--stone-700)">
-                        <div style="font-size:18px;font-weight:700;color:var(--gold);letter-spacing:1px">BALI HEALER</div>
-                        <div style="font-size:11px;color:var(--stone-500);margin-top:2px">{% trans "Spiritual Healing Marketplace" %}</div>
-                        <div style="font-size:20px;font-weight:800;color:var(--stone-200);margin-top:12px;letter-spacing:2px">{% trans "BUKTI PEMBAYARAN" %}</div>
-                        <div style="font-size:11px;color:var(--stone-500);margin-top:2px">{% trans "Payment Receipt" %}</div>
-                    </div>
-
-                    {# Invoice Status Badge #}
-                    <div style="text-align:center;margin-bottom:16px">
-                        {% if payment.status == 'success' %}
-                        <span style="display:inline-block;padding:6px 20px;border-radius:20px;background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);color:var(--success);font-size:12px;font-weight:600">
-                            <i class="fas fa-check-circle"></i> {% trans "PEMBAYARAN BERHASIL" %}
-                        </span>
-                        {% elif payment.status == 'held' %}
-                        <span style="display:inline-block;padding:6px 20px;border-radius:20px;background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.3);color:var(--warning);font-size:12px;font-weight:600">
-                            <i class="fas fa-lock"></i> {% trans "DANA DITAHAN (ESCROW)" %}
-                        </span>
-                        {% elif payment.status == 'released' %}
-                        <span style="display:inline-block;padding:6px 20px;border-radius:20px;background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.3);color:var(--info);font-size:12px;font-weight:600">
-                            <i class="fas fa-unlock"></i> {% trans "DANA TELAH DIRILIS" %}
-                        </span>
-                        {% endif %}
-                    </div>
-
-                    {# Invoice Info Grid #}
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
-                        <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                            <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Kode Pembayaran" %}</div>
-                            <div style="font-size:14px;font-weight:700;color:var(--gold);margin-top:2px">{{ payment.payment_code }}</div>
+                <div class="card-body" id="invoice-preview-body" style="padding:0">
+                    {# ---- Invoice preview (styled for screen) ---- #}
+                    <div style="padding:24px">
+                        <div style="text-align:center;margin-bottom:20px;padding-bottom:16px;border-bottom:2px dashed var(--stone-700)">
+                            <div style="font-size:22px;font-weight:800;color:var(--gold);letter-spacing:2px">BALI HEALER</div>
+                            <div style="font-size:11px;color:var(--stone-500);margin-top:2px">{% trans "Spiritual Healing Marketplace" %}</div>
+                            <div style="font-size:18px;font-weight:700;color:var(--stone-200);margin-top:14px;letter-spacing:3px">{% trans "BUKTI PEMBAYARAN" %}</div>
                         </div>
-                        <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                            <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Kode Booking" %}</div>
-                            <div style="font-size:14px;font-weight:700;color:var(--stone-200);margin-top:2px">{{ payment.booking.booking_code }}</div>
+                        <div style="text-align:center;margin-bottom:16px">
+                            {% if payment.status == 'success' %}
+                            <span style="display:inline-block;padding:6px 20px;border-radius:20px;background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);color:var(--success);font-size:12px;font-weight:600"><i class="fas fa-check-circle"></i> {% trans "PEMBAYARAN BERHASIL" %}</span>
+                            {% elif payment.status == 'held' %}
+                            <span style="display:inline-block;padding:6px 20px;border-radius:20px;background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.3);color:var(--warning);font-size:12px;font-weight:600"><i class="fas fa-lock"></i> {% trans "DANA DITAHAN (ESCROW)" %}</span>
+                            {% elif payment.status == 'released' %}
+                            <span style="display:inline-block;padding:6px 20px;border-radius:20px;background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.3);color:var(--info);font-size:12px;font-weight:600"><i class="fas fa-unlock"></i> {% trans "DANA TELAH DIRILIS" %}</span>
+                            {% endif %}
                         </div>
-                        <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                            <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Tanggal Pembayaran" %}</div>
-                            <div style="font-size:13px;font-weight:600;color:var(--stone-300);margin-top:2px">{{ payment.paid_at|date:"d M Y, H:i" }}</div>
-                        </div>
-                        <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                            <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Metode Pembayaran" %}</div>
-                            <div style="font-size:13px;font-weight:600;color:var(--stone-300);margin-top:2px">{{ payment.payment_method }}</div>
-                        </div>
-                    </div>
-
-                    {# Customer & Healer Info #}
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
-                        <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                            <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">{% trans "Customer" %}</div>
-                            <div style="font-size:13px;font-weight:600;color:var(--stone-200)">{{ payment.booking.customer_name }}</div>
-                            <div style="font-size:11px;color:var(--stone-500)">{{ payment.booking.customer_email }}</div>
-                            <div style="font-size:11px;color:var(--stone-500)">{{ payment.booking.customer_phone }}</div>
-                        </div>
-                        <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                            <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">{% trans "Healer" %}</div>
-                            <div style="font-size:13px;font-weight:600;color:var(--stone-200)">{{ payment.booking.healer.name }}</div>
-                            <div style="font-size:11px;color:var(--stone-500)">{{ payment.booking.healer.phone }}</div>
-                        </div>
-                    </div>
-
-                    {# Service Detail #}
-                    <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700);margin-bottom:16px">
-                        <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">{% trans "Detail Layanan" %}</div>
-                        <div style="font-size:14px;font-weight:600;color:var(--stone-200)">{{ payment.booking.service_type }}</div>
-                        <div style="font-size:12px;color:var(--stone-400);margin-top:4px">
-                            {% trans "Tanggal" %}: {{ payment.booking.booking_date|date:"d M Y" }} | {% trans "Jam" %}: {{ payment.booking.booking_time|time:"H:i" }}
-                        </div>
-                        {% if payment.booking.notes %}
-                        <div style="font-size:12px;color:var(--stone-400);margin-top:6px;padding-top:6px;border-top:1px solid var(--stone-700)">
-                            <strong>{% trans "Catatan" %}:</strong> {{ payment.booking.notes }}
-                        </div>
-                        {% endif %}
-                    </div>
-
-                    {# Amount Breakdown #}
-                    <div style="padding:14px;background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.15);border-radius:var(--radius);margin-bottom:16px">
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                            <span style="font-size:12px;color:var(--stone-400)">{% trans "Harga Layanan" %}</span>
-                            <span style="font-size:13px;color:var(--stone-300)">Rp {{ payment.amount_idr|floatformat:0 }}</span>
-                        </div>
-                        {% if payment.exchange_rate and payment.exchange_rate != 1 %}
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                            <span style="font-size:12px;color:var(--stone-400)">{% trans "Kurs" %}</span>
-                            <span style="font-size:12px;color:var(--stone-500)">x{{ payment.exchange_rate|floatformat:4 }}</span>
-                        </div>
-                        {% endif %}
-                        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px dashed var(--stone-600)">
-                            <span style="font-size:14px;font-weight:700;color:var(--stone-200)">{% trans "Total Dibayar" %}</span>
-                            <span style="font-size:18px;font-weight:800;color:var(--gold)">{{ currency_symbol }} {{ payment.amount_converted|floatformat:2 }}</span>
-                        </div>
-                    </div>
-
-                    {# Booking Status Info #}
-                    {% if payment.status == 'success' or payment.status == 'held' %}
-                    <div style="padding:12px 14px;background:rgba(251,191,36,0.05);border:1px solid rgba(251,191,36,0.15);border-radius:var(--radius);margin-bottom:12px">
-                        <div style="display:flex;align-items:center;gap:8px">
-                            <i class="fas fa-info-circle" style="color:var(--warning);font-size:14px"></i>
-                            <div>
-                                <div style="font-size:12px;font-weight:600;color:var(--stone-200)">{% trans "Status Booking" %}: {{ payment.booking.get_status_display }}</div>
-                                <div style="font-size:11px;color:var(--stone-400);margin-top:2px">
-                                    {% if payment.booking.status == 'pending_confirm' %}
-                                        {% trans "Pembayaran diterima. Healer akan segera mengkonfirmasi booking Anda." %}
-                                    {% elif payment.booking.status == 'confirmed' %}
-                                        {% trans "Booking dikonfirmasi. Healer siap melayani Anda." %}
-                                    {% else %}
-                                        {% trans "Menunggu konfirmasi dari healer." %}
-                                    {% endif %}
-                                </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+                            <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
+                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Kode Pembayaran" %}</div>
+                                <div style="font-size:14px;font-weight:700;color:var(--gold);margin-top:2px">{{ payment.payment_code }}</div>
+                            </div>
+                            <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
+                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Kode Booking" %}</div>
+                                <div style="font-size:14px;font-weight:700;color:var(--stone-200);margin-top:2px">{{ payment.booking.booking_code }}</div>
+                            </div>
+                            <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
+                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Tanggal Pembayaran" %}</div>
+                                <div style="font-size:13px;font-weight:600;color:var(--stone-300);margin-top:2px">{{ payment.paid_at|date:"d M Y, H:i" }}</div>
+                            </div>
+                            <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
+                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Metode Pembayaran" %}</div>
+                                <div style="font-size:13px;font-weight:600;color:var(--stone-300);margin-top:2px">{{ payment.payment_method }}</div>
                             </div>
                         </div>
-                    </div>
-                    {% endif %}
-
-                    {# Invoice Footer #}
-                    <div style="text-align:center;padding-top:16px;border-top:2px dashed var(--stone-700);margin-top:8px">
-                        <div style="font-size:10px;color:var(--stone-600)">{% trans "Invoice ini adalah bukti pembayaran yang sah" %}</div>
-                        <div style="font-size:10px;color:var(--stone-600);margin-top:2px">{% trans "Simpan atau cetak invoice ini untuk keperluan Anda" %}</div>
-                        <div style="font-size:10px;color:var(--stone-600);margin-top:4px">{{ payment.created_at|date:"d M Y, H:i:s" }}</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+                            <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
+                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">{% trans "Customer" %}</div>
+                                <div style="font-size:13px;font-weight:600;color:var(--stone-200)">{{ payment.booking.customer_name }}</div>
+                                <div style="font-size:11px;color:var(--stone-500)">{{ payment.booking.customer_email }}</div>
+                                <div style="font-size:11px;color:var(--stone-500)">{{ payment.booking.customer_phone }}</div>
+                            </div>
+                            <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
+                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">{% trans "Healer" %}</div>
+                                <div style="font-size:13px;font-weight:600;color:var(--stone-200)">{{ payment.booking.healer.name }}</div>
+                                <div style="font-size:11px;color:var(--stone-500)">{{ payment.booking.healer.phone }}</div>
+                            </div>
+                        </div>
+                        <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700);margin-bottom:16px">
+                            <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">{% trans "Detail Layanan" %}</div>
+                            <div style="font-size:14px;font-weight:600;color:var(--stone-200)">{{ payment.booking.service_type }}</div>
+                            <div style="font-size:12px;color:var(--stone-400);margin-top:4px">{% trans "Tanggal" %}: {{ payment.booking.booking_date|date:"d M Y" }} | {% trans "Jam" %}: {{ payment.booking.booking_time|time:"H:i" }}</div>
+                        </div>
+                        <div style="padding:14px;background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.15);border-radius:var(--radius);margin-bottom:12px">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                                <span style="font-size:12px;color:var(--stone-400)">{% trans "Harga Layanan" %}</span>
+                                <span style="font-size:13px;color:var(--stone-300)">Rp {{ payment.amount_idr|floatformat:0 }}</span>
+                            </div>
+                            {% if payment.exchange_rate and payment.exchange_rate != 1 %}
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                                <span style="font-size:12px;color:var(--stone-400)">{% trans "Kurs" %}</span>
+                                <span style="font-size:12px;color:var(--stone-500)">x{{ payment.exchange_rate|floatformat:4 }}</span>
+                            </div>
+                            {% endif %}
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px dashed var(--stone-600)">
+                                <span style="font-size:14px;font-weight:700;color:var(--stone-200)">{% trans "Total Dibayar" %}</span>
+                                <span style="font-size:20px;font-weight:800;color:var(--gold)">{{ currency_symbol }} {{ payment.amount_converted|floatformat:2 }}</span>
+                            </div>
+                        </div>
+                        <div style="text-align:center;padding-top:16px;border-top:2px dashed var(--stone-700);margin-top:8px">
+                            <div style="font-size:10px;color:var(--stone-600)">{% trans "Invoice ini adalah bukti pembayaran yang sah" %}</div>
+                            <div style="font-size:10px;color:var(--stone-600);margin-top:4px">{{ payment.created_at|date:"d M Y, H:i:s" }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -181,7 +135,6 @@
                     {% with method_name=payment.payment_method.name|lower %}
                     {% if 'transfer' in method_name or 'bank' in method_name %}
                     <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
-                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fas fa-building-columns" style="color:var(--gold);margin-right:6px"></i>{% trans "Bank Transfer Instructions" %}</h4>
                         <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
                             <li>{% trans "Transfer to the healer's bank account" %}</li>
                             <li>{% trans "Upload your transfer proof (screenshot/receipt)" %}</li>
@@ -191,7 +144,6 @@
                     </div>
                     {% elif 'gopay' in method_name %}
                     <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
-                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fab fa-google-pay" style="color:var(--gold);margin-right:6px"></i>{% trans "GoPay Instructions" %}</h4>
                         <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
                             <li>{% trans "Open GoPay app on your phone" %}</li>
                             <li>{% trans "Send payment to the healer's GoPay number" %}</li>
@@ -199,63 +151,20 @@
                             <li>{% trans "Wait for healer to confirm payment" %}</li>
                         </ol>
                     </div>
-                    {% elif 'ovo' in method_name %}
-                    <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
-                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fas fa-wallet" style="color:var(--gold);margin-right:6px"></i>{% trans "OVO Instructions" %}</h4>
-                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
-                            <li>{% trans "Open OVO app on your phone" %}</li>
-                            <li>{% trans "Send payment to the healer's OVO number" %}</li>
-                            <li>{% trans "Upload screenshot of the transfer confirmation" %}</li>
-                            <li>{% trans "Wait for healer to confirm payment" %}</li>
-                        </ol>
-                    </div>
-                    {% elif 'dana' in method_name %}
-                    <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
-                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-right:6px"></i>{% trans "DANA Instructions" %}</h4>
-                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
-                            <li>{% trans "Open DANA app on your phone" %}</li>
-                            <li>{% trans "Send payment to the healer's DANA number" %}</li>
-                            <li>{% trans "Upload screenshot of the transfer confirmation" %}</li>
-                            <li>{% trans "Wait for healer to confirm payment" %}</li>
-                        </ol>
-                    </div>
                     {% elif 'qris' in method_name %}
                     <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
-                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fas fa-qrcode" style="color:var(--gold);margin-right:6px"></i>{% trans "QRIS Instructions" %}</h4>
                         <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
                             <li>{% trans "Scan the QR code with any QRIS-supported app" %}</li>
-                            <li>{% trans "Use GoPay, OVO, DANA, ShopeePay, or mobile banking" %}</li>
                             <li>{% trans "Confirm the payment amount on your app" %}</li>
                             <li>{% trans "Payment will be confirmed automatically" %}</li>
                         </ol>
                     </div>
                     {% elif 'paypal' in method_name %}
                     <div style="padding:12px;border-radius:var(--radius);background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.1)">
-                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fab fa-paypal" style="color:var(--info);margin-right:6px"></i>{% trans "PayPal Instructions" %}</h4>
                         <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
                             <li>{% trans "You will be redirected to PayPal" %}</li>
-                            <li>{% trans "Log in to your PayPal account" %}</li>
                             <li>{% trans "Confirm payment amount and details" %}</li>
                             <li>{% trans "Payment will be confirmed automatically" %}</li>
-                        </ol>
-                    </div>
-                    {% elif 'visa' in method_name or 'mastercard' in method_name %}
-                    <div style="padding:12px;border-radius:var(--radius);background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.1)">
-                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fab fa-cc-visa" style="color:var(--info);margin-right:6px"></i>{% trans "Card Payment Instructions" %}</h4>
-                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
-                            <li>{% trans "You will be redirected to PayPal secure checkout" %}</li>
-                            <li>{% trans "Enter your Visa or Mastercard details" %}</li>
-                            <li>{% trans "Complete 3D Secure verification if prompted" %}</li>
-                            <li>{% trans "Payment will be confirmed automatically" %}</li>
-                        </ol>
-                    </div>
-                    {% elif 'cash' in method_name %}
-                    <div style="padding:12px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
-                        <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:10px"><i class="fas fa-money-bill" style="color:var(--gold);margin-right:6px"></i>{% trans "Cash Payment Instructions" %}</h4>
-                        <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:2">
-                            <li>{% trans "Booking confirmed — pay cash at the session" %}</li>
-                            <li>{% trans "Bring the exact amount if possible" %}</li>
-                            <li>{% trans "Healer will confirm payment receipt on-site" %}</li>
                         </ol>
                     </div>
                     {% endif %}
@@ -326,29 +235,221 @@
         </div>
     </div>
 </section>
+{# ===== HIDDEN INVOICE FOR PDF GENERATION ===== #}
+{% if payment.status == 'success' or payment.status == 'held' or payment.status == 'released' %}
+<div id="invoice-pdf-source" style="position:fixed;left:-9999px;top:0;width:794px;background:#fff;font-family:'Segoe UI',Arial,sans-serif;z-index:-1">
+    <table style="width:794px;min-height:1123px;border-collapse:collapse;background:#fff">
+        <tr>
+            {# LEFT DARK SIDEBAR #}
+            <td style="width:240px;vertical-align:top;background:linear-gradient(180deg,#1c1508 0%,#0d0b05 100%);padding:44px 28px;color:#e8d5a3">
 
-<style>
-@media print {
-    body * { visibility: hidden; }
-    #invoice-card, #invoice-card * { visibility: visible; }
-    #invoice-card {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        border: none !important;
-        box-shadow: none !important;
-        margin: 0 !important;
-        padding: 20px !important;
-    }
-    .page-header, .card:not(#invoice-card), button, .btn, a { display: none !important; }
-    .payment-detail-layout { display: block !important; }
-    #invoice-content { background: white !important; color: #333 !important; }
-    #invoice-content div, #invoice-content span, #invoice-content strong, #invoice-content p, #invoice-content h4, #invoice-content h3, #invoice-content small, #invoice-content li {
-        color: #333 !important;
-        background: transparent !important;
-        border-color: #ccc !important;
-    }
+                {# Logo #}
+                <div style="margin-bottom:36px">
+                    <div style="font-size:28px;font-weight:900;color:#D4AF37;letter-spacing:4px;line-height:1.1">BALI</div>
+                    <div style="font-size:28px;font-weight:900;color:#D4AF37;letter-spacing:4px;line-height:1.1">HEALER</div>
+                    <div style="width:36px;height:3px;background:#D4AF37;margin:10px 0 8px"></div>
+                    <div style="font-size:8px;color:#9a7d40;letter-spacing:1.5px;text-transform:uppercase;line-height:1.6">SPIRITUAL HEALING<br>MARKETPLACE</div>
+                </div>
+
+                {# Gold divider #}
+                <div style="width:100%;height:1px;background:#3a2e10;margin-bottom:28px"></div>
+
+                {# Status #}
+                <div style="margin-bottom:24px">
+                    <div style="font-size:8px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px">STATUS</div>
+                    {% if payment.status == 'success' %}
+                    <div style="background:#16a34a;color:#fff;padding:6px 10px;border-radius:5px;font-size:10px;font-weight:700;text-align:center;letter-spacing:1px">✓ LUNAS</div>
+                    {% elif payment.status == 'held' %}
+                    <div style="background:#d97706;color:#fff;padding:6px 10px;border-radius:5px;font-size:10px;font-weight:700;text-align:center;letter-spacing:1px">⏳ ESCROW</div>
+                    {% elif payment.status == 'released' %}
+                    <div style="background:#2563eb;color:#fff;padding:6px 10px;border-radius:5px;font-size:10px;font-weight:700;text-align:center;letter-spacing:1px">✓ RELEASED</div>
+                    {% endif %}
+                </div>
+
+                {# Invoice No #}
+                <div style="margin-bottom:22px">
+                    <div style="font-size:8px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px">NO. INVOICE</div>
+                    <div style="font-size:11px;font-weight:700;color:#D4AF37;word-break:break-all;line-height:1.4">{{ payment.payment_code }}</div>
+                </div>
+
+                {# Booking Code #}
+                <div style="margin-bottom:22px">
+                    <div style="font-size:8px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px">KODE BOOKING</div>
+                    <div style="font-size:12px;font-weight:600;color:#e8d5a3">{{ payment.booking.booking_code }}</div>
+                </div>
+
+                {# Date #}
+                <div style="margin-bottom:22px">
+                    <div style="font-size:8px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px">TANGGAL BAYAR</div>
+                    <div style="font-size:12px;color:#c4a55a;font-weight:600">{{ payment.paid_at|date:"d M Y" }}</div>
+                    <div style="font-size:10px;color:#8a7040">{{ payment.paid_at|date:"H:i" }} WIB</div>
+                </div>
+
+                {# Payment Method #}
+                <div style="margin-bottom:22px">
+                    <div style="font-size:8px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px">METODE PEMBAYARAN</div>
+                    <div style="font-size:11px;color:#c4a55a;font-weight:600">{{ payment.payment_method }}</div>
+                </div>
+
+                {# Footer note #}
+                <div style="margin-top:40px;padding-top:16px;border-top:1px solid #2a2010">
+                    <div style="font-size:8px;color:#4a3d18;line-height:1.7">Dokumen ini adalah bukti pembayaran resmi yang dikeluarkan oleh platform Bali Healer.</div>
+                    <div style="font-size:7px;color:#3a2e10;margin-top:6px">{{ payment.created_at|date:"d M Y, H:i:s" }}</div>
+                </div>
+            </td>
+
+            {# RIGHT MAIN CONTENT #}
+            <td style="vertical-align:top;padding:44px 40px;background:#fff;color:#1a1a1a">
+
+                {# Top gold accent bar #}
+                <div style="height:6px;background:linear-gradient(90deg,#D4AF37,#f5d876,#D4AF37);border-radius:3px;margin-bottom:28px"></div>
+
+                {# Invoice title #}
+                <div style="margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid #f0ead8">
+                    <div style="font-size:8px;color:#bbb;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px">BUKTI PEMBAYARAN RESMI</div>
+                    <div style="font-size:32px;font-weight:900;color:#1a1a1a;letter-spacing:2px">INVOICE</div>
+                </div>
+
+                {# From / To #}
+                <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+                    <tr>
+                        <td style="width:50%;vertical-align:top;padding-right:16px">
+                            <div style="font-size:8px;color:#999;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e8d5a3">DARI (HEALER)</div>
+                            <div style="font-size:14px;font-weight:700;color:#1a1a1a">{{ payment.booking.healer.name }}</div>
+                            <div style="font-size:10px;color:#555;margin-top:3px">{{ payment.booking.healer.phone }}</div>
+                        </td>
+                        <td style="width:50%;vertical-align:top;padding-left:16px">
+                            <div style="font-size:8px;color:#999;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e8d5a3">KEPADA (CUSTOMER)</div>
+                            <div style="font-size:14px;font-weight:700;color:#1a1a1a">{{ payment.booking.customer_name }}</div>
+                            <div style="font-size:10px;color:#555;margin-top:3px">{{ payment.booking.customer_email }}</div>
+                            <div style="font-size:10px;color:#555">{{ payment.booking.customer_phone }}</div>
+                        </td>
+                    </tr>
+                </table>
+
+                {# Service table #}
+                <table style="width:100%;border-collapse:collapse;margin-bottom:20px">
+                    <thead>
+                        <tr style="background:#f8f4e8">
+                            <th style="padding:10px 12px;text-align:left;font-size:8px;color:#8a7040;text-transform:uppercase;letter-spacing:1.5px;border-bottom:2px solid #D4AF37;border-top:1px solid #e8d5a3">DESKRIPSI LAYANAN</th>
+                            <th style="padding:10px 12px;text-align:center;font-size:8px;color:#8a7040;text-transform:uppercase;letter-spacing:1.5px;border-bottom:2px solid #D4AF37;border-top:1px solid #e8d5a3;width:110px">TANGGAL & JAM</th>
+                            <th style="padding:10px 12px;text-align:right;font-size:8px;color:#8a7040;text-transform:uppercase;letter-spacing:1.5px;border-bottom:2px solid #D4AF37;border-top:1px solid #e8d5a3;width:120px">JUMLAH (IDR)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:14px 12px;border-bottom:1px solid #f0e8d0;vertical-align:top">
+                                <div style="font-size:13px;font-weight:700;color:#1a1a1a">{{ payment.booking.service_type }}</div>
+                                <div style="font-size:10px;color:#777;margin-top:3px">Sesi dengan {{ payment.booking.healer.name }}</div>
+                            </td>
+                            <td style="padding:14px 12px;text-align:center;border-bottom:1px solid #f0e8d0;vertical-align:top">
+                                <div style="font-size:11px;color:#444;font-weight:600">{{ payment.booking.booking_date|date:"d M Y" }}</div>
+                                <div style="font-size:10px;color:#888">{{ payment.booking.booking_time|time:"H:i" }}</div>
+                            </td>
+                            <td style="padding:14px 12px;text-align:right;border-bottom:1px solid #f0e8d0;vertical-align:top">
+                                <div style="font-size:13px;font-weight:700;color:#1a1a1a">{{ payment.amount_idr|floatformat:0 }}</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                {# Totals — right-aligned #}
+                <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+                    <tr>
+                        <td style="width:55%"></td>
+                        <td style="width:45%">
+                            <table style="width:100%;border-collapse:collapse">
+                                <tr>
+                                    <td style="padding:6px 0;font-size:11px;color:#666;border-bottom:1px solid #eee">Subtotal</td>
+                                    <td style="padding:6px 0;font-size:11px;color:#333;text-align:right;border-bottom:1px solid #eee">Rp {{ payment.amount_idr|floatformat:0 }}</td>
+                                </tr>
+                                {% if payment.exchange_rate and payment.exchange_rate != 1 %}
+                                <tr>
+                                    <td style="padding:6px 0;font-size:11px;color:#666;border-bottom:1px solid #eee">Kurs ({{ currency_code }})</td>
+                                    <td style="padding:6px 0;font-size:11px;color:#333;text-align:right;border-bottom:1px solid #eee">x{{ payment.exchange_rate|floatformat:4 }}</td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <td colspan="2" style="padding:0">
+                                        <table style="width:100%;border-collapse:collapse;background:#1c1508;border-radius:8px;margin-top:10px">
+                                            <tr>
+                                                <td style="padding:12px 16px;font-size:12px;font-weight:700;color:#e8d5a3">TOTAL DIBAYAR</td>
+                                                <td style="padding:12px 16px;text-align:right;font-size:20px;font-weight:900;color:#D4AF37">{{ currency_symbol }} {{ payment.amount_converted|floatformat:2 }}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                {# Thank you note #}
+                <div style="padding:16px 20px;background:#fdf9f0;border-left:4px solid #D4AF37;border-radius:0 8px 8px 0;margin-top:8px">
+                    <div style="font-size:13px;font-weight:700;color:#8a6820;margin-bottom:5px">Terima kasih atas kepercayaan Anda!</div>
+                    <div style="font-size:10px;color:#a08030;line-height:1.7">Semoga sesi healing Anda membawa kedamaian dan kesembuhan. Bali Healer siap melayani Anda kapan saja.</div>
+                </div>
+
+                {# Bottom footer #}
+                <div style="margin-top:32px;padding-top:14px;border-top:1px dashed #e0d4b0;text-align:center">
+                    <div style="font-size:8px;color:#bbb;letter-spacing:1px">Invoice ini adalah bukti pembayaran yang sah • balihealer.com</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endif %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function downloadInvoice() {
+    var btn = document.getElementById('download-invoice-btn');
+    var source = document.getElementById('invoice-pdf-source');
+    if (!source) return;
+
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyiapkan PDF...';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+
+    // Temporarily bring into render range
+    source.style.left = '0';
+    source.style.top = '-9999px';
+    source.style.zIndex = '-1';
+
+    setTimeout(function() {
+        html2canvas(source, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#ffffff',
+            width: 794,
+            windowWidth: 794,
+            logging: false
+        }).then(function(canvas) {
+            source.style.left = '-9999px';
+            source.style.top = '0';
+
+            var { jsPDF } = window.jspdf;
+            var pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+            var imgData = canvas.toDataURL('image/jpeg', 0.97);
+            var pdfW = pdf.internal.pageSize.getWidth();
+            var pdfH = (canvas.height * pdfW) / canvas.width;
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH);
+            pdf.save('Invoice-{{ payment.payment_code }}.pdf');
+
+            btn.innerHTML = '<i class="fas fa-download"></i> Download Invoice';
+            btn.disabled = false;
+            btn.style.opacity = '1';
+        }).catch(function(err) {
+            source.style.left = '-9999px';
+            console.error(err);
+            btn.innerHTML = '<i class="fas fa-download"></i> Download Invoice';
+            btn.disabled = false;
+            btn.style.opacity = '1';
+        });
+    }, 100);
 }
-</style>
+</script>
+
 {% endblock %}
