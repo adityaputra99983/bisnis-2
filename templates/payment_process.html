@@ -123,16 +123,56 @@
                                 </div>
                             </div>
 
-                            <div id="method-sop" style="margin:12px 0;padding:14px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1);display:none">
-                                <div id="sop-transfer" style="display:none">
-                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-building-columns" style="color:var(--gold);margin-right:6px"></i>{% trans "Bank Transfer SOP" %}</h4>
-                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
-                                        <li>{% trans "Transfer to the bank account shown below" %}</li>
-                                        <li>{% trans "Upload transfer proof (screenshot/receipt)" %}</li>
-                                        <li>{% trans "Wait for healer to verify and confirm" %}</li>
-                                        <li>{% trans "Booking status updates automatically" %}</li>
-                                    </ol>
+                            {# Bank selector for transfer methods #}
+                            <div id="bank-selector" style="margin:12px 0;display:none">
+                                <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-building-columns" style="color:var(--gold);margin-right:6px"></i>{% trans "Pilih Bank" %}</h4>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                                    {% for bs in bank_tx_settings %}
+                                    <label class="bank-option-label" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--stone-700);border-radius:var(--radius);cursor:pointer;transition:border-color 0.2s" data-bank="{{ bs.bank_code }}">
+                                        <input type="radio" name="selected_bank" value="{{ bs.bank_code }}" style="accent-color:var(--gold)" onchange="showBankSop('{{ bs.bank_code }}')">
+                                        <div>
+                                            <strong style="font-size:12px;color:var(--stone-200)">{{ bs.bank_code }}</strong>
+                                            <small style="display:block;font-size:10px;color:var(--stone-500)">{{ bs.get_methods_display }}</small>
+                                        </div>
+                                    </label>
+                                    {% endfor %}
                                 </div>
+                            </div>
+
+                            {# Bank-specific SOP display #}
+                            <div id="bank-sop-container" style="margin:12px 0;display:none">
+                                {% for bs in bank_tx_settings %}
+                                <div id="bank-sop-{{ bs.bank_code }}" style="display:none;padding:14px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1)">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px">
+                                        <i class="fas fa-building-columns" style="color:var(--gold);margin-right:6px"></i>
+                                        {% trans "Cara Pembayaran" %} {{ bs.bank_code }}
+                                    </h4>
+                                    {% if bs.account_number %}
+                                    <div style="margin-bottom:10px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:6px">
+                                        <div style="font-size:11px;color:var(--stone-500)">{% trans "Nomor Rekening" %}</div>
+                                        <div style="font-size:16px;font-weight:700;color:var(--gold);letter-spacing:1px">{{ bs.account_number }}</div>
+                                        {% if bs.account_name %}
+                                        <div style="font-size:11px;color:var(--stone-400)">{{ bs.account_name }}{% if bs.branch %} — {{ bs.branch }}{% endif %}</div>
+                                        {% endif %}
+                                        {% if bs.admin_fee %}
+                                        <div style="font-size:10px;color:var(--stone-500);margin-top:2px">{% trans "Admin" %}: Rp {{ bs.admin_fee|floatformat:0 }}</div>
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
+                                    {% if bs.sop_transfer %}
+                                    <div style="font-size:12px;color:var(--stone-400);line-height:1.8;white-space:pre-line">{{ bs.sop_transfer }}</div>
+                                    {% endif %}
+                                    {% if bs.sop_va %}
+                                    <div style="font-size:12px;color:var(--stone-400);line-height:1.8;white-space:pre-line;margin-top:8px;padding-top:8px;border-top:1px solid var(--stone-700)">{{ bs.sop_va }}</div>
+                                    {% endif %}
+                                    {% if bs.sop_qris %}
+                                    <div style="font-size:12px;color:var(--stone-400);line-height:1.8;white-space:pre-line;margin-top:8px;padding-top:8px;border-top:1px solid var(--stone-700)">{{ bs.sop_qris }}</div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div id="method-sop" style="margin:12px 0;padding:14px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1);display:none">
                                 <div id="sop-gopay" style="display:none">
                                     <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fab fa-google-pay" style="color:var(--gold);margin-right:6px"></i>{% trans "GoPay SOP" %}</h4>
                                     <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
@@ -245,34 +285,76 @@
     });
 
     var sopContainer = document.getElementById('method-sop');
+    var bankSelector = document.getElementById('bank-selector');
+    var bankSopContainer = document.getElementById('bank-sop-container');
     var radios = document.querySelectorAll('input[name="payment_method"]');
+
+    function isBankTransfer(name) {
+        return name.indexOf('transfer') !== -1 || name.indexOf('bank') !== -1;
+    }
 
     function showSop() {
         var selected = document.querySelector('input[name="payment_method"]:checked');
         if (!selected) return;
         var methodName = selected.getAttribute('data-method-name') || '';
-        sopContainer.style.display = 'block';
 
-        var allSops = sopContainer.querySelectorAll('div[id^="sop-"]');
-        allSops.forEach(function(el) { el.style.display = 'none'; });
+        // Hide bank selector and bank SOP by default
+        if (bankSelector) bankSelector.style.display = 'none';
+        if (bankSopContainer) bankSopContainer.style.display = 'none';
+        document.querySelectorAll('#bank-sop-container > div').forEach(function(el) { el.style.display = 'none'; });
 
-        var sopId = 'sop-' + methodName.replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_');
-        var sopEl = document.getElementById(sopId);
-        if (!sopEl) {
-            if (methodName.indexOf('gopay') !== -1) sopEl = document.getElementById('sop-gopay');
-            else if (methodName.indexOf('ovo') !== -1) sopEl = document.getElementById('sop-ovo');
-            else if (methodName.indexOf('dana') !== -1) sopEl = document.getElementById('sop-dana');
-            else if (methodName.indexOf('qris') !== -1) sopEl = document.getElementById('sop-qris');
-            else if (methodName.indexOf('paypal') !== -1) sopEl = document.getElementById('sop-paypal');
-            else if (methodName.indexOf('visa') !== -1 || methodName.indexOf('mastercard') !== -1) sopEl = document.getElementById('sop-visa_mc');
-            else if (methodName.indexOf('cash') !== -1) sopEl = document.getElementById('sop-cash');
-            else if (methodName.indexOf('transfer') !== -1 || methodName.indexOf('bank') !== -1) sopEl = document.getElementById('sop-transfer');
+        if (isBankTransfer(methodName) && bankSelector) {
+            // Show bank selector for transfer methods
+            bankSelector.style.display = 'block';
+            sopContainer.style.display = 'none';
+            var selectedBank = document.querySelector('input[name="selected_bank"]:checked');
+            if (selectedBank) {
+                showBankSop(selectedBank.value);
+            }
+        } else {
+            // Show normal SOP for e-wallet, QRIS, etc.
+            sopContainer.style.display = 'block';
+            var allSops = sopContainer.querySelectorAll('div[id^="sop-"]');
+            allSops.forEach(function(el) { el.style.display = 'none'; });
+
+            var sopId = 'sop-' + methodName.replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_');
+            var sopEl = document.getElementById(sopId);
+            if (!sopEl) {
+                if (methodName.indexOf('gopay') !== -1) sopEl = document.getElementById('sop-gopay');
+                else if (methodName.indexOf('ovo') !== -1) sopEl = document.getElementById('sop-ovo');
+                else if (methodName.indexOf('dana') !== -1) sopEl = document.getElementById('sop-dana');
+                else if (methodName.indexOf('qris') !== -1) sopEl = document.getElementById('sop-qris');
+                else if (methodName.indexOf('paypal') !== -1) sopEl = document.getElementById('sop-paypal');
+                else if (methodName.indexOf('visa') !== -1 || methodName.indexOf('mastercard') !== -1) sopEl = document.getElementById('sop-visa_mc');
+                else if (methodName.indexOf('cash') !== -1) sopEl = document.getElementById('sop-cash');
+            }
+            if (sopEl) sopEl.style.display = 'block';
         }
-        if (sopEl) sopEl.style.display = 'block';
     }
+
+    // Make showBankSop global
+    window.showBankSop = function(bankCode) {
+        if (!bankSopContainer) return;
+        bankSopContainer.style.display = 'block';
+        document.querySelectorAll('#bank-sop-container > div').forEach(function(el) { el.style.display = 'none'; });
+        var sopEl = document.getElementById('bank-sop-' + bankCode);
+        if (sopEl) sopEl.style.display = 'block';
+
+        // Highlight selected bank label
+        document.querySelectorAll('.bank-option-label').forEach(function(el) {
+            el.style.borderColor = el.getAttribute('data-bank') === bankCode ? 'var(--gold)' : 'var(--stone-700)';
+        });
+    };
 
     radios.forEach(function(radio) {
         radio.addEventListener('change', showSop);
+    });
+
+    // Also handle bank selection
+    document.querySelectorAll('input[name="selected_bank"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            window.showBankSop(this.value);
+        });
     });
 
     showSop();

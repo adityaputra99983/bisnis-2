@@ -288,6 +288,7 @@ def healer_message_detail(request, profile, healer, msg_id):
 
 @require_healer_profile
 def healer_payments(request, profile, healer):
+    from healers.models import HealerPaymentSetting, BankTransactionSetting, BANK_CHOICES
     settings, _created = HealerPaymentSetting.objects.get_or_create(healer=healer)
     if request.method == 'POST':
         settings.bank_name = request.POST.get('bank_name', '')
@@ -297,18 +298,42 @@ def healer_payments(request, profile, healer):
         settings.gopay_number = request.POST.get('gopay_number', '')
         settings.ovo_number = request.POST.get('ovo_number', '')
         settings.dana_number = request.POST.get('dana_number', '')
+        settings.shopeepay_number = request.POST.get('shopeepay_number', '')
+        settings.linkaja_number = request.POST.get('linkaja_number', '')
+        settings.isaku_number = request.POST.get('isaku_number', '')
         settings.qris_merchant_name = request.POST.get('qris_merchant_name', '')
         settings.qris_id = request.POST.get('qris_id', '')
         settings.paypal_email = request.POST.get('paypal_email', '')
         settings.visa_mc_enabled = 'visa_mc_enabled' in request.POST
+        # Payment Gateway
+        settings.payment_gateway = request.POST.get('payment_gateway', 'manual')
+        settings.pg_midtrans_server_key = request.POST.get('pg_midtrans_server_key', '')
+        settings.pg_midtrans_client_key = request.POST.get('pg_midtrans_client_key', '')
+        settings.pg_midtrans_merchant_id = request.POST.get('pg_midtrans_merchant_id', '')
+        settings.pg_xendit_secret_key = request.POST.get('pg_xendit_secret_key', '')
+        settings.pg_xendit_api_key = request.POST.get('pg_xendit_api_key', '')
+        settings.pg_doku_client_key = request.POST.get('pg_doku_client_key', '')
+        settings.pg_doku_merchant_id = request.POST.get('pg_doku_merchant_id', '')
+        settings.pg_tripay_api_key = request.POST.get('pg_tripay_api_key', '')
+        settings.pg_tripay_private_key = request.POST.get('pg_tripay_private_key', '')
+        settings.pg_tripay_merchant_code = request.POST.get('pg_tripay_merchant_code', '')
+        # VA Bank
+        settings.va_bank_enabled = 'va_bank_enabled' in request.POST
+        va_banks_list = request.POST.getlist('va_banks')
+        settings.va_banks = ','.join(va_banks_list)
+        # Accept toggles
         settings.accept_cash = 'accept_cash' in request.POST
         settings.accept_transfer = 'accept_transfer' in request.POST
         settings.accept_gopay = 'accept_gopay' in request.POST
         settings.accept_ovo = 'accept_ovo' in request.POST
         settings.accept_dana = 'accept_dana' in request.POST
+        settings.accept_shopeepay = 'accept_shopeepay' in request.POST
+        settings.accept_linkaja = 'accept_linkaja' in request.POST
+        settings.accept_isaku = 'accept_isaku' in request.POST
         settings.accept_qris = 'accept_qris' in request.POST
         settings.accept_paypal = 'accept_paypal' in request.POST
         settings.accept_visa_mc = 'accept_visa_mc' in request.POST
+        # Security settings
         min_payment = request.POST.get('min_payment_idr', '0')
         try:
             settings.min_payment_idr = decimal.Decimal(min_payment.strip())
@@ -330,9 +355,68 @@ def healer_payments(request, profile, healer):
         settings.enable_refund = 'enable_refund' in request.POST
         settings.require_proof = 'require_proof' in request.POST
         settings.save()
+
+        # Save per-bank transaction settings
+        for bank_code, bank_label in BANK_CHOICES:
+            is_active = f'bt_active_{bank_code}' in request.POST
+            account_number = request.POST.get(f'bt_account_{bank_code}', '')
+            account_name = request.POST.get(f'bt_name_{bank_code}', '')
+            branch = request.POST.get(f'bt_branch_{bank_code}', '')
+            accept_va = f'bt_va_{bank_code}' in request.POST
+            accept_transfer = f'bt_transfer_{bank_code}' in request.POST
+            accept_qris = f'bt_qris_{bank_code}' in request.POST
+            va_code = request.POST.get(f'bt_vacode_{bank_code}', '')
+            admin_fee = request.POST.get(f'bt_admin_{bank_code}', '0')
+            timeout_min = request.POST.get(f'bt_timeout_{bank_code}', '60')
+            sop_va = request.POST.get(f'bt_sop_va_{bank_code}', '')
+            sop_transfer = request.POST.get(f'bt_sop_transfer_{bank_code}', '')
+            sop_qris = request.POST.get(f'bt_sop_qris_{bank_code}', '')
+            auto_cancel = f'bt_autocancel_{bank_code}' in request.POST
+
+            try:
+                admin_fee_val = decimal.Decimal(admin_fee.strip())
+            except (decimal.InvalidOperation, ValueError, TypeError):
+                admin_fee_val = 0
+            try:
+                timeout_val = int(timeout_min)
+            except (ValueError, TypeError):
+                timeout_val = 60
+
+            if is_active or account_number or sop_va or sop_transfer:
+                bs, _ = BankTransactionSetting.objects.update_or_create(
+                    healer=healer, bank_code=bank_code,
+                    defaults={
+                        'is_active': is_active,
+                        'account_number': account_number,
+                        'account_name': account_name,
+                        'branch': branch,
+                        'accept_va': accept_va,
+                        'accept_transfer': accept_transfer,
+                        'accept_qris': accept_qris,
+                        'va_code': va_code,
+                        'admin_fee': admin_fee_val,
+                        'payment_timeout_minutes': timeout_val,
+                        'sop_va': sop_va,
+                        'sop_transfer': sop_transfer,
+                        'sop_qris': sop_qris,
+                        'auto_cancel': auto_cancel,
+                    }
+                )
+            else:
+                BankTransactionSetting.objects.filter(healer=healer, bank_code=bank_code).delete()
+
         messages.success(request, _('Pengaturan pembayaran berhasil diperbarui.'))
         return redirect('healer_payments')
-    return render(request, 'healer_payments.html', {'healer': healer, 'settings': settings})
+
+    # GET: build bank_settings_dict for template
+    bank_settings_qs = BankTransactionSetting.objects.filter(healer=healer)
+    bank_settings_dict = {bs.bank_code: bs for bs in bank_settings_qs}
+    return render(request, 'healer_payments.html', {
+        'healer': healer,
+        'settings': settings,
+        'bank_choices': BANK_CHOICES,
+        'bank_settings_dict': bank_settings_dict,
+    })
 
 
 @login_required

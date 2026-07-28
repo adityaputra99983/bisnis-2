@@ -128,3 +128,10 @@ def price_with_original(price_idr, language_code):
         f'<span>{formatted}</span>'
         f'<span style="font-size:0.75em;opacity:0.6;margin-left:4px">(Rp {float(price_idr):,.0f})</span>'
     )
+
+
+@register.filter(name='dict_get')
+def dict_get(dictionary, key):
+    if dictionary is None:
+        return None
+    return dictionary.get(key)

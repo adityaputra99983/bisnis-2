@@ -25,10 +25,11 @@ def payment_process(request, booking_code):
         messages.info(request, _('Booking ini sudah diproses.'))
         return redirect('booking_detail', booking_code=booking_code)
 
-    from healers.models import HealerPaymentSetting
+    from healers.models import HealerPaymentSetting, BankTransactionSetting
     healer_settings, created = HealerPaymentSetting.objects.get_or_create(healer=booking.healer)
     payment_methods = PaymentMethod.objects.filter(is_active=True)
     currencies = get_all_currencies()
+    bank_tx_settings = BankTransactionSetting.objects.filter(healer=booking.healer, is_active=True)
 
     existing_payment = Payment.objects.filter(booking=booking, status='pending').first()
     if existing_payment:
@@ -38,6 +39,7 @@ def payment_process(request, booking_code):
             'payment_methods': payment_methods,
             'currencies': currencies,
             'healer_settings': healer_settings,
+            'bank_tx_settings': bank_tx_settings,
         })
 
     currency_code = booking.currency
@@ -53,6 +55,7 @@ def payment_process(request, booking_code):
         'selected_currency': currency_code,
         'exchange_rate': exchange_rate,
         'healer_settings': healer_settings,
+        'bank_tx_settings': bank_tx_settings,
     })
 
 

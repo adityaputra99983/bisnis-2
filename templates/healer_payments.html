@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load currency_tags %}
 {% block title %}{% trans "Payment Settings" %} — Bali Healer{% endblock %}
 {% block content %}
 <div class="page-header">
@@ -18,6 +19,85 @@
         <form method="POST">
             {% csrf_token %}
 
+            {# ========== PAYMENT GATEWAY ========== #}
+            <div class="card" style="margin-bottom:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-credit-card" style="color:var(--gold)"></i> {% trans "Payment Gateway" %}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>{% trans "Select Payment Gateway" %}</label>
+                        <select name="payment_gateway" class="form-control" id="pg-select" onchange="togglePGFields()">
+                            <option value="manual">{% trans "Manual / Manual Transfer" %}</option>
+                            <option value="midtrans" {% if settings.payment_gateway == 'midtrans' %}selected{% endif %}>Midtrans</option>
+                            <option value="xendit" {% if settings.payment_gateway == 'xendit' %}selected{% endif %}>Xendit</option>
+                            <option value="doku" {% if settings.payment_gateway == 'doku' %}selected{% endif %}>DOKU</option>
+                            <option value="tripay" {% if settings.payment_gateway == 'tripay' %}selected{% endif %}>Tripay</option>
+                        </select>
+                    </div>
+
+                    <div id="pg-fields-midtrans" class="pg-fields" style="display:none">
+                        <div class="form-group">
+                            <label>Midtrans {% trans "Merchant ID" %}</label>
+                            <input type="text" name="pg_midtrans_merchant_id" class="form-control" value="{{ settings.pg_midtrans_merchant_id }}" placeholder="M1234567890">
+                        </div>
+                        <div class="form-group">
+                            <label>Midtrans {% trans "Server Key" %}</label>
+                            <input type="password" name="pg_midtrans_server_key" class="form-control" value="{{ settings.pg_midtrans_server_key }}" placeholder="SB-Mid-server-xxxxxxxx">
+                        </div>
+                        <div class="form-group">
+                            <label>Midtrans {% trans "Client Key" %}</label>
+                            <input type="password" name="pg_midtrans_client_key" class="form-control" value="{{ settings.pg_midtrans_client_key }}" placeholder="SB-Mid-client-xxxxxxxx">
+                        </div>
+                    </div>
+
+                    <div id="pg-fields-xendit" class="pg-fields" style="display:none">
+                        <div class="form-group">
+                            <label>Xendit {% trans "API Key" %}</label>
+                            <input type="password" name="pg_xendit_api_key" class="form-control" value="{{ settings.pg_xendit_api_key }}" placeholder="xnd_">
+                        </div>
+                        <div class="form-group">
+                            <label>Xendit {% trans "Secret Key" %}</label>
+                            <input type="password" name="pg_xendit_secret_key" class="form-control" value="{{ settings.pg_xendit_secret_key }}" placeholder="xnd_">
+                        </div>
+                    </div>
+
+                    <div id="pg-fields-doku" class="pg-fields" style="display:none">
+                        <div class="form-group">
+                            <label>DOKU {% trans "Merchant ID" %}</label>
+                            <input type="text" name="pg_doku_merchant_id" class="form-control" value="{{ settings.pg_doku_merchant_id }}" placeholder="12345678">
+                        </div>
+                        <div class="form-group">
+                            <label>DOKU {% trans "Client Key" %}</label>
+                            <input type="password" name="pg_doku_client_key" class="form-control" value="{{ settings.pg_doku_client_key }}" placeholder="ABAA----">
+                        </div>
+                    </div>
+
+                    <div id="pg-fields-tripay" class="pg-fields" style="display:none">
+                        <div class="form-group">
+                            <label>Tripay {% trans "Merchant Code" %}</label>
+                            <input type="text" name="pg_tripay_merchant_code" class="form-control" value="{{ settings.pg_tripay_merchant_code }}" placeholder="T1234">
+                        </div>
+                        <div class="form-group">
+                            <label>Tripay {% trans "API Key" %}</label>
+                            <input type="password" name="pg_tripay_api_key" class="form-control" value="{{ settings.pg_tripay_api_key }}" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label>Tripay {% trans "Private Key" %}</label>
+                            <input type="password" name="pg_tripay_private_key" class="form-control" value="{{ settings.pg_tripay_private_key }}" placeholder="">
+                        </div>
+                    </div>
+
+                    <div style="padding:10px 14px;border-radius:var(--radius);background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.1)">
+                        <p style="font-size:11px;color:var(--stone-400);margin:0">
+                            <i class="fas fa-info-circle" style="color:var(--info);margin-right:4px"></i>
+                            {% trans "Payment Gateway memproses pembayaran secara otomatis (VA, QRIS, E-Wallet, Kartu Kredit). Pilih Manual jika ingin konfirmasi manual." %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {# ========== BANK TRANSFER ========== #}
             <div class="card" style="margin-bottom:16px">
                 <div class="card-header">
                     <h3><i class="fas fa-building-columns" style="color:var(--gold)"></i> {% trans "Bank Transfer" %}</h3>
@@ -31,17 +111,54 @@
                         <label>{% trans "Bank Name" %}</label>
                         <select name="bank_name" class="form-control">
                             <option value="">{% trans "Select Bank" %}</option>
-                            <option value="BCA" {% if settings.bank_name == 'BCA' %}selected{% endif %}>BCA</option>
-                            <option value="Mandiri" {% if settings.bank_name == 'Mandiri' %}selected{% endif %}>Mandiri</option>
-                            <option value="BRI" {% if settings.bank_name == 'BRI' %}selected{% endif %}>BRI</option>
-                            <option value="BNI" {% if settings.bank_name == 'BNI' %}selected{% endif %}>BNI</option>
-                            <option value="CIMB" {% if settings.bank_name == 'CIMB' %}selected{% endif %}>CIMB Niaga</option>
-                            <option value="BSI" {% if settings.bank_name == 'BSI' %}selected{% endif %}>BSI</option>
-                            <option value="Danamon" {% if settings.bank_name == 'Danamon' %}selected{% endif %}>Danamon</option>
-                            <option value="Permata" {% if settings.bank_name == 'Permata' %}selected{% endif %}>Permata</option>
-                            <option value="OCBC" {% if settings.bank_name == 'OCBC' %}selected{% endif %}>OCBC NISP</option>
-                            <option value="Maybank" {% if settings.bank_name == 'Maybank' %}selected{% endif %}>Maybank</option>
-                            <option value="Other" {% if settings.bank_name and settings.bank_name not in 'BCA,Mandiri,BRI,BNI,CIMB,BSI,Danamon,Permata,OCBC,Maybank' %}selected{% endif %}>{% trans "Other" %}</option>
+                            <optgroup label="{% trans 'Bank BUMN' %}">
+                                <option value="Mandiri" {% if settings.bank_name == 'Mandiri' %}selected{% endif %}>Bank Mandiri</option>
+                                <option value="BRI" {% if settings.bank_name == 'BRI' %}selected{% endif %}>Bank BRI</option>
+                                <option value="BNI" {% if settings.bank_name == 'BNI' %}selected{% endif %}>Bank BNI</option>
+                                <option value="BTN" {% if settings.bank_name == 'BTN' %}selected{% endif %}>Bank BTN</option>
+                                <option value="BSI" {% if settings.bank_name == 'BSI' %}selected{% endif %}>Bank BSI (Syariah)</option>
+                                <option value="BRIS" {% if settings.bank_name == 'BRIS' %}selected{% endif %}>Bank BRI Syariah</option>
+                                <option value="BNIS" {% if settings.bank_name == 'BNIS' %}selected{% endif %}>Bank BNI Syariah</option>
+                                <option value="BankJateng" {% if settings.bank_name == 'BankJateng' %}selected{% endif %}>Bank Jateng</option>
+                                <option value="BankJatim" {% if settings.bank_name == 'BankJatim' %}selected{% endif %}>Bank Jatim</option>
+                                <option value="BankBali" {% if settings.bank_name == 'BankBali' %}selected{% endif %}>Bank BPD Bali</option>
+                            </optgroup>
+                            <optgroup label="{% trans 'Bank Swasta' %}">
+                                <option value="BCA" {% if settings.bank_name == 'BCA' %}selected{% endif %}>Bank BCA</option>
+                                <option value="CIMB" {% if settings.bank_name == 'CIMB' %}selected{% endif %}>CIMB Niaga</option>
+                                <option value="Danamon" {% if settings.bank_name == 'Danamon' %}selected{% endif %}>Bank Danamon</option>
+                                <option value="Permata" {% if settings.bank_name == 'Permata' %}selected{% endif %}>Bank Permata</option>
+                                <option value="OCBC" {% if settings.bank_name == 'OCBC' %}selected{% endif %}>OCBC NISP</option>
+                                <option value="Maybank" {% if settings.bank_name == 'Maybank' %}selected{% endif %}>Maybank</option>
+                                <option value="Mega" {% if settings.bank_name == 'Mega' %}selected{% endif %}>Bank Mega</option>
+                                <option value="Panin" {% if settings.bank_name == 'Panin' %}selected{% endif %}>Bank Panin</option>
+                                <option value="Bukopin" {% if settings.bank_name == 'Bukopin' %}selected{% endif %}>Bank Bukopin</option>
+                                <option value="Sinarmas" {% if settings.bank_name == 'Sinarmas' %}selected{% endif %}>Bank Sinarmas</option>
+                                <option value="Commonwealth" {% if settings.bank_name == 'Commonwealth' %}selected{% endif %}>Bank Commonwealth</option>
+                                <option value="MNC" {% if settings.bank_name == 'MNC' %}selected{% endif %}>Bank MNC</option>
+                                <option value="Victoria" {% if settings.bank_name == 'Victoria' %}selected{% endif %}>Bank Victoria</option>
+                                <option value="YudhaBhakti" {% if settings.bank_name == 'YudhaBhakti' %}selected{% endif %}>Bank Yudha Bhakti</option>
+                                <option value="Maspion" {% if settings.bank_name == 'Maspion' %}selected{% endif %}>Bank Maspion</option>
+                                <option value="Hana" {% if settings.bank_name == 'Hana' %}selected{% endif %}>Bank Hana (Woori)</option>
+                                <option value="Woori" {% if settings.bank_name == 'Woori' %}selected{% endif %}>Bank Woori</option>
+                                <option value="Index" {% if settings.bank_name == 'Index' %}selected{% endif %}>Bank Index Selindo</option>
+                                <option value="Bisnis" {% if settings.bank_name == 'Bisnis' %}selected{% endif %}>Bank BJB Bisnis</option>
+                            </optgroup>
+                            <optgroup label="{% trans 'Bank Syariah' %}">
+                                <option value="Muamalat" {% if settings.bank_name == 'Muamalat' %}selected{% endif %}>Bank Muamalat</option>
+                                <option value="MegaSyariah" {% if settings.bank_name == 'MegaSyariah' %}selected{% endif %}>Bank Mega Syariah</option>
+                                <option value="AlloBank" {% if settings.bank_name == 'AlloBank' %}selected{% endif %}>Allo Bank</option>
+                            </optgroup>
+                            <optgroup label="{% trans 'Bank Digital' %}">
+                                <option value="Jago" {% if settings.bank_name == 'Jago' %}selected{% endif %}>Bank Jago</option>
+                                <option value="NeoCommerce" {% if settings.bank_name == 'NeoCommerce' %}selected{% endif %}>Bank Neo Commerce (BNC)</option>
+                                <option value="SuperNet" {% if settings.bank_name == 'SuperNet' %}selected{% endif %}>Bank Super Net</option>
+                                <option value="Ina" {% if settings.bank_name == 'Ina' %}selected{% endif %}>Bank Ina</option>
+                                <option value="Seabank" {% if settings.bank_name == 'Seabank' %}selected{% endif %}>Sea Bank</option>
+                                <option value="Digibank" {% if settings.bank_name == 'Digibank' %}selected{% endif %}>Digibank (DBS)</option>
+                                <option value="TMRW" {% if settings.bank_name == 'TMRW' %}selected{% endif %}>TMRW by UOB</option>
+                            </optgroup>
+                            <option value="Other" {% if settings.bank_name and settings.bank_name not in 'Mandiri,BRI,BNI,BTN,BSI,BRIS,BNIS,BankJateng,BankJatim,BankBali,BCA,CIMB,Danamon,Permata,OCBC,Maybank,Mega,Panin,Bukopin,Sinarmas,Commonwealth,MNC,Victoria,YudhaBhakti,Maspion,Hana,Woori,Index,Bisnis,Muamalat,MegaSyariah,AlloBank,Jago,NeoCommerce,SuperNet,Ina,Seabank,Digibank,TMRW' %}selected{% endif %}>{% trans "Other" %}</option>
                         </select>
                     </div>
                     <div class="form-row">
@@ -67,6 +184,179 @@
                 </div>
             </div>
 
+            {# ========== BANK TRANSACTION SETTINGS (per bank) ========== #}
+            <div class="card" style="margin-bottom:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-cog" style="color:var(--gold)"></i> {% trans "Bank Transaction Settings" %}</h3>
+                    <span style="font-size:11px;color:var(--stone-400)">{% trans "Konfigurasi SOP per bank" %}</span>
+                </div>
+                <div class="card-body" style="padding:8px">
+                    <p style="font-size:11px;color:var(--stone-400);margin:0 8px 8px 8px">
+                        <i class="fas fa-info-circle" style="color:var(--info);margin-right:4px"></i>
+                        {% trans "Aktifkan dan seting setiap bank yang ingin Anda terima. Customer akan melihat instruksi SOP sesuai bank yang dipilih." %}
+                    </p>
+
+                    {% for code,label in bank_choices %}
+                    {% with bs=bank_settings_dict|dict_get:code %}
+                    <div class="bank-panel" style="margin:6px 8px;border:1px solid var(--stone-700);border-radius:var(--radius);overflow:hidden">
+                        <div onclick="toggleBankPanel('bank-{{ code }}')" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;background:rgba(255,255,255,0.02)">
+                            <div style="display:flex;align-items:center;gap:10px">
+                                <label style="margin:0;cursor:pointer" onclick="event.stopPropagation()">
+                                    <input type="checkbox" name="bt_active_{{ code }}" value="1" {% if bs and bs.is_active %}checked{% endif %} style="accent-color:var(--gold)">
+                                </label>
+                                <div>
+                                    <strong style="font-size:13px;color:var(--stone-200)">{{ label }}</strong>
+                                    {% if bs and bs.is_active %}
+                                    <span style="font-size:10px;color:var(--success);margin-left:6px">Active</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down" style="font-size:12px;color:var(--stone-500);transition:transform 0.2s" id="bank-{{ code }}-icon"></i>
+                        </div>
+                        <div id="bank-{{ code }}" style="display:none;padding:0 14px 14px 14px;border-top:1px solid var(--stone-700)">
+                            <div style="padding-top:12px">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>{% trans "Nomor Rekening / VA" %}</label>
+                                        <input type="text" name="bt_account_{{ code }}" class="form-control" value="{% if bs %}{{ bs.account_number }}{% endif %}" placeholder="1234567890">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{% trans "Atas Nama" %}</label>
+                                        <input type="text" name="bt_name_{{ code }}" class="form-control" value="{% if bs %}{{ bs.account_name }}{% endif %}" placeholder="Nama pemegang rekening">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>{% trans "Cabang" %}</label>
+                                    <input type="text" name="bt_branch_{{ code }}" class="form-control" value="{% if bs %}{{ bs.branch }}{% endif %}" placeholder="Cabang bank">
+                                </div>
+
+                                <div style="margin:10px 0;padding:10px;border:1px solid var(--stone-700);border-radius:var(--radius)">
+                                    <label style="font-size:11px;color:var(--stone-300);margin-bottom:8px;display:block">{% trans "Metode Pembayaran yang Diterima" %}</label>
+                                    <div style="display:flex;gap:12px;flex-wrap:wrap">
+                                        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--stone-400)">
+                                            <input type="checkbox" name="bt_va_{{ code }}" value="1" {% if bs and bs.accept_va %}checked{% endif %} style="accent-color:var(--gold)">
+                                            Virtual Account
+                                        </label>
+                                        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--stone-400)">
+                                            <input type="checkbox" name="bt_transfer_{{ code }}" value="1" {% if bs and bs.accept_transfer %}checked{% endif %} style="accent-color:var(--gold)">
+                                            Transfer Manual
+                                        </label>
+                                        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--stone-400)">
+                                            <input type="checkbox" name="bt_qris_{{ code }}" value="1" {% if bs and bs.accept_qris %}checked{% endif %} style="accent-color:var(--gold)">
+                                            QRIS
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{% trans "Kode VA (prefix)" %}</label>
+                                    <input type="text" name="bt_vacode_{{ code }}" class="form-control" value="{% if bs %}{{ bs.va_code }}{% endif %}" placeholder="Contoh: 1234">
+                                    <small style="color:var(--stone-600);font-size:10px">{% trans "Kode prefix untuk Virtual Account (jika menggunakan VA)" %}</small>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>{% trans "Biaya Admin (IDR)" %}</label>
+                                        <input type="number" name="bt_admin_{{ code }}" class="form-control" value="{% if bs %}{{ bs.admin_fee|floatformat:0 }}{% endif %}" min="0" step="500">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{% trans "Batas Waktu (menit)" %}</label>
+                                        <input type="number" name="bt_timeout_{{ code }}" class="form-control" value="{% if bs %}{{ bs.payment_timeout_minutes }}{% else %}60{% endif %}" min="5" max="1440">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{% trans "SOP Virtual Account" %}</label>
+                                    <textarea name="bt_sop_va_{{ code }}" class="form-control" rows="3" placeholder="{% trans 'Instruksi pembayaran via VA...' %}">{% if bs %}{{ bs.sop_va }}{% endif %}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>{% trans "SOP Transfer Manual" %}</label>
+                                    <textarea name="bt_sop_transfer_{{ code }}" class="form-control" rows="3" placeholder="{% trans 'Instruksi transfer manual...' %}">{% if bs %}{{ bs.sop_transfer }}{% endif %}</textarea>
+                                </div>
+                                <div class="form-group" style="margin-bottom:0">
+                                    <label>{% trans "SOP QRIS" %}</label>
+                                    <textarea name="bt_sop_qris_{{ code }}" class="form-control" rows="3" placeholder="{% trans 'Instruksi QRIS...' %}">{% if bs %}{{ bs.sop_qris }}{% endif %}</textarea>
+                                </div>
+
+                                <div style="display:flex;gap:8px;margin-top:10px">
+                                    <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;color:var(--stone-400)">
+                                        <input type="checkbox" name="bt_autocancel_{{ code }}" value="1" {% if not bs or bs.auto_cancel %}checked{% endif %} style="accent-color:var(--gold)">
+                                        {% trans "Auto-cancel jika timeout" %}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endwith %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {# ========== VA BANK TRANSFER ========== #}
+            <div class="card" style="margin-bottom:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-university" style="color:var(--gold)"></i> {% trans "Virtual Account" %}</h3>
+                    <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--stone-400);cursor:pointer">
+                        <input type="checkbox" name="va_bank_enabled" value="1" {% if settings.va_bank_enabled %}checked{% endif %} style="accent-color:var(--gold)">
+                        {% trans "Active" %}
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="form-group" style="margin-bottom:0">
+                        <label>{% trans "Bank Virtual Account" %}</label>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px">
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:6px 8px;border:1px solid var(--stone-700);border-radius:var(--radius)">
+                                <input type="checkbox" name="va_banks" value="BCA" {% if 'BCA' in settings.va_banks %}checked{% endif %} style="accent-color:var(--gold)">
+                                BCA VA
+                            </label>
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:6px 8px;border:1px solid var(--stone-700);border-radius:var(--radius)">
+                                <input type="checkbox" name="va_banks" value="Mandiri" {% if 'Mandiri' in settings.va_banks %}checked{% endif %} style="accent-color:var(--gold)">
+                                Mandiri VA
+                            </label>
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:6px 8px;border:1px solid var(--stone-700);border-radius:var(--radius)">
+                                <input type="checkbox" name="va_banks" value="BRI" {% if 'BRI' in settings.va_banks %}checked{% endif %} style="accent-color:var(--gold)">
+                                BRI VA
+                            </label>
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:6px 8px;border:1px solid var(--stone-700);border-radius:var(--radius)">
+                                <input type="checkbox" name="va_banks" value="BNI" {% if 'BNI' in settings.va_banks %}checked{% endif %} style="accent-color:var(--gold)">
+                                BNI VA
+                            </label>
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:6px 8px;border:1px solid var(--stone-700);border-radius:var(--radius)">
+                                <input type="checkbox" name="va_banks" value="BSI" {% if 'BSI' in settings.va_banks %}checked{% endif %} style="accent-color:var(--gold)">
+                                BSI VA
+                            </label>
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:6px 8px;border:1px solid var(--stone-700);border-radius:var(--radius)">
+                                <input type="checkbox" name="va_banks" value="CIMB" {% if 'CIMB' in settings.va_banks %}checked{% endif %} style="accent-color:var(--gold)">
+                                CIMB VA
+                            </label>
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:6px 8px;border:1px solid var(--stone-700);border-radius:var(--radius)">
+                                <input type="checkbox" name="va_banks" value="Permata" {% if 'Permata' in settings.va_banks %}checked{% endif %} style="accent-color:var(--gold)">
+                                Permata VA
+                            </label>
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:6px 8px;border:1px solid var(--stone-700);border-radius:var(--radius)">
+                                <input type="checkbox" name="va_banks" value="Danamon" {% if 'Danamon' in settings.va_banks %}checked{% endif %} style="accent-color:var(--gold)">
+                                Danamon VA
+                            </label>
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:6px 8px;border:1px solid var(--stone-700);border-radius:var(--radius)">
+                                <input type="checkbox" name="va_banks" value="Maybank" {% if 'Maybank' in settings.va_banks %}checked{% endif %} style="accent-color:var(--gold)">
+                                Maybank VA
+                            </label>
+                            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:6px 8px;border:1px solid var(--stone-700);border-radius:var(--radius)">
+                                <input type="checkbox" name="va_banks" value="Muamalat" {% if 'Muamalat' in settings.va_banks %}checked{% endif %} style="accent-color:var(--gold)">
+                                Muamalat VA
+                            </label>
+                        </div>
+                    </div>
+                    <div style="padding:10px 14px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1);margin-top:12px">
+                        <p style="font-size:11px;color:var(--stone-400);margin:0">
+                            <i class="fas fa-shield-halved" style="color:var(--success);margin-right:4px"></i>
+                            {% trans "SOP: Sistem generate nomor VA. Customer bayar via mobile banking/ATM. Pembayaran otomatis terkonfirmasi jika menggunakan Payment Gateway." %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {# ========== QRIS ========== #}
             <div class="card" style="margin-bottom:16px">
                 <div class="card-header">
                     <h3><i class="fas fa-qrcode" style="color:var(--gold)"></i> {% trans "QRIS" %}</h3>
@@ -95,6 +385,7 @@
                 </div>
             </div>
 
+            {# ========== E-WALLET ========== #}
             <div class="card" style="margin-bottom:16px">
                 <div class="card-header">
                     <h3><i class="fas fa-mobile-screen" style="color:var(--gold)"></i> {% trans "E-Wallet" %}</h3>
@@ -114,12 +405,33 @@
                         </label>
                         <input type="text" name="ovo_number" class="form-control" value="{{ settings.ovo_number }}" placeholder="{% trans 'OVO Number (08xxx)' %}">
                     </div>
-                    <div class="form-group" style="margin-bottom:0">
+                    <div class="form-group">
                         <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:8px">
                             <input type="checkbox" name="accept_dana" value="1" {% if settings.accept_dana %}checked{% endif %} style="accent-color:var(--gold)">
                             <span><i class="fas fa-money-bill-wave" style="color:var(--stone-400)"></i> {% trans "DANA" %}</span>
                         </label>
                         <input type="text" name="dana_number" class="form-control" value="{{ settings.dana_number }}" placeholder="{% trans 'DANA Number (08xxx)' %}">
+                    </div>
+                    <div class="form-group">
+                        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:8px">
+                            <input type="checkbox" name="accept_shopeepay" value="1" {% if settings.accept_shopeepay %}checked{% endif %} style="accent-color:var(--gold)">
+                            <span><i class="fas fa-shopping-bag" style="color:var(--stone-400)"></i> {% trans "ShopeePay" %}</span>
+                        </label>
+                        <input type="text" name="shopeepay_number" class="form-control" value="{{ settings.shopeepay_number }}" placeholder="{% trans 'ShopeePay Number (08xxx)' %}">
+                    </div>
+                    <div class="form-group">
+                        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:8px">
+                            <input type="checkbox" name="accept_linkaja" value="1" {% if settings.accept_linkaja %}checked{% endif %} style="accent-color:var(--gold)">
+                            <span><i class="fas fa-link" style="color:var(--stone-400)"></i> {% trans "LinkAja" %}</span>
+                        </label>
+                        <input type="text" name="linkaja_number" class="form-control" value="{{ settings.linkaja_number }}" placeholder="{% trans 'LinkAja Number (08xxx)' %}">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0">
+                        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:8px">
+                            <input type="checkbox" name="accept_isaku" value="1" {% if settings.accept_isaku %}checked{% endif %} style="accent-color:var(--gold)">
+                            <span><i class="fas fa-piggy-bank" style="color:var(--stone-400)"></i> {% trans "iSaku" %}</span>
+                        </label>
+                        <input type="text" name="isaku_number" class="form-control" value="{{ settings.isaku_number }}" placeholder="{% trans 'iSaku Number (08xxx)' %}">
                     </div>
                     <div style="padding:10px 14px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1);margin-top:12px">
                         <p style="font-size:11px;color:var(--stone-400);margin:0">
@@ -130,6 +442,7 @@
                 </div>
             </div>
 
+            {# ========== VISA / MASTERCARD ========== #}
             <div class="card" style="margin-bottom:16px">
                 <div class="card-header">
                     <h3><i class="fab fa-cc-visa" style="color:var(--gold)"></i> {% trans "Visa / Mastercard" %}</h3>
@@ -158,6 +471,7 @@
                 </div>
             </div>
 
+            {# ========== PAYPAL ========== #}
             <div class="card" style="margin-bottom:16px">
                 <div class="card-header">
                     <h3><i class="fab fa-paypal" style="color:var(--gold)"></i> {% trans "PayPal" %}</h3>
@@ -176,6 +490,7 @@
                 </div>
             </div>
 
+            {# ========== CASH ========== #}
             <div class="card" style="margin-bottom:16px">
                 <div class="card-header">
                     <h3><i class="fas fa-money-bill" style="color:var(--gold)"></i> {% trans "Cash" %}</h3>
@@ -194,6 +509,7 @@
                 </div>
             </div>
 
+            {# ========== SECURITY SETTINGS ========== #}
             <div class="card" style="margin-bottom:16px">
                 <div class="card-header">
                     <h3><i class="fas fa-shield-halved" style="color:var(--gold)"></i> {% trans "Security Settings" %}</h3>
@@ -257,4 +573,28 @@
         </form>
     </div>
 </section>
+<script>
+function togglePGFields(){
+    var v=document.getElementById('pg-select').value;
+    document.querySelectorAll('.pg-fields').forEach(function(e){e.style.display='none'});
+    if(v==='midtrans')document.getElementById('pg-fields-midtrans').style.display='block';
+    else if(v==='xendit')document.getElementById('pg-fields-xendit').style.display='block';
+    else if(v==='doku')document.getElementById('pg-fields-doku').style.display='block';
+    else if(v==='tripay')document.getElementById('pg-fields-tripay').style.display='block';
+}
+togglePGFields();
+
+function toggleBankPanel(id){
+    var el=document.getElementById(id);
+    var icon=document.getElementById(id+'-icon');
+    if(!el)return;
+    if(el.style.display==='none'){
+        el.style.display='block';
+        if(icon)icon.style.transform='rotate(180deg)';
+    }else{
+        el.style.display='none';
+        if(icon)icon.style.transform='rotate(0deg)';
+    }
+}
+</script>
 {% endblock %}

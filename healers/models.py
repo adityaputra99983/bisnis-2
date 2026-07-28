@@ -203,6 +203,9 @@ class HealerPaymentSetting(models.Model):
     gopay_number = models.CharField(max_length=20, blank=True)
     ovo_number = models.CharField(max_length=20, blank=True)
     dana_number = models.CharField(max_length=20, blank=True)
+    shopeepay_number = models.CharField(max_length=20, blank=True, help_text='Nomor ShopeePay')
+    linkaja_number = models.CharField(max_length=20, blank=True, help_text='Nomor LinkAja')
+    isaku_number = models.CharField(max_length=20, blank=True, help_text='Nomor iSaku')
 
     qris_merchant_name = models.CharField(max_length=200, blank=True, help_text='Nama merchant QRIS')
     qris_id = models.CharField(max_length=50, blank=True, help_text='ID Merchant QRIS')
@@ -210,11 +213,31 @@ class HealerPaymentSetting(models.Model):
     paypal_email = models.EmailField(blank=True)
     visa_mc_enabled = models.BooleanField(default=False, help_text='Aktifkan pembayaran Visa/Mastercard via PayPal')
 
+    # Payment Gateway
+    payment_gateway = models.CharField(max_length=50, blank=True, help_text='Payment gateway: midtrans, xendit, doku, tripay, manual')
+    pg_midtrans_server_key = models.CharField(max_length=200, blank=True, help_text='Midtrans Server Key')
+    pg_midtrans_client_key = models.CharField(max_length=200, blank=True, help_text='Midtrans Client Key')
+    pg_midtrans_merchant_id = models.CharField(max_length=100, blank=True, help_text='Midtrans Merchant ID')
+    pg_xendit_secret_key = models.CharField(max_length=200, blank=True, help_text='Xendit Secret Key')
+    pg_xendit_api_key = models.CharField(max_length=200, blank=True, help_text='Xendit API Key')
+    pg_doku_client_key = models.CharField(max_length=200, blank=True, help_text='DOKU Client Key')
+    pg_doku_merchant_id = models.CharField(max_length=100, blank=True, help_text='DOKU Merchant ID')
+    pg_tripay_api_key = models.CharField(max_length=200, blank=True, help_text='Tripay API Key')
+    pg_tripay_private_key = models.CharField(max_length=200, blank=True, help_text='Tripay Private Key')
+    pg_tripay_merchant_code = models.CharField(max_length=100, blank=True, help_text='Tripay Merchant Code')
+
+    # VA Bank Settings
+    va_bank_enabled = models.BooleanField(default=False, help_text='Aktifkan pembayaran Virtual Account')
+    va_banks = models.CharField(max_length=500, blank=True, help_text='Daftar bank VA: BCA,Mandiri,BRI,BNI,BSI, dll')
+
     accept_cash = models.BooleanField(default=True)
     accept_transfer = models.BooleanField(default=True)
     accept_gopay = models.BooleanField(default=False)
     accept_ovo = models.BooleanField(default=False)
     accept_dana = models.BooleanField(default=False)
+    accept_shopeepay = models.BooleanField(default=False)
+    accept_linkaja = models.BooleanField(default=False)
+    accept_isaku = models.BooleanField(default=False)
     accept_qris = models.BooleanField(default=False)
     accept_paypal = models.BooleanField(default=False)
     accept_visa_mc = models.BooleanField(default=False)
@@ -241,24 +264,148 @@ class HealerPaymentSetting(models.Model):
         methods = []
         if self.accept_transfer and self.bank_name and self.bank_account_number:
             methods.append('transfer')
+        if self.va_bank_enabled and self.va_banks:
+            methods.append('va_transfer')
         if self.accept_gopay and self.gopay_number:
             methods.append('gopay')
         if self.accept_ovo and self.ovo_number:
             methods.append('ovo')
         if self.accept_dana and self.dana_number:
             methods.append('dana')
+        if self.accept_shopeepay and self.shopeepay_number:
+            methods.append('shopeepay')
+        if self.accept_linkaja and self.linkaja_number:
+            methods.append('linkaja')
+        if self.accept_isaku and self.isaku_number:
+            methods.append('isaku')
         if self.accept_qris and self.qris_id:
             methods.append('qris')
         if self.accept_paypal and self.paypal_email:
             methods.append('paypal')
         if self.accept_visa_mc and self.visa_mc_enabled:
             methods.append('visa_mc')
+        if self.payment_gateway and self.payment_gateway != 'manual':
+            methods.append('payment_gateway')
         if self.accept_cash:
             methods.append('cash')
         return methods
 
     def is_method_accepted(self, method):
         return method in self.get_accepted_methods()
+
+
+BANK_CHOICES = [
+    ('BCA', 'Bank BCA'),
+    ('Mandiri', 'Bank Mandiri'),
+    ('BRI', 'Bank BRI'),
+    ('BNI', 'Bank BNI'),
+    ('BTN', 'Bank BTN'),
+    ('BSI', 'Bank BSI (Syariah)'),
+    ('BRIS', 'Bank BRI Syariah'),
+    ('BNIS', 'Bank BNI Syariah'),
+    ('CIMB', 'CIMB Niaga'),
+    ('Danamon', 'Bank Danamon'),
+    ('Permata', 'Bank Permata'),
+    ('OCBC', 'OCBC NISP'),
+    ('Maybank', 'Maybank'),
+    ('Mega', 'Bank Mega'),
+    ('Panin', 'Bank Panin'),
+    ('Bukopin', 'Bank Bukopin'),
+    ('Sinarmas', 'Bank Sinarmas'),
+    ('Commonwealth', 'Bank Commonwealth'),
+    ('Muamalat', 'Bank Muamalat'),
+    ('Jago', 'Bank Jago'),
+    ('NeoCommerce', 'Bank Neo Commerce'),
+    ('Seabank', 'Sea Bank'),
+    ('Digibank', 'Digibank (DBS)'),
+    ('BJP', 'BJB'),
+    ('MandiriSyariah', 'Bank Mandiri Syariah'),
+]
+
+METHOD_CHOICES = [
+    ('va', 'Virtual Account'),
+    ('transfer', 'Manual Transfer'),
+    ('qris', 'QRIS'),
+    ('ewallet', 'E-Wallet'),
+]
+
+
+class BankTransactionSetting(models.Model):
+    healer = models.ForeignKey(Healer, on_delete=models.CASCADE, related_name='bank_transaction_settings')
+    bank_code = models.CharField(max_length=50, choices=BANK_CHOICES)
+    is_active = models.BooleanField(default=False, help_text='Aktifkan bank ini untuk transaksi')
+
+    account_number = models.CharField(max_length=50, blank=True, help_text='Nomor rekening / Virtual Account')
+    account_name = models.CharField(max_length=200, blank=True, help_text='Nama pemegang rekening')
+    branch = models.CharField(max_length=100, blank=True, help_text='Cabang bank')
+
+    accept_va = models.BooleanField(default=False, help_text='Terima pembayaran via Virtual Account')
+    accept_transfer = models.BooleanField(default=True, help_text='Terima transfer manual')
+    accept_qris = models.BooleanField(default=False, help_text='Terima QRIS via bank ini')
+
+    sop_va = models.TextField(blank=True, help_text='SOP instruksi Virtual Account')
+    sop_transfer = models.TextField(blank=True, help_text='SOP instruksi transfer manual')
+    sop_qris = models.TextField(blank=True, help_text='SOP instruksi QRIS')
+
+    va_code = models.CharField(max_length=50, blank=True, help_text='Kode prefix VA (contoh: 1234 untuk BCA VA 1234xxxxxx)')
+    admin_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0, help_text='Biaya admin tambahan (0 = gratis)')
+    min_transfer = models.DecimalField(max_digits=12, decimal_places=2, default=0, help_text='Minimum transfer')
+    max_transfer = models.DecimalField(max_digits=12, decimal_places=2, default=0, help_text='Maximum transfer (0 = tanpa batas)')
+
+    payment_timeout_minutes = models.PositiveIntegerField(default=60, help_text='Batas waktu pembayaran dalam menit')
+    auto_cancel = models.BooleanField(default=True, help_text='Batalkan otomatis jika timeout')
+
+    sort_order = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['sort_order', 'bank_code']
+        unique_together = ['healer', 'bank_code']
+
+    def __str__(self):
+        return f'{self.bank_code} - {self.healer.name}'
+
+    def get_methods_display(self):
+        methods = []
+        if self.accept_va:
+            methods.append('Virtual Account')
+        if self.accept_transfer:
+            methods.append('Transfer Manual')
+        if self.accept_qris:
+            methods.append('QRIS')
+        return ', '.join(methods) if methods else '-'
+
+    def get_default_sop(self, method='transfer'):
+        defaults = {
+            'va': f"""Cara Pembayaran Virtual Account {self.bank_code}:
+1. Buka aplikasi mobile banking {self.bank_code} atau ATM
+2. Pilih menu Virtual Account / Bayar Virtual Account
+3. Masukkan nomor VA: {self.va_code}xxxxxxxx
+4. Pastikan nama dan jumlah pembayaran benar
+5. Konfirmasi pembayaran
+6. Simpan bukti pembayaran
+7. Upload bukti pembayaran di halaman booking
+8. Tunggu konfirmasi dari healer""",
+            'transfer': f"""Cara Transfer Manual {self.bank_code}:
+1. Buka aplikasi mobile banking {self.bank_code} atau ATM
+2. Pilih menu Transfer ke Rekening Tujuan
+3. Masukkan nomor rekening: {self.account_number}
+4. Atas nama: {self.account_name}
+5. Masukkan jumlah yang tepat sesuai total pembayaran
+6. Konfirmasi dan selesaikan transfer
+7. Simpan bukti transfer (screenshot/receipt)
+8. Upload bukti transfer di halaman booking
+9. Tunggu konfirmasi dari healer""",
+            'qris': f"""Cara Pembayaran QRIS {self.bank_code}:
+1. Buka aplikasi mobile banking {self.bank_code} atau e-wallet
+2. Pilih menu Scan QR / QRIS
+3. Scan kode QR yang diberikan
+4. Pastikan nama merchant dan jumlah benar
+5. Konfirmasi pembayaran
+6. Pembayaran otomatis terkonfirmasi""",
+        }
+        return defaults.get(method, '')
 
 
 class ChatRoomQuerySet(models.QuerySet):
