@@ -27,20 +27,59 @@ def payment_process(request, booking_code):
 
     from healers.models import HealerPaymentSetting, BankTransactionSetting
     healer_settings, created = HealerPaymentSetting.objects.get_or_create(healer=booking.healer)
-    payment_methods = PaymentMethod.objects.filter(is_active=True)
+    all_payment_methods = PaymentMethod.objects.filter(is_active=True)
     currencies = get_all_currencies()
     bank_tx_settings = BankTransactionSetting.objects.filter(healer=booking.healer, is_active=True)
 
+    # Filter payment methods based on healer's enabled settings
+    accepted = healer_settings.get_accepted_methods()
+    method_filter = {
+        'transfer': ['Transfer Bank', 'transfer', 'bank'],
+        'gopay': ['GoPay', 'gopay'],
+        'ovo': ['OVO', 'ovo'],
+        'dana': ['DANA', 'dana'],
+        'shopeepay': ['ShopeePay', 'shopeepay'],
+        'linkaja': ['LinkAja', 'linkaja'],
+        'isaku': ['iSaku', 'isaku'],
+        'qris': ['QRIS', 'qris'],
+        'paypal': ['PayPal', 'paypal'],
+        'visa_mc': ['Kartu Kredit', 'Visa', 'Mastercard', 'visa', 'mastercard'],
+        'cash': ['Cash', 'cash'],
+        'payment_gateway': [],  # always show if gateway active
+    }
+
+    filtered_methods = []
+    for method in all_payment_methods:
+        method_name_lower = method.name.lower()
+        for key, keywords in method_filter.items():
+            if any(kw.lower() in method_name_lower for kw in keywords):
+                if key in accepted:
+                    filtered_methods.append(method)
+                break
+        else:
+            # If no keyword matched, check if it's a generic bank transfer
+            if ('transfer' in method_name_lower or 'bank' in method_name_lower) and 'transfer' in accepted:
+                filtered_methods.append(method)
+
+    # If bank transfer is accepted but only specific bank method exists, ensure it's included
+    if 'transfer' in accepted and not any('transfer' in m.name.lower() or 'bank' in m.name.lower() for m in filtered_methods):
+        bank_method = all_payment_methods.filter(name__icontains='Transfer').first()
+        if bank_method:
+            filtered_methods.append(bank_method)
+
     existing_payment = Payment.objects.filter(booking=booking, status='pending').first()
+    context = {
+        'booking': booking,
+        'payment_methods': filtered_methods,
+        'currencies': currencies,
+        'healer_settings': healer_settings,
+        'bank_tx_settings': bank_tx_settings,
+        'accepted_methods': accepted,
+    }
+
     if existing_payment:
-        return render(request, 'payment_process.html', {
-            'booking': booking,
-            'payment': existing_payment,
-            'payment_methods': payment_methods,
-            'currencies': currencies,
-            'healer_settings': healer_settings,
-            'bank_tx_settings': bank_tx_settings,
-        })
+        context['payment'] = existing_payment
+        return render(request, 'payment_process.html', context)
 
     currency_code = booking.currency
     currency_obj = Currency.objects.filter(code=currency_code).first()
@@ -48,15 +87,9 @@ def payment_process(request, booking_code):
     if currency_obj:
         exchange_rate = float(currency_obj.rate_to_idr)
 
-    return render(request, 'payment_process.html', {
-        'booking': booking,
-        'payment_methods': payment_methods,
-        'currencies': currencies,
-        'selected_currency': currency_code,
-        'exchange_rate': exchange_rate,
-        'healer_settings': healer_settings,
-        'bank_tx_settings': bank_tx_settings,
-    })
+    context['selected_currency'] = currency_code
+    context['exchange_rate'] = exchange_rate
+    return render(request, 'payment_process.html', context)
 
 
 @csrf_exempt

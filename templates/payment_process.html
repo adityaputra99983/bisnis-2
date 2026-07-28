@@ -88,6 +88,31 @@
                             <p>{% trans "Waiting for payment confirmation..." %}</p>
                         </div>
                         {% else %}
+
+                        {% if not payment_methods %}
+                        <div style="text-align:center;padding:30px 10px">
+                            <i class="fas fa-info-circle" style="font-size:32px;color:var(--stone-600);margin-bottom:10px"></i>
+                            <p style="color:var(--stone-400);font-size:13px">{% trans "Healer belum mengaktifkan metode pembayaran apapun." %}</p>
+                        </div>
+                        {% else %}
+
+                        {# Hidden data: healer account details per method #}
+                        <div id="healer-data" style="display:none"
+                            data-bank-name="{{ healer_settings.bank_name }}"
+                            data-bank-account="{{ healer_settings.bank_account_number }}"
+                            data-bank-holder="{{ healer_settings.bank_account_name }}"
+                            data-swift="{{ healer_settings.swift_code }}"
+                            data-gopay="{{ healer_settings.gopay_number }}"
+                            data-ovo="{{ healer_settings.ovo_number }}"
+                            data-dana="{{ healer_settings.dana_number }}"
+                            data-shopeepay="{{ healer_settings.shopeepay_number }}"
+                            data-linkaja="{{ healer_settings.linkaja_number }}"
+                            data-isaku="{{ healer_settings.isaku_number }}"
+                            data-qris-name="{{ healer_settings.qris_merchant_name }}"
+                            data-qris-id="{{ healer_settings.qris_id }}"
+                            data-paypal-email="{{ healer_settings.paypal_email }}"
+                        ></div>
+
                         <form method="POST" action="{% url 'create_payment' booking.booking_code %}">
                             {% csrf_token %}
                             <div class="form-section">
@@ -112,7 +137,7 @@
                                     <label class="payment-method-option">
                                         <input type="radio" name="payment_method" value="{{ method.id }}" data-method-name="{{ method.name|lower }}" {% if forloop.first %}checked{% endif %}>
                                         <div class="method-box">
-                                            <i class="fas {% if method.bank_name %}fa-building-columns{% elif 'gopay' in method.name|lower %}fa-google-pay{% elif 'ovo' in method.name|lower %}fa-wallet{% elif 'dana' in method.name|lower %}fa-money-bill-wave{% elif 'qris' in method.name|lower %}fa-qrcode{% elif 'paypal' in method.name|lower %}fa-paypal{% elif 'visa' in method.name|lower %}fa-cc-visa{% elif 'cash' in method.name|lower %}fa-money-bill{% else %}fa-mobile-screen{% endif %}"></i>
+                                            <i class="fas {% if 'transfer' in method.name|lower or 'bank' in method.name|lower %}fa-building-columns{% elif 'gopay' in method.name|lower %}fa-google-pay{% elif 'ovo' in method.name|lower %}fa-wallet{% elif 'dana' in method.name|lower %}fa-money-bill-wave{% elif 'shopeepay' in method.name|lower %}fa-shopping-bag{% elif 'linkaja' in method.name|lower %}fa-link{% elif 'isaku' in method.name|lower %}fa-piggy-bank{% elif 'qris' in method.name|lower %}fa-qrcode{% elif 'paypal' in method.name|lower %}fa-paypal{% elif 'visa' in method.name|lower or 'mastercard' in method.name|lower %}fa-cc-visa{% elif 'cash' in method.name|lower %}fa-money-bill{% else %}fa-mobile-screen{% endif %}"></i>
                                             <div>
                                                 <strong>{{ method.name }}</strong>
                                                 <small>{{ method.description|default:"Instant payment" }}</small>
@@ -172,67 +197,177 @@
                                 {% endfor %}
                             </div>
 
+                            {# Generic SOP + healer account info #}
                             <div id="method-sop" style="margin:12px 0;padding:14px;border-radius:var(--radius);background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.1);display:none">
+
+                                {# Transfer Bank SOP with account info #}
+                                <div id="sop-transfer" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-building-columns" style="color:var(--gold);margin-right:6px"></i>{% trans "Transfer Bank" %}</h4>
+                                    <div id="transfer-account-info" style="margin-bottom:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:6px;display:none">
+                                        <div style="font-size:11px;color:var(--stone-500)">Bank</div>
+                                        <div style="font-size:14px;font-weight:700;color:var(--gold)" id="transfer-bank-name"></div>
+                                        <div style="font-size:11px;color:var(--stone-500);margin-top:6px">{% trans "Nomor Rekening" %}</div>
+                                        <div style="font-size:16px;font-weight:700;color:var(--gold);letter-spacing:1px" id="transfer-account-number"></div>
+                                        <div style="font-size:11px;color:var(--stone-400)" id="transfer-account-holder"></div>
+                                    </div>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "Transfer ke rekening yang tercantum di atas" %}</li>
+                                        <li>{% trans "Masukkan nominal yang tepat sesuai total pembayaran" %}</li>
+                                        <li>{% trans "Upload bukti transfer (screenshot/receipt)" %}</li>
+                                        <li>{% trans "Tunggu healer memverifikasi dan mengkonfirmasi" %}</li>
+                                    </ol>
+                                </div>
+
+                                {# GoPay #}
                                 <div id="sop-gopay" style="display:none">
-                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fab fa-google-pay" style="color:var(--gold);margin-right:6px"></i>{% trans "GoPay SOP" %}</h4>
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fab fa-google-pay" style="color:var(--gold);margin-right:6px"></i>GoPay</h4>
+                                    <div id="gopay-info" style="margin-bottom:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:6px;display:none">
+                                        <div style="font-size:11px;color:var(--stone-500)">Nomor GoPay</div>
+                                        <div style="font-size:16px;font-weight:700;color:var(--gold);letter-spacing:1px" id="gopay-number"></div>
+                                    </div>
                                     <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
-                                        <li>{% trans "Open GoPay app" %}</li>
-                                        <li>{% trans "Send to the GoPay number shown below" %}</li>
-                                        <li>{% trans "Upload screenshot as payment proof" %}</li>
-                                        <li>{% trans "Wait for healer confirmation" %}</li>
+                                        <li>{% trans "Buka aplikasi Gojek/GoPay" %}</li>
+                                        <li>{% trans "Pilih kirim ke nomor GoPay di atas" %}</li>
+                                        <li>{% trans "Masukkan jumlah yang tepat" %}</li>
+                                        <li>{% trans "Upload screenshot sebagai bukti pembayaran" %}</li>
+                                        <li>{% trans "Tunggu konfirmasi dari healer" %}</li>
                                     </ol>
                                 </div>
+
+                                {# OVO #}
                                 <div id="sop-ovo" style="display:none">
-                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-wallet" style="color:var(--gold);margin-right:6px"></i>{% trans "OVO SOP" %}</h4>
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-wallet" style="color:var(--gold);margin-right:6px"></i>OVO</h4>
+                                    <div id="ovo-info" style="margin-bottom:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:6px;display:none">
+                                        <div style="font-size:11px;color:var(--stone-500)">Nomor OVO</div>
+                                        <div style="font-size:16px;font-weight:700;color:var(--gold);letter-spacing:1px" id="ovo-number"></div>
+                                    </div>
                                     <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
-                                        <li>{% trans "Open OVO app" %}</li>
-                                        <li>{% trans "Send to the OVO number shown below" %}</li>
-                                        <li>{% trans "Upload screenshot as payment proof" %}</li>
-                                        <li>{% trans "Wait for healer confirmation" %}</li>
+                                        <li>{% trans "Buka aplikasi OVO" %}</li>
+                                        <li>{% trans "Pilih Transfer ke nomor OVO di atas" %}</li>
+                                        <li>{% trans "Masukkan jumlah yang tepat" %}</li>
+                                        <li>{% trans "Upload screenshot sebagai bukti pembayaran" %}</li>
+                                        <li>{% trans "Tunggu konfirmasi dari healer" %}</li>
                                     </ol>
                                 </div>
+
+                                {# DANA #}
                                 <div id="sop-dana" style="display:none">
-                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-right:6px"></i>{% trans "DANA SOP" %}</h4>
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-right:6px"></i>DANA</h4>
+                                    <div id="dana-info" style="margin-bottom:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:6px;display:none">
+                                        <div style="font-size:11px;color:var(--stone-500)">Nomor DANA</div>
+                                        <div style="font-size:16px;font-weight:700;color:var(--gold);letter-spacing:1px" id="dana-number"></div>
+                                    </div>
                                     <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
-                                        <li>{% trans "Open DANA app" %}</li>
-                                        <li>{% trans "Send to the DANA number shown below" %}</li>
-                                        <li>{% trans "Upload screenshot as payment proof" %}</li>
-                                        <li>{% trans "Wait for healer confirmation" %}</li>
+                                        <li>{% trans "Buka aplikasi DANA" %}</li>
+                                        <li>{% trans "Pilih Kirim ke nomor DANA di atas" %}</li>
+                                        <li>{% trans "Masukkan jumlah yang tepat" %}</li>
+                                        <li>{% trans "Upload screenshot sebagai bukti pembayaran" %}</li>
+                                        <li>{% trans "Tunggu konfirmasi dari healer" %}</li>
                                     </ol>
                                 </div>
+
+                                {# ShopeePay #}
+                                <div id="sop-shopeepay" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-shopping-bag" style="color:var(--gold);margin-right:6px"></i>ShopeePay</h4>
+                                    <div id="shopeepay-info" style="margin-bottom:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:6px;display:none">
+                                        <div style="font-size:11px;color:var(--stone-500)">Nomor ShopeePay</div>
+                                        <div style="font-size:16px;font-weight:700;color:var(--gold);letter-spacing:1px" id="shopeepay-number"></div>
+                                    </div>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "Buka aplikasi Shopee" %}</li>
+                                        <li>{% trans "Pilih ShopeePay > Transfer" %}</li>
+                                        <li>{% trans "Masukkan nomor di atas" %}</li>
+                                        <li>{% trans "Upload screenshot sebagai bukti pembayaran" %}</li>
+                                        <li>{% trans "Tunggu konfirmasi dari healer" %}</li>
+                                    </ol>
+                                </div>
+
+                                {# LinkAja #}
+                                <div id="sop-linkaja" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-link" style="color:var(--gold);margin-right:6px"></i>LinkAja</h4>
+                                    <div id="linkaja-info" style="margin-bottom:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:6px;display:none">
+                                        <div style="font-size:11px;color:var(--stone-500)">Nomor LinkAja</div>
+                                        <div style="font-size:16px;font-weight:700;color:var(--gold);letter-spacing:1px" id="linkaja-number"></div>
+                                    </div>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "Buka aplikasi LinkAja" %}</li>
+                                        <li>{% trans "Pilih Kirim Uang ke nomor di atas" %}</li>
+                                        <li>{% trans "Masukkan jumlah yang tepat" %}</li>
+                                        <li>{% trans "Upload screenshot sebagai bukti pembayaran" %}</li>
+                                        <li>{% trans "Tunggu konfirmasi dari healer" %}</li>
+                                    </ol>
+                                </div>
+
+                                {# iSaku #}
+                                <div id="sop-isaku" style="display:none">
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-piggy-bank" style="color:var(--gold);margin-right:6px"></i>iSaku</h4>
+                                    <div id="isaku-info" style="margin-bottom:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:6px;display:none">
+                                        <div style="font-size:11px;color:var(--stone-500)">Nomor iSaku</div>
+                                        <div style="font-size:16px;font-weight:700;color:var(--gold);letter-spacing:1px" id="isaku-number"></div>
+                                    </div>
+                                    <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
+                                        <li>{% trans "Buka aplikasi iSaku" %}</li>
+                                        <li>{% trans "Pilih Transfer ke nomor di atas" %}</li>
+                                        <li>{% trans "Masukkan jumlah yang tepat" %}</li>
+                                        <li>{% trans "Upload screenshot sebagai bukti pembayaran" %}</li>
+                                        <li>{% trans "Tunggu konfirmasi dari healer" %}</li>
+                                    </ol>
+                                </div>
+
+                                {# QRIS #}
                                 <div id="sop-qris" style="display:none">
-                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-qrcode" style="color:var(--gold);margin-right:6px"></i>{% trans "QRIS SOP" %}</h4>
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-qrcode" style="color:var(--gold);margin-right:6px"></i>QRIS</h4>
+                                    <div id="qris-info" style="margin-bottom:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:6px;display:none">
+                                        <div style="font-size:11px;color:var(--stone-500)">{% trans "Merchant" %}</div>
+                                        <div style="font-size:13px;font-weight:700;color:var(--gold)" id="qris-merchant"></div>
+                                        <div style="font-size:11px;color:var(--stone-500);margin-top:4px">{% trans "QRIS ID" %}</div>
+                                        <div style="font-size:12px;font-weight:600;color:var(--stone-300)" id="qris-id"></div>
+                                    </div>
                                     <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
-                                        <li>{% trans "Scan the QR code with any QRIS-supported app" %}</li>
-                                        <li>{% trans "GoPay, OVO, DANA, ShopeePay, or mobile banking" %}</li>
-                                        <li>{% trans "Confirm payment on your app" %}</li>
-                                        <li>{% trans "Payment auto-confirmed instantly" %}</li>
+                                        <li>{% trans "Scan kode QR dengan aplikasi QRIS (GoPay, OVO, DANA, ShopeePay, mobile banking)" %}</li>
+                                        <li>{% trans "Pastikan nama merchant dan jumlah benar" %}</li>
+                                        <li>{% trans "Konfirmasi pembayaran di aplikasi Anda" %}</li>
+                                        <li>{% trans "Pembayaran otomatis terkonfirmasi" %}</li>
                                     </ol>
                                 </div>
+
+                                {# PayPal #}
                                 <div id="sop-paypal" style="display:none">
-                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fab fa-paypal" style="color:var(--gold);margin-right:6px"></i>{% trans "PayPal SOP" %}</h4>
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fab fa-paypal" style="color:var(--gold);margin-right:6px"></i>PayPal</h4>
+                                    <div id="paypal-info" style="margin-bottom:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:6px;display:none">
+                                        <div style="font-size:11px;color:var(--stone-500)">PayPal Email</div>
+                                        <div style="font-size:13px;font-weight:600;color:var(--gold)" id="paypal-email"></div>
+                                    </div>
                                     <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
-                                        <li>{% trans "You will be redirected to PayPal" %}</li>
-                                        <li>{% trans "Log in to your PayPal account" %}</li>
-                                        <li>{% trans "Confirm payment amount and details" %}</li>
-                                        <li>{% trans "Payment auto-confirmed upon success" %}</li>
+                                        <li>{% trans "Anda akan diarahkan ke halaman PayPal" %}</li>
+                                        <li>{% trans "Login ke akun PayPal Anda" %}</li>
+                                        <li>{% trans "Konfirmasi jumlah dan detail pembayaran" %}</li>
+                                        <li>{% trans "Pembayaran otomatis terkonfirmasi jika berhasil" %}</li>
                                     </ol>
                                 </div>
+
+                                {# Visa/Mastercard #}
                                 <div id="sop-visa_mc" style="display:none">
-                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fab fa-cc-visa" style="color:var(--gold);margin-right:6px"></i>{% trans "Visa / Mastercard SOP" %}</h4>
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fab fa-cc-visa" style="color:var(--gold);margin-right:6px"></i>Visa / Mastercard</h4>
+                                    <div id="visa-info" style="margin-bottom:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:6px;display:none">
+                                        <div style="font-size:11px;color:var(--stone-500)">PayPal Email</div>
+                                        <div style="font-size:13px;font-weight:600;color:var(--gold)" id="visa-email"></div>
+                                    </div>
                                     <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
-                                        <li>{% trans "You will be redirected to PayPal secure checkout" %}</li>
-                                        <li>{% trans "Enter your Visa or Mastercard details" %}</li>
-                                        <li>{% trans "Complete 3D Secure verification if prompted" %}</li>
-                                        <li>{% trans "Payment auto-confirmed upon success" %}</li>
+                                        <li>{% trans "Anda akan diarahkan ke halaman checkout PayPal yang aman" %}</li>
+                                        <li>{% trans "Masukkan detail Visa atau Mastercard Anda" %}</li>
+                                        <li>{% trans "Selesaikan verifikasi 3D Secure jika diminta" %}</li>
+                                        <li>{% trans "Pembayaran otomatis terkonfirmasi jika berhasil" %}</li>
                                     </ol>
                                 </div>
+
+                                {# Cash #}
                                 <div id="sop-cash" style="display:none">
-                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-money-bill" style="color:var(--gold);margin-right:6px"></i>{% trans "Cash Payment SOP" %}</h4>
+                                    <h4 style="font-size:13px;color:var(--stone-300);margin-bottom:8px"><i class="fas fa-money-bill" style="color:var(--gold);margin-right:6px"></i>{% trans "Cash" %}</h4>
                                     <ol style="font-size:12px;color:var(--stone-400);margin:0;padding-left:18px;line-height:1.8">
-                                        <li>{% trans "Booking confirmed with cash payment" %}</li>
-                                        <li>{% trans "Pay cash directly at the session location" %}</li>
-                                        <li>{% trans "Healer will confirm payment receipt" %}</li>
+                                        <li>{% trans "Booking dikonfirmasi dengan pembayaran tunai" %}</li>
+                                        <li>{% trans "Bayar tunai langsung di lokasi sesi" %}</li>
+                                        <li>{% trans "Healer akan mengkonfirmasi penerimaan pembayaran" %}</li>
                                     </ol>
                                 </div>
                             </div>
@@ -243,10 +378,47 @@
                                     <strong id="paymentTotalAmount" data-price-idr="{{ booking.total_price_idr|floatformat:0 }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-gold btn-lg btn-block">
+
+                            {# ===== PAYMENT CONFIRMATION CHECKLIST ===== #}
+                            <div id="payment-checklist" style="margin:16px 0;padding:16px;border-radius:var(--radius);background:rgba(212,175,55,0.05);border:1px solid rgba(212,175,55,0.15)">
+                                <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                                    <i class="fas fa-shield-check" style="color:var(--gold);font-size:14px"></i>
+                                    <span style="font-size:12px;font-weight:600;color:var(--stone-300)">{% trans "Konfirmasi Sebelum Membayar" %}</span>
+                                </div>
+                                <div style="display:flex;flex-direction:column;gap:10px">
+                                    <label id="chk-label-1" class="pay-confirm-label" style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:10px 12px;border-radius:8px;border:1px solid var(--stone-700);transition:all 0.2s">
+                                        <input type="checkbox" id="chk-paid" class="pay-confirm-chk" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;width:16px;height:16px">
+                                        <span style="font-size:12px;color:var(--stone-400);line-height:1.5">
+                                            <strong style="color:var(--stone-200)">{% trans "Saya telah melakukan pembayaran" %}</strong><br>
+                                            {% trans "Saya sudah mentransfer/membayar sesuai jumlah total yang tertera." %}
+                                        </span>
+                                    </label>
+                                    <label id="chk-label-2" class="pay-confirm-label" style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:10px 12px;border-radius:8px;border:1px solid var(--stone-700);transition:all 0.2s">
+                                        <input type="checkbox" id="chk-amount" class="pay-confirm-chk" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;width:16px;height:16px">
+                                        <span style="font-size:12px;color:var(--stone-400);line-height:1.5">
+                                            <strong style="color:var(--stone-200)">{% trans "Nominal sudah benar" %}</strong><br>
+                                            {% trans "Jumlah yang dibayarkan sesuai dengan total pembayaran di atas." %}
+                                        </span>
+                                    </label>
+                                    <label id="chk-label-3" class="pay-confirm-label" style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:10px 12px;border-radius:8px;border:1px solid var(--stone-700);transition:all 0.2s">
+                                        <input type="checkbox" id="chk-proof" class="pay-confirm-chk" style="accent-color:var(--gold);margin-top:2px;flex-shrink:0;width:16px;height:16px">
+                                        <span style="font-size:12px;color:var(--stone-400);line-height:1.5">
+                                            <strong style="color:var(--stone-200)">{% trans "Bukti pembayaran siap" %}</strong><br>
+                                            {% trans "Saya siap mengunggah bukti transfer jika diminta oleh healer." %}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div id="chk-warning" style="display:none;margin-top:10px;padding:8px 10px;border-radius:6px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);font-size:11px;color:#f87171">
+                                    <i class="fas fa-triangle-exclamation" style="margin-right:5px"></i>
+                                    {% trans "Centang semua pernyataan di atas untuk melanjutkan pembayaran." %}
+                                </div>
+                            </div>
+
+                            <button type="submit" id="pay-now-btn" class="btn btn-gold btn-lg btn-block" disabled style="opacity:0.5;cursor:not-allowed;transition:all 0.3s">
                                 <i class="fas fa-lock"></i> {% trans "Pay Now" %}
                             </button>
                         </form>
+                        {% endif %}
                         {% endif %}
                     </div>
                 </div>
@@ -288,9 +460,67 @@
     var bankSelector = document.getElementById('bank-selector');
     var bankSopContainer = document.getElementById('bank-sop-container');
     var radios = document.querySelectorAll('input[name="payment_method"]');
+    var healerData = document.getElementById('healer-data');
+
+    function getHealerData(key) {
+        if (!healerData) return '';
+        return healerData.getAttribute('data-' + key) || '';
+    }
 
     function isBankTransfer(name) {
         return name.indexOf('transfer') !== -1 || name.indexOf('bank') !== -1;
+    }
+
+    function showHealerAccountInfo(methodName) {
+        // Reset all info divs
+        ['transfer-account-info','gopay-info','ovo-info','dana-info','shopeepay-info','linkaja-info','isaku-info','qris-info','paypal-info','visa-info'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        });
+
+        if (methodName.indexOf('transfer') !== -1 || methodName.indexOf('bank') !== -1) {
+            var bankName = getHealerData('bank-name');
+            var bankAccount = getHealerData('bank-account');
+            var bankHolder = getHealerData('bank-holder');
+            if (bankAccount) {
+                document.getElementById('transfer-account-info').style.display = 'block';
+                document.getElementById('transfer-bank-name').textContent = bankName || '-';
+                document.getElementById('transfer-account-number').textContent = bankAccount;
+                document.getElementById('transfer-account-holder').textContent = bankHolder || '';
+            }
+        } else if (methodName.indexOf('gopay') !== -1) {
+            var num = getHealerData('gopay');
+            if (num) { document.getElementById('gopay-info').style.display = 'block'; document.getElementById('gopay-number').textContent = num; }
+        } else if (methodName.indexOf('ovo') !== -1) {
+            var num = getHealerData('ovo');
+            if (num) { document.getElementById('ovo-info').style.display = 'block'; document.getElementById('ovo-number').textContent = num; }
+        } else if (methodName.indexOf('dana') !== -1) {
+            var num = getHealerData('dana');
+            if (num) { document.getElementById('dana-info').style.display = 'block'; document.getElementById('dana-number').textContent = num; }
+        } else if (methodName.indexOf('shopeepay') !== -1) {
+            var num = getHealerData('shopeepay');
+            if (num) { document.getElementById('shopeepay-info').style.display = 'block'; document.getElementById('shopeepay-number').textContent = num; }
+        } else if (methodName.indexOf('linkaja') !== -1) {
+            var num = getHealerData('linkaja');
+            if (num) { document.getElementById('linkaja-info').style.display = 'block'; document.getElementById('linkaja-number').textContent = num; }
+        } else if (methodName.indexOf('isaku') !== -1) {
+            var num = getHealerData('isaku');
+            if (num) { document.getElementById('isaku-info').style.display = 'block'; document.getElementById('isaku-number').textContent = num; }
+        } else if (methodName.indexOf('qris') !== -1) {
+            var name = getHealerData('qris-name');
+            var id = getHealerData('qris-id');
+            if (name || id) {
+                document.getElementById('qris-info').style.display = 'block';
+                document.getElementById('qris-merchant').textContent = name || '-';
+                document.getElementById('qris-id').textContent = id || '-';
+            }
+        } else if (methodName.indexOf('paypal') !== -1) {
+            var email = getHealerData('paypal-email');
+            if (email) { document.getElementById('paypal-info').style.display = 'block'; document.getElementById('paypal-email').textContent = email; }
+        } else if (methodName.indexOf('visa') !== -1 || methodName.indexOf('mastercard') !== -1) {
+            var email = getHealerData('paypal-email');
+            if (email) { document.getElementById('visa-info').style.display = 'block'; document.getElementById('visa-email').textContent = email; }
+        }
     }
 
     function showSop() {
@@ -298,21 +528,18 @@
         if (!selected) return;
         var methodName = selected.getAttribute('data-method-name') || '';
 
-        // Hide bank selector and bank SOP by default
         if (bankSelector) bankSelector.style.display = 'none';
         if (bankSopContainer) bankSopContainer.style.display = 'none';
         document.querySelectorAll('#bank-sop-container > div').forEach(function(el) { el.style.display = 'none'; });
 
         if (isBankTransfer(methodName) && bankSelector) {
-            // Show bank selector for transfer methods
             bankSelector.style.display = 'block';
             sopContainer.style.display = 'none';
             var selectedBank = document.querySelector('input[name="selected_bank"]:checked');
             if (selectedBank) {
-                showBankSop(selectedBank.value);
+                window.showBankSop(selectedBank.value);
             }
         } else {
-            // Show normal SOP for e-wallet, QRIS, etc.
             sopContainer.style.display = 'block';
             var allSops = sopContainer.querySelectorAll('div[id^="sop-"]');
             allSops.forEach(function(el) { el.style.display = 'none'; });
@@ -323,16 +550,20 @@
                 if (methodName.indexOf('gopay') !== -1) sopEl = document.getElementById('sop-gopay');
                 else if (methodName.indexOf('ovo') !== -1) sopEl = document.getElementById('sop-ovo');
                 else if (methodName.indexOf('dana') !== -1) sopEl = document.getElementById('sop-dana');
+                else if (methodName.indexOf('shopeepay') !== -1) sopEl = document.getElementById('sop-shopeepay');
+                else if (methodName.indexOf('linkaja') !== -1) sopEl = document.getElementById('sop-linkaja');
+                else if (methodName.indexOf('isaku') !== -1) sopEl = document.getElementById('sop-isaku');
                 else if (methodName.indexOf('qris') !== -1) sopEl = document.getElementById('sop-qris');
                 else if (methodName.indexOf('paypal') !== -1) sopEl = document.getElementById('sop-paypal');
                 else if (methodName.indexOf('visa') !== -1 || methodName.indexOf('mastercard') !== -1) sopEl = document.getElementById('sop-visa_mc');
                 else if (methodName.indexOf('cash') !== -1) sopEl = document.getElementById('sop-cash');
             }
             if (sopEl) sopEl.style.display = 'block';
+
+            showHealerAccountInfo(methodName);
         }
     }
 
-    // Make showBankSop global
     window.showBankSop = function(bankCode) {
         if (!bankSopContainer) return;
         bankSopContainer.style.display = 'block';
@@ -340,7 +571,6 @@
         var sopEl = document.getElementById('bank-sop-' + bankCode);
         if (sopEl) sopEl.style.display = 'block';
 
-        // Highlight selected bank label
         document.querySelectorAll('.bank-option-label').forEach(function(el) {
             el.style.borderColor = el.getAttribute('data-bank') === bankCode ? 'var(--gold)' : 'var(--stone-700)';
         });
@@ -350,7 +580,6 @@
         radio.addEventListener('change', showSop);
     });
 
-    // Also handle bank selection
     document.querySelectorAll('input[name="selected_bank"]').forEach(function(radio) {
         radio.addEventListener('change', function() {
             window.showBankSop(this.value);
@@ -358,6 +587,54 @@
     });
 
     showSop();
+
+    // ===== PAYMENT CHECKLIST LOGIC =====
+    var chkboxes = document.querySelectorAll('.pay-confirm-chk');
+    var payBtn = document.getElementById('pay-now-btn');
+    var chkWarning = document.getElementById('chk-warning');
+    var chkLabels = [document.getElementById('chk-label-1'), document.getElementById('chk-label-2'), document.getElementById('chk-label-3')];
+
+    function updateChecklist() {
+        var allChecked = true;
+        chkboxes.forEach(function(chk, i) {
+            if (chk.checked) {
+                chkLabels[i].style.borderColor = 'rgba(212,175,55,0.5)';
+                chkLabels[i].style.background = 'rgba(212,175,55,0.07)';
+            } else {
+                chkLabels[i].style.borderColor = 'var(--stone-700)';
+                chkLabels[i].style.background = 'transparent';
+                allChecked = false;
+            }
+        });
+        if (payBtn) {
+            if (allChecked) {
+                payBtn.disabled = false;
+                payBtn.style.opacity = '1';
+                payBtn.style.cursor = 'pointer';
+                chkWarning.style.display = 'none';
+            } else {
+                payBtn.disabled = true;
+                payBtn.style.opacity = '0.5';
+                payBtn.style.cursor = 'not-allowed';
+            }
+        }
+    }
+
+    chkboxes.forEach(function(chk) {
+        chk.addEventListener('change', updateChecklist);
+    });
+
+    if (payBtn) {
+        payBtn.addEventListener('click', function(e) {
+            var allChecked = true;
+            chkboxes.forEach(function(chk) { if (!chk.checked) allChecked = false; });
+            if (!allChecked) {
+                e.preventDefault();
+                chkWarning.style.display = 'block';
+                document.getElementById('payment-checklist').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    }
 })();
 </script>
 {% endblock %}

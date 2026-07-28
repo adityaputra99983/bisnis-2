@@ -383,7 +383,7 @@ def healer_payments(request, profile, healer):
                 timeout_val = 60
 
             if is_active or account_number or sop_va or sop_transfer:
-                bs, _ = BankTransactionSetting.objects.update_or_create(
+                bs, _created_bs = BankTransactionSetting.objects.update_or_create(
                     healer=healer, bank_code=bank_code,
                     defaults={
                         'is_active': is_active,
