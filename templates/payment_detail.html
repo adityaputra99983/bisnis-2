@@ -40,85 +40,148 @@
 
             {# ========== INVOICE / RECEIPT ========== #}
             {% if payment.status == 'success' or payment.status == 'held' or payment.status == 'released' %}
-            <div class="card" style="margin-bottom:16px;border:1px solid rgba(52,211,153,0.3)">
-                <div class="card-header" style="background:rgba(52,211,153,0.05)">
-                    <h3><i class="fas fa-file-invoice" style="color:var(--success)"></i> {% trans "Invoice / Receipt" %}</h3>
-                    <button id="download-invoice-btn" onclick="downloadInvoice()" class="btn" style="font-size:11px;padding:6px 16px;border:1px solid var(--gold);border-radius:var(--radius);color:var(--gold);cursor:pointer;background:rgba(212,175,55,0.08);display:flex;align-items:center;gap:6px;transition:all 0.2s" onmouseover="this.style.background='rgba(212,175,55,0.18)'" onmouseout="this.style.background='rgba(212,175,55,0.08)'">
-                        <i class="fas fa-download"></i> {% trans "Download Invoice" %}
-                    </button>
+            <div class="card" style="margin-bottom:16px;border:1px solid #3a2e10;background:#0d0b05" id="invoice-card">
+                <div class="card-header" style="background:#1c1508;border-bottom:1px solid #3a2e10">
+                    <h3 style="color:#D4AF37"><i class="fas fa-file-invoice" style="color:#D4AF37"></i> {% trans "Invoice / Receipt" %}</h3>
+                    <div style="display:flex;gap:8px">
+                        <button onclick="window.print()" class="btn" style="font-size:11px;padding:5px 14px;border:1px solid #3a2e10;border-radius:var(--radius);color:#c4a55a;cursor:pointer;background:#1c1508">
+                            <i class="fas fa-print"></i> {% trans "Print" %}
+                        </button>
+                        <button id="download-invoice-btn" onclick="downloadInvoice()" class="btn" style="font-size:11px;padding:5px 14px;border:1px solid #D4AF37;border-radius:var(--radius);color:#D4AF37;cursor:pointer;background:#1c1508">
+                            <i class="fas fa-download"></i> {% trans "Download Invoice" %}
+                        </button>
+                    </div>
                 </div>
-                <div class="card-body" id="invoice-preview-body" style="padding:0">
-                    {# ---- Invoice preview (styled for screen) ---- #}
-                    <div style="padding:24px">
-                        <div style="text-align:center;margin-bottom:20px;padding-bottom:16px;border-bottom:2px dashed var(--stone-700)">
-                            <div style="font-size:22px;font-weight:800;color:var(--gold);letter-spacing:2px">BALI HEALER</div>
-                            <div style="font-size:11px;color:var(--stone-500);margin-top:2px">{% trans "Spiritual Healing Marketplace" %}</div>
-                            <div style="font-size:18px;font-weight:700;color:var(--stone-200);margin-top:14px;letter-spacing:3px">{% trans "BUKTI PEMBAYARAN" %}</div>
-                        </div>
-                        <div style="text-align:center;margin-bottom:16px">
-                            {% if payment.status == 'success' %}
-                            <span style="display:inline-block;padding:6px 20px;border-radius:20px;background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);color:var(--success);font-size:12px;font-weight:600"><i class="fas fa-check-circle"></i> {% trans "PEMBAYARAN BERHASIL" %}</span>
-                            {% elif payment.status == 'held' %}
-                            <span style="display:inline-block;padding:6px 20px;border-radius:20px;background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.3);color:var(--warning);font-size:12px;font-weight:600"><i class="fas fa-lock"></i> {% trans "DANA DITAHAN (ESCROW)" %}</span>
-                            {% elif payment.status == 'released' %}
-                            <span style="display:inline-block;padding:6px 20px;border-radius:20px;background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.3);color:var(--info);font-size:12px;font-weight:600"><i class="fas fa-unlock"></i> {% trans "DANA TELAH DIRILIS" %}</span>
-                            {% endif %}
-                        </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
-                            <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Kode Pembayaran" %}</div>
-                                <div style="font-size:14px;font-weight:700;color:var(--gold);margin-top:2px">{{ payment.payment_code }}</div>
+                <div class="card-body" id="invoice-preview-body" style="padding:0;background:#0d0b05">
+                    <div style="display:flex;min-height:420px">
+                        {# LEFT SIDEBAR #}
+                        <div style="width:200px;background:linear-gradient(180deg,#1c1508 0%,#0d0b05 100%);padding:28px 20px;color:#e8d5a3;flex-shrink:0">
+                            <div style="margin-bottom:24px">
+                                <div style="font-size:20px;font-weight:900;color:#D4AF37;letter-spacing:3px;line-height:1.1">BALI</div>
+                                <div style="font-size:20px;font-weight:900;color:#D4AF37;letter-spacing:3px;line-height:1.1">HEALER</div>
+                                <div style="width:28px;height:3px;background:#D4AF37;margin:8px 0 6px"></div>
+                                <div style="font-size:7px;color:#9a7d40;letter-spacing:1.2px;text-transform:uppercase;line-height:1.6">{% trans "Spiritual Healing Marketplace" %}</div>
                             </div>
-                            <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Kode Booking" %}</div>
-                                <div style="font-size:14px;font-weight:700;color:var(--stone-200);margin-top:2px">{{ payment.booking.booking_code }}</div>
+                            <div style="width:100%;height:1px;background:#3a2e10;margin-bottom:20px"></div>
+                            <div style="margin-bottom:16px">
+                                <div style="font-size:7px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px">STATUS</div>
+                                {% if payment.status == 'success' %}
+                                <div style="background:#16a34a;color:#fff;padding:5px 8px;border-radius:4px;font-size:9px;font-weight:700;text-align:center;letter-spacing:1px">LUNAS</div>
+                                {% elif payment.status == 'held' %}
+                                <div style="background:#d97706;color:#fff;padding:5px 8px;border-radius:4px;font-size:9px;font-weight:700;text-align:center;letter-spacing:1px">ESCROW</div>
+                                {% elif payment.status == 'released' %}
+                                <div style="background:#2563eb;color:#fff;padding:5px 8px;border-radius:4px;font-size:9px;font-weight:700;text-align:center;letter-spacing:1px">RELEASED</div>
+                                {% endif %}
                             </div>
-                            <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Tanggal Pembayaran" %}</div>
-                                <div style="font-size:13px;font-weight:600;color:var(--stone-300);margin-top:2px">{{ payment.paid_at|date:"d M Y, H:i" }}</div>
+                            <div style="margin-bottom:14px">
+                                <div style="font-size:7px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px">NO. INVOICE</div>
+                                <div style="font-size:10px;font-weight:700;color:#D4AF37;word-break:break-all;line-height:1.4">{{ payment.payment_code }}</div>
                             </div>
-                            <div style="padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px">{% trans "Metode Pembayaran" %}</div>
-                                <div style="font-size:13px;font-weight:600;color:var(--stone-300);margin-top:2px">{{ payment.payment_method }}</div>
+                            <div style="margin-bottom:14px">
+                                <div style="font-size:7px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px">KODE BOOKING</div>
+                                <div style="font-size:11px;font-weight:600;color:#e8d5a3">{{ payment.booking.booking_code }}</div>
                             </div>
-                        </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
-                            <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">{% trans "Customer" %}</div>
-                                <div style="font-size:13px;font-weight:600;color:var(--stone-200)">{{ payment.booking.customer_name }}</div>
-                                <div style="font-size:11px;color:var(--stone-500)">{{ payment.booking.customer_email }}</div>
-                                <div style="font-size:11px;color:var(--stone-500)">{{ payment.booking.customer_phone }}</div>
+                            <div style="margin-bottom:14px">
+                                <div style="font-size:7px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px">TANGGAL</div>
+                                <div style="font-size:11px;color:#c4a55a;font-weight:600">{{ payment.paid_at|date:"d M Y" }}</div>
+                                <div style="font-size:9px;color:#8a7040">{{ payment.paid_at|date:"H:i" }}</div>
                             </div>
-                            <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700)">
-                                <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">{% trans "Healer" %}</div>
-                                <div style="font-size:13px;font-weight:600;color:var(--stone-200)">{{ payment.booking.healer.name }}</div>
-                                <div style="font-size:11px;color:var(--stone-500)">{{ payment.booking.healer.phone }}</div>
+                            <div style="margin-bottom:14px">
+                                <div style="font-size:7px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px">METODE</div>
+                                <div style="font-size:10px;color:#c4a55a;font-weight:600">{{ payment.payment_method }}</div>
+                            </div>
+                            <div style="margin-top:24px;padding-top:12px;border-top:1px solid #2a2010">
+                                <div style="font-size:7px;color:#4a3d18;line-height:1.7">{% trans "Bukti pembayaran resmi dari Bali Healer" %}</div>
                             </div>
                         </div>
-                        <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border-radius:var(--radius);border:1px solid var(--stone-700);margin-bottom:16px">
-                            <div style="font-size:10px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">{% trans "Detail Layanan" %}</div>
-                            <div style="font-size:14px;font-weight:600;color:var(--stone-200)">{{ payment.booking.service_type }}</div>
-                            <div style="font-size:12px;color:var(--stone-400);margin-top:4px">{% trans "Tanggal" %}: {{ payment.booking.booking_date|date:"d M Y" }} | {% trans "Jam" %}: {{ payment.booking.booking_time|time:"H:i" }}</div>
-                        </div>
-                        <div style="padding:14px;background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.15);border-radius:var(--radius);margin-bottom:12px">
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                                <span style="font-size:12px;color:var(--stone-400)">{% trans "Harga Layanan" %}</span>
-                                <span style="font-size:13px;color:var(--stone-300)">Rp {{ payment.amount_idr|floatformat:0 }}</span>
+
+                        {# RIGHT CONTENT #}
+                        <div style="flex:1;padding:28px 24px;background:#0d0b05;color:#e8d5a3">
+                            <div style="height:4px;background:linear-gradient(90deg,#D4AF37,#f5d876,#D4AF37);border-radius:2px;margin-bottom:20px"></div>
+                            <div style="margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #2a2010">
+                                <div style="font-size:7px;color:#6b5a30;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px">{% trans "BUKTI PEMBAYARAN RESMI" %}</div>
+                                <div style="font-size:24px;font-weight:900;color:#D4AF37;letter-spacing:2px">INVOICE</div>
                             </div>
-                            {% if payment.exchange_rate and payment.exchange_rate != 1 %}
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                                <span style="font-size:12px;color:var(--stone-400)">{% trans "Kurs" %}</span>
-                                <span style="font-size:12px;color:var(--stone-500)">x{{ payment.exchange_rate|floatformat:4 }}</span>
+
+                            <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+                                <tr>
+                                    <td style="width:50%;vertical-align:top;padding-right:10px">
+                                        <div style="font-size:7px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px;padding-bottom:3px;border-bottom:1px solid #3a2e10">DARI (HEALER)</div>
+                                        <div style="font-size:13px;font-weight:700;color:#e8d5a3">{{ payment.booking.healer.name }}</div>
+                                        <div style="font-size:9px;color:#8a7040;margin-top:2px">{{ payment.booking.healer.phone }}</div>
+                                    </td>
+                                    <td style="width:50%;vertical-align:top;padding-left:10px">
+                                        <div style="font-size:7px;color:#6b5a30;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px;padding-bottom:3px;border-bottom:1px solid #3a2e10">KEPADA (CUSTOMER)</div>
+                                        <div style="font-size:13px;font-weight:700;color:#e8d5a3">{{ payment.booking.customer_name }}</div>
+                                        <div style="font-size:9px;color:#8a7040;margin-top:2px">{{ payment.booking.customer_email }}</div>
+                                        <div style="font-size:9px;color:#8a7040">{{ payment.booking.customer_phone }}</div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table style="width:100%;border-collapse:collapse;margin-bottom:14px">
+                                <thead>
+                                    <tr style="background:#1c1508">
+                                        <th style="padding:8px 10px;text-align:left;font-size:7px;color:#8a7040;text-transform:uppercase;letter-spacing:1.5px;border-bottom:2px solid #D4AF37">LAYANAN</th>
+                                        <th style="padding:8px 10px;text-align:center;font-size:7px;color:#8a7040;text-transform:uppercase;letter-spacing:1.5px;border-bottom:2px solid #D4AF37;width:90px">TANGGAL</th>
+                                        <th style="padding:8px 10px;text-align:right;font-size:7px;color:#8a7040;text-transform:uppercase;letter-spacing:1.5px;border-bottom:2px solid #D4AF37;width:100px">JUMLAH</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding:10px;border-bottom:1px solid #1c1508">
+                                            <div style="font-size:12px;font-weight:700;color:#e8d5a3">{{ payment.booking.service_type }}</div>
+                                            <div style="font-size:9px;color:#6b5a30;margin-top:2px">{% trans "Sesi dengan" %} {{ payment.booking.healer.name }}</div>
+                                        </td>
+                                        <td style="padding:10px;text-align:center;border-bottom:1px solid #1c1508">
+                                            <div style="font-size:10px;color:#c4a55a;font-weight:600">{{ payment.booking.booking_date|date:"d M Y" }}</div>
+                                            <div style="font-size:9px;color:#6b5a30">{{ payment.booking.booking_time|time:"H:i" }}</div>
+                                        </td>
+                                        <td style="padding:10px;text-align:right;border-bottom:1px solid #1c1508">
+                                            <div style="font-size:12px;font-weight:700;color:#D4AF37">Rp {{ payment.amount_idr|floatformat:0 }}</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table style="width:100%;border-collapse:collapse;margin-bottom:18px">
+                                <tr>
+                                    <td style="width:50%"></td>
+                                    <td style="width:50%">
+                                        <table style="width:100%;border-collapse:collapse">
+                                            <tr>
+                                                <td style="padding:4px 0;font-size:10px;color:#6b5a30;border-bottom:1px solid #1c1508">Subtotal</td>
+                                                <td style="padding:4px 0;font-size:10px;color:#c4a55a;text-align:right;border-bottom:1px solid #1c1508">Rp {{ payment.amount_idr|floatformat:0 }}</td>
+                                            </tr>
+                                            {% if payment.exchange_rate and payment.exchange_rate != 1 %}
+                                            <tr>
+                                                <td style="padding:4px 0;font-size:10px;color:#6b5a30;border-bottom:1px solid #1c1508">Kurs ({{ currency_code }})</td>
+                                                <td style="padding:4px 0;font-size:10px;color:#c4a55a;text-align:right;border-bottom:1px solid #1c1508">x{{ payment.exchange_rate|floatformat:4 }}</td>
+                                            </tr>
+                                            {% endif %}
+                                            <tr>
+                                                <td colspan="2" style="padding:0">
+                                                    <table style="width:100%;border-collapse:collapse;background:#1c1508;border-radius:6px;margin-top:8px">
+                                                        <tr>
+                                                            <td style="padding:10px 14px;font-size:11px;font-weight:700;color:#e8d5a3">TOTAL DIBAYAR</td>
+                                                            <td style="padding:10px 14px;text-align:right;font-size:18px;font-weight:900;color:#D4AF37">{{ currency_symbol }} {{ payment.amount_converted|floatformat:2 }}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div style="padding:12px 16px;background:#1c1508;border-left:3px solid #D4AF37;border-radius:0 6px 6px 0">
+                                <div style="font-size:12px;font-weight:700;color:#D4AF37;margin-bottom:3px">{% trans "Terima kasih atas kepercayaan Anda!" %}</div>
+                                <div style="font-size:9px;color:#8a7040;line-height:1.6">{% trans "Semoga sesi healing Anda membawa kedamaian dan kesembuhan." %}</div>
                             </div>
-                            {% endif %}
-                            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px dashed var(--stone-600)">
-                                <span style="font-size:14px;font-weight:700;color:var(--stone-200)">{% trans "Total Dibayar" %}</span>
-                                <span style="font-size:20px;font-weight:800;color:var(--gold)">{{ currency_symbol }} {{ payment.amount_converted|floatformat:2 }}</span>
+
+                            <div style="margin-top:20px;padding-top:8px;border-top:1px dashed #2a2010;text-align:center">
+                                <div style="font-size:7px;color:#4a3d18;letter-spacing:1px">{% trans "Invoice ini adalah bukti pembayaran yang sah" %} • balihealer.com</div>
                             </div>
-                        </div>
-                        <div style="text-align:center;padding-top:16px;border-top:2px dashed var(--stone-700);margin-top:8px">
-                            <div style="font-size:10px;color:var(--stone-600)">{% trans "Invoice ini adalah bukti pembayaran yang sah" %}</div>
-                            <div style="font-size:10px;color:var(--stone-600);margin-top:4px">{{ payment.created_at|date:"d M Y, H:i:s" }}</div>
                         </div>
                     </div>
                 </div>
