@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'storages',
     'healers',
     'bookings',
     'payments',
@@ -160,20 +159,10 @@ if not DEBUG:
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Supabase Storage (S3-compatible) — used when env vars are set
-SUPABASE_S3_ACCESS_KEY = os.environ.get('SUPABASE_S3_ACCESS_KEY')
-if SUPABASE_S3_ACCESS_KEY:
-    AWS_ACCESS_KEY_ID = SUPABASE_S3_ACCESS_KEY
-    AWS_SECRET_ACCESS_KEY = os.environ.get('SUPABASE_S3_SECRET_KEY')
-    AWS_S3_ENDPOINT_URL = os.environ.get('SUPABASE_S3_ENDPOINT', 'https://vwjxhfpvcaesrfcglgex.storage.supabase.co/storage/v1/s3')
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('SUPABASE_S3_BUCKET', 'media')
-    AWS_S3_REGION_NAME = 'ap-northeast-2'
-    AWS_DEFAULT_ACL = 'public-read'
-    AWS_S3_FILE_OVERWRITE = False
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-    AWS_S3_SIGNATURE_VERSION = 's3v4'
-    AWS_QUERYSTRING_AUTH = False
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# Supabase Storage (REST API) — used when service key is set
+SUPABASE_SERVICE_KEY = os.environ.get('SUPABASE_SERVICE_KEY')
+if SUPABASE_SERVICE_KEY:
+    DEFAULT_FILE_STORAGE = 'storage.SupabaseStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
