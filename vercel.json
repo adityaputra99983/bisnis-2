@@ -1,20 +1,17 @@
 {
-  "buildCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput --clear",
-  "framework": null,
+  "buildCommand": "python manage.py collectstatic --noinput --clear",
+  "outputDirectory": "staticfiles",
   "functions": {
     "api/index.py": {
       "runtime": "@vercel/python@3",
       "maxDuration": 60,
-      "includeFiles": [
-        "dukun/**",
-        "static/**",
-        "staticfiles/**",
-        "templates/**",
-        "locale/**"
-      ]
+      "includeFiles": ["**"]
     }
   },
   "routes": [
+    {
+      "handle": "filesystem"
+    },
     {
       "src": "/(.*)",
       "dest": "/api/index.py"
