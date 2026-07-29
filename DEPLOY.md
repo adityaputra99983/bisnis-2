@@ -76,40 +76,73 @@ heroku run python manage.py createsuperuser
 
 ## 4. Vercel
 
-1. Push ke GitHub
-2. Buka https://vercel.com → New Project → Import Repository
+### Persiapan
+
+1. Buat akun di [vercel.com](https://vercel.com)
+2. Install Vercel CLI (opsional): `npm i -g vercel`
+3. Push project ke GitHub/GitLab/Bitbucket
+
+### Deploy via Dashboard
+
+1. Buka https://vercel.com/new
+2. Import repository → Pilih repo yang sudah di-push
 3. **Root Directory:** `dukun` (folder yang berisi `manage.py`)
 4. **Framework Preset:** Other
 5. Build & Output Settings (otomatis terbaca dari `vercel.json`):
    - **Build Command:** `python manage.py collectstatic --noinput --clear`
    - **Output Directory:** `staticfiles`
-6. Environment Variables (set di Vercel Dashboard → Project Settings → Environment Variables):
+6. Di bagian **Environment Variables**, tambah:
    ```
-   DJANGO_SECRET_KEY = (Generate random string)
+   DJANGO_SECRET_KEY = <isi string random panjang, misal: d3f4u1t-s3cr3t-k3y-f0r-v3rc3l-!@#$%>
    DJANGO_DEBUG = False
-   DJANGO_ALLOWED_HOSTS = .vercel.app,.yourdomain.com
+   DJANGO_ALLOWED_HOSTS = .vercel.app
+   PYTHON_VERSION = 3.12
    ```
-7. Klik **Deploy**
+7. Klik **Deploy** → tunggu selesai
 
-### Struktur yang sudah disiapkan:
+### Deploy via CLI (Alternatif)
+
+```bash
+# Di folder dukun/
+vercel --prod
+# Ikuti wizard, set root directory ke "dukun"
+# Set environment variables di dashboard
 ```
-dukun/
-├── vercel.json          ← Config build, routes, functions
-├── api/index.py         ← Entry point serverless (WSGI handler)
-├── requirements.txt     ← Dependencies
+
+### Setelah Deploy
+
+Setelah deployment berhasil, buka terminal Vercel dashboard → tab **Functions** → klik fungsi `api/index.py` → **Runtime Logs** untuk lihat error.
+
+Jika database PostgreSQL belum disiapkan, aplikasi akan jalan dengan SQLite sementara (data akan hilang saat redeploy).
+
+### ⚠️ Catatan Penting
+
+| Masalah | Solusi |
+|---|---|
+| **SQLite hilang saat redeploy** | Gunakan PostgreSQL — daftar gratis di [Supabase](https://supabase.com) atau [Neon](https://neon.tech). Set `DATABASE_URL` di environment variables. |
+| **Upload foto tidak muncul** | Vercel tidak menyimpan file upload. Nanti perlu Cloudinary/AWS S3. |
+| **Error 500** | Cek logs di Vercel Dashboard → Functions → `api/index.py` → Runtime Logs |
+| **Tampilan berantakan** | Pastikan `DJANGO_DEBUG=False` dan sudah `collectstatic` berhasil |
+
+### Struktur file untuk Vercel
+
+```
+dukun/                         ← Root directory di Vercel
+├── vercel.json                ← Config build, routes, serverless
+├── .vercelignore              ← File yang di-exclude
+├── api/
+│   └── index.py               ← Entry point serverless Django
+├── requirements.txt
 ├── manage.py
-├── dukun/settings.py
-├── staticfiles/         ← Output directory (auto-generated)
+├── dukun/
+│   ├── settings.py
+│   ├── wsgi.py
+│   └── urls.py
 ├── static/
 ├── templates/
-└── locale/
+├── locale/
+└── staticfiles/               ← Auto-generated saat build
 ```
-
-### ⚠️ Catatan Penting Vercel:
-- **SQLite tidak bisa dipakai** — Vercel punya filesystem sementara (ephemeral). Database akan hilang setiap deploy ulang. Gunakan PostgreSQL via [Supabase](https://supabase.com) (gratis) atau [Neon](https://neon.tech) (gratis).
-- **File upload (media) tidak bisa pakai `MEDIA_ROOT` lokal** — Gunakan cloud storage seperti [Cloudinary](https://cloudinary.com) atau AWS S3 untuk foto healer/avatar.
-- Setelah deploy, jalankan migrasi sekali via Vercel CLI: `vercel run python manage.py migrate` atau via terminal dashboard.
-- Jika pakai PostgreSQL, set `DATABASE_URL` di environment variables Vercel.
 
 ---
 

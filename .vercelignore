@@ -1,0 +1,10 @@
+*.pyc
+__pycache__/
+.git/
+.gitignore
+.env
+.env.example
+db.sqlite3
+media/
+README.md
+DEPLOY.md

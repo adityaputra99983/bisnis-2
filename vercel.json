@@ -5,13 +5,14 @@
   "functions": {
     "api/index.py": {
       "runtime": "@vercel/python@3",
-      "maxDuration": 60
+      "maxDuration": 60,
+      "includeFiles": "**"
     }
   },
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/static/$1"
+      "dest": "/$1"
     },
     {
       "handle": "filesystem"
