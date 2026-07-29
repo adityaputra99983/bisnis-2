@@ -79,39 +79,73 @@ heroku run python manage.py createsuperuser
 ### Persiapan
 
 1. Buat akun di [vercel.com](https://vercel.com)
-2. Install Vercel CLI (opsional): `npm i -g vercel`
-3. Push project ke GitHub/GitLab/Bitbucket
+2. Push project ke GitHub/GitLab/Bitbucket
 
-### Deploy via Dashboard
+### Deploy via Dashboard (Cara termudah)
 
 1. Buka https://vercel.com/new
 2. Import repository → Pilih repo yang sudah di-push
 3. **Root Directory:** `dukun` (folder yang berisi `manage.py`)
 4. **Framework Preset:** Other
-5. Build & Output Settings (otomatis terbaca dari `vercel.json`):
-   - **Build Command:** `python manage.py collectstatic --noinput --clear`
-   - **Output Directory:** `staticfiles`
-6. Di bagian **Environment Variables**, tambah:
+5. **Build Command:** (biarkan kosong — otomatis baca `vercel.json`)
+6. **Output Directory:** (biarkan kosong)
+7. Di bagian **Environment Variables**, tambah INI WAJIB:
    ```
-   DJANGO_SECRET_KEY = <isi string random panjang, misal: d3f4u1t-s3cr3t-k3y-f0r-v3rc3l-!@#$%>
+   DJANGO_SECRET_KEY = <isi string random 50+ karakter>
    DJANGO_DEBUG = False
    DJANGO_ALLOWED_HOSTS = .vercel.app
-   PYTHON_VERSION = 3.12
+   DJANGO_SETTINGS_MODULE = dukun.settings
    ```
-7. Klik **Deploy** → tunggu selesai
+   Jika pakai PostgreSQL (recommended):
+   ```
+   DATABASE_URL = postgresql://user:pass@host:5432/dbname
+   ```
+8. Klik **Deploy** → tunggu selesai
 
-### Deploy via CLI (Alternatif)
+### Jika Build Gagal — Perbaiki di Dashboard Vercel
 
-```bash
-# Di folder dukun/
-vercel --prod
-# Ikuti wizard, set root directory ke "dukun"
-# Set environment variables di dashboard
+Buka Project → **Settings** → **Build & Development Settings** → override:
+- **Build Command:** `pip install -r requirements.txt && python manage.py collectstatic --noinput --clear`
+- **Output Directory:** *(kosongkan)*
+
+### Debug Jika Error 500
+
+1. Buka Vercel Dashboard → tab **Functions** → klik `api/index.py`
+2. Pilih **Runtime Logs** → lihat error terakhir
+3. Error umum:
+   - `ModuleNotFoundError: No module named 'dukun.settings'` → Set `DJANGO_SETTINGS_MODULE` di env vars
+   - `DisallowedHost` → Set `DJANGO_ALLOWED_HOSTS=.vercel.app`
+   - `cannot open db.sqlite3` → SQLite tidak persisten di Vercel. Pakai PostgreSQL.
+
+### ⚠️ Catatan Penting
+
+| Masalah | Solusi |
+|---|---|
+| **SQLite hilang saat redeploy** | Gunakan PostgreSQL gratis di [Supabase](https://supabase.com) atau [Neon](https://neon.tech). Set `DATABASE_URL` di env vars. |
+| **Upload foto tidak muncul** | Vercel tidak menyimpan file upload. Nanti perlu Cloudinary/AWS S3. |
+| **Error 500 terus** | Cek logs di Vercel Dashboard → Functions → Runtime Logs |
+| **Tampilan berantakan (CSS/js tidak load)** | Pastikan `collectstatic` berhasil dan WhiteNoise aktif (cek middleware) |
+
+### Struktur file untuk Vercel
+
 ```
-
-### Setelah Deploy
-
-Setelah deployment berhasil, buka terminal Vercel dashboard → tab **Functions** → klik fungsi `api/index.py` → **Runtime Logs** untuk lihat error.
+dukun/                         ← Root directory di Vercel
+├── vercel.json                ← Config build, routes, serverless
+├── .vercelignore              ← File yang di-exclude saat deploy
+├── runtime.txt                ← Versi Python
+├── api/
+│   └── index.py               ← Entry point serverless Django
+├── requirements.txt
+├── manage.py
+├── dukun/
+│   ├── settings.py
+│   ├── wsgi.py
+│   └── urls.py
+├── static/
+├── templates/
+├── locale/
+└── staticfiles/               ↑ Auto-generated saat build
+```
 
 Jika database PostgreSQL belum disiapkan, aplikasi akan jalan dengan SQLite sementara (data akan hilang saat redeploy).
 
