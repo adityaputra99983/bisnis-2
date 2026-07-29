@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: dukun
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn dukun.wsgi:application
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        sync: false
+      - key: PYTHON_VERSION
+        value: "3.12.6"
