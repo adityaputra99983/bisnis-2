@@ -1,11 +1,15 @@
 {
-  "framework": null,
   "buildCommand": "pip install --break-system-packages -r requirements.txt && python manage.py collectstatic --noinput --clear",
   "outputDirectory": "staticfiles",
+  "functions": {
+    "api/index.py": {
+      "runtime": "@vercel/python@3.0.0"
+    }
+  },
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/$1"
+      "dest": "/static/$1"
     },
     {
       "handle": "filesystem"
