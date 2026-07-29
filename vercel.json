@@ -10,6 +10,10 @@
   },
   "routes": [
     {
+      "src": "/static/(.*)",
+      "dest": "/$1"
+    },
+    {
       "handle": "filesystem"
     },
     {
