@@ -1,6 +1,6 @@
 {
   "framework": null,
-  "buildCommand": "python manage.py collectstatic --noinput --clear",
+  "buildCommand": "pip install --break-system-packages -r requirements.txt && python manage.py collectstatic --noinput --clear",
   "outputDirectory": "staticfiles",
   "routes": [
     {
