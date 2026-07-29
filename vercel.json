@@ -1,4 +1,5 @@
 {
+  "framework": "other",
   "buildCommand": "python manage.py collectstatic --noinput --clear",
   "outputDirectory": "staticfiles",
   "functions": {
