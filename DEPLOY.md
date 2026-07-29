@@ -77,19 +77,39 @@ heroku run python manage.py createsuperuser
 ## 4. Vercel
 
 1. Push ke GitHub
-2. Buka https://vercel.com → New Project → Import
-3. Framework: Other
-4. Root Directory: `dukun`
-5. Build Command: `pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate --noinput`
-6. Output Directory: `staticfiles`
-7. Environment Variables:
+2. Buka https://vercel.com → New Project → Import Repository
+3. **Root Directory:** `dukun` (folder yang berisi `manage.py`)
+4. **Framework Preset:** Other
+5. Build & Output Settings (otomatis terbaca dari `vercel.json`):
+   - **Build Command:** `python manage.py collectstatic --noinput --clear`
+   - **Output Directory:** `staticfiles`
+6. Environment Variables (set di Vercel Dashboard → Project Settings → Environment Variables):
    ```
-   DJANGO_SECRET_KEY = (Generate)
+   DJANGO_SECRET_KEY = (Generate random string)
    DJANGO_DEBUG = False
-   DJANGO_ALLOWED_HOSTS = your-app.vercel.app
+   DJANGO_ALLOWED_HOSTS = .vercel.app,.yourdomain.com
    ```
+7. Klik **Deploy**
 
-**Catatan:** Vercel menggunakan serverless functions. Database SQLite tidak cocok untuk Vercel — gunakan PostgreSQL via Supabase/Neon.
+### Struktur yang sudah disiapkan:
+```
+dukun/
+├── vercel.json          ← Config build, routes, functions
+├── api/index.py         ← Entry point serverless (WSGI handler)
+├── requirements.txt     ← Dependencies
+├── manage.py
+├── dukun/settings.py
+├── staticfiles/         ← Output directory (auto-generated)
+├── static/
+├── templates/
+└── locale/
+```
+
+### ⚠️ Catatan Penting Vercel:
+- **SQLite tidak bisa dipakai** — Vercel punya filesystem sementara (ephemeral). Database akan hilang setiap deploy ulang. Gunakan PostgreSQL via [Supabase](https://supabase.com) (gratis) atau [Neon](https://neon.tech) (gratis).
+- **File upload (media) tidak bisa pakai `MEDIA_ROOT` lokal** — Gunakan cloud storage seperti [Cloudinary](https://cloudinary.com) atau AWS S3 untuk foto healer/avatar.
+- Setelah deploy, jalankan migrasi sekali via Vercel CLI: `vercel run python manage.py migrate` atau via terminal dashboard.
+- Jika pakai PostgreSQL, set `DATABASE_URL` di environment variables Vercel.
 
 ---
 

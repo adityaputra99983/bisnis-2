@@ -1,25 +1,24 @@
 {
-  "buildCommand": "cd dukun && pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate --noinput",
+  "buildCommand": "python manage.py collectstatic --noinput --clear",
   "outputDirectory": "staticfiles",
   "framework": null,
   "functions": {
-    "dukun/wsgi.py": {
+    "api/index.py": {
       "runtime": "@vercel/python@3",
-      "includeFiles": ["dukun/**", "static/**", "templates/**", "locale/**", "media/**"]
+      "maxDuration": 60
     }
   },
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/staticfiles/$1"
+      "dest": "/static/$1"
     },
     {
-      "src": "/media/(.*)",
-      "dest": "/media/$1"
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "/dukun/wsgi.py"
+      "dest": "/api/index.py"
     }
   ]
 }
