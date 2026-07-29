@@ -6,6 +6,7 @@ if _root not in sys.path:
     sys.path.insert(0, _root)
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dukun.settings')
+os.environ.setdefault('DATABASE_URL', 'postgresql://postgres.vwjxhfpvcaesrfcglgex:%2B%3FV%2FQxPVcU%24y93c@db.vwjxhfpvcaesrfcglgex.supabase.co:5432/postgres')
 
 from django.core.wsgi import get_wsgi_application
 app = get_wsgi_application()
