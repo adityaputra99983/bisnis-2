@@ -2,13 +2,6 @@
   "framework": null,
   "buildCommand": "python manage.py collectstatic --noinput --clear",
   "outputDirectory": "staticfiles",
-  "functions": {
-    "api/index.py": {
-      "runtime": "@vercel/python@3.0.0",
-      "maxDuration": 60,
-      "includeFiles": "**"
-    }
-  },
   "routes": [
     {
       "src": "/static/(.*)",
