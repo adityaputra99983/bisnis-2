@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load l10n %}
 {% load currency_tags %}
 {% block title %}{% trans "Book Healing Session" %} — Bali Healer{% endblock %}
 {% block content %}
@@ -36,7 +37,7 @@
                         </div>
                         <div class="price-box">
                             <span>{% trans "Session Price" %}</span>
-                            <strong id="price-display" data-price-idr="{{ healer.price_idr|floatformat:0 }}">{{ healer.price_idr|convert_price:LANGUAGE_CODE }}</strong>
+                            <strong id="price-display" data-price-idr="{{ healer.price_idr|unlocalize }}">{{ healer.price_idr|convert_price:LANGUAGE_CODE }}</strong>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load l10n %}
 {% load currency_tags %}
 
 {% block title %}{% trans "Chat" %} — {% if chat_role == 'healer' %}{{ room.customer.get_full_name|default:room.customer.username }}{% else %}{{ healer.name }}{% endif %}{% endblock %}
@@ -102,7 +103,7 @@
                                 <strong>{{ svc.name }}</strong>
                                 <span>{{ svc.duration_minutes }} {% trans "min" %}</span>
                             </div>
-                            <span class="sidebar-price" data-price-idr="{{ svc.price_idr|floatformat:0 }}">{{ svc.price_idr|convert_price:LANGUAGE_CODE }}</span>
+                            <span class="sidebar-price" data-price-idr="{{ svc.price_idr|unlocalize }}">{{ svc.price_idr|convert_price:LANGUAGE_CODE }}</span>
                         </div>
                         {% endfor %}
                     </div>

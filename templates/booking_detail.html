@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load l10n %}
 {% load currency_tags %}
 {% block title %}{% trans "Booking Details" %} — Bali Healer{% endblock %}
 {% block content %}
@@ -134,11 +135,11 @@
                 <div class="card-body">
                     <div class="price-summary">
                         <div class="price-row"><span>{% trans "Service" %}</label><strong>{{ booking.service_type }}</strong></div>
-                        <div class="price-row"><span>{% trans "Price" %}</span><strong data-price-idr="{{ booking.service_price_idr|floatformat:0 }}">{{ booking.service_price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
+                        <div class="price-row"><span>{% trans "Price" %}</span><strong data-price-idr="{{ booking.service_price_idr|unlocalize }}">{{ booking.service_price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
                         {% if booking.total_price_converted and booking.currency != 'IDR' %}
                         <div class="price-row"><span>{% blocktrans %}Total ({{ booking.currency }}){% endblocktrans %}</span><strong>{{ booking.total_price_converted|floatformat:0 }} {{ booking.currency }}</strong></div>
                         {% endif %}
-                        <div class="price-row total"><span>{% trans "Total" %}</span><strong data-price-idr="{{ booking.total_price_idr|floatformat:0 }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
+                        <div class="price-row total"><span>{% trans "Total" %}</span><strong data-price-idr="{{ booking.total_price_idr|unlocalize }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
                     </div>
 
                     {% if payment %}

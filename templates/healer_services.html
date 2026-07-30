@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load l10n %}
 {% load currency_tags %}
 {% block title %}{% trans "Manage Services" %} — Bali Healer{% endblock %}
 {% block content %}
@@ -64,7 +65,7 @@
                         {% if svc.description %}<p style="color:var(--stone-500);font-size:11px;margin:3px 0">{{ svc.description }}</p>{% endif %}
                         <div style="display:flex;gap:14px;margin-top:4px;font-size:11px;color:var(--stone-500)">
                             <span><i class="fas fa-clock" style="margin-right:3px"></i>{% blocktrans with duration=svc.duration_minutes %}{{ duration }} minutes{% endblocktrans %}</span>
-                            <span style="color:var(--gold)"><i class="fas fa-coins" style="margin-right:3px"></i><span data-price-idr="{{ svc.price_idr|floatformat:0 }}">{{ svc.price_idr|convert_price:LANGUAGE_CODE }}</span></span>
+                            <span style="color:var(--gold)"><i class="fas fa-coins" style="margin-right:3px"></i><span data-price-idr="{{ svc.price_idr|unlocalize }}">{{ svc.price_idr|convert_price:LANGUAGE_CODE }}</span></span>
                         </div>
                     </div>
                     <div style="display:flex;gap:5px;flex-shrink:0">

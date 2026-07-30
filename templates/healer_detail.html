@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load l10n %}
 {% load currency_tags %}
 {% block title %}{{ healer.name }} — Bali Healer{% endblock %}
 {% block content %}
@@ -89,7 +90,7 @@
                             {% if svc.description %}<p style="font-size:11px;color:var(--stone-500);margin:3px 0 0">{{ svc.description|truncatewords:15 }}</p>{% endif %}
                             <span style="font-size:11px;color:var(--stone-500)"><i class="fas fa-clock" style="margin-right:3px"></i>{{ svc.duration_minutes }} {% trans "min" %}</span>
                         </div>
-                        <strong style="color:var(--gold);font-size:14px;white-space:nowrap" data-price-idr="{{ svc.price_idr|floatformat:0 }}">{{ svc.price_idr|convert_price:LANGUAGE_CODE }}</strong>
+                        <strong style="color:var(--gold);font-size:14px;white-space:nowrap" data-price-idr="{{ svc.price_idr|unlocalize }}">{{ svc.price_idr|convert_price:LANGUAGE_CODE }}</strong>
                     </div>
                     {% endfor %}
                 </div>

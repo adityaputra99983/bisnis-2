@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load l10n %}
 {% load currency_tags %}
 {% block title %}{% trans "Payment" %} — Bali Healer{% endblock %}
 {% block content %}
@@ -34,7 +35,7 @@
                         <div class="summary-row"><span>{% trans "Booking Code" %}</span><strong style="color:var(--gold)">{{ booking.booking_code }}</strong></div>
                         <div class="summary-row"><span>{% trans "Date" %}</span><strong>{{ booking.booking_date|date:"d M Y" }}</strong></div>
                         <div class="summary-row"><span>{% trans "Customer" %}</span><strong>{{ booking.customer_name }}</strong></div>
-                        <div class="summary-row total"><span>{% trans "Total" %}</span><strong id="paymentTotalAmount" data-price-idr="{{ booking.total_price_idr|floatformat:0 }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
+                        <div class="summary-row total"><span>{% trans "Total" %}</span><strong id="paymentTotalAmount" data-price-idr="{{ booking.total_price_idr|unlocalize }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong></div>
                     </div>
                 </div>
 
@@ -120,7 +121,7 @@
                                 <div class="currency-grid">
                                     {% for curr in currencies %}
                                     <label class="currency-option">
-                                        <input type="radio" name="currency" value="{{ curr.code }}" data-rate="{{ curr.rate_to_idr }}" data-symbol="{{ curr.symbol }}" {% if forloop.first %}checked{% endif %}>
+                                        <input type="radio" name="currency" value="{{ curr.code }}" data-rate="{{ curr.rate_to_idr|unlocalize }}" data-symbol="{{ curr.symbol }}" {% if forloop.first %}checked{% endif %}>
                                         <div class="currency-box">
                                             <div class="currency-symbol">{{ curr.symbol }}</div>
                                             <div class="currency-code">{{ curr.code }}</div>
@@ -375,7 +376,7 @@
                             <div class="payment-total-section">
                                 <div class="payment-total-row">
                                     <span>{% trans "Total Payment" %}</span>
-                                    <strong id="paymentTotalAmount" data-price-idr="{{ booking.total_price_idr|floatformat:0 }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong>
+                                    <strong id="paymentTotalAmount" data-price-idr="{{ booking.total_price_idr|unlocalize }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong>
                                 </div>
                             </div>
 
@@ -431,7 +432,8 @@
     var NO_DECIMAL = ['IDR','JPY','KRW','VND','INR','RUB','CNY','TWD','TRY','PKR','BDT','UGX','TZS','UZS','MMK','LAK','MNT','KZT','KHR','AFN','LKR','KES','NGN','EGP','MXN','ZAR','ISK','BGN','RON','HUF','SEK','NOK','DKK','UAH','BYN','OMR','KWD','BHD','QAR','AED'];
     var totalEl = document.getElementById('paymentTotalAmount');
     if (!totalEl) return;
-    var totalIdr = parseFloat(totalEl.getAttribute('data-price-idr'));
+    var priceStr = (totalEl.getAttribute('data-price-idr') || '').replace(/[^0-9.\-]/g, '');
+    var totalIdr = parseFloat(priceStr);
     if (isNaN(totalIdr)) return;
 
     var summaryEl = document.querySelector('.summary-row.total strong[data-price-idr]');
