@@ -25,9 +25,9 @@ class CustomerRegistrationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Choose username')})
-        self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Create password')})
-        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Confirm password')})
+        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Choose username'), 'autocomplete': 'username'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Create password'), 'autocomplete': 'new-password'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Confirm password'), 'autocomplete': 'new-password'})
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -84,9 +84,9 @@ class HealerRegistrationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Choose username')})
-        self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Create password')})
-        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Confirm password')})
+        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Choose username'), 'autocomplete': 'username'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Create password'), 'autocomplete': 'new-password'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': _('Confirm password'), 'autocomplete': 'new-password'})
 
     def save(self, commit=True):
         from healers.models import Healer

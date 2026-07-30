@@ -46,11 +46,11 @@
                         {% if next_url %}<input type="hidden" name="next" value="{{ next_url }}">{% endif %}
                         <div class="form-group" style="text-align:left">
                             <label><i class="fas fa-user"></i> {% trans "Username" %}</label>
-                            <input type="text" name="username" class="form-control" required autofocus placeholder="{% trans 'Enter username' %}">
+                            <input type="text" name="username" class="form-control" required autofocus autocomplete="username" placeholder="{% trans 'Enter username' %}">
                         </div>
                         <div class="form-group" style="text-align:left">
                             <label><i class="fas fa-lock"></i> {% trans "Password" %}</label>
-                            <input type="password" name="password" class="form-control" required placeholder="{% trans 'Enter password' %}">
+                            <input type="password" name="password" class="form-control" required autocomplete="current-password" placeholder="{% trans 'Enter password' %}">
                         </div>
                         <button type="submit" class="btn btn-gold btn-lg btn-block"><i class="fas fa-right-to-bracket"></i> {% trans "Login" %}</button>
                     </form>
