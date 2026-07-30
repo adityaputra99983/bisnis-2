@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from django.utils.translation import gettext as _
+
+MAX_PRICE_IDR = decimal.Decimal('9999999999.99')
 from .models import UserProfile
 from .forms import CustomerRegistrationForm, HealerRegistrationForm
 from healers.models import Healer as HealerModel, HealerSchedule, HealerService, HealerMessage, HealerPaymentSetting, ChatRoom, ChatMessage, Notification
@@ -191,6 +193,9 @@ def healer_profile_edit(request, profile, healer):
             except (decimal.InvalidOperation, ValueError, TypeError):
                 messages.error(request, _('Harga harus berupa angka yang valid.'))
                 return redirect('healer_profile_edit')
+            if healer.price_idr > MAX_PRICE_IDR:
+                messages.error(request, _('Harga terlalu besar. Maksimal Rp 9.999.999.999.'))
+                return redirect('healer_profile_edit')
         healer.save()
         messages.success(request, _('Profil healer berhasil diperbarui.'))
         return redirect('healer_dashboard')
@@ -241,6 +246,9 @@ def healer_services(request, profile, healer):
                 return redirect('healer_services')
             if price < 0:
                 messages.error(request, _('Harga tidak boleh negatif.'))
+                return redirect('healer_services')
+            if price > MAX_PRICE_IDR:
+                messages.error(request, _('Harga terlalu besar. Maksimal Rp 9.999.999.999.'))
                 return redirect('healer_services')
             try:
                 duration = int(duration_raw)
@@ -344,6 +352,8 @@ def healer_payments(request, profile, healer):
         try:
             settings.min_payment_idr = decimal.Decimal(min_payment.strip())
         except (decimal.InvalidOperation, ValueError, TypeError):
+            settings.min_payment_idr = 0
+        if settings.min_payment_idr > MAX_PRICE_IDR:
             settings.min_payment_idr = 0
         settings.require_deposit = 'require_deposit' in request.POST
         deposit_pct = request.POST.get('deposit_percent', '50')
