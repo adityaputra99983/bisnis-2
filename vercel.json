@@ -1,5 +1,5 @@
 {
-  "buildCommand": "python manage.py collectstatic --noinput --clear",
+  "buildCommand": "python manage.py collectstatic --noinput --clear && python manage.py migrate --noinput",
   "builds": [
     {
       "src": "api/index.py",
