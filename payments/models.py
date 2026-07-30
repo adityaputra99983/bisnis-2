@@ -56,7 +56,7 @@ class Payment(models.Model):
     }
 
     booking = models.OneToOneField(Booking, on_delete=models.CASCADE, related_name='payment')
-    payment_code = models.CharField(max_length=20, unique=True, default=uuid.uuid4)
+    payment_code = models.CharField(max_length=40, unique=True, blank=True)
     payment_method = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True)
     amount_idr = models.DecimalField(max_digits=12, decimal_places=2)
     currency = models.ForeignKey(Currency, on_delete=models.SET_NULL, null=True)
@@ -79,7 +79,8 @@ class Payment(models.Model):
         return f'{self.payment_code} - {self.booking.customer_name} - {self.status}'
 
     def save(self, *args, **kwargs):
-        if not self.payment_code or self.payment_code == '':
+        if not self.payment_code:
+            self.payment_code = str(uuid.uuid4())[:12].upper()
             self.payment_code = str(uuid.uuid4())[:12].upper()
         super().save(*args, **kwargs)
 
