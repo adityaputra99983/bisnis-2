@@ -29,7 +29,7 @@ class Booking(models.Model):
         'refunded': [],
     }
 
-    booking_code = models.CharField(max_length=20, unique=True, default=uuid.uuid4)
+    booking_code = models.CharField(max_length=40, unique=True, blank=True)
     healer = models.ForeignKey(Healer, on_delete=models.CASCADE, related_name='bookings')
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='bookings')
     customer_name = models.CharField(max_length=200)
@@ -59,7 +59,7 @@ class Booking(models.Model):
         return f'{self.booking_code} - {self.customer_name} - {self.healer.name}'
 
     def save(self, *args, **kwargs):
-        if not self.booking_code or self.booking_code == '':
+        if not self.booking_code:
             self.booking_code = str(uuid.uuid4())[:8].upper()
         super().save(*args, **kwargs)
 
