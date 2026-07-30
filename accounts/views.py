@@ -1,12 +1,11 @@
 import decimal
 from functools import wraps
+from urllib.parse import urlparse
 from django.db.models import Subquery, OuterRef, Count, Q, Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.cache import cache
-from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from .models import UserProfile
@@ -15,6 +14,11 @@ from healers.models import Healer as HealerModel, HealerSchedule, HealerService,
 from healers.notifications import create_notification, get_unread_count, get_recent_notifications
 from bookings.models import Booking
 from payments.models import Payment, TransactionLog
+
+
+def _is_safe_url(url):
+    parsed = urlparse(url)
+    return not parsed.netloc
 
 
 def require_healer_profile(view_func):
@@ -46,7 +50,6 @@ def register_customer(request):
         form = CustomerRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            request.session.cycle_key()
             login(request, user)
             messages.success(request, _('Selamat datang, %(name)s!') % {'name': user.first_name})
             return redirect('home')
@@ -64,7 +67,6 @@ def register_healer(request):
         form = HealerRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            request.session.cycle_key()
             login(request, user)
             messages.success(request, _('Selamat datang, %(name)s! Profil healer Anda berhasil dibuat.') % {'name': user.first_name})
             return redirect('healer_dashboard')
@@ -83,28 +85,17 @@ def login_view(request):
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
         next_url = request.POST.get('next', next_url)
-
-        ip = request.META.get('REMOTE_ADDR', '')
-        cache_key = f'login_attempts_{ip}'
-        attempts = cache.get(cache_key, 0)
-        if attempts >= 5:
-            messages.error(request, _('Terlalu banyak percobaan login. Coba lagi dalam 15 menit.'))
-            return render(request, 'login.html', {'next_url': next_url})
-
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            cache.delete(cache_key)
-            request.session.cycle_key()
             login(request, user)
             profile, _created = UserProfile.objects.get_or_create(user=user)
-            if next_url and url_has_allowed_host_and_scheme(next_url, allowed_hosts=None):
+            if next_url and _is_safe_url(next_url):
                 return redirect(next_url)
             if profile.is_healer:
                 return redirect('healer_dashboard')
             else:
                 return redirect('home')
         else:
-            cache.set(cache_key, attempts + 1, timeout=900)
             messages.error(request, _('Username atau password salah.'))
     return render(request, 'login.html', {'next_url': next_url})
 
