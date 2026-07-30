@@ -376,7 +376,7 @@
                             <div class="payment-total-section">
                                 <div class="payment-total-row">
                                     <span>{% trans "Total Payment" %}</span>
-                                    <strong id="paymentTotalAmount" data-price-idr="{{ booking.total_price_idr|unlocalize }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong>
+                                    <strong id="paymentTotalAmount2" data-price-idr="{{ booking.total_price_idr|unlocalize }}">{{ booking.total_price_idr|convert_price:LANGUAGE_CODE }}</strong>
                                 </div>
                             </div>
 
@@ -436,11 +436,15 @@
     var totalIdr = parseFloat(priceStr);
     if (isNaN(totalIdr)) return;
 
+    var totalEl2 = document.getElementById('paymentTotalAmount2');
     var summaryEl = document.querySelector('.summary-row.total strong[data-price-idr]');
 
     function convertAndFormat(amount, rate, symbol, code) {
         var converted = amount * rate;
         var decimals = NO_DECIMAL.indexOf(code) !== -1 ? 0 : 2;
+        if (decimals === 0 && converted > 0 && converted < 1) {
+            decimals = 2;
+        }
         var val = decimals === 0 ? Math.round(converted).toLocaleString('en-US') :
             converted.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
         return symbol + ' ' + val;
@@ -454,6 +458,7 @@
             if (isNaN(rate)) return;
             var formatted = convertAndFormat(totalIdr, rate, symbol, code);
             totalEl.textContent = formatted;
+            if (totalEl2) totalEl2.textContent = formatted;
             if (summaryEl) summaryEl.textContent = formatted;
         });
     });
