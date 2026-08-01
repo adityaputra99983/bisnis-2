@@ -88,6 +88,11 @@ if DATABASE_URL:
             }
         }
 else:
+    if os.environ.get('VERCEL'):
+        raise RuntimeError(
+            'VERCEL: set DATABASE_URL (PostgreSQL/Supabase) di Environment '
+            'Variables Vercel. SQLite tidak dipakai di Vercel.'
+        )
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
