@@ -152,6 +152,12 @@ CACHES = {
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+SILENCED_SYSTEM_CHECKS = [
+    'staticfiles.E002',
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
