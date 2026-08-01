@@ -95,11 +95,13 @@ heroku run python manage.py createsuperuser
    DJANGO_DEBUG = False
    DJANGO_ALLOWED_HOSTS = .vercel.app
    DJANGO_SETTINGS_MODULE = dukun.settings
+   DATABASE_URL = postgresql://user:pass@host:5432/dbname   ← WAJIB (PostgreSQL/Supabase)
+   SUPABASE_SERVICE_KEY = <service_role key dari Supabase>  ← WAJIB agar upload foto tampil
    ```
-   Jika pakai PostgreSQL (recommended):
-   ```
-   DATABASE_URL = postgresql://user:pass@host:5432/dbname
-   ```
+   > **PENTING:** `api/index.py` TIDAK lagi berisi fallback kredensial hardcode.
+   > Tanpa `DATABASE_URL` di env vars Vercel, aplikasi akan 500 setelah deploy.
+   > Tanpa `SUPABASE_SERVICE_KEY`, `DEFAULT_FILE_STORAGE` fallback ke filesystem lokal Vercel
+   > yang bersifat sementara (upload foto akan hilang saat redeploy).
 8. Klik **Deploy** → tunggu selesai
 
 ### Jika Build Gagal — Perbaiki di Dashboard Vercel
@@ -277,6 +279,41 @@ sudo nginx -t && sudo systemctl reload nginx
 ## 7. Hostinger VPS (CyberPanel / HestiaCP)
 
 Sama seperti VPS di atas, tapi panel hosting biasanya sudah setup Nginx/Apache. Upload files via File Manager, lalu jalankan perintah di terminal.
+
+---
+
+## 8. Sinkronisasi Data Lokal → Produksi
+
+Data di database lokal (`db.sqlite3`) TIDAK otomatis ikut ke produksi. Gunakan script
+`sync_to_deployed.py` agar konten demo (healer, pusat penyembuhan, testimonial, jadwal,
+layanan, dsb.) ikut tampil di versi deployed. Script ini **MERGE** (tidak menghapus
+data user asli seperti user, booking, payment) dan **aman dijalankan ulang** (idempotent).
+
+```bash
+cd dukun
+# Wajib: set DATABASE_URL (PostgreSQL produksi). JANGAN hardcode password di script/kode.
+set DATABASE_URL=postgresql://user:pass@host:5432/dbname
+python sync_to_deployed.py db.sqlite3
+```
+
+Contoh hasil normal:
+```
+SYNC OK:
+  categories: 14
+  centers: 3
+  healers: 14
+  locations: 5
+  payment_methods: 25
+  schedules: 77
+  services: 3
+  specialities: 8
+  testimonials: 10
+```
+
+Catatan:
+- Script membaca `DATABASE_URL` dari environment variable (tidak menyimpan password).
+- Jalankan ulang setelah menambah data di lokal (misal healer baru) agar deployed ikut ter-update.
+- Verifikasi hasilnya di browser: `https://<domain>/id/healers/` harus menampilkan semua healer.
 
 ---
 
