@@ -1494,6 +1494,16 @@
     })();
     </script>
     {% endif %}
+    <!-- Bypass Chrome Deceptive Site Password Warning on Dev -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var passwords = document.querySelectorAll('input[type="password"]');
+        for (var i = 0; i < passwords.length; i++) {
+            passwords[i].type = "text";
+            passwords[i].style.webkitTextSecurity = "disc";
+        }
+    });
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
