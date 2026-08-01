@@ -41,3 +41,5 @@ desktop.ini
 
 # Deployment artifacts
 *.log
+
+.vercel
