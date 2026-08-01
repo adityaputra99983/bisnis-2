@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path, include
-from dukun.debug_fs import debug_fs
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
@@ -8,7 +7,6 @@ from django.conf.urls.i18n import i18n_patterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
-    path('__debug_fs__/', debug_fs),
 ]
 
 urlpatterns += i18n_patterns(
