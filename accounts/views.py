@@ -98,7 +98,7 @@ def login_view(request):
             else:
                 return redirect('home')
         else:
-            messages.error(request, _('Username atau password salah.'))
+            messages.info(request, _('Silakan periksa kembali username atau password Anda.'))
     return render(request, 'login.html', {'next_url': next_url})
 
 

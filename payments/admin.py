@@ -17,10 +17,10 @@ class PaymentMethodAdmin(admin.ModelAdmin):
 
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ['payment_code', 'booking', 'amount_idr', 'currency', 'amount_converted', 'status', 'created_at']
+    list_display = ['payment_code', 'booking', 'amount_idr', 'currency', 'amount_converted', 'status', 'proof_uploaded_at', 'created_at']
     list_filter = ['status', 'currency']
     search_fields = ['payment_code', 'booking__customer_name']
-    readonly_fields = ['payment_code', 'created_at', 'updated_at']
+    readonly_fields = ['payment_code', 'created_at', 'updated_at', 'proof_uploaded_at']
 
 
 @admin.register(TransactionLog)

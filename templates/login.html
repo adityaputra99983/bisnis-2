@@ -32,13 +32,13 @@
                     {% if messages %}
                     {% for message in messages %}
                     {% if message.tags == 'error' %}
-                    <div class="alert alert-error"><i class="fas fa-circle-exclamation"></i> {{ message }}</div>
+                    <div class="alert alert-info"><i class="fas fa-circle-info"></i> {{ message }}</div>
                     {% endif %}
                     {% endfor %}
                     {% endif %}
 
                     {% if form.errors %}
-                    <div class="alert alert-error"><i class="fas fa-circle-exclamation"></i> {% trans "Invalid username or password." %}</div>
+                    <div class="alert alert-info"><i class="fas fa-circle-info"></i> {% trans "Invalid username or password." %}</div>
                     {% endif %}
 
                     <form method="POST">

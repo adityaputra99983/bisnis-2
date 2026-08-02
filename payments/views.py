@@ -207,6 +207,53 @@ def payment_detail(request, payment_code):
     })
 
 
+def upload_payment_proof(request, payment_code):
+    if request.method != 'POST':
+        messages.error(request, _('Metode tidak diizinkan.'))
+        return redirect('payment_detail', payment_code=payment_code)
+
+    payment = get_object_or_404(Payment, payment_code=payment_code)
+
+    if payment.status in ('released', 'refunded', 'expired', 'failed'):
+        messages.error(request, _('Bukti pembayaran tidak dapat diunggah untuk transaksi ini.'))
+        return redirect('payment_detail', payment_code=payment_code)
+
+    image = request.FILES.get('proof_image')
+    if not image:
+        messages.error(request, _('Silakan pilih file screenshot bukti pembayaran.'))
+        return redirect('payment_detail', payment_code=payment_code)
+
+    if not image.content_type.startswith('image/'):
+        messages.error(request, _('File yang diunggah harus berupa gambar (JPG/PNG).'))
+        return redirect('payment_detail', payment_code=payment_code)
+
+    max_size = 10 * 1024 * 1024
+    if image.size > max_size:
+        messages.error(request, _('Ukuran file maksimal 10 MB.'))
+        return redirect('payment_detail', payment_code=payment_code)
+
+    note = request.POST.get('proof_note', '').strip()
+    payment.proof_image = image
+    payment.proof_note = note
+    payment.proof_uploaded_at = timezone.now()
+    payment.save()
+
+    ip = request.META.get('REMOTE_ADDR', '')
+    ua = request.META.get('HTTP_USER_AGENT', '')
+    TransactionLog.objects.create(
+        payment=payment,
+        booking=payment.booking,
+        log_type='payment_created',
+        action=_('Bukti pembayaran diunggah'),
+        details=_('Screenshot bukti pembayaran telah diunggah untuk diverifikasi healer'),
+        ip_address=ip,
+        user_agent=ua,
+    )
+
+    messages.success(request, _('Bukti pembayaran berhasil diunggah. Healer akan segera memverifikasi.'))
+    return redirect('payment_detail', payment_code=payment.payment_code)
+
+
 @csrf_exempt
 def payment_simulate(request, payment_code):
     if request.method != 'POST':

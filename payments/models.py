@@ -69,6 +69,10 @@ class Payment(models.Model):
     refunded_at = models.DateTimeField(null=True, blank=True)
     refund_reason = models.TextField(blank=True)
     notes = models.TextField(blank=True)
+    proof_image = models.ImageField(upload_to='payment_proofs/', blank=True, null=True,
+        help_text='Bukti pembayaran berupa screenshot/struk transfer')
+    proof_note = models.TextField(blank=True, verbose_name='Catatan bukti pembayaran')
+    proof_uploaded_at = models.DateTimeField(null=True, blank=True, verbose_name='Waktu unggah bukti')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -87,6 +91,9 @@ class Payment(models.Model):
     def can_transition_to(self, new_status):
         allowed = self.VALID_PAYMENT_TRANSITIONS.get(self.status, [])
         return new_status in allowed
+
+    def has_proof(self):
+        return bool(self.proof_image)
 
 
 class TransactionLog(models.Model):

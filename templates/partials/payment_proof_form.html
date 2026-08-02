@@ -1,0 +1,21 @@
+{% load i18n %}
+<form method="POST" action="{% url 'upload_payment_proof' payment.payment_code %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group" style="text-align:left">
+        <label><i class="fas fa-image"></i> {% trans "Screenshot Bukti Pembayaran" %}</label>
+        <input type="file" name="proof_image" accept="image/png,image/jpeg,image/jpg,image/webp" class="form-control" required
+               style="padding:8px;cursor:pointer" onchange="document.getElementById('proof-preview').src = URL.createObjectURL(this.files[0]);document.getElementById('proof-preview').style.display='block'">
+        <img id="proof-preview" alt="{% trans 'Preview' %}" style="display:none;margin-top:10px;max-width:200px;border-radius:var(--radius);border:1px solid var(--border)">
+        <small style="color:var(--stone-600);font-size:10px;display:block;margin-top:6px">
+            <i class="fas fa-circle-info"></i> {% trans "Format JPG/PNG, maksimal 10 MB." %}
+        </small>
+    </div>
+    <div class="form-group" style="text-align:left">
+        <label><i class="fas fa-pen"></i> {% trans "Catatan (opsional)" %}</label>
+        <textarea name="proof_note" rows="2" class="form-control" style="resize:vertical"
+                  placeholder="{% trans 'Contoh: Transfer via BCA sebesar Rp ...' %}"></textarea>
+    </div>
+    <button type="submit" class="btn btn-gold" style="font-size:12px">
+        <i class="fas fa-upload"></i> {% trans "Unggah Bukti Pembayaran" %}
+    </button>
+</form>

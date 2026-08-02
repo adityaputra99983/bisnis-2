@@ -161,6 +161,22 @@
                         {% if payment.status == 'released' %}
                         <p style="font-size:11px;color:var(--emerald-500);margin:6px 0 0"><i class="fas fa-check-circle" style="margin-right:3px"></i>{% trans "Funds have been released to healer." %}</p>
                         {% endif %}
+                        {% if payment.has_proof %}
+                        <div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)">
+                            <div style="display:flex;gap:12px;align-items:center">
+                                <a href="{{ payment.proof_image.url }}" target="_blank" rel="noopener" style="flex-shrink:0">
+                                    <img src="{{ payment.proof_image.url }}" alt="{% trans 'Bukti Pembayaran' %}" loading="lazy"
+                                         style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--border);display:block">
+                                </a>
+                                <div>
+                                    <p style="font-size:11px;color:var(--emerald-500);margin:0 0 2px"><i class="fas fa-circle-check"></i> {% trans "Bukti pembayaran sudah diunggah." %}</p>
+                                    <a href="{{ payment.proof_image.url }}" target="_blank" rel="noopener" style="font-size:11px;color:var(--gold)">
+                                        <i class="fas fa-expand"></i> {% trans "Lihat Bukti" %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                     {% endif %}
 

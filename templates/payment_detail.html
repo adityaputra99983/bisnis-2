@@ -188,6 +188,66 @@
             </div>
             {% endif %}
 
+            {# ========== PAYMENT PROOF (BUKTI PEMBAYARAN) ========== #}
+            <div class="card" style="margin-bottom:16px">
+                <div class="card-header">
+                    <h3><i class="fas fa-camera" style="color:var(--gold)"></i> {% trans "Bukti Pembayaran" %}</h3>
+                    {% if payment.has_proof %}
+                    <span class="payment-status-badge success" style="font-size:10px"><i class="fas fa-circle-check"></i> {% trans "Terkirim" %}</span>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% if payment.has_proof %}
+                    <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+                        <a href="{{ payment.proof_image.url }}" target="_blank" rel="noopener" style="flex-shrink:0">
+                            <img src="{{ payment.proof_image.url }}" alt="{% trans 'Bukti Pembayaran' %}" loading="lazy"
+                                 style="max-width:280px;width:100%;border-radius:var(--radius);border:1px solid var(--border);background:#0d0b05;display:block">
+                        </a>
+                        <div style="flex:1;min-width:220px">
+                            <p style="color:var(--stone-400);font-size:13px;margin-bottom:8px">
+                                <i class="fas fa-circle-check" style="color:#34d399"></i>
+                                {% trans "Screenshot bukti pembayaran sudah diterima." %}
+                            </p>
+                            {% if payment.proof_note %}
+                            <p style="color:var(--stone-300);font-size:12px;background:rgba(212,175,55,0.06);border:1px solid rgba(212,175,55,0.15);border-radius:var(--radius);padding:10px 12px;margin-bottom:8px">
+                                <strong style="color:var(--gold)">{% trans "Catatan:" %}</strong> {{ payment.proof_note }}
+                            </p>
+                            {% endif %}
+                            {% if payment.proof_uploaded_at %}
+                            <p style="color:var(--stone-600);font-size:11px">
+                                <i class="fas fa-clock"></i> {% trans "Diunggah pada" %} {{ payment.proof_uploaded_at|date:"d M Y, H:i" }}
+                            </p>
+                            {% endif %}
+                            <div style="margin-top:12px">
+                                <a href="{{ payment.proof_image.url }}" target="_blank" rel="noopener" class="btn" style="border:1px solid var(--stone-600);color:var(--stone-300);font-size:11px;padding:5px 14px">
+                                    <i class="fas fa-expand"></i> {% trans "Lihat Ukuran Penuh" %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% if payment.status == 'pending' or payment.status == 'processing' or payment.status == 'success' or payment.status == 'held' %}
+                    <div style="margin-top:14px;padding-top:14px;border-top:1px dashed var(--border)">
+                        <details>
+                            <summary style="cursor:pointer;color:var(--gold);font-size:12px"><i class="fas fa-rotate"></i> {% trans "Ganti Bukti Pembayaran" %}</summary>
+                            {% include 'partials/payment_proof_form.html' %}
+                        </details>
+                    </div>
+                    {% endif %}
+                    {% else %}
+                    {% if payment.status == 'pending' or payment.status == 'processing' or payment.status == 'success' or payment.status == 'held' %}
+                    <p style="color:var(--stone-400);font-size:12px;margin-bottom:14px">
+                        {% trans "Setelah melakukan pembayaran, unggah screenshot/struk sebagai bukti agar healer dapat memverifikasi pembayaran Anda." %}
+                    </p>
+                    {% include 'partials/payment_proof_form.html' %}
+                    {% else %}
+                    <p style="color:var(--stone-500);font-size:12px;margin-bottom:0">
+                        <i class="fas fa-circle-info"></i> {% trans "Belum ada bukti pembayaran yang diunggah." %}
+                    </p>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
             {# ========== PAYMENT INSTRUCTIONS (pending only) ========== #}
             {% if payment.status == 'pending' and payment.payment_method %}
             <div class="card" style="margin-bottom:16px">
