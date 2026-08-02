@@ -3285,7 +3285,7 @@ section.section:nth-child(even)::before {
 .chat-container {
   background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
   overflow: hidden; display: flex; flex-direction: column;
-  min-height: 520px;
+  height: 70vh; min-height: 500px; max-height: 800px;
 }
 .chat-header {
   display: flex; align-items: center; gap: 12px; padding: 14px 18px;
@@ -3314,7 +3314,6 @@ section.section:nth-child(even)::before {
   flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 6px;
   background: linear-gradient(rgba(12,10,9,0.85), rgba(12,10,9,0.85)), url("../images/bali_healer_hero.png") no-repeat center center;
   background-size: cover;
-  min-height: 400px; max-height: 520px;
 }
 .chat-date-divider {
   display: flex; align-items: center; justify-content: center; padding: 10px 0;
@@ -3437,7 +3436,6 @@ section.section:nth-child(even)::before {
 /* Mobile */
 @media (max-width: 768px) {
   .chat-sidebar { display: none !important; }
-  .chat-messages { max-height: 380px; }
   .chat-bubble { max-width: 85%; }
   .chat-header-actions { gap: 4px; }
   .chat-action-btn { width: 28px; height: 28px; font-size: 11px; }
