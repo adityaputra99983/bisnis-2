@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.db import IntegrityError
 from django.db.models import Sum, Count
 from datetime import datetime, timedelta
 import json
@@ -67,7 +68,7 @@ def payment_process(request, booking_code):
         if bank_method:
             filtered_methods.append(bank_method)
 
-    existing_payment = Payment.objects.filter(booking=booking, status='pending').first()
+    existing_payment = Payment.objects.filter(booking=booking).first()
     context = {
         'booking': booking,
         'payment_methods': filtered_methods,
@@ -78,8 +79,8 @@ def payment_process(request, booking_code):
     }
 
     if existing_payment:
-        context['payment'] = existing_payment
-        return render(request, 'payment_process.html', context)
+        if existing_payment.status not in ('failed', 'expired', ''):
+            return redirect('payment_detail', payment_code=existing_payment.payment_code)
 
     currency_code = booking.currency
     currency_obj = Currency.objects.filter(code=currency_code).first()
@@ -150,15 +151,36 @@ def create_payment(request, booking_code):
     booking.total_price_converted = amount_converted
     booking.save()
 
-    payment = Payment.objects.create(
-        booking=booking,
-        payment_method=payment_method,
-        amount_idr=amount_idr,
-        currency=currency_obj,
-        amount_converted=amount_converted,
-        exchange_rate=exchange_rate,
-        status='pending',
-    )
+    payment = Payment.objects.filter(booking=booking).first()
+    if payment:
+        if payment.status == 'pending':
+            messages.info(request, _('Pembayaran untuk booking ini sudah dibuat. Silakan selesaikan pembayaran.'))
+            return redirect('payment_detail', payment_code=payment.payment_code)
+        if payment.status in ('processing', 'success', 'held', 'released', 'refunded'):
+            messages.error(request, _('Booking ini sudah memiliki pembayaran aktif.'))
+            return redirect('payment_detail', payment_code=payment.payment_code)
+        payment.payment_method = payment_method
+        payment.currency = currency_obj
+        payment.amount_idr = amount_idr
+        payment.amount_converted = amount_converted
+        payment.exchange_rate = exchange_rate
+        payment.status = 'pending'
+        payment.save()
+    else:
+        try:
+            payment = Payment.objects.create(
+                booking=booking,
+                payment_method=payment_method,
+                amount_idr=amount_idr,
+                currency=currency_obj,
+                amount_converted=amount_converted,
+                exchange_rate=exchange_rate,
+                status='pending',
+            )
+        except IntegrityError:
+            payment = Payment.objects.filter(booking=booking).first()
+            messages.info(request, _('Pembayaran sudah dibuat sebelumnya.'))
+            return redirect('payment_detail', payment_code=payment.payment_code)
 
     ip = request.META.get('REMOTE_ADDR', '')
     ua = request.META.get('HTTP_USER_AGENT', '')
