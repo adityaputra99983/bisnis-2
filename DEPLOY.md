@@ -306,13 +306,18 @@ SYNC OK:
   profiles: 2
   categories: 14
   centers: 3
-  healers: 14
+  currencies: 53
+  healers: 13
   locations: 5
-  payment_methods: 25
+  payment_methods: 10
+  reviews: 0
   schedules: 77
   services: 3
-  specialities: 8
+  specialities: 2
   testimonials: 10
+  messages: 0
+  healer_pay_settings: 0
+  bank_txn_settings: 0
 ```
 
 Catatan:
