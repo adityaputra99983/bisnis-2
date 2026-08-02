@@ -4,8 +4,12 @@ Sinkronkan data konten lokal (db.sqlite3) ke database produksi (Supabase/Postgre
 secara MERGE: menambah/memperbarui data demo tapi TIDAK menghapus data user asli
 (user, booking, payment) yang ada di produksi. Aman dijalankan ulang (upsert).
 
+Selain konten (healer, center, testimonial, dll), script ini juga menyinkronkan
+akun customer & healer (auth_user + accounts_userprofile) dari lokal sehingga
+username/password yang sama bisa dipakai login di versi deploy.
+
 Cara pakai:
-    set DATABASE_URL=postgresql://... 
+    set DATABASE_URL=postgresql://...
     python sync_to_deployed.py [path_ke_db.sqlite3]
 
 WAJIB: jangan hardcode password di file ini. Selalu lewat environment variable.
@@ -76,6 +80,62 @@ def upsert_by_match(table, match_col, cols, row):
     return pcur.fetchone()[0]
 
 
+# 0. Users & profiles — bawa akun customer & healer dari lokal (db.sqlite3)
+#    agar bisa login di versi deploy dengan username & password yang sama.
+lcur.execute("PRAGMA table_info(auth_user)")
+local_user_cols = [r['name'] for r in lcur.fetchall()]
+pcur.execute("SELECT column_name FROM information_schema.columns "
+             "WHERE table_name='auth_user' ORDER BY ordinal_position")
+pg_user_cols = {r[0] for r in pcur.fetchall()}
+user_cols = [c for c in local_user_cols if c in pg_user_cols and c != 'id']
+
+user_map = {}
+lcur.execute("SELECT * FROM auth_user")
+for row in lcur.fetchall():
+    if not row['password']:
+        continue
+    data = {c: (row[c] if c in row.keys() else None) for c in user_cols}
+    pcur.execute("SELECT id FROM auth_user WHERE username=%s", (row['username'],))
+    found = pcur.fetchone()
+    if found:
+        sets = ','.join('%s=%%s' % qq(c) for c in user_cols)
+        pcur.execute("UPDATE auth_user SET %s WHERE id=%%s" % sets,
+                     list(data.values()) + [found[0]])
+        user_map[row['id']] = found[0]
+    else:
+        icols = [qq(c) for c in user_cols]
+        placeholders = ','.join(['%s'] * len(icols))
+        pcur.execute("INSERT INTO auth_user (%s) VALUES (%s) RETURNING id"
+                     % (','.join(icols), placeholders), list(data.values()))
+        user_map[row['id']] = pcur.fetchone()[0]
+summary['users'] = len(user_map)
+
+# accounts_userprofile (role: customer / healer)
+pcur.execute("SELECT column_name FROM information_schema.columns "
+             "WHERE table_name='accounts_userprofile' ORDER BY ordinal_position")
+pg_profile_cols = [r[0] for r in pcur.fetchall()]
+profile_cols = [c for c in pg_profile_cols if c not in ('id', 'user_id', 'avatar')]
+n = 0
+lcur.execute("SELECT * FROM accounts_userprofile")
+for row in lcur.fetchall():
+    uid = user_map.get(row['user_id'])
+    if uid is None:
+        continue
+    data = {c: (row[c] if c in row.keys() else None) for c in profile_cols}
+    cast_row('accounts_userprofile', data)
+    pcur.execute("SELECT id FROM accounts_userprofile WHERE user_id=%s", (uid,))
+    if pcur.fetchone():
+        sets = ','.join('%s=%%s' % qq(c) for c in data)
+        pcur.execute("UPDATE accounts_userprofile SET %s WHERE user_id=%%s" % sets,
+                     list(data.values()) + [uid])
+    else:
+        icols = [qq(c) for c in data.keys()] + ['user_id']
+        placeholders = ','.join(['%s'] * len(icols))
+        pcur.execute("INSERT INTO accounts_userprofile (%s) VALUES (%s)"
+                     % (','.join(icols), placeholders), list(data.values()) + [uid])
+    n += 1
+summary['profiles'] = n
+
 # 1. HealerCategory
 lcur.execute("SELECT * FROM healers_healercategory")
 for row in lcur.fetchall():
@@ -131,6 +191,7 @@ lcur.execute("SELECT * FROM healers_healer")
 base_cols = ['name', 'slug', 'category_id', 'bio', 'experience_years', 'photo', 'phone',
              'email', 'address', 'price_idr', 'rating', 'is_available',
              'specializations', 'created_at', 'updated_at']
+healer_cols = base_cols + ['user_id']
 for row in lcur.fetchall():
     cat_id = cat_map.get(row['category_id'])
     pcur.execute("SELECT id FROM healers_healer WHERE slug=%s", (row['slug'],))
@@ -138,17 +199,19 @@ for row in lcur.fetchall():
     data = {c: (row[c] if c in row.keys() else None) for c in base_cols}
     data['category_id'] = cat_id
     data['photo'] = data['photo'] or ''
+    data['user_id'] = user_map.get(row['user_id']) if row['user_id'] is not None else None
     cast_row('healers_healer', data)
     if found:
-        sets = ','.join('%s=%%s' % qq(c) for c in base_cols)
+        sets = ','.join('%s=%%s' % qq(c) for c in healer_cols)
         pcur.execute("UPDATE healers_healer SET %s WHERE id=%%s" % sets,
-                     list(data.values()) + [found[0]])
+                     [data[c] for c in healer_cols] + [found[0]])
         healer_map[row['id']] = found[0]
     else:
-        icols = [qq(c) for c in (['user_id'] + base_cols)]
-        placeholders = ','.join(['%s'] * len(data.values()))
-        pcur.execute("INSERT INTO healers_healer (%s) VALUES (NULL,%s) RETURNING id"
-                     % (','.join(icols), placeholders), list(data.values()))
+        icols = [qq(c) for c in healer_cols]
+        placeholders = ','.join(['%s'] * len(icols))
+        pcur.execute("INSERT INTO healers_healer (%s) VALUES (%s) RETURNING id"
+                     % (','.join(icols), placeholders),
+                     [data[c] for c in healer_cols])
         healer_map[row['id']] = pcur.fetchone()[0]
 summary['healers'] = len(healer_map)
 

@@ -286,8 +286,9 @@ Sama seperti VPS di atas, tapi panel hosting biasanya sudah setup Nginx/Apache. 
 
 Data di database lokal (`db.sqlite3`) TIDAK otomatis ikut ke produksi. Gunakan script
 `sync_to_deployed.py` agar konten demo (healer, pusat penyembuhan, testimonial, jadwal,
-layanan, dsb.) ikut tampil di versi deployed. Script ini **MERGE** (tidak menghapus
-data user asli seperti user, booking, payment) dan **aman dijalankan ulang** (idempotent).
+layanan, dsb.) **dan akun customer & healer** ikut tampil di versi deployed. Script ini
+**MERGE** (tidak menghapus data user asli seperti booking, payment) dan **aman dijalankan
+ulang** (idempotent). Akun yang tersinkron mempertahankan username & password yang sama.
 
 ```bash
 cd dukun
@@ -299,6 +300,8 @@ python sync_to_deployed.py db.sqlite3
 Contoh hasil normal:
 ```
 SYNC OK:
+  users: 2
+  profiles: 2
   categories: 14
   centers: 3
   healers: 14
@@ -312,8 +315,9 @@ SYNC OK:
 
 Catatan:
 - Script membaca `DATABASE_URL` dari environment variable (tidak menyimpan password).
-- Jalankan ulang setelah menambah data di lokal (misal healer baru) agar deployed ikut ter-update.
+- Jalankan ulang setelah menambah data di lokal (misal healer baru / akun baru) agar deployed ikut ter-update.
 - Verifikasi hasilnya di browser: `https://<domain>/id/healers/` harus menampilkan semua healer.
+- Akun lokal (mis. `admin` dan customer) bisa langsung login di versi deploy dengan password yang sama.
 
 ---
 
