@@ -7,7 +7,7 @@ if _root not in sys.path:
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dukun.settings')
 os.environ.setdefault('DATABASE_URL', 'postgresql://postgres.vwjxhfpvcaesrfcglgex:%2B%3FV%2FQxPVcU%24y93c@aws-1-ap-northeast-2.pooler.supabase.com:6543/postgres?sslmode=require')
-os.environ.setdefault('SUPABASE_SERVICE_KEY', '')
+os.environ.setdefault('SUPABASE_SERVICE_KEY', 'sb_publishable_c_I3DM9ZFJ-z3GZmOWOq-A_N1W5yqpu')
 # Catatan: nilai di atas hanya fallback saat env vars Vercel belum di-set.
 # Env vars (jika ada) selalu menang. Jangan commit perubahan kredensial di file ini.
 
