@@ -20,9 +20,9 @@
         <div style="display:grid;grid-template-columns:1fr;gap:20px">
             {% if True %}
             <div class="card">
-                <div class="healer-card-header" style="height:180px">
-                    <div class="healer-card-header-bg" style="background:linear-gradient(135deg,#92400e,#ca8a04)">
-                        <div class="deco-circle"></div><div class="deco-circle"></div>
+                <div class="healer-card-header" style="height:220px">
+                    <div class="healer-card-header-bg" style="background:{% if healer.cover_photo %}url('{{ healer.cover_photo.url }}') center/cover{% else %}linear-gradient(135deg,#92400e,#ca8a04){% endif %}">
+                        {% if not healer.cover_photo %}<div class="deco-circle"></div><div class="deco-circle"></div>{% endif %}
                     </div>
                     <div class="healer-avatar-wrap" style="bottom:-28px">
                         {% if healer.photo %}

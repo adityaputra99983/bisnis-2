@@ -33,9 +33,8 @@
             {% for healer in healers %}
             <div class="healer-card">
                 <div class="healer-card-header">
-                    <div class="healer-card-header-bg" style="background:linear-gradient(135deg, {% cycle '#92400e' '#581c87' '#0f766e' '#1e3a5f' '#7e22ce' '#166534' as hbg1 %}, {% cycle '#ca8a04' '#9333ea' '#06b6d4' '#2563eb' '#db2777' '#059669' as hbg2 %})">
-                        <div class="deco-circle"></div>
-                        <div class="deco-circle"></div>
+                    <div class="healer-card-header-bg" style="background:{% if healer.cover_photo %}url('{{ healer.cover_photo.url }}') center/cover{% else %}linear-gradient(135deg, {% cycle '#92400e' '#581c87' '#0f766e' '#1e3a5f' '#7e22ce' '#166534' as hbg1 %}, {% cycle '#ca8a04' '#9333ea' '#06b6d4' '#2563eb' '#db2777' '#059669' as hbg2 %}){% endif %}">
+                        {% if not healer.cover_photo %}<div class="deco-circle"></div><div class="deco-circle"></div>{% endif %}
                     </div>
                     <button class="healer-fav-btn"><i class="far fa-heart"></i></button>
                     <div class="healer-avatar-wrap">
