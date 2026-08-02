@@ -10,6 +10,27 @@
     <link rel="shortcut icon" type="image/svg+xml" href="{% static 'images/lotus.svg' %}">
     <meta name="description" content="{% trans 'Find and book trusted healing experiences across Bali. Connect with verified healers for spiritual wellness and ancient Balinese healing traditions.' %}">
     <meta name="keywords" content="{% trans 'Bali Healer, healing, spiritual healing, Reiki, chakra healing, sound healing, Balinese healing, meditation, wellness, Bali' %}">
+    <meta name="author" content="Bali Healer">
+    <meta name="robots" content="index, follow">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="theme-color" content="#15120f">
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Bali Healer",
+        "alternateName": "Bali Healer — Discover · Book · Heal",
+        "url": "{{ request.scheme }}://{{ request.get_host }}/",
+        "description": "Find and book trusted healing experiences across Bali. Connect with verified healers for spiritual wellness and ancient Balinese healing traditions.",
+        "inLanguage": "{{ LANGUAGE_CODE }}",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "{{ request.scheme }}://{{ request.get_host }}/{{ LANGUAGE_CODE }}/healers/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+Display:wght@400;500;600;700&family=Cinzel:wght@400;600;800&display=swap" rel="stylesheet">

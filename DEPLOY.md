@@ -323,6 +323,36 @@ Catatan:
 
 ---
 
+## Peringatan "Situs Berbahaya" (Google Safe Browsing)
+
+Jika Chrome/Firefox masih menampilkan layar merah **"Deceptive site ahead / Situs menipu di depan"**
+saat membuka halaman login/register, kode sudah aman (password `type="password"`, HTTPS+HSTS,
+security headers, `DJANGO_DEBUG=False`, tanpa konten HTTP) tetapi **flag di database Google Safe
+Browsing belum hilang**. Flag ini melekat pada domain dan perlu di-review oleh Google:
+
+1. Buka **Google Search Console** → [https://search.google.com/search-console](https://search.google.com/search-console)
+2. Tambahkan & verifikasi domain `bisnis-2.vercel.app`
+3. Menu **Security Issues** → jika ada masalah, klik **Request Review**
+4. Alternatif cek status: [https://transparencyreport.google.com/safe-browsing/search?url=bisnis-2.vercel.app](https://transparencyreport.google.com/safe-browsing/search?url=bisnis-2.vercel.app)
+5. Flag biasanya hilang dalam beberapa hari setelah konten berbahaya (password `type="text"`)
+   sudah diperbaiki dan Google re-crawl ulang.
+
+### Sinyal kepercayaan yang sudah terpasang di kode
+- `type="password"` + `autocomplete="current-password"` di semua field password
+- Trust badges "Secure Login / SSL Encrypted / Data Protected" di login & register
+- Security headers (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy)
+- `robots.txt` + `/.well-known/security.txt` (endpoint ditambahkan)
+- JSON-LD `WebSite` schema + meta robots/canonical di `<head>` (membantu crawler
+  mengenali situs sebagai situs bisnis yang sah)
+
+> **Catatan preview:** URL preview Vercel (`bisnis-2-<hash>-...vercel.app`) dilindungi
+> **Deployment Protection** sehingga meminta login Vercel (redirect ke `vercel.com/login`).
+> Jika user membuka URL itu dan "diminta login", nonaktifkan proteksi di
+> Vercel Dashboard → Project → **Settings → Deployment Protection** agar preview bisa
+> diakses tanpa login Vercel.
+
+---
+
 ## Environment Variables
 
 | Variable | Default | Keterangan |
