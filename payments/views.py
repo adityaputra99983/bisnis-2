@@ -260,8 +260,9 @@ def upload_payment_proof(request, payment_code):
     payment.proof_note = note
     payment.proof_uploaded_at = timezone.now()
 
-    if payment.can_transition_to('processing'):
-        payment.status = 'processing'
+    if payment.can_transition_to('success'):
+        payment.status = 'success'
+        payment.paid_at = timezone.now()
 
     try:
         payment.save()
@@ -269,33 +270,38 @@ def upload_payment_proof(request, payment_code):
         messages.error(request, _('Gagal menyimpan bukti pembayaran. Silakan coba lagi.'))
         return redirect('payment_detail', payment_code=payment_code)
 
+    booking = payment.booking
+    booking.success, booking_msg = booking.transition_to('pending_confirm', user=None, reason=_('Pembayaran berhasil via bukti transfer'))
+
     ip = request.META.get('REMOTE_ADDR', '')
     ua = request.META.get('HTTP_USER_AGENT', '')
     TransactionLog.objects.create(
         payment=payment,
-        booking=payment.booking,
-        log_type='payment_created',
-        action=_('Bukti pembayaran diunggah'),
-        details=_('Screenshot bukti pembayaran telah diunggah untuk diverifikasi healer'),
+        booking=booking,
+        log_type='payment_success',
+        action=_('Pembayaran berhasil'),
+        details=_('Pembayaran %(amount)s berhasil diproses via bukti transfer') % {
+            'amount': format_currency(payment.amount_converted, payment.currency.code if payment.currency else 'IDR')
+        },
         ip_address=ip,
         user_agent=ua,
     )
 
     from healers.notifications import create_notification
-    healer_user = getattr(payment.booking.healer, 'user', None)
+    healer_user = getattr(booking.healer, 'user', None)
     if healer_user:
         create_notification(
             user=healer_user,
-            title=_('Bukti Pembayaran Baru'),
-            message=_('%s telah mengunggah bukti pembayaran untuk booking %s.') % (
-                payment.booking.customer_name,
-                payment.booking.booking_code,
+            title=_('Pembayaran Berhasil'),
+            message=_('%s telah membayar booking %s. Menunggu konfirmasi Anda.') % (
+                booking.customer_name,
+                booking.booking_code,
             ),
             notification_type='booking',
-            link='/booking/%s/' % payment.booking.booking_code,
+            link='/booking/%s/' % booking.booking_code,
         )
 
-    messages.success(request, _('Bukti pembayaran berhasil diunggah. Healer akan segera memverifikasi.'))
+    messages.success(request, _('Pembayaran berhasil! Menunggu konfirmasi healer.'))
     return redirect('payment_detail', payment_code=payment.payment_code)
 
 
