@@ -95,6 +95,7 @@ for row in lcur.fetchall():
     if not row['password']:
         continue
     data = {c: (row[c] if c in row.keys() else None) for c in user_cols}
+    cast_row('auth_user', data)
     pcur.execute("SELECT id FROM auth_user WHERE username=%s", (row['username'],))
     found = pcur.fetchone()
     if found:

@@ -98,8 +98,10 @@ heroku run python manage.py createsuperuser
    DATABASE_URL = postgresql://user:pass@host:5432/dbname   ← WAJIB (PostgreSQL/Supabase)
    SUPABASE_SERVICE_KEY = <service_role key dari Supabase>  ← WAJIB agar upload foto tampil
    ```
-   > **PENTING:** `api/index.py` TIDAK lagi berisi fallback kredensial hardcode.
-   > Tanpa `DATABASE_URL` di env vars Vercel, aplikasi akan 500 setelah deploy.
+   > **PENTING:** `api/index.py` memuat fallback `DATABASE_URL` (Supabase) agar deploy jalan
+   > meski env vars belum di-set. Env vars Vercel **selalu menang** atas fallback.
+   > Tanpa `DATABASE_URL` di env vars Vercel, aplikasi memakai fallback (berjalan normal,
+   > tapi kredensial ikut ter-commit — sebaiknya dipindah ke env vars).
    > Tanpa `SUPABASE_SERVICE_KEY`, `DEFAULT_FILE_STORAGE` fallback ke filesystem lokal Vercel
    > yang bersifat sementara (upload foto akan hilang saat redeploy).
 8. Klik **Deploy** → tunggu selesai
