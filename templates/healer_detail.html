@@ -25,7 +25,11 @@
                         <div class="deco-circle"></div><div class="deco-circle"></div>
                     </div>
                     <div class="healer-avatar-wrap" style="bottom:-28px">
-                        <div class="healer-avatar" style="width:56px;height:56px;font-size:16px;background:linear-gradient(135deg,#b45309,#eab308)">{{ healer.name|truncatechars:2 }}</div>
+                        {% if healer.photo %}
+                            <img src="{{ healer.photo.url }}" alt="{{ healer.name }}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--gold)">
+                        {% else %}
+                            <div class="healer-avatar" style="width:56px;height:56px;font-size:16px;background:linear-gradient(135deg,#b45309,#eab308)">{{ healer.name|truncatechars:2 }}</div>
+                        {% endif %}
                         <div class="verified-badge"><i class="fas fa-check"></i></div>
                     </div>
                 </div>

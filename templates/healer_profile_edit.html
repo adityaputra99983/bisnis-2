@@ -20,10 +20,32 @@
                     <h3><i class="fas fa-user-pen" style="color:var(--gold)"></i> {% trans "Edit Profile" %}</h3>
                 </div>
                 <div class="card-body" style="padding:22px">
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-section">
                             <h4><i class="fas fa-spa"></i> {% trans "Healing Profile" %}</h4>
+                            <div class="form-group">
+                                <label>{% trans "Profile Photo" %}</label>
+                                <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+                                    <div style="width:90px;height:90px;border-radius:50%;overflow:hidden;border:2px solid var(--gold);flex-shrink:0;background:var(--bg-alt);display:flex;align-items:center;justify-content:center">
+                                        {% if healer.photo %}
+                                            <img src="{{ healer.photo.url }}" alt="{{ healer.name }}" style="width:100%;height:100%;object-fit:cover">
+                                        {% else %}
+                                            <i class="fas fa-user" style="font-size:36px;color:var(--gold);opacity:0.5"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div style="flex:1;min-width:200px">
+                                        <input type="file" name="photo" accept="image/*" class="form-control" style="padding:8px">
+                                        <small style="color:var(--text-muted);margin-top:4px;display:block">{% trans "Upload a clear photo of yourself. JPG, PNG, or WebP. Max 5MB." %}</small>
+                                        {% if healer.photo %}
+                                            <label style="display:flex;align-items:center;gap:6px;margin-top:8px;cursor:pointer;color:var(--text-muted);font-size:13px">
+                                                <input type="checkbox" name="delete_photo" value="1" style="accent-color:var(--gold)">
+                                                {% trans "Remove current photo" %}
+                                            </label>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label>{% trans "Professional Name" %}</label>
                                 <input type="text" name="name" class="form-control" value="{{ healer.name }}" required>

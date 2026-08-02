@@ -203,6 +203,15 @@ def healer_profile_edit(request, profile, healer):
             if healer.price_idr > MAX_PRICE_IDR:
                 messages.error(request, _('Harga terlalu besar. Maksimal Rp 9.999.999.999.'))
                 return redirect('healer_profile_edit')
+        if 'delete_photo' in request.POST and healer.photo:
+            healer.photo.delete(save=False)
+            healer.photo = None
+        elif 'photo' in request.FILES:
+            uploaded = request.FILES['photo']
+            if uploaded.size > 5 * 1024 * 1024:
+                messages.error(request, _('Ukuran foto maksimal 5MB.'))
+                return redirect('healer_profile_edit')
+            healer.photo = uploaded
         healer.save()
         messages.success(request, _('Profil healer berhasil diperbarui.'))
         return redirect('healer_dashboard')

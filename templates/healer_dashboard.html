@@ -97,8 +97,12 @@
                 <div class="card-body">
                     <div class="healer-mini" style="margin-bottom:14px">
                         <div class="healer-mini-avatar" style="border-radius:12px">
-                            <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;color:var(--stone-950);font-weight:700;font-size:20px;border-radius:12px">
-                                {{ healer.name|truncatechars:1 }}
+                            <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;color:var(--stone-950);font-weight:700;font-size:20px;border-radius:12px;overflow:hidden">
+                                {% if healer.photo %}
+                                    <img src="{{ healer.photo.url }}" alt="{{ healer.name }}" style="width:100%;height:100%;object-fit:cover">
+                                {% else %}
+                                    {{ healer.name|truncatechars:1 }}
+                                {% endif %}
                             </div>
                         </div>
                         <div class="healer-mini-info">
