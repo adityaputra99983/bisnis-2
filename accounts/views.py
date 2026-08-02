@@ -140,13 +140,18 @@ def healer_dashboard(request):
     completed_count = 0
     total_revenue = 0
     held_funds = 0
+    payments_pending_verify = []
     if healer:
         for s in healer.schedules.filter(is_active=True):
             schedules_list[s.day_of_week] = s
         services = healer.services.filter(is_active=True)
         recent_bookings = Booking.objects.filter(
             healer=healer
-        ).select_related('customer').order_by('-created_at')[:10]
+        ).select_related('customer', 'payment').order_by('-created_at')[:10]
+        payments_pending_verify = Payment.objects.filter(
+            booking__healer=healer,
+            booking__status='pending_confirm',
+        ).select_related('booking').order_by('-created_at')[:10]
         booking_stats = Booking.objects.filter(healer=healer).aggregate(
             pending_count=Count('id', filter=Q(status='pending_confirm')),
             in_progress_count=Count('id', filter=Q(status='in_progress')),
@@ -172,6 +177,7 @@ def healer_dashboard(request):
         'completed_count': completed_count,
         'total_revenue': total_revenue,
         'held_funds': held_funds,
+        'payments_pending_verify': payments_pending_verify,
         'unread_notifications': get_unread_count(request.user),
         'recent_notifications': get_recent_notifications(request.user, 5),
     })

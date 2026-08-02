@@ -164,8 +164,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Supabase Storage (REST API) — used when service key is set
 SUPABASE_SERVICE_KEY = os.environ.get('SUPABASE_SERVICE_KEY')
-if SUPABASE_SERVICE_KEY:
-    DEFAULT_FILE_STORAGE = 'storage.SupabaseStorage'
+STORAGES = {
+    'default': {
+        'BACKEND': 'storage.SupabaseStorage' if SUPABASE_SERVICE_KEY else 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+    },
+}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

@@ -153,6 +153,61 @@
 
         <div class="card">
             <div class="card-header">
+                <h3><i class="fas fa-shield-halved" style="color:var(--gold)"></i> {% trans "Payment Verification" %}</h3>
+                {% if payments_pending_verify %}<span class="payment-status-badge pending" style="font-size:10px"><i class="fas fa-clock"></i> {{ payments_pending_verify|length }} {% trans "menunggu" %}</span>{% endif %}
+            </div>
+            <div class="card-body">
+                {% if payments_pending_verify %}
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>{% trans "Booking" %}</th><th>{% trans "Customer" %}</th><th>{% trans "Total" %}</th><th>{% trans "Bukti Transfer" %}</th><th>{% trans "Actions" %}</th></tr>
+                        </thead>
+                        <tbody>
+                            {% for p in payments_pending_verify %}
+                            <tr>
+                                <td><strong style="color:var(--gold);font-weight:700">{{ p.payment_code }}</strong><br><small style="color:var(--stone-500)">{{ p.booking.booking_code }}</small></td>
+                                <td style="color:var(--fg)">{{ p.booking.customer_name }}</td>
+                                <td><strong>Rp {{ p.amount_idr|floatformat:0 }}</strong></td>
+                                <td>
+                                    {% if p.has_proof %}
+                                    <a href="{% url 'payment_detail' p.payment_code %}" title="{% trans 'Lihat Bukti Pembayaran' %}">
+                                        <img src="{{ p.proof_image.url }}" alt="{% trans 'Bukti Pembayaran' %}" loading="lazy"
+                                             style="width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--border);display:inline-block;vertical-align:middle">
+                                    </a>
+                                    <a href="{% url 'payment_detail' p.payment_code %}" style="font-size:10px;color:var(--gold);display:block;margin-top:2px"><i class="fas fa-expand"></i> {% trans "Lihat" %}</a>
+                                    {% else %}
+                                    <span style="font-size:11px;color:var(--stone-500)">{% trans "Belum ada bukti" %}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form method="POST" action="{% url 'healer_booking_update' p.booking.booking_code %}" style="display:inline">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="action" value="confirm">
+                                        <button type="submit" class="btn btn-sm btn-success" title="{% trans 'Confirm & Release' %}"><i class="fas fa-check"></i></button>
+                                    </form>
+                                    <form method="POST" action="{% url 'booking_cancel' p.booking.booking_code %}" style="display:inline" onsubmit="return confirm('{% trans "Reject this booking?" %}')">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="reason" value="Rejected by healer">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="{% trans 'Reject' %}"><i class="fas fa-xmark"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="empty-state" style="padding:28px">
+                    <i class="fas fa-shield-halved"></i>
+                    <p>{% trans "Tidak ada pembayaran yang menunggu verifikasi saat ini." %}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
                 <h3><i class="fas fa-calendar-check" style="color:var(--gold)"></i> {% trans "Recent Bookings" %}</h3>
             </div>
             <div class="card-body">
@@ -160,7 +215,7 @@
                 <div class="table-container">
                     <table class="data-table">
                         <thead>
-                            <tr><th>{% trans "Code" %}</th><th>{% trans "Customer" %}</th><th>{% trans "Service" %}</th><th>{% trans "Date" %}</th><th>{% trans "Status" %}</th><th>{% trans "Actions" %}</th></tr>
+                            <tr><th>{% trans "Code" %}</th><th>{% trans "Customer" %}</th><th>{% trans "Service" %}</th><th>{% trans "Date" %}</th><th>{% trans "Payment" %}</th><th>{% trans "Status" %}</th><th>{% trans "Actions" %}</th></tr>
                         </thead>
                         <tbody>
                             {% for b in recent_bookings %}
@@ -169,6 +224,19 @@
                                 <td style="color:var(--fg)">{{ b.customer_name }}</td>
                                 <td>{{ b.service_type }}</td>
                                 <td>{{ b.booking_date|date:"d M Y" }}</td>
+                                <td>
+                                    {% if b.payment and b.payment.has_proof %}
+                                    <a href="{% url 'payment_detail' b.payment.payment_code %}" title="{% trans 'Lihat Bukti Pembayaran' %}">
+                                        <img src="{{ b.payment.proof_image.url }}" alt="{% trans 'Bukti Pembayaran' %}" loading="lazy"
+                                             style="width:48px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--border);display:inline-block;vertical-align:middle">
+                                    </a>
+                                    <span style="font-size:10px;color:var(--emerald-500);display:block;margin-top:2px"><i class="fas fa-circle-check"></i> {% trans "Bukti ada" %}</span>
+                                    {% elif b.payment %}
+                                    <span style="font-size:11px;color:var(--stone-500)"><i class="fas fa-circle-xmark"></i> {% trans "Belum" %}</span>
+                                    {% else %}
+                                    <span style="font-size:11px;color:var(--stone-600)">—</span>
+                                    {% endif %}
+                                </td>
                                 <td><span class="status-badge status-{{ b.status }}">{{ b.get_status_display }}</span></td>
                                 <td>
                                     {% if b.status == 'pending_confirm' %}
