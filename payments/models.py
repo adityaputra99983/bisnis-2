@@ -85,7 +85,6 @@ class Payment(models.Model):
     def save(self, *args, **kwargs):
         if not self.payment_code:
             self.payment_code = str(uuid.uuid4())[:12].upper()
-            self.payment_code = str(uuid.uuid4())[:12].upper()
         super().save(*args, **kwargs)
 
     def can_transition_to(self, new_status):

@@ -150,7 +150,8 @@ def healer_dashboard(request):
         ).select_related('customer', 'payment').order_by('-created_at')[:10]
         payments_pending_verify = Payment.objects.filter(
             booking__healer=healer,
-            booking__status='pending_confirm',
+        ).filter(
+            Q(status='processing') | Q(booking__status='pending_confirm'),
         ).select_related('booking').order_by('-created_at')[:10]
         booking_stats = Booking.objects.filter(healer=healer).aggregate(
             pending_count=Count('id', filter=Q(status='pending_confirm')),

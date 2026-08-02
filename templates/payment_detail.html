@@ -20,6 +20,7 @@
                     <h3><i class="fas fa-receipt" style="color:var(--gold)"></i> {% trans "Payment Details" %}</h3>
                     <span class="payment-status-badge {{ payment.status }}">
                         {% if payment.status == 'pending' %}<i class="fas fa-clock"></i> {% trans "Pending" %}
+                        {% elif payment.status == 'processing' %}<i class="fas fa-spinner"></i> {% trans "Processing" %}
                         {% elif payment.status == 'success' %}<i class="fas fa-check-circle"></i> {% trans "Successful" %}
                         {% elif payment.status == 'held' %}<i class="fas fa-lock"></i> {% trans "Held (Escrow)" %}
                         {% elif payment.status == 'released' %}<i class="fas fa-unlock"></i> {% trans "Released" %}

@@ -148,6 +148,7 @@
                             <span style="font-size:12px;color:var(--stone-500)">{% trans "Payment Status" %}</span>
                             <span class="payment-status-badge {{ payment.status }}" style="font-size:11px">
                                 {% if payment.status == 'pending' %}<i class="fas fa-clock"></i> {% trans "Waiting" %}
+                                {% elif payment.status == 'processing' %}<i class="fas fa-spinner"></i> {% trans "Processing" %}
                                 {% elif payment.status == 'success' %}<i class="fas fa-check-circle"></i> {% trans "Successful" %}
                                 {% elif payment.status == 'held' %}<i class="fas fa-lock"></i> {% trans "Held (Escrow)" %}
                                 {% elif payment.status == 'released' %}<i class="fas fa-unlock"></i> {% trans "Released" %}
