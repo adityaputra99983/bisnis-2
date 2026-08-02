@@ -10,6 +10,7 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('robots.txt', views.robots_txt),
     path('.well-known/security.txt', views.security_txt),
+    path('sitemap.xml', views.sitemap_xml),
 ]
 
 urlpatterns += i18n_patterns(
