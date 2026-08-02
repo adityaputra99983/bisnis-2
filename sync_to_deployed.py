@@ -157,7 +157,7 @@ lcur.execute("SELECT * FROM healers_speciality")
 for row in lcur.fetchall():
     upsert_by_match('healers_speciality', 'name',
                     ['name', 'slug', 'emoji', 'description', 'order'], row)
-summary['specialities'] = 8
+summary['specialities'] = n
 
 # 4. Testimonial
 lcur.execute("SELECT * FROM healers_testimonial")
@@ -185,7 +185,16 @@ lcur.execute("SELECT * FROM payments_paymentmethod")
 for row in lcur.fetchall():
     upsert_by_match('payments_paymentmethod', 'name',
                     ['name', 'description', 'icon', 'is_active', 'instructions'], row)
-summary['payment_methods'] = 25
+summary['payment_methods'] = n
+
+# 5b. Currency
+lcur.execute("SELECT * FROM payments_currency")
+n = 0
+for row in lcur.fetchall():
+    upsert_by_match('payments_currency', 'code',
+                    ['code', 'name', 'symbol', 'rate_to_idr', 'is_active'], row)
+    n += 1
+summary['currencies'] = n
 
 # 6. Healer
 lcur.execute("SELECT * FROM healers_healer")
@@ -232,11 +241,34 @@ for row in lcur.fetchall():
     n += 1
 summary['schedules'] = n
 
+# 7b. HealerReview
+lcur.execute("SELECT * FROM healers_healerreview")
+n = 0
+for row in lcur.fetchall():
+    new_hid = healer_map.get(row['healer_id'])
+    if new_hid is None:
+        continue
+    pcur.execute("""
+        SELECT id FROM healers_healerreview
+        WHERE healer_id=%s AND customer_name=%s AND rating=%s
+    """, (new_hid, row['customer_name'], row['rating']))
+    if pcur.fetchone():
+        continue
+    pcur.execute("""
+        INSERT INTO healers_healerreview
+            (healer_id, customer_name, customer_email, rating, comment, created_at)
+        VALUES (%s,%s,%s,%s,%s,%s)
+    """, (new_hid, row['customer_name'], row['customer_email'],
+          row['rating'], row['comment'], row['created_at']))
+    n += 1
+summary['reviews'] = n
+
 # 8. HealingCenter
 lcur.execute("SELECT * FROM healers_healingcenter")
 base_cols = ['name', 'location_id', 'address', 'description', 'phone', 'email', 'photo',
              'rating', 'review_count', 'specializations', 'price_range',
              'min_price_idr', 'max_price_idr', 'has_google_badge', 'is_active', 'gradient']
+n = 0
 for row in lcur.fetchall():
     loc_id = loc_map.get(row['location_id'])
     pcur.execute("SELECT id FROM healers_healingcenter WHERE slug=%s", (row['slug'],))
@@ -255,7 +287,8 @@ for row in lcur.fetchall():
         pcur.execute("INSERT INTO healers_healingcenter (%s) VALUES (%s)"
                      % (','.join(icols), placeholders),
                      list(data.values()) + [row['slug'], row['created_at']])
-summary['centers'] = 3
+    n += 1
+summary['centers'] = n
 
 # 9. HealerService (upsert by healer_id+name agar tidak dobel saat dijalankan ulang)
 lcur.execute("SELECT * FROM healers_healerservice")
@@ -307,6 +340,30 @@ for row in lcur.fetchall():
                  % (','.join(icols), placeholders), list(data.values()))
     n += 1
 summary['healer_pay_settings'] = n
+
+# 10b. HealerMessage
+lcur.execute("SELECT * FROM healers_healermessage")
+n = 0
+for row in lcur.fetchall():
+    new_hid = healer_map.get(row['healer_id'])
+    if new_hid is None:
+        continue
+    pcur.execute("""
+        SELECT id FROM healers_healermessage
+        WHERE healer_id=%s AND sender_email=%s AND subject=%s AND created_at=%s
+    """, (new_hid, row['sender_email'], row['subject'], row['created_at']))
+    if pcur.fetchone():
+        continue
+    pcur.execute("""
+        INSERT INTO healers_healermessage
+            (healer_id, sender_name, sender_email, sender_phone, subject, message,
+             is_read, reply, replied_at, created_at)
+        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+    """, (new_hid, row['sender_name'], row['sender_email'], row['sender_phone'],
+          row['subject'], row['message'], bool(row['is_read']),
+          row['reply'], row['replied_at'], row['created_at']))
+    n += 1
+summary['messages'] = n
 
 # 11. BankTransactionSetting
 lcur.execute("SELECT * FROM healers_banktransactionsetting")
