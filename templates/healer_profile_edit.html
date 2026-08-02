@@ -25,9 +25,16 @@
                         <div class="form-section">
                             <h4><i class="fas fa-spa"></i> {% trans "Healing Profile" %}</h4>
                             <div class="form-group" style="margin-bottom:24px">
-                                <label>{% trans "Profile Photo" %}</label>
+                                <label>{% trans "Profile & Cover Photo" %}</label>
                                 <div style="position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card)">
-                                    <div style="height:100px;width:100%;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%);"></div>
+                                    <div style="height:120px;width:100%;background:{% if healer.cover_photo %}url('{{ healer.cover_photo.url }}') center/cover{% else %}linear-gradient(135deg,var(--gold) 0%,var(--gold-dark) 100%){% endif %};position:relative;">
+                                        <div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.6);padding:6px 10px;border-radius:6px;backdrop-filter:blur(4px);">
+                                            <label style="color:#fff;font-size:12px;cursor:pointer;margin:0;display:flex;align-items:center;gap:6px;">
+                                                <i class="fas fa-camera"></i> {% trans "Cover" %}
+                                                <input type="file" name="cover_photo" accept="image/*" style="display:none;">
+                                            </label>
+                                        </div>
+                                    </div>
                                     <div style="padding:0 20px 20px;display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-top:-45px">
                                         <div style="width:90px;height:90px;border-radius:50%;overflow:hidden;border:4px solid var(--bg-card);flex-shrink:0;background:var(--bg-alt);display:flex;align-items:center;justify-content:center;position:relative;z-index:2;box-shadow:0 4px 12px rgba(0,0,0,0.1)">
                                             {% if healer.photo %}
@@ -39,12 +46,20 @@
                                         <div style="flex:1;min-width:200px;padding-top:40px">
                                             <input type="file" name="photo" accept="image/*" class="form-control" style="padding:8px">
                                             <small style="color:var(--text-muted);margin-top:4px;display:block">{% trans "Upload a clear photo of yourself. JPG, PNG, or WebP. Max 5MB." %}</small>
-                                            {% if healer.photo %}
-                                                <label style="display:flex;align-items:center;gap:6px;margin-top:8px;cursor:pointer;color:var(--text-muted);font-size:13px">
-                                                    <input type="checkbox" name="delete_photo" value="1" style="accent-color:var(--gold)">
-                                                    {% trans "Remove current photo" %}
-                                                </label>
-                                            {% endif %}
+                                            <div style="display:flex;gap:16px;flex-wrap:wrap;">
+                                                {% if healer.photo %}
+                                                    <label style="display:flex;align-items:center;gap:6px;margin-top:8px;cursor:pointer;color:var(--text-muted);font-size:13px">
+                                                        <input type="checkbox" name="delete_photo" value="1" style="accent-color:var(--gold)">
+                                                        {% trans "Remove photo" %}
+                                                    </label>
+                                                {% endif %}
+                                                {% if healer.cover_photo %}
+                                                    <label style="display:flex;align-items:center;gap:6px;margin-top:8px;cursor:pointer;color:var(--text-muted);font-size:13px">
+                                                        <input type="checkbox" name="delete_cover" value="1" style="accent-color:var(--gold)">
+                                                        {% trans "Remove cover" %}
+                                                    </label>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -212,6 +212,16 @@ def healer_profile_edit(request, profile, healer):
                 messages.error(request, _('Ukuran foto maksimal 5MB.'))
                 return redirect('healer_profile_edit')
             healer.photo = uploaded
+            
+        if 'delete_cover' in request.POST and getattr(healer, 'cover_photo', None):
+            healer.cover_photo.delete(save=False)
+            healer.cover_photo = None
+        elif 'cover_photo' in request.FILES:
+            uploaded_cover = request.FILES['cover_photo']
+            if uploaded_cover.size > 5 * 1024 * 1024:
+                messages.error(request, _('Ukuran cover photo maksimal 5MB.'))
+                return redirect('healer_profile_edit')
+            healer.cover_photo = uploaded_cover
         healer.save()
         messages.success(request, _('Profil healer berhasil diperbarui.'))
         return redirect('healer_dashboard')

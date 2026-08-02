@@ -25,6 +25,7 @@ class Healer(models.Model):
     bio = models.TextField()
     experience_years = models.PositiveIntegerField(default=0)
     photo = models.ImageField(upload_to='healer_photos/', blank=True, null=True)
+    cover_photo = models.ImageField(upload_to='healer_covers/', blank=True, null=True)
     phone = models.CharField(max_length=20)
     email = models.EmailField(blank=True)
     address = models.TextField()
